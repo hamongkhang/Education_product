@@ -2,24 +2,23 @@
 
 ## Prerequirement
 
-Please refer to the [setup guide](https://github.com/kms-grove/grove-enterprise/tree/develop/docs/system/setup.md)
+Please refer to the [setup guide](https://github.com/hamongkhang/Education_product/edit/master/README.md)
 
 ## Setup
 
 - Backend:
 
-  - Create proxy to aws's infrastructure (database, redis, rabbitmq, nats, etc.)
-    - sudo kubefwd services -n dev
-  - yarn package:be
-  - cd backend/services/<SERVICE_NAME>
-  - yarn start:dev
+  - Create .env
+      cp .env.example .env
+  - Create a database
+  - npm install
+  - npm run dev
+  - php artisan serve
 
 - Frontend:
 
-  - yarn package:fe
-  - cd frontend/webapps/<WEBAPP_NAME>
-  - yarn dev
-  - Site: kms.localhost:3000
+  - npm install
+  - npm start
 
 - Fullstack:
 
@@ -34,14 +33,7 @@ Please refer to the [setup guide](https://github.com/kms-grove/grove-enterprise/
 
 ## COMMIT STEP
 
-- wizard:
-  - git add .
-  - git commit (wizard to create commit message)
-
 ## COMMIT MESSAGE CONVENTION
-
-- type: message lower case text here
-- type(package-name): message lower case text here
 
 - type:
   - feat: A new feature
