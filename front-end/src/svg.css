@@ -1,0 +1,60 @@
+.box
+    {
+        position: relative;
+        height: 150px;
+        width: 150px;
+    }
+    .box .number_precent
+    {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+    .box svg
+    {
+        position: absolute;
+        left: 0%;
+        top: 0%;
+        transform: translate(-50%,-50%);
+        transform: rotate(-90deg);
+        width: 150px;
+        height: 150px;
+    }
+ 
+    .box svg circle
+    {  
+        height: 150px;
+        width: 150px;
+        transform: translate(5px, 5px);
+        fill: transparent;
+        stroke: #007eff;
+        stroke-width:10;
+        stroke-linecap:round;
+        stroke-dasharray: 440;
+        stroke-dashoffset: 440;
+        transition: all 1s;
+        /*animation: animate 5s forwards;*/
+    }
+    .box svg circle:nth-of-type(1)
+    {  
+        stroke-dashoffset: 0;
+        stroke: #dcd9d9;
+    }
+    .box svg circle.p25
+    {
+        stroke-dashoffset: 330;
+         
+    }
+    .box svg circle.p50
+    {
+        stroke-dashoffset: 220 ;
+    }
+    .box svg circle.p75
+    {
+        stroke-dashoffset: 110 ;
+    }
+    .box svg circle.p100
+    {
+        stroke-dashoffset: 0 ;
+    }
