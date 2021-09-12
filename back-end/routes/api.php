@@ -24,5 +24,5 @@ Route::get('token', function (Request $request) {
     $token = csrf_token();
     return Response()->json(array("token"=>$token));
 });
-Route::post('/users/login', [App\Http\Controllers\Api\UsersController::class, 'onLogin'])->name('user.login');
-Route::post('/users', [App\Http\Controllers\Api\UsersController::class, 'onRegister'])->name('user.register');
+Route::post('/users/login', [App\Http\Controllers\UsersController::class, 'onLogin'])->name('user.login');
+Route::post('/users/register', [App\Http\Controllers\UsersController::class, 'onRegister'])->name('user.register');
