@@ -100,7 +100,7 @@ const Register = () => {
                 body: _formData
             };
               
-            fetch('http://127.0.0.1:8000/api/users', requestOptions)
+            fetch('http://127.0.0.1:8000/api/users/register', requestOptions)
                 .then(res => res.json())
                 .then(json =>{
                     if(json['success']>0){
