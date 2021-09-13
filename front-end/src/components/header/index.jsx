@@ -6,13 +6,18 @@ import SearchBox from './searchBox'
 
 const Header = (props) => {
     return (
-        <div className="h-52">
-            <AccountControls/>
-            <div className="w-4/5 flex justify-between bg-blue-500 relative left-1/2 transform -translate-x-1/2">
-                <Logo/>
-                <SearchBox/>
+        <div className="max-w-screen-2xl header">
+            <div className="relative">
+
+            <div className="w-full header-fixed h-19 fixed top-0 left-1/2 transform -translate-x-1/2 z-10 duration-300">
+                <div className="w-11/12 mx-auto mt-2">
+                    <div className="flex items-center z-10 justify-between">
+                        <Navbar/>
+                        <AccountControls/>
+                    </div>
+                </div>
             </div>
-            <Navbar/>
+            </div>
         </div>
     )
 }

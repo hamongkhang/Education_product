@@ -1,3 +1,221 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+body::-webkit-scrollbar {
+    width: 8px;
+}
+
+body {
+    scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #777;
+}
+
+.overlay {
+    position: relative;
+}
+
+.overlay:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+
+.overlay-9::before {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.overlay-8::before {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.overlay-7::before {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.overlay-6::before {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.overlay-5::before {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.overlay-4::before {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.overlay-3::before {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.overlay-2::before {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.overlay-1::before {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.line-1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.line-2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.line-3 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.line-4 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
+.nav-link::after {
+    content: "";
+    height: 2px;
+    width: 0;
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    transition: .3s;
+}
+
+.nav-link::after {
+    background: white;
+}
+
+.nav-link-fixed::after {
+    background: black;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.btn-stroke {
+    stroke: white;
+    stroke-dasharray: 100;
+}
+
+.btn-stroke-fixed {
+    stroke: green;
+}
+
+
+/* The container */
+
+.form-checkbox {
+    display: block;
+    position: relative;
+    padding-left: 16px;
+    cursor: pointer;
+    width: fit-content;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+/* Hide the browser's default checkbox */
+
+.form-checkbox input {
+    display: none;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+
+/* Create a custom checkbox */
+
+.checkmark {
+    position: absolute;
+    top: 4px;
+    left: 0;
+    height: 15px;
+    width: 15px;
+    border: 1px solid #4338ca;
+    background-color: #fff;
+}
+
+
+/* On mouse-over, add a grey background color */
+
+.form-checkbox:hover input~.checkmark {
+    background-color: #eee;
+}
+
+
+/* When the checkbox is checked, add a blue background */
+
+.form-checkbox input:checked~.checkmark {
+    background-color: #4338ca;
+}
+
+
+/* Create the checkmark/indicator (hidden when not checked) */
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+
+/* Show the checkmark when checked */
+
+.form-checkbox input:checked~.checkmark:after {
+    display: block;
+}
+
+
+/* Style the checkmark/indicator */
+
+.form-checkbox .checkmark:after {
+    left: 4px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.course-list:hover .btn-arrow {
+    opacity: 1;
+}
+
+.custom-scroll::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #777;
+}

@@ -1,15 +1,28 @@
 import React from 'react'
+import Logo from './logo'
 
 const Navbar = (props) => {
     return (
-        <div className="bg-indigo-500 h-12">
-            <div className="w-4/5 h-full flex relative left-1/2 transform -translate-x-1/2">
-                <div className="w-3/12">
-                    Tiêu đề Danh Mục
-                </div>
-                <div className="bg-indigo-200 w-9/12">
-                    navbar
-                </div>
+        <div className="flex items-center">
+            <Logo/>
+            <div className="ml-10">
+                <ul className="flex nav-menu text-white font-medium space-x-4 uppercase tracking-wide">
+                    <li className="nav-link relative">
+                        <a href="http://" className="hover">Trang chủ</a>
+                    </li>
+                    <li className="nav-link relative">
+                        <a href="http://" className="hover">Khóa học</a>
+                    </li>
+                    <li className="nav-link relative">
+                        <a href="http://" className="hover">Sách</a>
+                    </li>
+                    <li className="nav-link relative">
+                        <a href="http://" className="hover">Thi Online</a>
+                    </li>
+                    <li className="nav-link relative">
+                        <a href="http://" className="hover">Tin tức</a>
+                    </li>
+                </ul>
             </div>
         </div>
     )

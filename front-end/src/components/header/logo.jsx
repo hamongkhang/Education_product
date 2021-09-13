@@ -2,9 +2,9 @@ import React from 'react'
 
 const Logo = (props) => {
     return (
-        <div className="w-3/12 bg-yellow-500 h-28">
-            Logo
-        </div>
+        <>
+            <img src="./assets/images/logo/logo.jpg" className="w-24 h-14 pt-1 align-middle object-cover" alt="" />
+        </>
     )
 }
 export default Logo
