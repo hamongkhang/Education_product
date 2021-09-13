@@ -15,7 +15,7 @@
         "http"
     ],
     "paths": {
-        "api/user/login/": {
+        "api/users/login/": {
             "post": {
                 "description": "Return a user's information",
                 "parameters": [
@@ -70,35 +70,77 @@
                 }
             }
         },
-        "api/user/register/": {
+        "api/users/register/": {
             "post": {
                 "description": "Return a user's information",
                 "parameters": [
                     {
                         "name": "email",
                         "in": "query",
-                        "description": "Your email",
+                        "description": "Your email(email)",
                         "required": true,
                         "type": "string"
                     },
                     {
-                        "name": "name",
+                        "name": "fullName",
                         "in": "query",
-                        "description": "Your name",
+                        "description": "Your fullName",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "password",
                         "in": "query",
-                        "description": "Your password",
+                        "description": "Your password(length>7)",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "confirm_password",
                         "in": "query",
-                        "description": "Your confirm_password",
+                        "description": "Your confirm_password(same password)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "nameAccount",
+                        "in": "query",
+                        "description": "Your nameAccount",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "linkFB",
+                        "in": "query",
+                        "description": "Your linkFB",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "Your phone(only number,start:0 and 9<length<12)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "birthday",
+                        "in": "query",
+                        "description": "Your birthday(start before today)",
+                        "required": true,
+                        "type": "datetime"
+                    },
+                    {
+                        "name": "address",
+                        "in": "query",
+                        "description": "Your address",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sex",
+                        "in": "query",
+                        "description": "Your sex(male or female)",
                         "required": true,
                         "type": "string"
                     }
@@ -108,7 +150,25 @@
                         "description": "Successfully",
                         "schema": {
                             "properties": {
-                                "name": {
+                                "fullName": {
+                                    "type": "string"
+                                },
+                                "nameAccount": {
+                                    "type": "string"
+                                },
+                                "linkFB": {
+                                    "type": "string"
+                                },
+                                "phone": {
+                                    "type": "string"
+                                },
+                                "birthday": {
+                                    "type": "string"
+                                },
+                                "address": {
+                                    "type": "string"
+                                },
+                                "sex": {
                                     "type": "string"
                                 },
                                 "email": {
@@ -118,6 +178,134 @@
                                     "type": "string"
                                 },
                                 "remember_token": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                },
+                                "avatar": {
+                                    "type": "string"
+                                },
+                                "code": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Missing Data"
+                    }
+                }
+            }
+        },
+        "api/users/getCode/": {
+            "post": {
+                "description": "Return a user's information",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Your email(email)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fullName",
+                        "in": "query",
+                        "description": "Your fullName",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Your password(length>7)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "confirm_password",
+                        "in": "query",
+                        "description": "Your confirm_password(same password)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "nameAccount",
+                        "in": "query",
+                        "description": "Your nameAccount",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "linkFB",
+                        "in": "query",
+                        "description": "Your linkFB",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "Your phone(only number,start:0 and 9<length<12)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "birthday",
+                        "in": "query",
+                        "description": "Your birthday(start before today)",
+                        "required": true,
+                        "type": "datetime"
+                    },
+                    {
+                        "name": "address",
+                        "in": "query",
+                        "description": "Your address",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sex",
+                        "in": "query",
+                        "description": "Your sex(male or female)",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully. Please check code your email!",
+                        "schema": {
+                            "properties": {
+                                "fullName": {
+                                    "type": "string"
+                                },
+                                "nameAccount": {
+                                    "type": "string"
+                                },
+                                "linkFB": {
+                                    "type": "string"
+                                },
+                                "phone": {
+                                    "type": "string"
+                                },
+                                "birthday": {
+                                    "type": "string"
+                                },
+                                "address": {
+                                    "type": "string"
+                                },
+                                "sex": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "password": {
                                     "type": "string"
                                 },
                                 "created_at": {
