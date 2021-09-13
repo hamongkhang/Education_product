@@ -168,7 +168,7 @@ class UsersController extends Controller
             DB::delete('delete from user_code where id = ?',[$data->id]);
             return Response()->json(array("success"=> 1,"data"=>$postArray ));
         }else{
-            return response()->json(['error'=>"No code"], 422);
+            return response()->json(['error'=>"No one have code"], 422);
         }
     }
 
