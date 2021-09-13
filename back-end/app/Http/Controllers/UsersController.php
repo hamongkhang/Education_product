@@ -102,73 +102,10 @@ class UsersController extends Controller
      *     path="api/users/register/",
      *     description="Return a user's information",
      *     @SWG\Parameter(
-     *         name="email",
+     *         name="code",
      *         in="query",
      *         type="string",
-     *         description="Your email(email)",
-     *         required=true,
-     *     ),
-     *     @SWG\Parameter(
-     *         name="fullName",
-     *         in="query",
-     *         type="string",
-     *         description="Your fullName",
-     *         required=true,
-     *     ),
-     *  @SWG\Parameter(
-     *         name="password",
-     *         in="query",
-     *         type="string",
-     *         description="Your password(length>7)",
-     *         required=true,
-     *     ),
-     *  @SWG\Parameter(
-     *         name="confirm_password",
-     *         in="query",
-     *         type="string",
-     *         description="Your confirm_password(same password)",
-     *         required=true,
-     *     ),
-     * @SWG\Parameter(
-     *         name="nameAccount",
-     *         in="query",
-     *         type="string",
-     *         description="Your nameAccount",
-     *         required=true,
-     *     ),
-     * * @SWG\Parameter(
-     *         name="linkFB",
-     *         in="query",
-     *         type="string",
-     *         description="Your linkFB",
-     *         required=true,
-     *     ),
-     * * @SWG\Parameter(
-     *         name="phone",
-     *         in="query",
-     *         type="string",
-     *         description="Your phone(only number,start:0 and 9<length<12)",
-     *         required=true,
-     *     ),
-     * * @SWG\Parameter(
-     *         name="birthday",
-     *         in="query",
-     *         type="datetime",
-     *         description="Your birthday(start before today)",
-     *         required=true,
-     *     ),
-     * * @SWG\Parameter(
-     *         name="address",
-     *         in="query",
-     *         type="string",
-     *         description="Your address",
-     *         required=true,
-     *     ),
-     * * @SWG\Parameter(
-     *         name="sex",
-     *         in="query",
-     *         type="string",
-     *         description="Your sex(male or female)",
+     *         description="Your code(length=6)",
      *         required=true,
      *     ),
      *     @SWG\Response(
@@ -188,7 +125,6 @@ class UsersController extends Controller
      *             @SWG\Property(property="created_at", type="timestamp"),
      *             @SWG\Property(property="updated_at", type="timestamp"),
      *             @SWG\Property(property="avatar", type="string"),
-     *             @SWG\Property(property="code", type="string"),
      *            )
      *     ),
      *     @SWG\Response(
@@ -199,46 +135,41 @@ class UsersController extends Controller
      */
     public function onRegister(Request $request){
         $validator = Validator::make($request->all(), [
-            'fullName' => 'required|max:255',
-            'nameAccount' => 'required|max:255',
-            'linkFB'=>'required',
-            'phone' => 'required|numeric|starts_with:0|digits_between:10,12',
-            'email' => 'required|email|unique:users',
-            'birthday' => 'required|before:today',
-            'password' => 'required|max:255|min:8',
-            'confirm_password' => 'required|same:password',
-            'address' => 'required',
-            'sex' => 'required|in:male,female',
+            'code' => 'required|size:6',
         ]);
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 401);     
         }
-        if ($request->sex==="female"){
-            $sex="female_avatar.jpg";
+        $data = DB::table('user_code')->where('code', $request->code)->first();
+        if($data){
+            if ($data->sex==="female"){
+                $sex="female_avatar.jpg";
+            }
+            else{
+                $sex="male_avatar.jpg";
+            }
+            $postArray = [
+                'fullName'  => $data->fullName,
+                'nameAccount'  => $data->nameAccount,
+                'linkFB'  => $data->linkFB,
+                'phone'  => $data->phone,
+                'birthday'  => $data->birthday,
+                'address'  => $data->address,
+                'sex'  => $data->sex,
+                'email'     => $data->email,
+                'password'  => $data->password,
+                'remember_token' => $request->token,
+                'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+                'updated_at'=>Carbon::now('Asia/Ho_Chi_Minh'),
+                'avatar'=>$sex,
+                'status'=>"active",
+            ];
+            $user = User::create($postArray);
+            DB::delete('delete from user_code where id = ?',[$data->id]);
+            return Response()->json(array("success"=> 1,"data"=>$postArray ));
+        }else{
+            return response()->json(['error'=>"No code"], 422);
         }
-        else{
-            $sex="male_avatar.jpg";
-        }
-        $code=$random = Str::random(6);
-        $postArray = [
-            'fullName'  => $request->fullName,
-            'nameAccount'  => $request->nameAccount,
-            'linkFB'  => $request->linkFB,
-            'phone'  => $request->phone,
-            'birthday'  => $request->birthday,
-            'address'  => $request->address,
-            'sex'  => $request->sex,
-            'email'     => $request->email,
-            'password'  => Hash::make($request->password),
-            'remember_token' => $request->token,
-            'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
-            'updated_at'=>Carbon::now('Asia/Ho_Chi_Minh'),
-            'avatar'=>$sex,
-            'code'=>$code,
-        ];
-
-         $user = User::create($postArray);
-        return Response()->json(array("success"=> 1,"data"=>$postArray ));
     }
 
 

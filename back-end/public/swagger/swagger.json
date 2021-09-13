@@ -75,72 +75,9 @@
                 "description": "Return a user's information",
                 "parameters": [
                     {
-                        "name": "email",
+                        "name": "code",
                         "in": "query",
-                        "description": "Your email(email)",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "fullName",
-                        "in": "query",
-                        "description": "Your fullName",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "description": "Your password(length>7)",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "confirm_password",
-                        "in": "query",
-                        "description": "Your confirm_password(same password)",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "nameAccount",
-                        "in": "query",
-                        "description": "Your nameAccount",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "linkFB",
-                        "in": "query",
-                        "description": "Your linkFB",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "phone",
-                        "in": "query",
-                        "description": "Your phone(only number,start:0 and 9<length<12)",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "birthday",
-                        "in": "query",
-                        "description": "Your birthday(start before today)",
-                        "required": true,
-                        "type": "datetime"
-                    },
-                    {
-                        "name": "address",
-                        "in": "query",
-                        "description": "Your address",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "sex",
-                        "in": "query",
-                        "description": "Your sex(male or female)",
+                        "description": "Your code(length=6)",
                         "required": true,
                         "type": "string"
                     }
@@ -187,9 +124,6 @@
                                     "type": "timestamp"
                                 },
                                 "avatar": {
-                                    "type": "string"
-                                },
-                                "code": {
                                     "type": "string"
                                 }
                             }

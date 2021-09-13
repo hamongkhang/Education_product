@@ -32,6 +32,7 @@ class User extends Authenticatable implements JWTSubject
         'phone',
         'linkFB',
         'nameAccount',
+        'status',
     ];
    
     /**
