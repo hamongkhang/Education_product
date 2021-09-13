@@ -13,6 +13,7 @@ Please refer to the [setup guide](https://github.com/hamongkhang/Education_produ
   - Create a database
   - npm install
   - npm run dev
+  - composer i
   - php artisan serve
 
 - Frontend:
