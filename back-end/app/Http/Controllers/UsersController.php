@@ -38,25 +38,36 @@ class UsersController extends Controller
      *         name="password",
      *         in="query",
      *         type="string",
-     *         description="Your password",
+     *         description="Your password(length>8)",
      *         required=true,
      *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Successfully",
      *         @SWG\Schema(
-     *             @SWG\Property(property="id", type="string", description="UUID"),
-     *             @SWG\Property(property="name", type="string"),
+     *             @SWG\Property(property="access_token", type="string"),
+     *             @SWG\Property(property="token_type", type="string"),
+     *             @SWG\Property(property="expires_in", type="integer"),
+     *             @SWG\Property(property="user", type="object"),
+     *             @SWG\Property(property="id", type="integer"),
+     *             @SWG\Property(property="fullName", type="string"),
      *             @SWG\Property(property="email", type="string"),
-     *             @SWG\Property(property="email_verified_at", type="string"),
+     *             @SWG\Property(property="email_verified_at", type="datetime"),
      *             @SWG\Property(property="created_at", type="timestamp"),
      *             @SWG\Property(property="updated_at", type="timestamp"),
-     *             @SWG\Property(property="avatar", type="timestamp"),
+     *             @SWG\Property(property="avatar", type="string"),
+     *             @SWG\Property(property="nameAccount", type="string"),
+     *             @SWG\Property(property="linkFB", type="string"),
+     *             @SWG\Property(property="phone", type="string"),
+     *             @SWG\Property(property="address", type="string"),
+     *             @SWG\Property(property="birthday", type="datetime"),
+     *             @SWG\Property(property="sex", type="string"),
+     *             @SWG\Property(property="status", type="string"),
      *            )
      *     ),
      *     @SWG\Response(
      *         response=401,
-     *         description="Login không thành công!"
+     *         description="Unauthorized!"
      *     )
      * )
      */
@@ -64,22 +75,22 @@ class UsersController extends Controller
      {
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
-            'password' => 'required|string',
+            'password' => 'required|string|min:8',
         ]);
         if ($validator->fails()) {
-            return response()->json(['error'=>"Login không thành công!"], 401);      
+            return response()->json($validator->errors(), 422);      
         }
- 
-        $user = User::where("email",$request->email)->get();
-        if($user->count()>0){
-            if (! $token = auth()->attempt($validator->validated())) {
-                return response()->json(['error' => 'Unauthorized'], 401);
-            }
-    
-            return $this->createNewToken($token);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
         }
-        return response()->json(['error'=>"Login không thành công!"], 401);  
+
+        if (! $token = auth()->attempt($validator->validated())) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        return $this->createNewToken($token); 
     }
+
+
     /**
      * Get the token array structure.
      *
@@ -96,6 +107,15 @@ class UsersController extends Controller
         ]);
     }
  
+    /**
+     * Log the user out (Invalidate the token).
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout() {
+        auth()->logout();
+        return response()->json(['message' => 'User successfully signed out']);
+    }
 
      /**
      * @SWG\POST(

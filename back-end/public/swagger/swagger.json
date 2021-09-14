@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Laravel and Swagger",
+        "title": "Education website with Swagger",
         "description": "Getting started with Laravel and Swagger",
         "termsOfService": "",
         "contact": {
@@ -29,7 +29,7 @@
                     {
                         "name": "password",
                         "in": "query",
-                        "description": "Your password",
+                        "description": "Your password(length>8)",
                         "required": true,
                         "type": "string"
                     }
@@ -39,18 +39,29 @@
                         "description": "Successfully",
                         "schema": {
                             "properties": {
-                                "id": {
-                                    "description": "UUID",
+                                "access_token": {
                                     "type": "string"
                                 },
-                                "name": {
+                                "token_type": {
+                                    "type": "string"
+                                },
+                                "expires_in": {
+                                    "type": "integer"
+                                },
+                                "user": {
+                                    "type": "object"
+                                },
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "fullName": {
                                     "type": "string"
                                 },
                                 "email": {
                                     "type": "string"
                                 },
                                 "email_verified_at": {
-                                    "type": "string"
+                                    "type": "datetime"
                                 },
                                 "created_at": {
                                     "type": "timestamp"
@@ -59,13 +70,34 @@
                                     "type": "timestamp"
                                 },
                                 "avatar": {
-                                    "type": "timestamp"
+                                    "type": "string"
+                                },
+                                "nameAccount": {
+                                    "type": "string"
+                                },
+                                "linkFB": {
+                                    "type": "string"
+                                },
+                                "phone": {
+                                    "type": "string"
+                                },
+                                "address": {
+                                    "type": "string"
+                                },
+                                "birthday": {
+                                    "type": "datetime"
+                                },
+                                "sex": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
                                 }
                             }
                         }
                     },
                     "401": {
-                        "description": "Login kh\u00f4ng th\u00e0nh c\u00f4ng!"
+                        "description": "Unauthorized!"
                     }
                 }
             }

@@ -27,3 +27,4 @@ Route::get('token', function (Request $request) {
 Route::post('/users/login', [App\Http\Controllers\UsersController::class, 'onLogin'])->name('user.login');
 Route::post('/users/getCode', [App\Http\Controllers\UsersController::class, 'getCode'])->name('user.getCode');
 Route::post('/users/register', [App\Http\Controllers\UsersController::class, 'onRegister'])->name('user.register');
+Route::post('/users/logout', [App\Http\Controllers\UsersController::class, 'logout'])->name('user.logout');
