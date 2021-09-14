@@ -172,7 +172,7 @@ class UsersController extends Controller
      * )
      */
     public function refresh() {
-        //return $this->createNewToken(auth()->refresh());
+        return $this->createNewToken(auth()->refresh());
     }
      /**
      * @SWG\POST(
@@ -459,7 +459,7 @@ class UsersController extends Controller
      * )
      */
     public function userProfile() {
-        //return response()->json(auth()->user());
+        return response()->json(auth()->user());
     }
 
 }
