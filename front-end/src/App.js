@@ -7,11 +7,13 @@ import Register from './components/Register'
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 import Cart from './components/cart';
+import Header from './components/header';
 function App() {
   return (
     <div className="max-w-screen-2xl my-0 mx-auto">
       <div className="my-0 mx-auto relative">
         <Router>
+          <Header/>
           <Switch>
             <Route path="/" exact component={Home} />
           </Switch>

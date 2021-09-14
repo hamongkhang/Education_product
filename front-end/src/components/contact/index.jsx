@@ -3,16 +3,15 @@ import React from 'react'
 const Contact = (props) => {
     return(
         <div className="rounded-lg relative overflow-hidden shadow-md h-96 w-full p-0 m-0 mb-10 bg-cover bg-no-repeat" style={{backgroundImage: `url("./assets/images/bg/contact.jfif")`}}>
-            <div className="absolute h-32 w-32 bg-pink-600 top-1/3 -left-16 transform rotate-180 animate-spin"></div>
-            <div className="absolute h-20 w-20 bg-indigo-600 top-10 right-4 transform animate-bounce rounded-full"></div>
-            <div className="absolute bottom-8 right-8 transform animate-spin -translate-x-3/4 -translate-y-3/4 text-7xl">
-
+            <div className="absolute md:h-32 md:w-32 h-10 w-10 bg-pink-600 top-10 md:-left-16 -left-2 transform rotate-180 animate-spin"></div>
+            <div className="absolute md:h-20 md:w-20 h-10 w-10 bg-indigo-600 top-10 right-4 transform animate-bounce rounded-full"></div>
+            <div className="absolute bottom-8 md:right-8 right-2/4 transform animate-spin -translate-x-3/4 -translate-y-3/4 text-7xl">
                 <i class="fad fa-pen text-green-600"></i>
             </div>
-            <div className="absolute -bottom-1 right-20 transform transition animate-spin text-8xl">
+            <div className="absolute -bottom-1 md:right-20 right-2/3 transform transition animate-spin text-8xl">
                 <i class="fad fa-ruler-triangle text-pink-200"></i>
             </div>
-            <div className="flex items-center justify-center bg-indigo-200 shadow-md w-2/4 mx-auto rounded-lg my-10">
+            <div className="flex items-center justify-center bg-indigo-200 shadow-md md:w-2/4 md:mx-auto rounded-lg md:my-10 m-5">
                 <form action="#" className="w-full px-5 font-semibold">
                     <div className="text-2xl text-center my-5">
                         <h3>Đăng ký nhận tin</h3>

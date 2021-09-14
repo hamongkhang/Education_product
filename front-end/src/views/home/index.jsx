@@ -14,13 +14,12 @@ import Contact from '../../components/contact'
 const Home = (props) => {
     return (
         <>
-            <Header/>
             <Banner/>
-            <div className="w-4/5 flex relative left-1/2 transform -translate-x-1/2 mt-20">
-                <div className="w-3/12 relative">
+            <div className="xl:w-4/5 xl:px-0 px-4 w-full flex relative left-1/2 transform -translate-x-1/2 md:mt-20 mt-10">
+                <div className="w-3/12 hidden lg:block relative">
                     <Sidebar/>
                 </div>
-                <div className="w-9/12 ml-10">
+                <div className="lg:w-9/12 w-full lg:ml-10">
                     <Courses/>
                     <Books/>
                     <About/>

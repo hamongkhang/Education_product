@@ -14,10 +14,14 @@ const AccountControls = (props) => {
                 </a>
             </div>
 
-            <div>
+            <div className="hidden md:block">
                 <a href="#" className="relative font-semibold duration-200 box-border bg-indigo-600 hover:bg-indigo-500 px-4 py-2 text-white">
                     <span>Đăng ký</span>
                 </a>
+            </div>
+
+            <div className="nav-open w-6 text-2xl flex lg:hidden items-center text-white cursor-pointer hover:opacity-70">
+                <i class="far fa-bars"></i>
             </div>
         </div>
     )

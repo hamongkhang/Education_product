@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick-theme.css"
 import BookItem from './bookItem'
 
 const NextArrow = (props) => (
-    <div onClick={props.onClick} className="opacity-0 btn-arrow absolute top-1/3 z-50 transform translate-y-3/4 right-2 bg-white w-8 h-8 flex items-center justify-center rounded-full shadow-md group cursor-pointer hover:opacity-70 duration-300">
+    <div onClick={props.onClick} className="opacity-0 btn-arrow absolute top-1/3 z-50 transform translate-y-3/4 -right-2 bg-white w-8 h-8 flex items-center justify-center rounded-full shadow-md group cursor-pointer hover:opacity-70 duration-300">
         <i class="far fa-chevron-right text-base font-medium group-hover:text-blue-900"></i>
     </div>
 )
@@ -26,32 +26,22 @@ const Books = (props) => {
         swipeToSlide: true,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
-        // responsive: [
-        //     {
-        //       breakpoint: 1024,
-        //       settings: {
-        //         slidesToShow: 3,
-        //         slidesToScroll: 3,
-        //         infinite: true,
-        //         dots: true
-        //       }
-        //     },
-        //     {
-        //       breakpoint: 600,
-        //       settings: {
-        //         slidesToShow: 2,
-        //         slidesToScroll: 2,
-        //         initialSlide: 2
-        //       }
-        //     },
-        //     {
-        //       breakpoint: 480,
-        //       settings: {
-        //         slidesToShow: 1,
-        //         slidesToScroll: 1
-        //       }
-        //     }
-        //   ]
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+        ]
       };
     return (
         <div className="relative">
@@ -64,7 +54,7 @@ const Books = (props) => {
                 </div>
             </div>
 
-            <div className="relative pl-5 course-list">
+            <div className="relative course-list">
                 <Slider {...settings}>
                     <BookItem/>
                     <BookItem/>

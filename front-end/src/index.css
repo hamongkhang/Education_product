@@ -116,6 +116,10 @@ body {
     width: 100%;
 }
 
+.nav-link.active::after {
+    width: 100%;
+}
+
 .btn-stroke {
     stroke: white;
     stroke-dasharray: 100;
@@ -218,4 +222,10 @@ body {
 
 ::-webkit-scrollbar-thumb {
     background-color: #777;
+}
+
+@media only screen and (max-width: 1024px) {
+    .menu-mobile {
+        height: calc(100vh - 100px);
+    }
 }

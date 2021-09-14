@@ -5,7 +5,7 @@ const Catalog = (props) => {
         console.log(e.target.checked);
     }
     return (
-        <div className="bg-gray-200 shadow-lg rounded-lg p-8">
+        <div className="bg-gray-200 shadow-lg rounded-lg xl:p-8 p-4">
             <h3 className="mb-4 font-medium text-xl">Danh mục</h3>
             <div className="my-1">
                 <label className="form-checkbox flex items-center text-15">

@@ -2,7 +2,7 @@ import React from 'react'
 
 const CourseItem = (props) => {
     return (
-        <div className="bg-gray-50 shadow-md w-60 mr-2 rounded-lg overflow-hidden mb-10">
+        <div className="bg-gray-50 shadow-md mr-2 rounded-lg overflow-hidden mb-10">
             <div>
                 <img src="./assets/images/slider/city.jpg" className="w-full h-36 object-cover" alt="" />
                 <span></span>
