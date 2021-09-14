@@ -120,6 +120,82 @@
                 ]
             }
         },
+        "api/users/refresh/": {
+            "post": {
+                "description": "Return a user's information",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "access_token": {
+                                    "type": "string"
+                                },
+                                "token_type": {
+                                    "type": "string"
+                                },
+                                "expires_in": {
+                                    "type": "integer"
+                                },
+                                "user": {
+                                    "type": "object"
+                                },
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "fullName": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "email_verified_at": {
+                                    "type": "datetime"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                },
+                                "avatar": {
+                                    "type": "string"
+                                },
+                                "nameAccount": {
+                                    "type": "string"
+                                },
+                                "linkFB": {
+                                    "type": "string"
+                                },
+                                "phone": {
+                                    "type": "string"
+                                },
+                                "address": {
+                                    "type": "string"
+                                },
+                                "birthday": {
+                                    "type": "datetime"
+                                },
+                                "sex": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized!"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "api/users/register/": {
             "post": {
                 "description": "Return a user's information",
@@ -305,6 +381,67 @@
                         "description": "Missing Data"
                     }
                 }
+            }
+        },
+        "api/users/userProfile/": {
+            "post": {
+                "description": "Return a user's information",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "fullName": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "email_verified_at": {
+                                    "type": "datetime"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                },
+                                "avatar": {
+                                    "type": "string"
+                                },
+                                "nameAccount": {
+                                    "type": "string"
+                                },
+                                "linkFB": {
+                                    "type": "string"
+                                },
+                                "phone": {
+                                    "type": "string"
+                                },
+                                "address": {
+                                    "type": "string"
+                                },
+                                "birthday": {
+                                    "type": "string"
+                                },
+                                "sex": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         }
     },

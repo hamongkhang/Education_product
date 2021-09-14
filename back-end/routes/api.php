@@ -28,3 +28,7 @@ Route::post('/users/login', [App\Http\Controllers\UsersController::class, 'onLog
 Route::post('/users/getCode', [App\Http\Controllers\UsersController::class, 'getCode'])->name('user.getCode');
 Route::post('/users/register', [App\Http\Controllers\UsersController::class, 'onRegister'])->name('user.register');
 Route::post('/users/logout', [App\Http\Controllers\UsersController::class, 'logout'])->name('user.logout');
+Route::post('/users/refresh', [App\Http\Controllers\UsersController::class, 'refresh'])->name('user.refresh');
+Route::post('/users/userProfile', [App\Http\Controllers\UsersController::class, 'userProfile'])->name('user.userProfile');
+
+
