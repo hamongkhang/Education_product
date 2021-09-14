@@ -80,12 +80,12 @@ class UsersController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);      
         }
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
 
         if (! $token = auth()->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        if (auth()->user()->status==="block") {
+            return response()->json(['error' => 'Blocked'], 401);
         }
         return $this->createNewToken($token); 
     }
@@ -112,11 +112,68 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+    /**
+     * @SWG\POST(
+     *     path="api/users/logout/",
+     *     description="Return a user's information",
+     *     @SWG\Response(
+     *         response=200,
+     *         description="User successfully signed out",
+     *     ),
+     *     @SWG\Response(
+     *         response=401,
+     *         description="No one login!"
+     *     ),
+     *  security={
+     *           {"api_key_security_example": {}}
+     *       }
+     * )
+     */
     public function logout() {
         auth()->logout();
         return response()->json(['message' => 'User successfully signed out']);
     }
 
+     /**
+     * @SWG\POST(
+     *     path="api/users/refresh/",
+     *     description="Return a user's information",
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Successfully",
+     *         @SWG\Schema(
+     *             @SWG\Property(property="access_token", type="string"),
+     *             @SWG\Property(property="token_type", type="string"),
+     *             @SWG\Property(property="expires_in", type="integer"),
+     *             @SWG\Property(property="user", type="object"),
+     *             @SWG\Property(property="id", type="integer"),
+     *             @SWG\Property(property="fullName", type="string"),
+     *             @SWG\Property(property="email", type="string"),
+     *             @SWG\Property(property="email_verified_at", type="datetime"),
+     *             @SWG\Property(property="created_at", type="timestamp"),
+     *             @SWG\Property(property="updated_at", type="timestamp"),
+     *             @SWG\Property(property="avatar", type="string"),
+     *             @SWG\Property(property="nameAccount", type="string"),
+     *             @SWG\Property(property="linkFB", type="string"),
+     *             @SWG\Property(property="phone", type="string"),
+     *             @SWG\Property(property="address", type="string"),
+     *             @SWG\Property(property="birthday", type="datetime"),
+     *             @SWG\Property(property="sex", type="string"),
+     *             @SWG\Property(property="status", type="string"),
+     *            )
+     *     ),
+     *     @SWG\Response(
+     *         response=401,
+     *         description="Unauthorized!"
+     *     ),
+     * security={
+     *           {"api_key_security_example": {}}
+     *       }
+     * )
+     */
+    public function refresh() {
+        //return $this->createNewToken(auth()->refresh());
+    }
      /**
      * @SWG\POST(
      *     path="api/users/register/",
@@ -367,6 +424,42 @@ class UsersController extends Controller
          $user = UserCode::create($postArray);
        return Response()->json(array("Successfully. Please check code your email!"=> 1,"data"=>$postArrayRes ));
     }
+    }
+
+/**
+     * @SWG\POST(
+     *     path="api/users/userProfile/",
+     *     description="Return a user's information",
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Successfully",
+     *         @SWG\Schema(
+     *             @SWG\Property(property="id", type="integer"),
+     *             @SWG\Property(property="fullName", type="string"),
+     *             @SWG\Property(property="email", type="string"),
+     *             @SWG\Property(property="email_verified_at", type="datetime"),
+     *             @SWG\Property(property="created_at", type="timestamp"),
+     *             @SWG\Property(property="updated_at", type="timestamp"),
+     *             @SWG\Property(property="avatar", type="string"),
+     *             @SWG\Property(property="nameAccount", type="string"),
+     *             @SWG\Property(property="linkFB", type="string"),
+     *             @SWG\Property(property="phone", type="string"),
+     *             @SWG\Property(property="address", type="string"),
+     *             @SWG\Property(property="birthday", type="string"),
+     *             @SWG\Property(property="sex", type="string"),
+     *            )
+     *     ),
+     *     @SWG\Response(
+     *         response=422,
+     *         description="Missing Data"
+     *     ),
+     *  security={
+     *           {"api_key_security_example": {}}
+     *       }
+     * )
+     */
+    public function userProfile() {
+        //return response()->json(auth()->user());
     }
 
 }
