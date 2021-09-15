@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\UsersResource;
 use App\Models\User;
 use App\Models\UserCode;
+use App\Models\ForgotCode;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -21,7 +22,7 @@ class UsersController extends Controller
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['onLogin', 'onRegister','getCode']]);
+        $this->middleware('auth:api', ['except' => ['onLogin', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
      /**
      * @SWG\POST(
@@ -529,5 +530,140 @@ class UsersController extends Controller
             'user' => $user
         ], 201);
     }       
+
+     /**
+     * @SWG\POST(
+     *     path="api/users/getCodeForgotPassword/",
+     *     description="Return a user's information",
+     *     @SWG\Parameter(
+     *         name="email",
+     *         in="query",
+     *         type="string",
+     *         description="Your email",
+     *         required=true,
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Successfully",
+     *         @SWG\Schema(
+     *             @SWG\Property(property="code", type="string"),
+     *            )
+     *     ),
+     *     @SWG\Response(
+     *         response=422,
+     *         description="Missing Data"
+     *     )
+     * )
+     */
+    public function getCodeForgotPassword(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+        $code=$random = Str::random(6);
+        $data = DB::table('users')->where('email', $request->email)->first();
+        if($data){
+            if($data->status!="block"){
+                $usercheck = DB::table('forgot_code')->where('email', $request->email)->first();
+                if($usercheck){
+                    $user = ForgotCode::find($usercheck->id);
+                    $user->email = $request->email;
+                    $user->created_at = Carbon::now('Asia/Ho_Chi_Minh');
+                    $user->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
+                    $user->code = $code;
+                    $user->save();
+                    return Response()->json(array("Successfully. Please check code your email!"=> 1,"email"=>$user->email ));    
+                }else{
+                    $postArrayRes = [
+                        'email'     => $request->email,
+                        'code'  => $code,
+                        'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+                        'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+                    ];
+                     $user = ForgotCode::create($postArrayRes);
+                   return Response()->json(array("Successfully. Please check code your email!"=> 1,"data"=>$request->email ));
+                }
+        }else{
+            return response()->json([
+                'error' => 'blocked',
+            ], 401);
+        }
+        }
+        return response()->json([
+            'error' => 'No email',
+        ], 401);
+    }      
+    
+     /**
+     * @SWG\POST(
+     *     path="api/users/changePasswordForgot/",
+     *     description="Return a user's information",
+     *     @SWG\Parameter(
+     *         name="code",
+     *         in="query",
+     *         type="string",
+     *         description="Your code",
+     *         required=true,
+     *     ),
+     *   @SWG\Parameter(
+     *         name="new_password",
+     *         in="query",
+     *         type="string",
+     *         description="Your new password(length=8)",
+     *         required=true,
+     *     ),
+     *  @SWG\Parameter(
+     *         name="new_password_confirmed",
+     *         in="query",
+     *         type="string",
+     *         description="Your new password confirmed(length=8)",
+     *         required=true,
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="User successfully changed password",
+     *         @SWG\Schema(
+     *             @SWG\Property(property="user", type="integer"),
+     *            )
+     *     ),
+     *     @SWG\Response(
+     *         response=422,
+     *         description="Missing Data"
+     *     )
+     * )
+     */
+    public function changePasswordForgot(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'code' => 'required|string|min:6',
+            'new_password' => 'required|string|min:8',
+            'new_password_confirmed' => 'required|string|same:new_password|min:8',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+        $data = DB::table('forgot_code')->where('code', $request->code)->first();
+        if($data){
+            $userEmail = $data->email;
+            $userFind = DB::table('users')->where('email', $userEmail)->first();
+
+            $user = User::where('id',$userFind->id)->update(
+                        ['password' => bcrypt($request->new_password)]
+                    );
+    
+            DB::delete('delete from forgot_code where id = ?',[$user->id]);
+            return response()->json([
+                'message' => 'User successfully changed password',
+                'user' => $user
+            ], 201);
+        }else{
+            return response()->json(['error'=>"No one have code"], 422);
+        }
+    }       
+
 }
 
