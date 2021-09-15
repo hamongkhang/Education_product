@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use app\Http\Controller\Api\UsersController;
+use App\Http\Controllers\ChatController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,3 +27,7 @@ Route::get('token', function (Request $request) {
 });
 Route::post('/users/login', [App\Http\Controllers\UsersController::class, 'onLogin'])->name('user.login');
 Route::post('/users/register', [App\Http\Controllers\UsersController::class, 'onRegister'])->name('user.register');
+
+Route::post('/inbox', [ChatController::class, 'getAllMessages'])->name('inbox');
+Route::post('/inbox_admin', [ChatController::class, 'getMessageByAdmin'])->name('inboxAdmin');
+Route::post('/sendmess', [ChatController::class, 'sendMessage'])->name('sendMessage');

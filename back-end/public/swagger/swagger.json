@@ -134,6 +134,161 @@
                     }
                 }
             }
+        },
+        "api/inbox/": {
+            "post": {
+                "description": "Return ID account logining, messages of login account ",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "ID account logining",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "user_id":{
+                                    "type":"integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                },
+                                "remember_token": {
+                                    "type": "string"
+                                },
+                                "is_admin": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    }                   
+                }
+            }
+        },
+        "api/inbox_admin/": {
+            "post": {
+                "description": "Return all users and messages",
+                "request": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "ID account logining",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sender_id",
+                        "in": "query",
+                        "description": "ID account send message",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                },
+                                "remember_token": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Get wrong"
+                    }
+                   
+                }
+            }
+        },
+        "api/sendmess/": {
+            "post": {
+                "description": "Return messages",
+                "request": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "ID account logining",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sender_id",
+                        "in": "query",
+                        "description": "ID account send message",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "message",
+                        "in": "query",
+                        "description": "Content of message",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                },
+                                "user_id": {
+                                    "type": "string"
+                                },
+                                "receiver": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Send message error"
+                    }
+                   
+                }
+            }
         }
     },
     "definitions": {}
