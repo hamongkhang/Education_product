@@ -14,6 +14,7 @@ Please refer to the [setup guide](https://github.com/hamongkhang/Education_produ
   - npm install
   - npm run dev
   - composer i
+  - php artisan jwt:secret
   - php artisan serve
 
 - Frontend:
