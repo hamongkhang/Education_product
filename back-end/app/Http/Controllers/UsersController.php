@@ -515,6 +515,9 @@ class UsersController extends Controller
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
+        if($request->old_password===$request->new_password){
+            return response()->json(['Old password is same new password'=>$validator->errors()], 401);     
+        }
         $hashedPassword = auth()->user()->password;
         if (!Hash::check($request->old_password , $hashedPassword)) {
             return response()->json(['Old password is not correct'=>$validator->errors()], 401);     
@@ -655,7 +658,7 @@ class UsersController extends Controller
                         ['password' => bcrypt($request->new_password)]
                     );
     
-            DB::delete('delete from forgot_code where id = ?',[$user->id]);
+            DB::delete('delete from forgot_code where id = ?',[$data->id]);
             return response()->json([
                 'message' => 'User successfully changed password',
                 'user' => $user
