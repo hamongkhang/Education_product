@@ -1,8 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const MaterialItem = (props) => (
-    <div className="line-2 px-4 mb-3 hover:bg-gray-300 rounded-lg">
-        <a href="#" className="">Đề thi THPT Vật Lý 2021 Đề thi THPT Vật Lý 2021 Đề thi THPT Vật Lý 2021</a>
+    <div>
+        <Link to="/" className="line-2 hover:bg-gray-300 rounded px-4 py-2">Đề thi THPT Vật Lý 2021Đề thi THPT Vật Lý 2021</Link>
     </div>
 )
 

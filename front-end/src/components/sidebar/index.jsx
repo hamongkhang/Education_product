@@ -1,14 +1,14 @@
 import React from 'react'
 import Catalog from './catalog'
-import Contact from './contact'
 import Materials from './materials'
+import Support from './support'
 
 const Sidebar = (props) => {
     return (
         <>
             <Catalog/>
             <Materials/>
-            <Contact/>
+            <Support/>
         </>
     )
 }

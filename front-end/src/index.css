@@ -94,6 +94,22 @@ body {
     -webkit-box-orient: vertical;
 }
 
+.line-10 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 10;
+    -webkit-box-orient: vertical;
+}
+
+.line-15 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 15;
+    -webkit-box-orient: vertical;
+}
+
 .nav-link::after {
     content: "";
     height: 2px;
@@ -123,10 +139,6 @@ body {
 .btn-stroke {
     stroke: white;
     stroke-dasharray: 100;
-}
-
-.btn-stroke-fixed {
-    stroke: green;
 }
 
 
@@ -224,7 +236,7 @@ body {
     background-color: #777;
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1023px) {
     .menu-mobile {
         height: calc(100vh - 100px);
     }

@@ -2,7 +2,7 @@ import React from 'react'
 
 const BannerItem = (props) => {
     return (
-        <div className="relative lg:h-700 h-96 bg-cover bg-no-repeat" style={{backgroundImage: `url("./assets/images/slider/city.jpg")`}}>
+        <div className="relative lg:h-700 h-96 bg-cover bg-center bg-no-repeat" style={{backgroundImage: `url("./assets/images/slider/city.jpg")`}}>
             <div className="absolute top-0 left-0 w-full h-full overlay overlay-5" />
             <div className="absolute lg:top-1/4 top-12 left-0 w-full h-2/5 mt-20">
                 <div className="w-11/12 h-full mx-auto">

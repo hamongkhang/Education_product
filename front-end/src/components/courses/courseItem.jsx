@@ -13,15 +13,15 @@ const CourseItem = (props) => {
                         <h3 className="font-semibold line-2">Lorem ipsum dolor sit amet consectetur</h3>
                     </a>
                 </div>
-                <div className="mb-1 flex justify-end">
+                <div className="mb-1 flex justify-between">
                     <div className="space-x-2">
                         <i class="fad fa-book-open text-indigo-300"></i>
                         <span className="text-15 text-gray-500">43 Video</span>
                     </div>
-                    {/* <div>
-                        <i></i>
-                        <span></span>
-                    </div> */}
+                    <div className="space-x-2">
+                        <i className="fad fa-clock text-indigo-600"></i>
+                        <span className="text-15 text-gray-500">3h52p</span>
+                    </div>
                 </div>
                 <div>
                     <a href="#" className="flex items-center space-x-2">

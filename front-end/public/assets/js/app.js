@@ -1,5 +1,6 @@
 var PATH = {};
 (function($) {
+    "use strict"
     /** handle open/close cart area */
     PATH.HandleCart = function() {
         const cartArea = $('.cart-area'),
@@ -25,11 +26,12 @@ var PATH = {};
     }
 
     /** handle open/close menu mobie */
-    PATH.HandleNavMobile = function() {
+    PATH.HandleNav = function() {
         const responsive = $(window).width() < 1024,
             nav = $('.nav'),
             navOverlay = $('.nav-overlay'),
             navMenu = $('.nav-menu'),
+            navLink = $('.nav-menu .nav-link'),
             navLinkMobie = $('.nav-link-mobile');
 
         $('.nav-open').on('click', function() {
@@ -41,6 +43,7 @@ var PATH = {};
             if (responsive) {
                 navMenu.removeClass('text-white');
                 navMenu.addClass('text-black');
+                navLink.addClass('nav-link-fixed');
             }
         });
 
@@ -59,6 +62,55 @@ var PATH = {};
         $('.nav-overlay').on('click', function() {
             handleClose();
         })
+
+        var handleRemoveActive = function() {
+            $('.nav-link').removeClass('active');
+            handleClose();
+        }
+        $('.nav-link').on('click', function() {
+            handleRemoveActive();
+            $(this).addClass('active');
+        })
+
+        $('.btn-login').on('click', function() {
+            handleRemoveActive();
+        })
+
+        $('.btn-register').on('click', function() {
+            handleRemoveActive();
+        })
+    }
+
+    /** handle open/close search box */
+    PATH.HandleSearchBox = function() {
+        const searchOpen = $('.search-open'),
+            searchClose = $('.search-close'),
+            searchOverlay = $('.search-overlay'),
+            searchArea = $('.search-area');
+
+        var handleClose = function() {
+            searchArea.removeClass('translate-y-0');
+            searchArea.addClass('-translate-y-full');
+            searchOverlay.removeClass('translate-y-0');
+            searchOverlay.addClass('translate-y-full');
+        }
+
+        $('.search-open').on('click', function() {
+            console.log('ok');
+            searchArea.removeClass('-translate-y-full');
+            searchArea.addClass('translate-y-0');
+            searchOverlay.removeClass('translate-y-full');
+            searchOverlay.addClass('translate-y-0');
+        })
+
+        searchClose.on('click', function() {
+            handleClose();
+        })
+
+        searchOverlay.on('click', function() {
+            handleClose();
+        })
+
     }
 
     /** handle fixed header on scroll */
@@ -68,46 +120,29 @@ var PATH = {};
             navbarFixed = $('.header-fixed'),
             navMenu = $('.nav-menu'),
             navLink = $('.nav-menu .nav-link'),
-            btnLogin = $('.btn-login'),
-            btnOpenNav = $('.nav-open'),
-            btnLoginStroke = $('.btn-stroke');
+            btnOpenNav = $('.nav-open');
         if (varHeaderFix) {
             navbarFixed.addClass('bg-white text-black shadow-md');
             navLink.addClass('nav-link-fixed');
-            btnLoginStroke.addClass('btn-stroke-fixed text-black');
-            btnLogin.addClass('text-black');
-            btnLogin.removeClass('text-white');
             if (!responsive) {
                 navMenu.addClass('text-black');
                 navMenu.removeClass('text-white');
             }
-
             btnOpenNav.removeClass('text-white');
             btnOpenNav.addClass('text-black');
         } else {
             navbarFixed.removeClass('bg-white text-black shadow-md');
-            navLink.removeClass('nav-link-fixed');
-            btnLoginStroke.removeClass('btn-stroke-fixed text-white');
-            btnLogin.removeClass('text-black');
-            btnLogin.addClass('text-white');
             if (responsive) {
                 navMenu.addClass('text-black');
                 navMenu.removeClass('text-white');
             } else {
-                navMenu.addClass('text-white');
+                navLink.removeClass('nav-link-fixed');
                 navMenu.removeClass('text-black');
+                navMenu.addClass('text-white');
             }
             btnOpenNav.removeClass('text-black');
             btnOpenNav.addClass('text-white');
         }
-    }
-
-    PATH.NavLinkActive = function() {
-        $('.nav-link').on('click', function() {
-            console.log($('.nav-link'));
-            $('.nav-link').removeClass('active');
-            $(this).addClass('active');
-        })
     }
 
     /* Window on scroll function */
@@ -118,7 +153,7 @@ var PATH = {};
     /* Window on load function */
     $(window).on('load', function() {
         PATH.HandleCart();
-        PATH.HandleNavMobile();
-        PATH.NavLinkActive();
+        PATH.HandleNav();
+        PATH.HandleSearchBox();
     });
 })(jQuery);

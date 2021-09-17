@@ -1,8 +1,9 @@
 import React from 'react'
-import CourseItem from './courseItem'
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
+import BookItem from './bookItem'
+import { Link } from 'react-router-dom'
 
 const NextArrow = (props) => (
     <div onClick={props.onClick} className="opacity-0 btn-arrow absolute top-1/3 z-50 transform translate-y-3/4 -right-2 bg-white w-8 h-8 flex items-center justify-center rounded-full shadow-md group cursor-pointer hover:opacity-70 duration-300">
@@ -15,7 +16,7 @@ const PrevArrow = (props) => (
     </div>
 )
 
-const Courses = (props) => {
+const BookList = (props) => {
     const settings = {
         infinite: true,
         autoplay: true,
@@ -41,31 +42,35 @@ const Courses = (props) => {
                     slidesToScroll: 1,
                 }
             },
-          ]
+        ]
       };
     return (
         <div className="relative">
-            <div className="bg-indigo-300 shadow-lg rounded-lg h-12 mb-10 flex items-center justify-between relative overflow-hidden">
-                <div className="w-40 h-40 rounded-full bg-yellow-700 absolute z-0 -top-3/4 -right-5"/>
+            <div className="bg-indigo-300 shadow-md rounded-lg h-12 my-10 flex items-center justify-between relative overflow-hidden z-0">
+            <div className="w-40 h-40 bg-green-600 transform rotate-45 absolute z-0 -right-16"/>
                 <div className="p-3 text-17 font-semibold">
-                    Khóa học nổi bậc
+                    Sách
                 </div>
                 <div className="z-10">
-                    <a href="#" className="p-3 text-17 font-semibold hover:underline duration-300 text-white">Xem tất cả</a>
+                    <Link to="/sach" className="p-3 text-17 font-semibold hover:underline duration-300 text-white">Xem tất cả</Link>
                 </div>
             </div>
 
             <div className="relative course-list">
                 <Slider {...settings}>
-                    <CourseItem/>
-                    <CourseItem/>
-                    <CourseItem/>
-                    <CourseItem/>
-                    <CourseItem/>
-                    <CourseItem/>
+                    <BookItem/>
+                    <BookItem/>
+                    <BookItem/>
+                    <BookItem/>
+                    <BookItem/>
+                    <BookItem/>
+                    <BookItem/>
+                    <BookItem/>
+                    <BookItem/>
+                    <BookItem/>
                 </Slider>
             </div>
         </div>
     )
 }
-export default Courses
+export default BookList
