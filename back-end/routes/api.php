@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use app\Http\Controller\Api\UsersController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,6 +34,4 @@ Route::post('/users/userProfile', [App\Http\Controllers\UsersController::class, 
 Route::post('/users/changePassword', [App\Http\Controllers\UsersController::class, 'changePassword'])->name('user.changePassword');
 Route::post('/users/getCodeForgotPassword', [App\Http\Controllers\UsersController::class, 'getCodeForgotPassword'])->name('user.getCodeForgotPassword');
 Route::post('/users/changePasswordForgot', [App\Http\Controllers\UsersController::class, 'changePasswordForgot'])->name('user.changePasswordForgot');
-
-
 
