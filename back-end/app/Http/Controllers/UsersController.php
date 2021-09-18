@@ -614,6 +614,7 @@ class UsersController extends Controller
                     $dataSendMail = [
                         'description'=>'getCodeForgot',
                         'title' => 'Xác nhận thay đổi mật khẩu',
+                        'note'=>'Chú ý: Mã có sự phân biệt kí tự hoa và kí tự thường.',
                         'content'=>'Để xác nhận thay đổi mật khẩu, vui lòng nhập mã xác nhận ở bên dưới',
                         'code'=>$code
                     ];
@@ -631,6 +632,7 @@ class UsersController extends Controller
                      $dataSendMail = [
                         'description'=>'getCodeForgot',
                         'title' => 'Xác nhận thay đổi mật khẩu',
+                        'note'=>'Chú ý: Mã có sự phân biệt kí tự hoa và kí tự thường.',
                         'content'=>'Để xác nhận thay đổi mật khẩu, vui lòng nhập mã xác nhận ở bên dưới',
                         'code'=>$code
                     ];
