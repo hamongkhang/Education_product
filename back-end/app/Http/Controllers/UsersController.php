@@ -404,8 +404,9 @@ class UsersController extends Controller
         // Mail send new code for new account register
         $dataSendMail = [
             'description'=>'getNewCode',
-            'title' => 'Xác nhận email đăng kí',
+            'title' => 'Mã xác nhận đăng kí',
             'content'=>'Để xác nhận đăng kí, vui lòng nhập mã xác nhận ở bên dưới',
+            'note'=>'Chú ý: Mã có sự phân biệt kí tự hoa và kí tự thường.',
             'code'=>$code
         ];
         SendEmail::dispatch($dataSendMail, $request->email)->delay(now());
@@ -443,6 +444,7 @@ class UsersController extends Controller
          $dataSendMail = [
             'description'=>'getNewCode',
             'title' => 'Xác nhận email đăng kí',
+            'note'=>'Chú ý: Mã có sự phân biệt kí tự hoa và kí tự thường.',
             'content'=>'Để xác nhận đăng kí, vui lòng nhập mã xác nhận ở bên dưới',
             'code'=>$code
         ];

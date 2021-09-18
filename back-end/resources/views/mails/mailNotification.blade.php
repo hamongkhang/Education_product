@@ -288,7 +288,7 @@
                         <img src="logo" alt="" style="width: 100px; max-width: 600px; height: auto; margin: auto; display: block;">
                         <h3 class="name">Thông báo</h3>
                         <span class="position">{{$data['content']}}</span>
-                        <p><a href="#" class="btn btn-primary">Kiểm Tra</a></p>
+                        <p><a href="#" class="btn btn-primary">Truy cập</a></p>
                         {{-- <p><a href="#" class="btn-custom">Ignore Request</a></p> --}}
                     </div>
                     </td>
