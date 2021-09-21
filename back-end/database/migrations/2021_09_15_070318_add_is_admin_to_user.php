@@ -1,10 +1,10 @@
 <?php
- 
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
- 
-class CreateAddAvatarUsers extends Migration
+
+class AddIsAdminToUser extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,11 @@ class CreateAddAvatarUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('avatar')->nullable();
+            $table->boolean('is_admin')->default(0);
+            $table->boolean('is_online')->default(0);
         });
     }
- 
+
     /**
      * Reverse the migrations.
      *
@@ -25,6 +26,9 @@ class CreateAddAvatarUsers extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('is_admin');
+            $table->dropColumn('is_online');
+        });
     }
 }
