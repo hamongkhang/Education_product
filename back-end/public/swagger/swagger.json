@@ -137,45 +137,24 @@
         },
         "api/inbox/": {
             "post": {
-                "description": "Return ID account logining, messages of login account ",
+                "description": "Trả về tin nhắn của account đang đăng nhập, user đăng nhập thì trả toàn bộ messages của acc đó, nêu là admin thì trả về id user",
                 "parameters": [
-                    {
-                        "name": "user_id",
-                        "in": "query",
-                        "description": "ID account logining",
-                        "required": false,
-                        "type": "string"
-                    }
                 ],
                 "responses": {
                     "200": {
                         "description": "Successfully",
                         "schema": {
                             "properties": {
-                                "user_id":{
+                                "success":{
                                     "type":"integer"
                                 },
-                                "name": {
-                                    "type": "string"
+                                "messages":{
+                                    "type":"object"
                                 },
-                                "email": {
-                                    "type": "string"
-                                },
-                                "password": {
-                                    "type": "string"
-                                },
-                                "remember_token": {
-                                    "type": "string"
-                                },
-                                "is_admin": {
-                                    "type": "string"
-                                },
-                                "created_at": {
-                                    "type": "timestamp"
-                                },
-                                "updated_at": {
-                                    "type": "timestamp"
+                                "users":{
+                                    "type":"object"
                                 }
+
                             }
                         }
                     }                   
@@ -184,19 +163,12 @@
         },
         "api/inbox_admin/": {
             "post": {
-                "description": "Return all users and messages",
-                "request": [
-                    {
-                        "name": "user_id",
-                        "in": "query",
-                        "description": "ID account logining",
-                        "required": true,
-                        "type": "string"
-                    },
+                "description": "API hoạt động khi account đăng nhập là admin, Trả về toàn bộ messages của user bất kì được chọn bởi admin",
+                "parameters": [
                     {
                         "name": "sender_id",
                         "in": "query",
-                        "description": "ID account send message",
+                        "description": "ID account admin muốn xem message",
                         "required": true,
                         "type": "string"
                     }
@@ -206,29 +178,35 @@
                         "description": "Successfully",
                         "schema": {
                             "properties": {
-                                "name": {
-                                    "type": "string"
+                                "messages": {
+                                    "type": "object"
                                 },
-                                "email": {
-                                    "type": "string"
-                                },
-                                "password": {
-                                    "type": "string"
-                                },
-                                "remember_token": {
-                                    "type": "string"
-                                },
-                                "created_at": {
-                                    "type": "timestamp"
-                                },
-                                "updated_at": {
-                                    "type": "timestamp"
+                                "sender_id": {
+                                    "type": "integer"
                                 }
                             }
                         }
                     },
                     "401": {
-                        "description": "Get wrong"
+                        "description": "Lỗi khi truyền thiếu sender_id",
+                        "schema": {
+                            "properties": {
+                                "error": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Lỗi khi không phải account admin nhưng gọi API này",
+                        "schema": {
+                            "properties": {
+                                "error": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                       
                     }
                    
                 }
@@ -236,26 +214,19 @@
         },
         "api/sendmess/": {
             "post": {
-                "description": "Return messages",
-                "request": [
-                    {
-                        "name": "user_id",
-                        "in": "query",
-                        "description": "ID account logining",
-                        "required": true,
-                        "type": "string"
-                    },
+                "description": "Gửi message, nếu chưa đăng nhập thì tạo account và đăng nhập account đó, trả về tin nhắn vừa gửi",
+                "parameters": [
                     {
                         "name": "sender_id",
                         "in": "query",
-                        "description": "ID account send message",
+                        "description": "ID account nhận messages",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "message",
                         "in": "query",
-                        "description": "Content of message",
+                        "description": "Nội dung của message",
                         "required": true,
                         "type": "string"
                     }
@@ -265,28 +236,15 @@
                         "description": "Successfully",
                         "schema": {
                             "properties": {
-                                "message": {
-                                    "type": "string"
+                                "success":{
+                                    "type":"integer"
                                 },
-                                "user_id": {
-                                    "type": "string"
-                                },
-                                "receiver": {
-                                    "type": "string"
-                                },
-                                "created_at": {
-                                    "type": "timestamp"
-                                },
-                                "updated_at": {
-                                    "type": "timestamp"
+                                "new_message": {
+                                    "type": "object"
                                 }
                             }
                         }
-                    },
-                    "401": {
-                        "description": "Send message error"
-                    }
-                   
+                    }                   
                 }
             }
         }

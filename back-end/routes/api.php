@@ -19,6 +19,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
  
+Route::group([
+    'middleware' => 'api',
+
+], function ($router) {
+    Route::post('/inbox', [ChatController::class, 'getAllMessages'])->name('inbox');
+    Route::post('/inbox_admin', [ChatController::class, 'getMessageByAdmin'])->name('inboxAdmin');
+    Route::post('/sendmess', [ChatController::class, 'sendMessage'])->name('sendMessage');   
+});
 /* Api Register */
 Route::get('token', function (Request $request) {
     $token = $request->session()->token();
@@ -28,6 +36,4 @@ Route::get('token', function (Request $request) {
 Route::post('/users/login', [App\Http\Controllers\UsersController::class, 'onLogin'])->name('user.login');
 Route::post('/users/register', [App\Http\Controllers\UsersController::class, 'onRegister'])->name('user.register');
 
-Route::post('/inbox', [ChatController::class, 'getAllMessages'])->name('inbox');
-Route::post('/inbox_admin', [ChatController::class, 'getMessageByAdmin'])->name('inboxAdmin');
-Route::post('/sendmess', [ChatController::class, 'sendMessage'])->name('sendMessage');
+
