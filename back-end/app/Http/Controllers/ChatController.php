@@ -18,7 +18,7 @@ class ChatController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => auth()->user(),
+            'user' => auth()->user()->id,
             'forChat' => $forChat
         ]);
     }
@@ -56,7 +56,6 @@ class ChatController extends Controller
         }
        
     }
-
     // Admin see detail message
     public function getMessageByAdmin(Request $request) {
         $login = auth()->user();
