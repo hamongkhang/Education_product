@@ -113,7 +113,23 @@ class PaymentController extends Controller
             DB::table('cart')->where('userId', $dataUser->id)->update(['id_payment'	=>	$orderId]);
             return response()->json(['url' => $jsonResult['payUrl']]);
     }
-
+  /**
+     * @SWG\POST(
+     *     path="api/payment/checkResult",
+     *     description="Momo payment",
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Successfully",
+     *         @SWG\Schema(
+     *             @SWG\Property(property="response", type="string"),
+     *            )
+     *     ),
+     *     @SWG\Response(
+     *         response=422,
+     *         description="Missing Data"
+     *     )
+     * )
+     */
  public function checkResult(){
         $dataUser=auth()->user();
         $dataCheck = DB::table('momoOrderDetails')->where('userId', $dataUser->id)->get();
@@ -165,7 +181,7 @@ class PaymentController extends Controller
         $history = History::create($dataHistory);
           }
          DB:: delete( 'delete from cart where id_payment = ?' ,[ $dataCheck[count($dataCheck)-1]->orderId ]);
-         return response()->json(['response' =>  $getCart[0]]);
+         return response()->json(['response' =>  $jsonResult['message']]);
          }
          else{
          return response()->json(['response' => $jsonResult['message']]);
