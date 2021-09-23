@@ -21,7 +21,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
  
 Route::group([
     'middleware' => 'api',
-
 ], function ($router) {
     Route::post('/inbox', [ChatController::class, 'getAllMessages'])->name('inbox');
     Route::post('/inbox_admin', [ChatController::class, 'getMessageByAdmin'])->name('inboxAdmin');
