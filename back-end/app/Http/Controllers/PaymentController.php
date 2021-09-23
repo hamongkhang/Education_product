@@ -5,7 +5,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UsersResource;
 use App\Jobs\SendEmail;
 use App\Models\User;
+use App\Models\Cart;
+use App\Models\History;
 use App\Models\UserCode;
+use App\Models\UserCourse;
 use App\Models\ForgotCode;
 use App\Models\momoOrderDetail;
 use Illuminate\Support\Facades\Hash;
@@ -24,14 +27,32 @@ class PaymentController extends Controller
         $this->middleware('auth:api', ['except' => ['onLogin', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
     
+      /**
+     * @SWG\POST(
+     *     path="api/payment/momoPayment",
+     *     description="Momo payment",
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Successfully",
+     *         @SWG\Schema(
+     *             @SWG\Property(property="url", type="string"),
+     *            )
+     *     ),
+     *     @SWG\Response(
+     *         response=422,
+     *         description="Missing Data"
+     *     )
+     * )
+     */
     public function momoPayment(Request $request)
     {
             $dataUser=auth()->user();
+            $data = DB::table('cart')->where('userId', $dataUser->id)->get();
             $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
-            $partnerCode = 'MOMOFK0V20210919';
-            $accessKey = 'UZDeBN1UI45OvSwR';
-            $serectkey = 'r5bX8YBaEfwG8rhg9vfWFAxOCHMALXQv';
-            $orderId = time() .""; // Mã đơn hàng
+            $partnerCode = 'MOMO282120210723';
+            $accessKey = 'lI611IsPM6PQ3TFC';
+            $serectkey = 'w3SOos2fvPln43ksfcJFAEMvhB9joTTZ';
+            $orderId = time() ."";
             $orderInfo = "Thanh toán qua MoMo";
             $amount = "5000";
             $ipnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
@@ -63,6 +84,7 @@ class PaymentController extends Controller
             'requestId' => $requestId,
             'amount' => $amount,
             'orderId' => $orderId,
+            'payType' => "qr",
             'orderInfo' => $orderInfo,
             'redirectUrl' => $redirectUrl,
             'ipnUrl' => $ipnUrl,
@@ -70,6 +92,7 @@ class PaymentController extends Controller
             'extraData' => $extraData,
             'requestType' => $requestType,
             'signature' => $signature,
+            'status' => "unsuccessful",
             'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
             'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
         );
@@ -84,16 +107,72 @@ class PaymentController extends Controller
             );
             curl_setopt($ch, CURLOPT_TIMEOUT, 5);
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-            //execute post
             $result = curl_exec($ch);
-            //close connection
             curl_close($ch);
-
-            //$result = execPostRequest($endpoint, json_encode($data));
             $jsonResult = json_decode($result, true);
-            //header('Location: ' . $jsonResult['payUrl']);
+            DB::table('cart')->where('userId', $dataUser->id)->update(['id_payment'	=>	$orderId]);
             return response()->json(['url' => $jsonResult['payUrl']]);
     }
+
+ public function checkResult(){
+        $dataUser=auth()->user();
+        $dataCheck = DB::table('momoOrderDetails')->where('userId', $dataUser->id)->get();
+        $endpoint = "https://test-payment.momo.vn/v2/gateway/api/query";
+        $partnerCode = 'MOMO282120210723';
+        $accessKey = 'lI611IsPM6PQ3TFC';
+        $secretKey = 'w3SOos2fvPln43ksfcJFAEMvhB9joTTZ';
+        $requestId = time()."";
+        $orderId =$dataCheck[count($dataCheck)-1]->orderId;
+        $rawHash = "accessKey=".$accessKey."&orderId=".$orderId."&partnerCode=".$partnerCode."&requestId=".$requestId;
+        $signature = hash_hmac("sha256", $rawHash, $secretKey);
+        $data = array('partnerCode' => $partnerCode,
+        'requestId' => $requestId,
+        'orderId' => $orderId,
+        'signature' => $signature,
+        'lang' => 'vi');
+         $ch = curl_init($endpoint);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+           'Content-Type: application/json',
+           'Content-Length: ' . strlen(json_encode($data)))
+        );
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        $result = curl_exec($ch);
+        curl_close($ch);
+            $jsonResult = json_decode($result, true);
+        if (($jsonResult['resultCode']===0)&&($jsonResult['message']==="Giao dịch thành công.")){
+        $userCourse=array(
+        'userId' => $dataUser->id,
+        'id_payment' => $dataCheck[count($dataCheck)-1]->orderId,
+        'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+        'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+        );
+        $user = UserCourse::create($userCourse);
+        DB::table('momoOrderDetails')->where('orderId', $dataCheck[count($dataCheck)-1]->orderId)->update(['status'	=>	"successfully"]);
+         $getCart = DB::table('cart')->where('id_payment', $dataCheck[count($dataCheck)-1]->orderId)->get();
+        for ($i = 0; $i <count($getCart); $i++) {
+        $dataHistory=array(
+            'id_payment' => $getCart[$i]->id_payment,
+            'userId' => $getCart[$i]->userId,
+            'product_id' => $getCart[$i]->product_id,
+            'type' => $getCart[$i]->type,
+            'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+            'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+        );
+        $history = History::create($dataHistory);
+          }
+         DB:: delete( 'delete from cart where id_payment = ?' ,[ $dataCheck[count($dataCheck)-1]->orderId ]);
+         return response()->json(['response' =>  $getCart[0]]);
+         }
+         else{
+         return response()->json(['response' => $jsonResult['message']]);
+         }
+ }
+
+
 
     public function atmPayment(Request $request)
     {

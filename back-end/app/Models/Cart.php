@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
-class momoOrderDetail extends Authenticatable implements JWTSubject
+class Cart extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -19,24 +19,13 @@ class momoOrderDetail extends Authenticatable implements JWTSubject
      *
      * @var string[]
      */
-    protected $table="momoOrderDetails";
+    protected $table="cart";
     protected $fillable = [
+        'id',
+        'id_payment',
         'userId',
-        'partnerCode',
-        'partnerName',
-        'storeId',
-        'requestId',
-        'amount',
-        'orderId',
-        'payType',
-        'orderInfo',
-        'redirectUrl',
-        'ipnUrl',
-        'lang',
-        'extraData',
-        'requestType',
-        'signature',
-        'status',
+        'product_id',
+        'type',
         'updated_at',
         'created_at',
     ];
