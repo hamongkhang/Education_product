@@ -35,3 +35,6 @@ Route::post('/users/changePassword', [App\Http\Controllers\UsersController::clas
 Route::post('/users/getCodeForgotPassword', [App\Http\Controllers\UsersController::class, 'getCodeForgotPassword'])->name('user.getCodeForgotPassword');
 Route::post('/users/changePasswordForgot', [App\Http\Controllers\UsersController::class, 'changePasswordForgot'])->name('user.changePasswordForgot');
 
+Route::post('/cart/getCart', [App\Http\Controllers\CartController::class, 'getCart'])->name('cart.get');
+Route::post('/cart/addCart', [App\Http\Controllers\CartController::class, 'addNewCart'])->name('cart.add');
+Route::post('/cart/removeCart', [App\Http\Controllers\CartController::class, 'removeCart'])->name('cart.remove');
