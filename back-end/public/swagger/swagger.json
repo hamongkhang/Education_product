@@ -637,15 +637,25 @@
                         "description": "kiểu của product",
                         "required": true,
                         "type": "string"
+                    },
+                    {
+                        "name": "quantity",
+                        "in": "query",
+                        "description": "Số lượng của sản phẩm",
+                        "required": false,
+                        "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Trả về giỏ hàng của account đang login",
+                        "description": "Trả về trạng thái giỏ hàng của account đang login",
                         "schema": {
                             "properties": {
                                 "success": {
                                     "type": "integer"
+                                },
+                                "cart":{
+                                    "type":"object"
                                 },
                                 "description": {
                                     "type": "string"
