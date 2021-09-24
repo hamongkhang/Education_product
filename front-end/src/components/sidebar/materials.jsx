@@ -1,15 +1,14 @@
 import React from 'react'
 import MaterialItem from './materiaItem'
 
-
 const Materials = (props) => {
     return (
-        <div className="materials bg-gray-200 shadow-lg rounded-lg xl:p-8 p-4 xl:px-4 px-0 mt-10">
+        <div className="materials bg-blue-500 shadow-lg rounded-md py-4 px-2 mt-10">
             <div className="flex items-center px-4 space-x-2">
-                <i class="fad fa-file-alt text-xl text-indigo-400"></i>
-                <h3 className="font-medium text-xl">Tài liệu miễn phí</h3>
+                <i class="fad fa-file-alt text-xl text-indigo-200"></i>
+                <h3 className="font-medium text-xl uppercase text-yellow-300 tracking-tighter">Tài liệu miễn phí</h3>
             </div>
-            <div className="text-sm font-medium text-gray-500 h-64 overflow-y-scroll overflow-hidden custom-scroll">
+            <div className="text-sm font-medium text-gray-900 h-80 overflow-y-scroll overflow-hidden custom-scroll mt-2">
                 <MaterialItem/>
                 <MaterialItem/>
                 <MaterialItem/>
@@ -20,4 +19,5 @@ const Materials = (props) => {
         </div>
     )
 }
+
 export default Materials

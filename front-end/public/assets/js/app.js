@@ -110,7 +110,25 @@ var PATH = {};
         searchOverlay.on('click', function() {
             handleClose();
         })
+    }
 
+    /** handle open/close chat box */
+    PATH.HandleChatbox = function() {
+        const chatOpen = $('.chat-open'),
+            chatClose = $('.chat-close'),
+            chatbox = $('.chatbox');
+
+        chatOpen.on('click', function() {
+            chatbox.removeClass('w-0 h-0');
+            chatbox.addClass('w-80 h-508');
+            chatOpen.addClass('hidden');
+        });
+
+        chatClose.on('click', function() {
+            chatbox.removeClass('w-80 h-508');
+            chatbox.addClass('w-0 h-0');
+            chatOpen.removeClass('hidden');
+        })
     }
 
     /** handle fixed header on scroll */
@@ -122,22 +140,22 @@ var PATH = {};
             navLink = $('.nav-menu .nav-link'),
             btnOpenNav = $('.nav-open');
         if (varHeaderFix) {
-            navbarFixed.addClass('bg-white text-black shadow-md');
+            navbarFixed.addClass('bg-white text-blue-600 shadow-md');
             navLink.addClass('nav-link-fixed');
             if (!responsive) {
-                navMenu.addClass('text-black');
+                navMenu.addClass('text-blue-600');
                 navMenu.removeClass('text-white');
             }
             btnOpenNav.removeClass('text-white');
             btnOpenNav.addClass('text-black');
         } else {
-            navbarFixed.removeClass('bg-white text-black shadow-md');
+            navbarFixed.removeClass('bg-white text-blue-600 shadow-md');
             if (responsive) {
-                navMenu.addClass('text-black');
+                navMenu.addClass('text-blue-600');
                 navMenu.removeClass('text-white');
             } else {
                 navLink.removeClass('nav-link-fixed');
-                navMenu.removeClass('text-black');
+                navMenu.removeClass('text-blue-600');
                 navMenu.addClass('text-white');
             }
             btnOpenNav.removeClass('text-black');
@@ -155,5 +173,6 @@ var PATH = {};
         PATH.HandleCart();
         PATH.HandleNav();
         PATH.HandleSearchBox();
+        PATH.HandleChatbox();
     });
 })(jQuery);

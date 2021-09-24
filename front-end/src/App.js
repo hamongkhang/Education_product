@@ -1,5 +1,4 @@
 import React from 'react';
-// import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import Home from './views/home'
 import { Login, Register, ForgotPassword, CodeVerification, ResetPassword } from './components/account'
@@ -10,7 +9,9 @@ import Header from './components/header';
 import Footer from './components/footer';
 import Books from './views/books'
 import SearchBox from './components/searchBox';
-import Call from './components/call'
+import Call from './components/call';
+import Chat from './components/chat';
+
 function App() {
   return (
     <div className="max-w-screen-2xl my-0 mx-auto">
@@ -29,6 +30,7 @@ function App() {
           <Cart/>
           <SearchBox/>
           <Call/>
+          <Chat/>
           <Footer/>
         </Router>
       </div>

@@ -10,7 +10,7 @@ const BannerItem = (props) => {
                         <h4 className="text-red-400 mb-2">Học hỏi và tích lũy kiến thức</h4>
                         <h1 className="lg:text-5xl md:text-3xl text-2xl font-bold tracking-wide lg:leading-tight line-2">Tìm kiếm khóa học phù hợp cho bạn. </h1>
                         <p className="text-base mb-10 mt-2 line-2">Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
-                        <a href="#" className="px-6 py-3 border-2 border-gray-200 hover:bg-white hover:text-black font-semibold hover:border-white duration-1000">Bạn đã sẵn sàng để bắt đầu?</a>
+                        <a href="#" className="px-6 py-3 border-2 rounded-md border-gray-200 hover:bg-white hover:text-black font-semibold hover:border-white duration-500">Bạn đã sẵn sàng để bắt đầu?</a>
                     </div>
                 </div>
             </div>

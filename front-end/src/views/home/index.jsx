@@ -4,7 +4,7 @@ import Articles from '../../components/articles'
 import Courses from '../../components/courses'
 import { BannerHome } from '../../components/banner'
 // import Footer from '../../components/footer'
-// import ITinTeaching from '../../components/ITinTeaching'
+import ITinTeaching from '../../components/ITinTeaching'
 import Sidebar from '../../components/sidebar'
 import Teachers from '../../components/teachers'
 import { BookList } from '../../components/books'
@@ -21,17 +21,19 @@ const Home = (props) => {
                     </div>
                     <div className="lg:w-9/12 w-full lg:ml-10">
                         <Courses/>
-                        <BookList/>
+                        <Articles/>
+                        {/* <About/> */}
                     </div>
                 </div>
                 <About/>
-                {/* <ITinTeaching/> */}
-                <Teachers/>
+                <ITinTeaching/>
+                <BookList/>
                 <RegisterHome/>
-                <Articles/>
+                <Teachers/>
             </div>
             {/* <Footer/> */}
         </>
     )
 }
+
 export default Home

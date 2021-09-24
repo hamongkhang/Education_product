@@ -3,6 +3,7 @@ import ArticleItem from './articleItem'
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
+import { NextArrow, PrevArrow } from '../customArrowsSlider'
 
 const Articles = (props) => {
     const settings = {
@@ -10,11 +11,11 @@ const Articles = (props) => {
         autoplay: true,
         autoplaySpeed: 5000,
         slidesToShow: 3,
-        slidesToScroll: 1,
+        slidesToScroll: 3,
         centerPadding: 0,
         swipeToSlide: true,
-        // nextArrow: <NextArrow />,
-        // prevArrow: <PrevArrow />,
+        nextArrow: <NextArrow />,
+        prevArrow: <PrevArrow />,
         responsive: [
             {
                 breakpoint: 1024,
@@ -33,17 +34,19 @@ const Articles = (props) => {
         ]
     };
     return (
-        <div className="mt-20">
-            <div className="font-bold text-3xl text-center mb-10">
+        <div className="mt-10">
+            <div className="font-bold text-3xl text-center mb-10 uppercase">
                 Bài viết nổi bật
             </div>
-            <Slider {...settings}>
-                <ArticleItem/>
-                <ArticleItem/>
-                <ArticleItem/>
-                <ArticleItem/>
-                <ArticleItem/>
-            </Slider>
+            <div className="custom-btn-arrow">
+                <Slider {...settings}>
+                    <ArticleItem/>
+                    <ArticleItem/>
+                    <ArticleItem/>
+                    <ArticleItem/>
+                    <ArticleItem/>
+                </Slider>
+            </div>
         </div>
     )
 }

@@ -1,8 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const CourseItem = (props) => {
     return (
-        <div className="bg-gray-50 shadow-md mr-2 rounded-lg overflow-hidden mb-10">
+        <div className="bg-gray-50 shadow-md mr-2 rounded-md overflow-hidden mb-10">
             <div>
                 <img src="./assets/images/slider/city.jpg" className="w-full h-36 object-cover" alt="" />
                 <span></span>
@@ -31,11 +32,14 @@ const CourseItem = (props) => {
                 </div>
             </div>
             <div className="border-t border-gray-300 p-4 flex justify-between">
-                <label htmlFor="" className="text-indigo-600 font-semibold">390.000<sup>đ</sup></label>
-                <a href="#" className="space-x-2 group">
+                <div>
+                    <label htmlFor="" className="text-indigo-600 font-semibold">390.000<sup>đ</sup></label>
+                    <label htmlFor="" className="line-through text-xs ml-1">490.000<sup>đ</sup></label>
+                </div>
+                <Link href="#" className="space-x-2 group">
                     <span className="font-semibold group-hover:text-indigo-600">Chi tiết</span>
                     <i className="far fa-arrow-right transform duration-300 group-hover:translate-x-1.5 group-hover:text-indigo-600"></i>
-                </a>
+                </Link>
             </div>
         </div>
     )

@@ -18,7 +18,7 @@ const Navbar = (props) => {
                         <i className="far fa-times"></i>
                     </div>
                 </div>
-                <div className="custom-scroll overflow-y-scroll lg:overflow-y-visible menu-mobile font-medium">
+                <div className="custom-scroll overflow-y-scroll lg:overflow-y-visible menu-mobile text-lg font-medium">
                     <div className="">
                         <Link to="dang-nhap" className="md:hidden flex nav-link items-center justify-between text-white px-5 py-4 bg-green-700 hover:bg-green-800">
                             <span>Đăng nhập</span>

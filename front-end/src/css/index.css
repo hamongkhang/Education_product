@@ -110,6 +110,14 @@ body {
     -webkit-box-orient: vertical;
 }
 
+.line-17 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 17;
+    -webkit-box-orient: vertical;
+}
+
 .nav-link::after {
     content: "";
     height: 2px;
@@ -125,7 +133,7 @@ body {
 }
 
 .nav-link-fixed::after {
-    background: black;
+    background: #2563EB;
 }
 
 .nav-link:hover::after {
@@ -224,7 +232,7 @@ body {
     transform: rotate(45deg);
 }
 
-.course-list:hover .btn-arrow {
+.custom-btn-arrow:hover .btn-arrow {
     opacity: 1;
 }
 

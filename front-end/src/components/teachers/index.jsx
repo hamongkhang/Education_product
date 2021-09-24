@@ -3,6 +3,7 @@ import TeacherItem from './teacherItem'
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
+import { NextArrow, PrevArrow } from '../customArrowsSlider'
 
 const Teachers = (props) => {
     const settings = {
@@ -13,8 +14,8 @@ const Teachers = (props) => {
         slidesToScroll: 1,
         centerPadding: 0,
         swipeToSlide: true,
-        // nextArrow: <NextArrow />,
-        // prevArrow: <PrevArrow />,
+        nextArrow: <NextArrow />,
+        prevArrow: <PrevArrow />,
         responsive: [
             {
                 breakpoint: 1024,
@@ -34,16 +35,18 @@ const Teachers = (props) => {
     };
     return (
         <div className="mt-20">
-            <div className="font-bold text-3xl text-center mb-10">
+            <div className="font-bold text-3xl text-center mb-10 uppercase">
                 Đội ngũ giáo viên
             </div>
-            <Slider {...settings}>
-                <TeacherItem/>
-                <TeacherItem/>
-                <TeacherItem/>
-                <TeacherItem/>
-                <TeacherItem/>
-            </Slider>
+            <div className="relative custom-btn-arrow">
+                <Slider {...settings}>
+                    <TeacherItem/>
+                    <TeacherItem/>
+                    <TeacherItem/>
+                    <TeacherItem/>
+                    <TeacherItem/>
+                </Slider>
+            </div>
         </div>
     )
 }
