@@ -648,6 +648,13 @@
                 "description": "Gửi tin nhắn",
                 "parameters": [
                     {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "Người dùng đăng nhập hoặc không",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
                         "name": "sender_id",
                         "in": "query",
                         "description": "ID user được nhận message",
@@ -664,7 +671,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Trả về message vừa mới gửi, hoặc user vừa được tạo mới",
+                        "description": "Trả về message vừa mới gửi",
                         "schema": {
                             "properties": {
                                 "success":{

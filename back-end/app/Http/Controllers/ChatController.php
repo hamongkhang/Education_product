@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Message;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class ChatController extends Controller
@@ -101,6 +102,8 @@ class ChatController extends Controller
             $new_message = new Message();
             $new_message->message = $request->message;
             $new_message->user_id = $login->id;
+            $new_message->created_at =  Carbon::now('Asia/Ho_Chi_Minh');
+            $new_message->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
             if ($login->is_admin == false) {
                 $receiver = User::where('is_admin', true)->first();
                 $new_message->receiver = $receiver->id;
@@ -125,9 +128,28 @@ class ChatController extends Controller
                 'status' => 'status',
                 'email'     => 'email'.$count,
                 'password'  =>  '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', //password
+                'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+                'updated_at'=>Carbon::now('Asia/Ho_Chi_Minh'),
             ];
             $login = User::create($postArray);
-            return $this->fakeLogin($login->email,'password');
+            $user = $this->fakeLogin($login->email,'password');
+            $new_message = new Message();
+            $new_message->message = $request->message;
+            $new_message->user_id = $login->id;
+            $new_message->created_at =  Carbon::now('Asia/Ho_Chi_Minh');
+            $new_message->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
+            if ($login->is_admin == false) {
+                $receiver = User::where('is_admin', true)->first();
+                $new_message->receiver = $receiver->id;
+            } else {
+                $new_message->receiver = $request->sender_id;
+            }
+            $new_message->save();
+            return [
+                'success'=>1,
+                'access_token'=>$user->original['access_token'],
+                'new_messages'=>$new_message
+            ];
         }
         
     }
