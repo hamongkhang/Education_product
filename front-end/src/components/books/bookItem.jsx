@@ -9,7 +9,7 @@ const BookItem = (props) => {
             <div className="px-6 text-center h-10">
                 <label htmlFor="" className="text-indigo-600 font-semibold">390.000<sup>đ</sup></label>
                 <label htmlFor="" className="line-through text-xs ml-2">490.000<sup>đ</sup></label>
-                <h3 className="font-semibold line-2">The Perfect Marriage by Jeneva Rose </h3>
+                <h3 className="font-semibold line-2">{props.name}</h3>
             </div>
             {/* <div className="text-center w-full text-white h-12 bg-red-400 relative transform group-hover:translate-y-10 translate-y-19 duration-300 grid grid-cols-2">
                 <button className="bg-indigo-400 hover:bg-indigo-300 h-full duration-300">Chi tiết</button>
