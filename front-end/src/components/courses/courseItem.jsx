@@ -11,7 +11,7 @@ const CourseItem = (props) => {
             <div className="px-4 py-2">
                 <div className="my-1">
                     <a href="#" className="hover:text-indigo-600 duration-300">
-                        <h3 className="font-semibold line-2">Lorem ipsum dolor sit amet consectetur</h3>
+                        <h3 className="font-semibold line-2">{props.name}</h3>
                     </a>
                 </div>
                 <div className="mb-1 flex justify-between">

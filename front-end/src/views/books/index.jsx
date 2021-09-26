@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { BannerBook } from '../../components/banner'
 import { BookItem } from '../../components/books'
-import Typography from '@mui/material/Typography';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
