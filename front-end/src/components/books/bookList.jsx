@@ -6,6 +6,21 @@ import BookItem from './bookItem'
 import { Link } from 'react-router-dom'
 import { NextArrow, PrevArrow } from '../customArrowsSlider'
 
+const arr = [
+    {
+        name: "12"
+    },
+    {
+        name: "THPT"
+    },
+    {
+        name: "11"
+    },
+    {
+        name: "10"
+    },
+]
+
 const BookList = (props) => {
     const settings = {
         infinite: true,
@@ -49,16 +64,9 @@ const BookList = (props) => {
 
             <div className="relative custom-btn-arrow">
                 <Slider {...settings}>
-                    <BookItem/>
-                    <BookItem/>
-                    <BookItem/>
-                    <BookItem/>
-                    <BookItem/>
-                    <BookItem/>
-                    <BookItem/>
-                    <BookItem/>
-                    <BookItem/>
-                    <BookItem/>
+                    {
+                        arr.map((item, index) => (<BookItem key={index} {...item}/>))
+                    }
                 </Slider>
             </div>
         </div>

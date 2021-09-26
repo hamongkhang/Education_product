@@ -5,6 +5,21 @@ import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 import { NextArrow, PrevArrow } from '../customArrowsSlider'
 
+const arr = [
+    {
+        name: "12"
+    },
+    {
+        name: "THPT"
+    },
+    {
+        name: "11"
+    },
+    {
+        name: "10"
+    },
+]
+
 const CourseList = (props) => {
     const settings = {
         infinite: false,
@@ -47,12 +62,9 @@ const CourseList = (props) => {
 
             <div className="relative custom-btn-arrow">
                 <Slider {...settings}>
-                    <CourseItem/>
-                    <CourseItem/>
-                    <CourseItem/>
-                    <CourseItem/>
-                    <CourseItem/>
-                    <CourseItem/>
+                    {
+                        arr.map((item, index) => (<CourseItem key={index} {...item}/>))
+                    }
                 </Slider>
             </div>
         </div>
