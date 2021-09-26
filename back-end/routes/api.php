@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use app\Http\Controller\Api\UsersController;
-use App\Http\Controllers\ChatController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,9 +22,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group([
     'middleware' => 'api',
 ], function ($router) {
-    Route::post('/inbox', [ChatController::class, 'getAllMessages'])->name('inbox');
-    Route::post('/inbox_admin', [ChatController::class, 'getMessageByAdmin'])->name('inboxAdmin');
-    Route::post('/sendmess', [ChatController::class, 'sendMessage'])->name('sendMessage');   
+    Route::post('/inbox', [App\Http\Controllers\ChatController::class, 'getAllMessages'])->name('inbox');
+    Route::post('/inbox_admin', [App\Http\Controllers\ChatController::class, 'getMessageByAdmin'])->name('inboxAdmin');
+    Route::post('/sendmess', [App\Http\Controllers\ChatController::class, 'sendMessage'])->name('sendMessage');   
 });
 /* Api Register */
 Route::get('token', function (Request $request) {
@@ -35,7 +35,6 @@ Route::get('token', function (Request $request) {
 Route::post('/users/login', [App\Http\Controllers\UsersController::class, 'onLogin'])->name('user.login');
 Route::post('/users/getCode', [App\Http\Controllers\UsersController::class, 'getCode'])->name('user.getCode');
 Route::post('/users/register', [App\Http\Controllers\UsersController::class, 'onRegister'])->name('user.register');
-
 Route::post('/users/logout', [App\Http\Controllers\UsersController::class, 'logout'])->name('user.logout');
 Route::post('/users/refresh', [App\Http\Controllers\UsersController::class, 'refresh'])->name('user.refresh');
 Route::post('/users/userProfile', [App\Http\Controllers\UsersController::class, 'userProfile'])->name('user.userProfile');
@@ -43,3 +42,7 @@ Route::post('/users/changePassword', [App\Http\Controllers\UsersController::clas
 Route::post('/users/getCodeForgotPassword', [App\Http\Controllers\UsersController::class, 'getCodeForgotPassword'])->name('user.getCodeForgotPassword');
 Route::post('/users/changePasswordForgot', [App\Http\Controllers\UsersController::class, 'changePasswordForgot'])->name('user.changePasswordForgot');
 
+Route::post('/payment/momoPayment', [App\Http\Controllers\PaymentController::class, 'momoPayment'])->name('payment.momoPayment');
+Route::post('/payment/checkResult', [App\Http\Controllers\PaymentController::class, 'checkResult'])->name('payment.checkResult');
+Route::post('/payment/atmPayment', [App\Http\Controllers\PaymentController::class, 'atmPayment'])->name('payment.atmPayment');
+//Route::post('/payment/checkResultATM', [App\Http\Controllers\PaymentController::class, 'checkResultATM'])->name('payment.checkResultATM');

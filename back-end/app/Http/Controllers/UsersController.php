@@ -559,7 +559,7 @@ class UsersController extends Controller
             'title' => 'Cập nhật mật khẩu thành công',
             'content'=>'Đổi mật khẩu thành công'
         ];
-         SendEmail::dispatch($dataSendMail, $data->email)->delay(now());
+         SendEmail::dispatch($dataSendMail,  auth()->user()->email)->delay(now());
         return response()->json([
             'message' => 'User successfully changed password',
             'user' => $user
