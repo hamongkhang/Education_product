@@ -626,6 +626,128 @@
                     }
                 }
             }
+        },
+        "api/inbox/": {
+            "post": {
+                "description": "Trả về messages của account đang đăng nhập, nếu là admin thì trả thêm user ID",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Trả về messages của user đang đăng nhập",
+                        "schema": {
+                            "properties": {
+                                "success":{
+                                    "type": "integer"
+                                },
+                                "messages": {
+                                    "type": "object"
+                                },
+                                "users":{
+                                    "types":"integer"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/inbox_admin/": {
+            "post": {
+                "description": "API chỉ dùng cho acc admin, Trả về messages của user bất kì do admin chọn",
+                "parameters": [
+                    {
+                        "name": "sender_id",
+                        "in": "query",
+                        "description": "ID user được admin truy vấn",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về messages của user đang được chọn",
+                        "schema": {
+                            "properties": {
+                                "success":{
+                                    "type": "integer"
+                                },
+                                "messages": {
+                                    "type": "object"
+                                },
+                                "users":{
+                                    "types":"integer"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Trả về lỗi do thiếu sender_id",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Trả về lỗi do không đăng nhập account admin",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/sendmess/": {
+            "post": {
+                "description": "Gửi tin nhắn",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "Người dùng đăng nhập hoặc không",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sender_id",
+                        "in": "query",
+                        "description": "ID user được nhận message",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "message",
+                        "in": "query",
+                        "description": "Nội dung message được gửi đi",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về message vừa mới gửi",
+                        "schema": {
+                            "properties": {
+                                "success":{
+                                    "type": "integer"
+                                },
+                                "new_message": {
+                                    "type": "object"
+                                },
+                                "users":{
+                                    "types":"object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {}
