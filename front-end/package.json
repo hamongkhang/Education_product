@@ -4,6 +4,11 @@
     "private": true,
     "dependencies": {
         "@craco/craco": "^6.3.0",
+        "@emotion/react": "^11.4.1",
+        "@emotion/styled": "^11.3.0",
+        "@material-tailwind/react": "0.3.4",
+        "@mui/material": "^5.0.1",
+        "@tailwindcss/forms": "^0.3.3",
         "@testing-library/jest-dom": "^5.11.4",
         "@testing-library/react": "^11.1.0",
         "@testing-library/user-event": "^12.1.10",
@@ -13,6 +18,7 @@
         "react-scripts": "4.0.3",
         "react-slick": "^0.28.1",
         "slick-carousel": "^1.8.1",
+        "swiper": "^7.0.5",
         "web-vitals": "^1.0.1"
     },
     "scripts": {
