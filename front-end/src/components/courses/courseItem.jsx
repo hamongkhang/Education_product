@@ -36,7 +36,7 @@ const CourseItem = (props) => {
                     <label htmlFor="" className="text-indigo-600 font-semibold">390.000<sup>đ</sup></label>
                     <label htmlFor="" className="line-through text-xs ml-1">490.000<sup>đ</sup></label>
                 </div>
-                <Link href="#" className="space-x-2 group">
+                <Link to="/khoa-hoc/khoa-hoc-1" className="space-x-2 group">
                     <span className="font-semibold group-hover:text-indigo-600">Chi tiết</span>
                     <i className="far fa-arrow-right transform duration-300 group-hover:translate-x-1.5 group-hover:text-indigo-600"></i>
                 </Link>

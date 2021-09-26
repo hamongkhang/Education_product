@@ -11,6 +11,9 @@ import Books from './views/books'
 import SearchBox from './components/searchBox';
 import Call from './components/call';
 import Chat from './components/chat';
+import Articles from './views/articles';
+import Courses from './views/courses';
+import CourseDetails from './views/courseDetails'
 
 function App() {
   return (
@@ -25,6 +28,9 @@ function App() {
             <Route path="/xac-nhan-ma" exact component={CodeVerification} />
             <Route path="/dat-lai-mat-khau" exact component={ResetPassword} />
             <Route path="/sach" exact component={Books} />
+            <Route path="/khoa-hoc/khoa-hoc-1" exact component={CourseDetails} />
+            <Route path="/khoa-hoc" exact component={Courses} />
+            <Route path="/tin-tuc" exact component={Articles} />
             <Route path="/" exact component={Home} />
           </Switch>
           <Cart/>

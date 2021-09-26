@@ -10,19 +10,7 @@ const Cart = (props) => (
                     <i className="far fa-times"></i>
                 </button>
             </div>
-            <div className="px-5 custom-scroll overflow-y-scroll" style={{ height: "calc(100vh - 220px)" }}>
-                <CartItem/>
-                <CartItem/>
-                <CartItem/>
-                <CartItem/>
-                <CartItem/>
-                <CartItem/>
-                <CartItem/>
-                <CartItem/>
-                <CartItem/>
-                <CartItem/>
-                <CartItem/>
-                <CartItem/>
+            <div className="px-5 custom-scroll overflow-y-scroll" style={{ height: "calc(100vh - 250px)" }}>
                 <CartItem/>
                 <CartItem/>
             </div>

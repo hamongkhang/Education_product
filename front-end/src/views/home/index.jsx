@@ -1,9 +1,8 @@
 import React from 'react'
 import About from '../../components/about'
-import Articles from '../../components/articles'
-import Courses from '../../components/courses'
+import { ArticleList } from '../../components/articles'
+import { CourseList } from '../../components/courses'
 import { BannerHome } from '../../components/banner'
-// import Footer from '../../components/footer'
 import ITinTeaching from '../../components/ITinTeaching'
 import Sidebar from '../../components/sidebar'
 import Teachers from '../../components/teachers'
@@ -20,9 +19,8 @@ const Home = (props) => {
                         <Sidebar/>
                     </div>
                     <div className="lg:w-9/12 w-full lg:ml-10">
-                        <Courses/>
-                        <Articles/>
-                        {/* <About/> */}
+                        <CourseList/>
+                        <ArticleList/>
                     </div>
                 </div>
                 <About/>

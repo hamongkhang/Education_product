@@ -30,7 +30,7 @@ const Navbar = (props) => {
                             <Link to="/">Trang chủ</Link>
                         </li>
                         <li className={ pathname === "/khoa-hoc" ? 'nav-link relative active' : 'nav-link relative' }>
-                            <a href="#" className="hover">Khóa học</a>
+                            <Link to="/khoa-hoc" className="hover">Khóa học</Link>
                         </li>
                         <li className={ pathname === "/sach" ? 'nav-link relative active' : 'nav-link relative' }>
                             <Link to="/sach" className="hover">Sách</Link>
@@ -39,7 +39,7 @@ const Navbar = (props) => {
                             <a href="#" className="hover">Thi Online</a>
                         </li>
                         <li className={ pathname === "/tin-tuc" ? 'nav-link relative active' : 'nav-link relative' }>
-                            <a href="#" className="hover">Tin tức</a>
+                            <Link to="/tin-tuc" className="hover">Tin tức</Link>
                         </li>
                         {/*  */}
                         <li className={ pathname === "/luyen-thi" ? 'nav-link relative nav-link-mobile lg:hidden active' : 'nav-link nav-link-mobile lg:hidden relative' }>

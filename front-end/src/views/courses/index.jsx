@@ -1,7 +1,7 @@
 import React from 'react'
 import { BannerBook } from '../../components/banner'
-import { BookItem } from '../../components/books'
-const Books = (props) => {
+import { CourseItem } from '../../components/courses'
+const Courses = (props) => {
     return (
         <>
             <BannerBook/>
@@ -22,17 +22,17 @@ const Books = (props) => {
                     </div>
                 </div>
                 <div className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
-                    <BookItem/>
-                    <BookItem/>
-                    <BookItem/>
-                    <BookItem/>
-                    <BookItem/>
-                    <BookItem/>
-                    <BookItem/>
-                    <BookItem/>
+                    <CourseItem/>
+                    <CourseItem/>
+                    <CourseItem/>
+                    <CourseItem/>
+                    <CourseItem/>
+                    <CourseItem/>
+                    <CourseItem/>
+                    <CourseItem/>
                 </div>
             </div>
         </>
     )
 }
-export default Books
+export default Courses

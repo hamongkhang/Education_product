@@ -8,7 +8,7 @@ const Materials = (props) => {
                 <i class="fad fa-file-alt text-xl text-indigo-200"></i>
                 <h3 className="font-medium text-xl uppercase text-yellow-300 tracking-tighter">Tài liệu miễn phí</h3>
             </div>
-            <div className="text-sm font-medium text-gray-900 h-80 overflow-y-scroll overflow-hidden custom-scroll mt-2">
+            <div className="text-sm font-medium text-gray-900 h-80 overflow-y-scroll overflow-hidden custom-scroll-1 mt-2">
                 <MaterialItem/>
                 <MaterialItem/>
                 <MaterialItem/>

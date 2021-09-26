@@ -70,7 +70,7 @@ const Chat = (props) => {
                 </form>
             </div>
 
-            <div className="chat-open fixed bottom-5 right-5 sm:bottom-10 sm:right-10 cursor-pointer w-12 h-12 sm:w-14 sm:h-14  mb-2 flex items-center justify-center rounded-full duration-500 bg-white">
+            <div className="chat-open fixed bottom-5 right-5 sm:bottom-14 sm:right-14 cursor-pointer w-12 h-12 sm:w-14 sm:h-14  mb-2 flex items-center justify-center rounded-full duration-500 bg-white">
                 <div className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gradient-to-tr to-red-500 from-blue-600 opacity-75" />
                 <i className="fab fa-facebook-messenger mt-1 bg-gradient-to-tr to-red-500 from-blue-600 text-transparent bg- text-3xl sm:text-4xl bg-clip-text"></i>
             </div>
