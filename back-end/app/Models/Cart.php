@@ -26,6 +26,7 @@ class Cart extends Authenticatable implements JWTSubject
         'userId',
         'product_id',
         'type',
+        'quantity',
         'updated_at',
         'created_at',
     ];

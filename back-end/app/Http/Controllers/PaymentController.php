@@ -99,7 +99,7 @@ class PaymentController extends Controller
             $user = momoOrderDetail::create($dataMomo);
             $ch = curl_init($endpoint);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+            curl_setopt($ch, CURLOPT_POSTFIELDS , json_encode($data));
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                     'Content-Type: application/json',
@@ -110,7 +110,7 @@ class PaymentController extends Controller
             $result = curl_exec($ch);
             curl_close($ch);
             $jsonResult = json_decode($result, true);
-            DB::table('cart')->where('userId', $dataUser->id)->update(['id_payment'	=>	$orderId]);
+            DB::table('cart')->where('userId', $dataUser->id)->update(['id_payment'	=>	$orderId,'updated_at'	=>	Carbon::now('Asia/Ho_Chi_Minh')]);
             return response()->json(['url' => $jsonResult['payUrl']]);
     }
   /**
@@ -189,41 +189,42 @@ class PaymentController extends Controller
  }
 
 
-
+ /**
+     * @SWG\POST(
+     *     path="api/payment/atmPayment",
+     *     description="Atm payment",
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Successfully",
+     *         @SWG\Schema(
+     *             @SWG\Property(property="url", type="string"),
+     *            )
+     *     ),
+     *     @SWG\Response(
+     *         response=422,
+     *         description="Missing Data"
+     *     )
+     * )
+     */
     public function atmPayment(Request $request)
     {
-            $dataUser=auth()->user();
-            $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
-            $partnerCode = 'MOMOFK0V20210919';
-            $accessKey = 'UZDeBN1UI45OvSwR';
-            $serectkey = 'r5bX8YBaEfwG8rhg9vfWFAxOCHMALXQv';
-            $orderId = time() .""; // Mã đơn hàng
-            $orderInfo = "Thanh toán qua MoMo";
-            $amount = "5000";
-            $ipnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
-            $redirectUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
-            $extraData = "merchantName=MoMo Partner";
-            $requestId = time() . "";
-            $requestType = "captureWallet";
-            $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
-            $signature = hash_hmac("sha256", $rawHash, $serectkey);
-            $data = array('partnerCode' => $partnerCode,
-                'partnerName' => "Test",
-                "storeId" => "MomoTestStore",
-                'requestId' => $requestId,
-                'amount' => $amount,
-                'orderId' => $orderId,
-                'orderInfo' => $orderInfo,
-                'redirectUrl' => $redirectUrl,
-                'ipnUrl' => $ipnUrl,
-                'lang' => 'vi',
-                'extraData' => $extraData,
-                'requestType' => $requestType,
-                'signature' => $signature
-            );
-            $dataMomo=array(
-            'userId' => $dataUser->id,
-            'partnerCode' => $partnerCode,
+        $dataUser=auth()->user();
+        $data = DB::table('cart')->where('userId', $dataUser->id)->get();
+        $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
+        $partnerCode = 'MOMOBKUN20180529';
+        $accessKey = 'klm05TvNBzhg7h7j';
+        $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
+        $orderId = time() ."";
+        $orderInfo = "Thanh toán qua MoMo";
+        $amount = "10000";
+        $ipnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
+        $redirectUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
+        $extraData = "";
+        $requestId = time() . "";
+        $requestType = "payWithATM";
+        $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
+        $signature = hash_hmac("sha256", $rawHash, $secretKey);
+        $data = array('partnerCode' => $partnerCode,
             'partnerName' => "Test",
             "storeId" => "MomoTestStore",
             'requestId' => $requestId,
@@ -235,30 +236,42 @@ class PaymentController extends Controller
             'lang' => 'vi',
             'extraData' => $extraData,
             'requestType' => $requestType,
-            'signature' => $signature,
-            'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
-            'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+            'signature' => $signature);
+        $ch = curl_init($endpoint);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen(json_encode($data)))
         );
-            $user = momoOrderDetail::create($dataMomo);
-            $ch = curl_init($endpoint);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/json',
-                    'Content-Length: ' . strlen(json_encode($data)))
-            );
-            curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-            //execute post
-            $result = curl_exec($ch);
-            //close connection
-            curl_close($ch);
-
-            //$result = execPostRequest($endpoint, json_encode($data));
-            $jsonResult = json_decode($result, true);
-            //header('Location: ' . $jsonResult['payUrl']);
-            return response()->json(['url' => $jsonResult['payUrl']]);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        $jsonResult = json_decode($result, true);
+        $dataMomo=array(
+        'userId' => $dataUser->id,
+        'partnerCode' => $partnerCode,
+        'partnerName' => "Test",
+        "storeId" => "MomoTestStore",
+        'requestId' => $requestId,
+        'amount' => $amount,
+        'orderId' => $orderId,
+        'payType' => "atm",
+        'orderInfo' => $orderInfo,
+        'redirectUrl' => $redirectUrl,
+        'ipnUrl' => $ipnUrl,
+        'lang' => 'vi',
+        'extraData' => $extraData,
+        'requestType' => $requestType,
+        'signature' => $signature,
+        'status' => "unsuccessful",
+        'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+        'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+    );
+      
+        DB::table('cart')->where('userId', $dataUser->id)->update(['id_payment'	=>	$orderId,'updated_at'	=>	Carbon::now('Asia/Ho_Chi_Minh')]);
+        return response()->json(['url' => $jsonResult['payUrl']]);
     }
-   
 }
