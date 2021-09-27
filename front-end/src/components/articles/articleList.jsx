@@ -34,7 +34,7 @@ const ArticleList = (props) => {
         ]
     };
     return (
-        <div className="mt-10">
+        <div className="">
             <div className="font-bold text-3xl text-center mb-10 uppercase">
                 Bài viết nổi bật
             </div>

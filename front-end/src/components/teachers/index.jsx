@@ -34,7 +34,7 @@ const Teachers = (props) => {
         ]
     };
     return (
-        <div className="mt-20">
+        <div className="mt-10">
             <div className="font-bold text-3xl text-center mb-10 uppercase">
                 Đội ngũ giáo viên
             </div>

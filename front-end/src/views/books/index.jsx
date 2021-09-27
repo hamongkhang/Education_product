@@ -72,7 +72,7 @@ const Books = (props) => {
     return (
         <>
             <BannerBook/>
-            <div className="xl:w-4/5 xl:px-0 px-4 w-full relative left-1/2 transform -translate-x-1/2 md:mt-20 mt-10">
+            <div className="xl:w-4/5 xl:px-0 px-4 w-full relative left-1/2 transform -translate-x-1/2 mt-10">
                 <div className="bg-indigo-300 w-full h-12 md:h-16 rounded-md mb-10 flex items-center justify-between px-3 md:px-6" >
                     <div className="font-medium uppercase">
                         Hiển thị 9/20
