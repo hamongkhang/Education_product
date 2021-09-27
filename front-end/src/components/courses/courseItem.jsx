@@ -16,7 +16,7 @@ const CourseItem = (props) => {
                 </div>
                 <div className="mb-1 flex justify-between">
                     <div className="space-x-2">
-                        <i class="fad fa-book-open text-indigo-300"></i>
+                        <i className="fad fa-book-open text-indigo-300"></i>
                         <span className="text-15 text-gray-500">43 Video</span>
                     </div>
                     <div className="space-x-2">
