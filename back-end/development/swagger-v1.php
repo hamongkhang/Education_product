@@ -6,7 +6,7 @@
  *     basePath="/",
  *     @SWG\Info(
  *         version="1.0.0",
- *         title="Education website with Swagger",
+ *         title="Laravel and Swagger",
  *         description="Getting started with Laravel and Swagger",
  *         termsOfService="",
  *         @SWG\Contact(
