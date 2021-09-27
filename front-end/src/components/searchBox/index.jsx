@@ -7,7 +7,7 @@ const SearchBox = (props) => {
                 <div className="text-center text-3xl font-semibold uppercase my-10">Tìm kiếm</div>
                 <div>
                     <form action="#" className="px-10 relative">
-                    <input type="text" placeholder="Tìm kiếm" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded-sm outline-none border-2" required/>
+                        <input type="text" placeholder="Tìm kiếm" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded-sm outline-none border-2" required/>
                         <button type="submit" className="leading-5 absolute right-10 px-8 text-white p-2 h-full rounded-sm bg-indigo-600 hover:bg-indigo-700 duration-300">
                             <i className="far fa-search font-medium"/>
                         </button>
