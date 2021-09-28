@@ -264,6 +264,56 @@
                 ]
             }
         },
+        "api/teacher/getTeacher/": {
+            "get": {
+                "description": "Return teacher's informaion.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "position": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "phone": {
+                                    "type": "string"
+                                },
+                                "facebook": {
+                                    "type": "string"
+                                },
+                                "skype": {
+                                    "type": "string"
+                                },
+                                "youtube": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                }
+            }
+        },
         "api/users/login/": {
             "post": {
                 "description": "Return a user's information",
