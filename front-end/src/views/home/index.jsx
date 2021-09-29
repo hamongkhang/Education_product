@@ -1,37 +1,34 @@
-import React from 'react'
-import About from '../../components/about'
-import { ArticleList } from '../../components/articles'
-import { CourseList } from '../../components/courses'
-import { BannerHome } from '../../components/banner'
-import ITinTeaching from '../../components/ITinTeaching'
-import Sidebar from '../../components/sidebar'
-import Teachers from '../../components/teachers'
-import { BookList } from '../../components/books'
-import { RegisterHome } from '../../components/account'
-
-const Home = (props) => {
+import React from 'react';
+import Header from '../../components/header';
+import { Route } from 'react-router-dom';
+import Articles from './articles';
+import Courses from './courses';
+import CourseDetails from './courseDetails';
+import Books from './books';
+import { Login, Register, ForgotPassword, CodeVerification, ResetPassword } from '../../components/account';
+import Home from './home';
+const HomePages = (props) => {
     return (
         <>
-            <BannerHome/>
-            <div className="xl:w-4/5 xl:px-0 px-4 w-full relative left-1/2 transform -translate-x-1/2 mt-10">
-                <div className="flex">
-                    <div className="w-3/12 hidden lg:block relative">
-                        <Sidebar/>
-                    </div>
-                    <div className="lg:w-9/12 w-full lg:ml-10">
-                        <CourseList/>
-                        <ArticleList/>
-                    </div>
-                </div>
-                <About/>
-                <ITinTeaching/>
-                <BookList/>
-                <RegisterHome/>
-                <Teachers/>
+            <Header/>
+            <div>
+                {/*  Route home page */}
+                <Route path="/dang-ky" exact component={Register} />
+                <Route path="/dang-nhap" exact component={Login} />
+                <Route path="/quen-mat-khau" exact component={ForgotPassword} />
+                <Route path="/xac-nhan-ma" exact component={CodeVerification} />
+                <Route path="/dat-lai-mat-khau" exact component={ResetPassword} />
+                <Route path="/sach" exact component={Books} />
+                <Route path="/khoa-hoc/khoa-hoc-1" exact component={CourseDetails} />
+                <Route path="/khoa-hoc" exact component={Courses} />
+                <Route path="/tin-tuc" exact component={Articles} />
+
+                {/* Route profile */}
+
+                <Route path="/" exact component={Home} />
             </div>
-            {/* <Footer/> */}
         </>
     )
 }
 
-export default Home
+export default HomePages

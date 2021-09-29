@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { LoginName } from '../account';
 
 const AccountControls = (props) => {
     return (
@@ -13,15 +14,16 @@ const AccountControls = (props) => {
                     <label className="absolute top-0 right-1 font-medium text-15">4</label>
                 </button>
             </div>
-            <div>
+            {/* <div>
                 <Link to="/dang-nhap">
-                    <a  className="relative hidden md:block btn-login duration-300 bg-transparent rounded-md bg-green-700 hover:shadow-2xl hover:bg-green-800 hover:text-white px-4 py-2 text-white font-semibold">
-                        {/* <svg className="absolute top-0 left-0 w-full h-full fill-transparent">
-                            <rect className="absolute btn-stroke top-0 left-0 w-full h-full fill-transparent stroke-2 stroke-dasharray animate-btnlogin"></rect>
-                        </svg> */}
+                    <a  className="relative hidden sm:block btn-login duration-300 bg-transparent rounded-md bg-green-700 hover:shadow-2xl hover:bg-green-800 hover:text-white px-4 py-2 text-white font-semibold">
                         Đăng nhập
                     </a>
                 </Link>
+            </div> */}
+
+            <div className="hidden sm:block">
+                <LoginName />
             </div>
 
             {/* <div className="hidden md:block">

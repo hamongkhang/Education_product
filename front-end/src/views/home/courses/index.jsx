@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { BannerBook } from '../../components/banner'
-import { BookItem } from '../../components/books'
+import { BannerBook } from '../../../components/banner'
+import { CourseItem } from '../../../components/courses'
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
@@ -90,7 +90,7 @@ const Books = (props) => {
                 </div>
                 <div className="w-full grid mx-auto pl-2 grid-cols-1 gap-0 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {
-                        arr1.map((item, index) => ( <BookItem key={index} {...item} /> ))
+                        arr1.map((item, index) => ( <CourseItem key={index} {...item} /> ))
                     }
                 </div>
                 <div className="flex justify-center mb-10">

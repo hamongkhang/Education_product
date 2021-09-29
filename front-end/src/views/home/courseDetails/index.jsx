@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { BannerBook } from '../../components/banner'
+import { BannerBook } from '../../../components/banner'
 import CourseDesc from './courseDesc'
-import { CourseItem, CourseList } from '../../components/courses'
 
 const CourseDetails = () => {
     const [classes, setClasses] = useState("right-0 translate-x-full");

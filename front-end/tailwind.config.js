@@ -5,9 +5,20 @@ module.exports = {
     purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
     darkMode: false, // or 'media' or 'class'
     theme: {
+        screens: {
+            'xs': '576px',
+            // => @media (min-width: 576px) { ... }
+            'sm1': '600px',
+            // => @media (min-width: 600px) { ... }
+            'sm': '640px',
+            'md': '768px',
+            'lg': '1024px',
+            'xl': '1280px',
+            '2xl': '1536px',
+        },
         extend: {
             spacing: {
-                "19": "76px",
+                "18": "72px",
                 "19": "76px",
                 "508": "508px",
                 "600": "600px",
@@ -69,8 +80,14 @@ module.exports = {
     },
     variants: {
         extend: {
+            borderRadius: ['focus'],
             divideColor: ['group-hover'],
             translate: ['group-hover'],
+            backgroundColor: ['checked'],
+            borderColor: ['checked'],
+            height: ['focus-within'],
+            display: ['focus-within'],
+            opacity: ['focus-within'],
         },
     },
     plugins: [],
