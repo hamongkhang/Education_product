@@ -11,9 +11,7 @@
     },
     "host": "localhost:8000",
     "basePath": "/",
-    "schemes": [
-        "http"
-    ],
+    "schemes": ["http"],
     "paths": {
         "api/comment/addComment/": {
             "post": {
@@ -189,6 +187,53 @@
                 ]
             }
         },
+        "api/ITinTeach/getITinTeach": {
+            "get": {
+                "description": "get file IT i Teach",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "author": {
+                                    "type": "string"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "datetime"
+                                },
+                                "updated_at": {
+                                    "type": "datetime"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Missing Data"
+                    }
+                }
+            }
+        },
         "api/payment/momoPayment": {
             "post": {
                 "description": "Momo payment",
@@ -206,12 +251,7 @@
                     "422": {
                         "description": "Missing Data"
                     }
-                },
-                "security": [
-                    {
-                        "api_key_security_example": []
-                    }
-                ]
+                }
             }
         },
         "api/payment/checkResult": {
@@ -231,12 +271,7 @@
                     "422": {
                         "description": "Missing Data"
                     }
-                },
-                "security": [
-                    {
-                        "api_key_security_example": []
-                    }
-                ]
+                }
             }
         },
         "api/payment/atmPayment": {
@@ -256,12 +291,7 @@
                     "422": {
                         "description": "Missing Data"
                     }
-                },
-                "security": [
-                    {
-                        "api_key_security_example": []
-                    }
-                ]
+                }
             }
         },
         "api/users/login/": {
