@@ -18,4 +18,7 @@ class Cart extends Model
         'created_at'
     ];
     use HasFactory;
+    public function book() {
+        return $this->belongsTo('\App\Models\Book');
+    }
 }

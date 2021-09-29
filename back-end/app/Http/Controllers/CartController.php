@@ -17,6 +17,33 @@ class CartController extends Controller
         $login =  auth()->user();
         if($login){
             $cart = Cart::where('userId', $login->id)->get();
+            
+            foreach($cart as $c){
+                if($c->type == "book"){
+                    $promotion = DB::table('book')->where('id',$c->product_id)->value('promotion');
+                    if($promotion > 0){
+                        $book = DB::table('book')->where('id',$c->product_id)->value('promotion_price');
+                        $c->total = $book * $c->quantity;
+                    }
+                    else{
+                        $book = DB::table('book')->where('id',$c->product_id)->value('Initial_price');
+                        $c->total = $book * $c->quantity;
+                    }
+                    
+                }
+                else{
+                    $promotion = DB::table('course')->where('id',$c->product_id)->value('promotion');
+                    if($promotion > 0){
+                        $course = DB::table('course')->where('id',$c->product_id)->value('promotion_price');
+                        $c->total = $course;
+                    }
+                    else{
+                        $course = DB::table('course')->where('id',$c->product_id)->value('Initial_price');
+                        $c->total = $course;
+                    }
+                    
+                }
+            }
             return response()->json(
                 [
                     'success'=>1,
