@@ -15,6 +15,86 @@
         "http"
     ],
     "paths": {
+        "api/admin/blockAccount/": {
+            "post": {
+                "description": "Return a user's information",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Your email",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Your password(length>8)",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "email_verified_at": {
+                                    "type": "datetime"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                },
+                                "avatar": {
+                                    "type": "string"
+                                },
+                                "nameAccount": {
+                                    "type": "string"
+                                },
+                                "linkFB": {
+                                    "type": "string"
+                                },
+                                "phone": {
+                                    "type": "string"
+                                },
+                                "address": {
+                                    "type": "string"
+                                },
+                                "birthday": {
+                                    "type": "datetime"
+                                },
+                                "sex": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "id not found!"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "api/ITinTeach/getITinTeach": {
             "get": {
                 "description": "get file IT i Teach",
@@ -670,6 +750,96 @@
                     },
                     "422": {
                         "description": "Missing Data"
+                    }
+                }
+            }
+        },
+        "api/admin/loginAdmin/": {
+            "post": {
+                "description": "Return a user's information",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Your email",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Your password(length>8)",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login successfully",
+                        "schema": {
+                            "properties": {
+                                "access_token": {
+                                    "type": "string"
+                                },
+                                "token_type": {
+                                    "type": "string"
+                                },
+                                "expires_in": {
+                                    "type": "integer"
+                                },
+                                "user": {
+                                    "type": "object"
+                                },
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "email_verified_at": {
+                                    "type": "datetime"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                },
+                                "avatar": {
+                                    "type": "string"
+                                },
+                                "nameAccount": {
+                                    "type": "string"
+                                },
+                                "linkFB": {
+                                    "type": "string"
+                                },
+                                "phone": {
+                                    "type": "string"
+                                },
+                                "address": {
+                                    "type": "string"
+                                },
+                                "birthday": {
+                                    "type": "datetime"
+                                },
+                                "sex": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "level": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized!"
                     }
                 }
             }

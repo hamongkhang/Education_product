@@ -9,6 +9,7 @@ use App\Jobs\SendEmail;
 use App\Models\User;
 use App\Models\UserCode;
 use App\Models\ForgotCode;
+use App\Models\AdminAccount;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
@@ -23,7 +24,7 @@ class UsersController extends Controller
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['onLogin', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
+        $this->middleware('auth:api', ['except' => ['onLogin','loginAdmin', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
      /**
      * @SWG\POST(
@@ -725,5 +726,81 @@ class UsersController extends Controller
         }
     }       
 
+
+     /**
+     * @SWG\POST(
+     *     path="api/admin/loginAdmin/",
+     *     description="Return a user's information",
+     *     @SWG\Parameter(
+     *         name="email",
+     *         in="query",
+     *         type="string",
+     *         description="Your email",
+     *         required=true,
+     *     ),
+     *  @SWG\Parameter(
+     *         name="password",
+     *         in="query",
+     *         type="string",
+     *         description="Your password(length>8)",
+     *         required=true,
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="login successfully",
+     *         @SWG\Schema(
+     *             @SWG\Property(property="access_token", type="string"),
+     *             @SWG\Property(property="token_type", type="string"),
+     *             @SWG\Property(property="expires_in", type="integer"),
+     *             @SWG\Property(property="user", type="object"),
+     *             @SWG\Property(property="id", type="integer"),
+     *             @SWG\Property(property="message", type="string"),
+     *             @SWG\Property(property="email", type="string"),
+     *             @SWG\Property(property="email_verified_at", type="datetime"),
+     *             @SWG\Property(property="created_at", type="timestamp"),
+     *             @SWG\Property(property="updated_at", type="timestamp"),
+     *             @SWG\Property(property="avatar", type="string"),
+     *             @SWG\Property(property="nameAccount", type="string"),
+     *             @SWG\Property(property="linkFB", type="string"),
+     *             @SWG\Property(property="phone", type="string"),
+     *             @SWG\Property(property="address", type="string"),
+     *             @SWG\Property(property="birthday", type="datetime"),
+     *             @SWG\Property(property="sex", type="string"),
+     *             @SWG\Property(property="status", type="string"),
+     *             @SWG\Property(property="level", type="string"),
+     *            )
+     *     ),
+     *     @SWG\Response(
+     *         response=401,
+     *         description="Unauthorized!"
+     *     )
+     * )
+     */
+    public function loginAdmin(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email',
+            'password' => 'required|string|min:8',
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);      
+        }
+        if (($request->email!=="web.vatly365@gmail.com")||($request->password!=="vatli365")) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        if (! $token = auth()->attempt($validator->validated())) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        if (auth()->user()->status==="block") {
+            return response()->json(['error' => 'Blocked'], 401);
+        }
+        $adminFind = DB::table('admin_account')->where('id', 1)->first();
+        $dataRespon=response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60,
+            'user' => $adminFind
+        ]);
+        return $dataRespon; 
+        }
 }
 
