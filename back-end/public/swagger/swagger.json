@@ -15,6 +15,180 @@
         "http"
     ],
     "paths": {
+        "api/comment/addComment/": {
+            "post": {
+                "description": "Return a comment of client",
+                "parameters": [
+                    {
+                        "name": "message",
+                        "in": "query",
+                        "description": "Your message",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lessonId",
+                        "in": "query",
+                        "description": "id of lesson",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "userId": {
+                                    "type": "integer"
+                                },
+                                "lessonId": {
+                                    "type": "integer"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/comment/getComment/": {
+            "get": {
+                "description": "Return a comment of client",
+                "parameters": [
+                    {
+                        "name": "lessonId",
+                        "in": "query",
+                        "description": "id of lesson",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "userId": {
+                                    "type": "integer"
+                                },
+                                "lessonId": {
+                                    "type": "integer"
+                                },
+                                "id_reply": {
+                                    "type": "integer"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/comment/replyComment/": {
+            "post": {
+                "description": "Return a comment of client",
+                "parameters": [
+                    {
+                        "name": "message",
+                        "in": "query",
+                        "description": "Your message",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lessonId",
+                        "in": "query",
+                        "description": "id of lesson",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "id_reply",
+                        "in": "query",
+                        "description": "id of comment",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "userId": {
+                                    "type": "integer"
+                                },
+                                "lessonId": {
+                                    "type": "integer"
+                                },
+                                "id_reply": {
+                                    "type": "integer"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "api/ITinTeach/getITinTeach": {
             "get": {
                 "description": "get file IT i Teach",
@@ -79,7 +253,12 @@
                     "422": {
                         "description": "Missing Data"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         },
         "api/payment/checkResult": {
@@ -99,7 +278,12 @@
                     "422": {
                         "description": "Missing Data"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         },
         "api/payment/atmPayment": {
@@ -119,7 +303,12 @@
                     "422": {
                         "description": "Missing Data"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         },
         "api/users/login/": {
