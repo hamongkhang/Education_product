@@ -59,3 +59,6 @@ Route::get('/teacher/getTeacher', [App\Http\Controllers\TeacherController::class
 /* Api Admin */
 Route::post('/admin/loginAdmin', [App\Http\Controllers\UsersController::class, 'loginAdmin'])->name('admin.loginAdmin');
 Route::post('/admin/blockAccount', [App\Http\Controllers\AdminController::class, 'blockAccount'])->name('admin.loginAdmin');
+/* Api Free Document */
+Route::post('/freeDocument/getFreeDocument', [App\Http\Controllers\FreeDocumentController::class, 'getFreeDocument'])->name('freeDocument.getFreeDocument');
+//Route::post('/freeDocument/blockAccount', [App\Http\Controllers\FreeDocumentController::class, 'blockAccount'])->name('freeDocument.loginAdmin');
