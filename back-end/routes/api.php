@@ -54,3 +54,5 @@ Route::get('/comment/getComment', [App\Http\Controllers\CommentController::class
 Route::post('/comment/replyComment', [App\Http\Controllers\CommentController::class, 'replyComment'])->name('comment.replyComment');
 /* Api News */
 Route::get('/news/getNews', [App\Http\Controllers\NewsController::class, 'getNews'])->name('news.getNews');
+/* Api Teacher */
+Route::get('/teacher/getTeacher', [App\Http\Controllers\TeacherController::class, 'getTeacher'])->name('teacher.getTeacher');
