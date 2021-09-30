@@ -46,3 +46,15 @@ Route::post('/payment/momoPayment', [App\Http\Controllers\PaymentController::cla
 Route::post('/payment/checkResult', [App\Http\Controllers\PaymentController::class, 'checkResult'])->name('payment.checkResult');
 Route::post('/payment/atmPayment', [App\Http\Controllers\PaymentController::class, 'atmPayment'])->name('payment.atmPayment');
 //Route::post('/payment/checkResultATM', [App\Http\Controllers\PaymentController::class, 'checkResultATM'])->name('payment.checkResultATM');
+
+Route::get('/getBookTypes', [App\Http\Controllers\BookTypeController::class, 'getAllBookTypes'])->name('booktype.get');
+Route::post('/getOneBookType', [App\Http\Controllers\BookTypeController::class, 'getOneBookType'])->name('booktype.getOne');
+Route::post('/addBookType', [App\Http\Controllers\BookTypeController::class, 'addBookType'])->name('booktype.add');
+Route::post('/updateBookType', [App\Http\Controllers\BookTypeController::class, 'updateBookType'])->name('booktype.update');
+Route::post('/deleteBookType', [App\Http\Controllers\BookTypeController::class, 'deleteBookType'])->name('booktype.delete');
+
+Route::get('/getBooks', [App\Http\Controllers\BookController::class, 'getAllBooks'])->name('book.get');
+Route::post('/getOneBook', [App\Http\Controllers\BookController::class, 'getOneBook'])->name('book.getOne');
+Route::post('/addBook', [App\Http\Controllers\BookController::class, 'addBook'])->name('book.add');
+Route::post('/updateBook', [App\Http\Controllers\BookController::class, 'updateBook'])->name('book.update');
+Route::post('/deleteBook', [App\Http\Controllers\BookController::class, 'deleteBook'])->name('book.delete');

@@ -748,6 +748,459 @@
                     }
                 }
             }
+        },
+        "api/getAllBookType/": {
+            "get": {
+                "description": "Trả về toàn bộ type của sách",
+                "parameters": [
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về toàn bộ types của sách",
+                        "schema": {
+                            "properties": {
+                                "book_types":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/getOneBookType/": {
+            "post": {
+                "description": "Trả về một type của sách",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Id của type sách đó",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về một type của sách",
+                        "schema": {
+                            "properties": {
+                                "book_type":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/addBookType/": {
+            "post": {
+                "description": "Trả về một type của sách",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Tên kiểu sách",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về type của sách vừa mới thêm",
+                        "schema": {
+                            "properties": {
+                                "book_type":{
+                                    "type": "object"
+                                },
+                                "success":{
+                                    "type":"integer"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Lỗi validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/updateBookType/": {
+            "post": {
+                "description": "Trả về một type của sách",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID kiểu sách",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Tên kiểu sách",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về type của sách vừa mới cập nhật",
+                        "schema": {
+                            "properties": {
+                                "book_type":{
+                                    "type": "object"
+                                },
+                                "success":{
+                                    "type":"integer"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Lỗi validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/deleteBookType/": {
+            "post": {
+                "description": "Xóa một type sách",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID kiểu sách",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về thông báo mới xóa",
+                        "schema": {
+                            "properties": {
+                                "success":{
+                                    "type":"integer"
+                                },
+                                "description":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Lỗi validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/getAllBook/": {
+            "get": {
+                "description": "Trả về toàn bộ sách",
+                "parameters": [
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về toàn bộ sách",
+                        "schema": {
+                            "properties": {
+                                "books":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/getOneBook/": {
+            "post": {
+                "description": "Trả về một sách",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Id của sách",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về một type của sách",
+                        "schema": {
+                            "properties": {
+                                "book_type":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Lỗi validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/addBook/": {
+            "post": {
+                "description": "Trả về một sách đã thêm",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Tên sách",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Initial_price",
+                        "in": "query",
+                        "description": "Giá gốc sách",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "promotion",
+                        "in": "query",
+                        "description": "phần trăm giảm giá",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "link ảnh",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": " Kiểu sách",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "page_number",
+                        "in": "query",
+                        "description": "số trang",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "author",
+                        "in": "query",
+                        "description": "tác giả",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Mô tả",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về sách vừa mới thêm",
+                        "schema": {
+                            "properties": {
+                                "book":{
+                                    "type": "object"
+                                },
+                                "success":{
+                                    "type":"integer"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Lỗi validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/updateBook/": {
+            "post": {
+                "description": "Trả về một sách đã chỉnh sửa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID sách",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Tên sách",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Initial_price",
+                        "in": "query",
+                        "description": "Giá gốc sách",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "promotion",
+                        "in": "query",
+                        "description": "phần trăm giảm giá",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "link ảnh",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": " Kiểu sách",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "page_number",
+                        "in": "query",
+                        "description": "số trang",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "trạng thái: active và block",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "author",
+                        "in": "query",
+                        "description": "tác giả",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Mô tả",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về sách vừa mới sửa",
+                        "schema": {
+                            "properties": {
+                                "book":{
+                                    "type": "object"
+                                },
+                                "success":{
+                                    "type":"integer"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Lỗi validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/deleteBook/": {
+            "post": {
+                "description": "Xóa một sách",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID kiểu sách",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về thông báo mới xóa",
+                        "schema": {
+                            "properties": {
+                                "success":{
+                                    "type":"integer"
+                                },
+                                "description":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Lỗi validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {}
