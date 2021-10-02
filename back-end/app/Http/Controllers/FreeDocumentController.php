@@ -334,4 +334,39 @@ else{
 }
     }
 
+    public function blockActiveFreeDocument($id){
+        $adminFind = auth()->user();
+        if (($adminFind->email==="web.vatly365@gmail.com")){
+            $freeDocumentFind = DB::table('free_document')->where('id', $id)->first();
+            if ($freeDocumentFind){ 
+                if ($freeDocumentFind->status==="Block"){
+                    DB::table('free_document')->where('id', $freeDocumentFind->id)->update(['status'	=>	"Active"]);  
+                    $freeDocumentRespon = DB::table('free_document')->where('id', $id)->first();
+                    return response()->json([
+                        'message' => 'successfully',
+                        'user' => $freeDocumentRespon
+                    ], 201);
+                }
+                else{
+                    DB::table('free_document')->where('id', $freeDocumentFind->id)->update(['status'	=>	"Block"]);  
+                    $freeDocumentRespon = DB::table('free_document')->where('id', $id)->first();
+                    return response()->json([
+                        'message' => 'successfully',
+                        'user' => $freeDocumentRespon
+                    ], 201);
+                }
+            }
+            else{
+                return response()->json([
+                    'error' => 'id not found'
+                ], 401); 
+            }
+        }
+        else{
+            return response()->json([
+                'error' => 'admin not found'
+            ], 401); 
+        }
+    }
+
 }
