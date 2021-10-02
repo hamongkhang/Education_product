@@ -92,7 +92,6 @@ class UsersController extends Controller
         }
         return $this->createNewToken($token); 
     }
-    
     /**
      * Get the token array structure.
      *
