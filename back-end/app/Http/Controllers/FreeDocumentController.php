@@ -334,6 +334,33 @@ else{
 }
     }
 
+    /**
+     * @SWG\POST(
+     *     path="api/freeDocument/blockActiveFreeDocument/{id}",
+     *     description="Return freeDocument's informaion.",
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Successfully",
+     *         @SWG\Schema(
+     *             @SWG\Property(property="id", type="integer"),
+     *             @SWG\Property(property="name", type="integer"),
+     *             @SWG\Property(property="file", type="string"),
+     *             @SWG\Property(property="category_id", type="integer"),
+     *             @SWG\Property(property="path", type="string"),
+     *             @SWG\Property(property="status", type="string"),
+     *             @SWG\Property(property="created_at", type="timestamp"),
+     *             @SWG\Property(property="updated_at", type="timestamp"),
+     *            )
+     *     ),
+     *     @SWG\Response(
+     *         response=401,
+     *         description="Missing Data"
+     *     ),
+     * security={
+     *           {"api_key_security_example": {}}
+     *       }
+     * )
+     */
     public function blockActiveFreeDocument($id){
         $adminFind = auth()->user();
         if (($adminFind->email==="web.vatly365@gmail.com")){
