@@ -7,6 +7,7 @@ import CourseDetails from './courseDetails';
 import Books from './books';
 import { Login, Register, ForgotPassword, CodeVerification, ResetPassword } from '../../components/account';
 import Home from './home';
+import ITinTeaching from './ITinTeaching';
 const HomePages = (props) => {
     return (
         <>
@@ -22,9 +23,7 @@ const HomePages = (props) => {
                 <Route path="/khoa-hoc/khoa-hoc-1" exact component={CourseDetails} />
                 <Route path="/khoa-hoc" exact component={Courses} />
                 <Route path="/tin-tuc" exact component={Articles} />
-
-                {/* Route profile */}
-
+                <Route path="/it-trong-day-hoc" exact component={ITinTeaching} />
                 <Route path="/" exact component={Home} />
             </div>
         </>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const ITinTeaching = (props) => {
+const ITinTeachingList = (props) => {
     return (
         <div className="w-full object-cover rounded-lg overflow-hidden mt-5">
             <h3 className="text-center font-semibold text-3xl uppercase mb-10">CNTT trong dạy học</h3>
@@ -31,4 +31,4 @@ const ITinTeaching = (props) => {
         </div>
     )
 }
-export default ITinTeaching
+export default ITinTeachingList

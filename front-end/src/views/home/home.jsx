@@ -3,7 +3,7 @@ import About from '../../components/about'
 import { ArticleList } from '../../components/articles'
 import { CourseList } from '../../components/courses'
 import { BannerHome } from '../../components/banner'
-import ITinTeaching from '../../components/ITinTeaching'
+import ITinTeachingList from '../../components/ITinTeaching'
 import Sidebar from '../../components/sidebar'
 import Teachers from '../../components/teachers'
 import { BookList } from '../../components/books'
@@ -24,7 +24,7 @@ const Home = (props) => {
                     </div>
                 </div>
                 <About/>
-                <ITinTeaching/>
+                <ITinTeachingList/>
                 <BookList/>
                 <RegisterHome/>
                 <Teachers/>
