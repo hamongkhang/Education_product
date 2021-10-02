@@ -73,19 +73,15 @@ class AdminController extends Controller
      *           {"api_key_security_example": {}}
      *       }
      * )
-     */ 
-    public function blockAccount(Request $request){
-        $validator = Validator::make($request->all(), [
-            'id' => 'required|numeric|digits_between:1,11'
-        ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);      
-        }
-        $userFind = DB::table('users')->where('id', $request->id)->first();
+     */
+    public function blockAccount($id){
+        $adminFind = auth()->user();
+        if (($adminFind->email==="web.vatly365@gmail.com")){
+        $userFind = DB::table('users')->where('id', $id)->first();
         if ($userFind){
             if ($userFind->status==="Block"){
                 DB::table('users')->where('id', $userFind->id)->update(['status'	=>	"Active"]);  
-                $userRespon = DB::table('users')->where('id', $request->id)->first();
+                $userRespon = DB::table('users')->where('id', $id)->first();
                 return response()->json([
                     'message' => 'successfully',
                     'user' => $userRespon
@@ -93,7 +89,7 @@ class AdminController extends Controller
             }
             else{
                 DB::table('users')->where('id', $userFind->id)->update(['status'	=>	"Block"]);  
-                $userRespon = DB::table('users')->where('id', $request->id)->first();
+                $userRespon = DB::table('users')->where('id', $id)->first();
                 return response()->json([
                     'message' => 'successfully',
                     'user' => $userRespon
@@ -105,6 +101,12 @@ class AdminController extends Controller
                 'error' => 'id not found'
             ], 401); 
         }
+    }
+    else{
+        return response()->json([
+            'error' => 'admin not found'
+        ], 401); 
+    }
     }    
 
 
