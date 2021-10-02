@@ -33,7 +33,7 @@ const UserProfileHeader = (props) => {
                         <Link to="/tai-khoan/khoa-hoc" className="hover:text-green-500 duration-200 px-1 xs:px-0 mt-5 xs:my-0 my-1.5 block">Khóa học</Link>
                     </div>
                     <div>
-                        <Link to="/tai-khoan/lich-su-mua" className="hover:text-green-500 duration-200 px-1 xs:px-0 xs:my-0 my-1.5 block">Lịch sử mua</Link>
+                        <Link to="/tai-khoan/don-hang" className="hover:text-green-500 duration-200 px-1 xs:px-0 xs:my-0 my-1.5 block">Lịch sử mua</Link>
                     </div>
                     <div>
                         <Link to="/tai-khoan/thong-tin" className="hover:text-green-500 duration-200 px-1 xs:px-0 xs:my-0 my-1.5 block">Tài khoản</Link>
