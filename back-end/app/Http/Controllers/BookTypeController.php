@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\BookType;
+use App\Models\Cart;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 
 class BookTypeController extends Controller
 {
@@ -33,6 +36,8 @@ class BookTypeController extends Controller
        
     }
     public function addBookType(Request $request){
+        $login = auth()->user();
+        if($login->is_admin == true){
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:1|max:255|unique:book_type,name',
         ]);
@@ -49,7 +54,16 @@ class BookTypeController extends Controller
             'book_type'=>$book_type,
         ], 201);
     }
+    else{
+        return response()->json([
+            'error'=>1,
+            'description'=>'account login is not admin',
+        ], 401);
+    }
+    }
     public function updateBookType(Request $request){
+        $login = auth()->user();
+        if($login->is_admin == true){
         $validator = Validator::make($request->all(), [
             'id'    => 'required',
             'name' => 'required|min:1|max:255|string',
@@ -72,18 +86,43 @@ class BookTypeController extends Controller
                 'error'=>'Not found',
             ], 404);
         }
+        }
+        else{
+            return response()->json([
+                'error'=>1,
+                'description'=>'account login is not admin',
+            ], 401);
+        }
     }
     public function deleteBookType(Request $request){
-        $validator = Validator::make($request->all(), [
-            'id' => 'required|exists:book_type,id',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['error'=>$validator->errors()], 400);      
-        }
-        $book_type = BookType::find($request->id)->delete();
-      
+        $login = auth()->user();
+        if($login->is_admin == true){
+            $validator = Validator::make($request->all(), [
+                'id' => 'required|exists:book_type,id',
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['error'=>$validator->errors()], 400);      
+            }
+            $book_type = BookType::find($request->id);
+            $book = Book::where('type',$request->id);
+            $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'book_images';
+
+            foreach($book->get() as $b){
+                $cart = Cart::where('product_id',$b->id)->where('type','book')->delete();
+                File::delete($destinationPath.'/'.$b->image);
+            }
+           
+            $book -> delete();
+            $book_type->delete();
+                return response()->json([
+                    'success'=>1,
+                ], 200);
+            }
+        else{
             return response()->json([
-                'success'=>1,
-            ], 200);
+                'error'=>1,
+                'description'=>'account login is not admin',
+            ], 401);
+        }
     }
 }

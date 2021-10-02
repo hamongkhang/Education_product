@@ -58,3 +58,4 @@ Route::post('/getOneBook', [App\Http\Controllers\BookController::class, 'getOneB
 Route::post('/addBook', [App\Http\Controllers\BookController::class, 'addBook'])->name('book.add');
 Route::post('/updateBook', [App\Http\Controllers\BookController::class, 'updateBook'])->name('book.update');
 Route::post('/deleteBook', [App\Http\Controllers\BookController::class, 'deleteBook'])->name('book.delete');
+Route::post('/changeBookStatus', [App\Http\Controllers\BookController::class, 'changeStatus'])->name('book.status');

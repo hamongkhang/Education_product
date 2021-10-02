@@ -978,6 +978,13 @@
                 "description": "Trả về một sách đã thêm",
                 "parameters": [
                     {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin đăng nhập",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
                         "name": "name",
                         "in": "query",
                         "description": "Tên sách",
@@ -1065,6 +1072,13 @@
             "post": {
                 "description": "Trả về một sách đã chỉnh sửa",
                 "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin đăng nhập",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "name": "id",
                         "in": "query",
@@ -1168,6 +1182,13 @@
                 "description": "Xóa một sách",
                 "parameters": [
                     {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin đăng nhập",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
                         "name": "id",
                         "in": "query",
                         "description": "ID kiểu sách",
@@ -1195,6 +1216,65 @@
                             "properties": {
                                 "error":{
                                     "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/changeBookStatus/": {
+            "post": {
+                "description": "Đổi trạng thái của sách",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin đăng nhập",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID kiểu sách",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về thông báo mới xóa",
+                        "schema": {
+                            "properties": {
+                                "success":{
+                                    "type":"integer"
+                                },
+                                "description":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Lỗi validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Lỗi đăng nhập",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                },
+                                "description":{
+                                    "type": "string"
                                 }
                             }
                         }
