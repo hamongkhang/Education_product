@@ -3,7 +3,7 @@ import React from 'react'
 const SearchBox = (props) => {
     return (
         <div>
-            <div className="search-area fixed transform -translate-y-full duration-300 top-0 right-0 left-0 z-40 bg-white h-2/5">
+            <div className="search-area hidden fixed transform -translate-y-full duration-300 top-0 right-0 left-0 z-40 bg-white h-2/5">
                 <div className="text-center text-3xl font-semibold uppercase my-10">Tìm kiếm</div>
                 <div>
                     <form action="#" className="px-10 relative">

@@ -96,7 +96,6 @@ var PATH = {};
         }
 
         $('.search-open').on('click', function() {
-            console.log('ok');
             searchArea.removeClass('-translate-y-full');
             searchArea.addClass('translate-y-0');
             searchOverlay.removeClass('translate-y-full');

@@ -2,7 +2,7 @@ import React from 'react'
 
 const RegisterHome = (props) => {
     return(
-        <section className="rounded-lg relative overflow-hidden shadow-md w-full py-10 m-0 bg-cover bg-center  bg-no-repeat" style={{backgroundImage: `url("./assets/images/bg/contact.jfif")`}}>
+        <section className="rounded-lg relative overflow-hidden shadow-md w-full py-10 m-0 bg-cover bg-center  bg-no-repeat" style={{backgroundImage: `url("./assets/images/bg/about.jpg")`}}>
             {/* <div className="absolute md:h-32 md:w-32 h-10 w-10 bg-pink-600 top-10 md:-left-16 -left-2 transform rotate-180 animate-spin" />
             <div className="absolute md:h-20 md:w-20 h-10 w-10 bg-indigo-600 top-10 right-4 transform animate-bounce rounded-full" />
             <div className="absolute bottom-8 md:right-8 right-2/4 transform animate-spin -translate-x-3/4 -translate-y-3/4 text-7xl">

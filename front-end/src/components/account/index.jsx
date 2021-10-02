@@ -5,5 +5,6 @@ import Register from "./register";
 import ForgotPassword from "./forgotPassword";
 import ResetPassword from "./resetPassword";
 import CodeVerification from "./codeVerification";
+import LoginName from "./loginName";
 
-export { RegisterHome, Register, Login, ForgotPassword, CodeVerification, ResetPassword };
+export { RegisterHome, Register, Login, ForgotPassword, CodeVerification, ResetPassword, LoginName };

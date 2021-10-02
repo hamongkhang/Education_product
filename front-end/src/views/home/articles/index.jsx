@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { ArticleItem } from '../../components/articles'
-import { BannerBook } from '../../components/banner'
+import { ArticleItem } from '../../../components/articles'
+import { BannerBook } from '../../../components/banner'
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
@@ -51,23 +51,23 @@ const arr = [
 ]
 
 const Articles = (props) => {
-    const [show, setShow] = useState(6);
+    const [show, setShow] = useState(4);
     const [arr1, setArr1] = useState([]);
     const [pageItem, setPageItem] = useState(1);
     const [page, setPage] = useState(0);
     const handleChange = (event, value) => {
         setPageItem(value);
-        renderBooks(value);
+        renderArticles(value);
     };
 
-    const renderBooks = (value = 1) => {
+    const renderArticles = (value = 1) => {
         let end = value * show,
         start = end - show;
         setArr1(arr.slice(start, end));
     }
     useEffect(() => {
         setPage(parseInt(arr.length/show + 1));
-        renderBooks();
+        renderArticles();
     }, [])
     return (
         <>
@@ -94,6 +94,7 @@ const Articles = (props) => {
                             </button>
                         </form>
                     </div>
+
                     <div className="space-y-3 py-5 mt-8 border-b-2 border-gray-400 space-y-4 rounded-md shadow-lg">
                         <div className="uppercase font-medium px-5">
                             Thể Loại bài viết
