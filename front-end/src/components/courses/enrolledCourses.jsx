@@ -65,11 +65,11 @@ const EnrolledCourses = (props) => {
         renderCourses();
     }, [])
     return (
-        <div className="w-11/12 mx-auto">
+        <div className="">
             <div className="flex flex-col md:flex-row items-start justify-between uppercase font-semibold mt-5">
                 <div className="text-xl sm:text-2xl">Các khóa học đã đăng ký</div>
                 <div>
-                    <input type="text" className="px-3 py-2 border-2 rounded w-80" placeholder="Tìm kiếm"/>
+                    <input type="text" className="px-3 py-2 border-2 hover:border-gray-400 rounded w-80 outline-none focus:border-indigo-500" placeholder="Tìm kiếm"/>
                 </div>
             </div>
             <div className="grid grid-cols-1 xs:grid-cols-2 sm1:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-6 my-4">
