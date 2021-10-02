@@ -144,6 +144,8 @@ class TeacherController extends Controller
      * )
      */
     public function createTeacher(Request $request){
+        $adminFind = auth()->user();
+        if (($adminFind->email==="web.vatly365@gmail.com")){
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
             'position' => 'required',
@@ -184,6 +186,12 @@ class TeacherController extends Controller
         {
               return response()->json(["message" => "Upload Failed"]);
         }
+    }
+    else{
+        return response()->json([
+            'error' => 'admin not found'
+        ], 401); 
+    }
     }
 /**
      * @SWG\POST(
@@ -272,6 +280,8 @@ class TeacherController extends Controller
      * )
      */
 public function updateTeacher($id,Request $request){
+    $adminFind = auth()->user();
+    if (($adminFind->email==="web.vatly365@gmail.com")){
     $validator = Validator::make($request->all(), [
         'name' => 'max:255',
         'position' => '',
@@ -365,6 +375,12 @@ public function updateTeacher($id,Request $request){
     return Response()->json(array("error!"=> 401,"message"=>"Id Not Found" ));
 }
 }
+else{
+    return response()->json([
+        'error' => 'admin not found'
+    ], 401); 
+}
+}
 
 /**
      * @SWG\POST(
@@ -397,6 +413,8 @@ public function updateTeacher($id,Request $request){
      * )
      */
     public function destroyTeacher($id){
+        $adminFind = auth()->user();
+        if (($adminFind->email==="web.vatly365@gmail.com")){
         $teacherFind= Teacher::find($id);
         if ($teacherFind){
         $teacherFind->delete();
@@ -406,5 +424,11 @@ public function updateTeacher($id,Request $request){
     else{
         return response()->json(["message" => "Delete failed"]);
     }
+}
+else{
+    return response()->json([
+        'error' => 'admin not found'
+    ], 401); 
+}
     }
 }
