@@ -307,6 +307,187 @@
                 }
             }
         },
+        "api/freeDocument/createFreeDocument/": {
+            "post": {
+                "description": "Return teacher's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Document name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "file",
+                        "in": "query",
+                        "description": "Document file",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "category",
+                        "in": "query",
+                        "description": "Category's id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "category_id": {
+                                    "type": "integer"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/freeDocument/updateFreeDocument/{id}": {
+            "post": {
+                "description": "Return free Document's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Fr\u00ea Document's Name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "category",
+                        "in": "query",
+                        "description": "Free Document's Type",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "file",
+                        "in": "query",
+                        "description": "Free Document's File",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "category_id": {
+                                    "type": "integer"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/freeDocument/destroyFreeDocument/{id}": {
+            "post": {
+                "description": "Return freeDocument's informaion.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "category_id": {
+                                    "type": "integer"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "api/ITinTeach/getITinTeach": {
             "get": {
                 "description": "get file IT i Teach",
