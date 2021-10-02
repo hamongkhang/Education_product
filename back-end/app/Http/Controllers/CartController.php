@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Book;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 class CartController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['getCart']]);
+        $this->middleware('auth:api', ['except' => ['getCart','addCart']]);
     }
     public function getCart(Request $request) {
         $login =  auth()->user();
@@ -113,7 +115,7 @@ class CartController extends Controller
                 return response()->json(
                     [
                         'success'=>1,
-                        'description'=> 'added success',
+                        'description'=> 'added',
                         'cart'=> $findCart
                     ], 200);
             }
@@ -124,7 +126,7 @@ class CartController extends Controller
                 return response()->json(
                     [
                         'success'=>1,
-                        'description'=> 'added success',
+                        'description'=> 'added',
                         'cart'=> $findCart
                     ], 200);
             }
@@ -142,7 +144,7 @@ class CartController extends Controller
             return response()->json(
                 [
                     'success'=>1,
-                    'description'=> 'added success',
+                    'description'=> 'added',
                     'cart'=> $cart
                 ], 200);
         }
@@ -183,7 +185,7 @@ class CartController extends Controller
                     return response()->json(
                         [
                             'success'=>1,
-                            'description'=> 'deleted success',
+                            'description'=> 'deleted',
                             'cart'=> $findCart
                         ], 200);
                 }
@@ -193,7 +195,7 @@ class CartController extends Controller
                 return response()->json(
                     [
                         'success'=>1,
-                        'description'=> 'updated success',
+                        'description'=> 'updated',
                     ], 200);
             }
             else{
@@ -202,16 +204,27 @@ class CartController extends Controller
                     return response()->json(
                         [
                             'success'=>1,
-                            'description'=> 'deleted success',
+                            'description'=> 'deleted',
                         ], 200);
                 }
-                $findCart -> quantity = $request -> quantity;
+                $book_quantity = Book::where('id',$request->product_id)->value('quantity');
+                if($request->quantity <= $book_quantity){
+                    $findCart -> quantity = $request -> quantity;
+                }
+                else{
+                    return response()->json(
+                        [
+                            'error'=>1,
+                            'description'=> 'quantity was too much',
+                            'cart'=>$findCart
+                        ], 422);
+                }
                 $findCart->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
                 $findCart -> save();
                 return response()->json(
                     [
                         'success'=>1,
-                        'description'=> 'updated success',
+                        'description'=> 'updated',
                         'cart'=> $findCart
                     ], 200);
             }
@@ -238,7 +251,7 @@ class CartController extends Controller
             return response()->json(
                 [
                     'success'=>1,
-                    'description'=> 'deleted success'
+                    'description'=> 'deleted'
                 ], 200);
         }
         else{
