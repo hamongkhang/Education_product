@@ -80,7 +80,7 @@ class CartController extends Controller
                 return response()->json(
                     [
                         'block' => 1,
-                        'description'=> 'khóa học đang bị block',
+                        'description'=> 'course is blocked',
                     ], 401);
             }
             
@@ -97,7 +97,7 @@ class CartController extends Controller
                 return response()->json(
                     [
                         'block' => 1,
-                        'description'=> 'sách đang bị block',
+                        'description'=> 'book is blocked',
                     ], 401);
             }
         }
@@ -113,7 +113,7 @@ class CartController extends Controller
                 return response()->json(
                     [
                         'success'=>1,
-                        'description'=> 'thêm vào giỏ hàng thành công',
+                        'description'=> 'added success',
                         'cart'=> $findCart
                     ], 200);
             }
@@ -124,7 +124,7 @@ class CartController extends Controller
                 return response()->json(
                     [
                         'success'=>1,
-                        'description'=> 'thêm vào giỏ hàng thành công',
+                        'description'=> 'added success',
                         'cart'=> $findCart
                     ], 200);
             }
@@ -142,19 +142,17 @@ class CartController extends Controller
             return response()->json(
                 [
                     'success'=>1,
-                    'description'=> 'thêm vào giỏ hàng thành công',
+                    'description'=> 'added success',
                     'cart'=> $cart
                 ], 200);
         }
 
     }
-
-
     public function updateCart(Request $request) {
         $validator = Validator::make($request->all(), [
             'product_id' => 'required',
             'type' => 'required|string',
-            'quantity' => 'required|integer|min:1'
+            'quantity' => 'required|numeric|min:0'
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);      
@@ -180,24 +178,40 @@ class CartController extends Controller
         ->where('type',$request->type) -> first();
         if($findCart){
             if($request->type == 'course'){
+                if($request->quantity == 0){
+                    $findCart->delete();
+                    return response()->json(
+                        [
+                            'success'=>1,
+                            'description'=> 'deleted success',
+                            'cart'=> $findCart
+                        ], 200);
+                }
                 $findCart -> quantity = 1;
                 $findCart->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
                 $findCart -> save();
                 return response()->json(
                     [
                         'success'=>1,
-                        'description'=> 'cập nhật giỏ hàng thành công',
-                        'cart'=> $findCart
+                        'description'=> 'updated success',
                     ], 200);
             }
             else{
+                if($request->quantity == 0){
+                    $findCart->delete();
+                    return response()->json(
+                        [
+                            'success'=>1,
+                            'description'=> 'deleted success',
+                        ], 200);
+                }
                 $findCart -> quantity = $request -> quantity;
                 $findCart->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
                 $findCart -> save();
                 return response()->json(
                     [
                         'success'=>1,
-                        'description'=> 'cập nhật giở hàng thành công',
+                        'description'=> 'updated success',
                         'cart'=> $findCart
                     ], 200);
             }
@@ -205,11 +219,10 @@ class CartController extends Controller
         else{
             return response()->json(
                 [
-                    'error'=> 'không tìm thấy giỏ hàng',
+                    'error'=> 'not found',
                 ], 404);
         }
     }
-    
     public function removeCart(Request $request) {
         $validator = Validator::make($request->all(), [
             'product_id' => 'required',
@@ -225,14 +238,14 @@ class CartController extends Controller
             return response()->json(
                 [
                     'success'=>1,
-                    'description'=> 'xóa thành công cart'
+                    'description'=> 'deleted success'
                 ], 200);
         }
         else{
             return response()->json(
                 [
                     'success'=>0,
-                    'description'=> 'Không tìm thấy cart'
+                    'description'=> 'not found'
                 ], 404);
         }
         
