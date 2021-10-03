@@ -398,6 +398,285 @@
                 }
             }
         },
+        "api/news/createNews/": {
+            "post": {
+                "description": "Return news's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "News name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "file",
+                        "in": "query",
+                        "description": "Document file",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "Type's id",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "News description",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "Image file",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "type_id": {
+                                    "type": "integer"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/news/updateNews/{id}": {
+            "post": {
+                "description": "Return news's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "News name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "file",
+                        "in": "query",
+                        "description": "Document file",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "Type's id",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "News description",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "Image file",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "type_id": {
+                                    "type": "integer"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/news/destroyNews/{id}": {
+            "post": {
+                "description": "Return news's informaion.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "type_id": {
+                                    "type": "integer"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/news/blockActiveNews/{id}": {
+            "post": {
+                "description": "Return news's informaion.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "type_id": {
+                                    "type": "integer"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "api/payment/momoPayment": {
             "post": {
                 "description": "Momo payment",
@@ -749,226 +1028,9 @@
                 ]
             }
         },
-<<<<<<< HEAD
         "api/teacher/destroyTeacher/{id}": {
             "post": {
                 "description": "Return teacher's informaion.",
-=======
-        "api/freeDocument/getFreeDocument/": {
-            "get": {
-                "description": "Return teacher's informaion.",
-                "responses": {
-                    "200": {
-                        "description": "Successfully",
-                        "schema": {
-                            "properties": {
-                                "id": {
-                                    "type": "integer"
-                                },
-                                "category_name": {
-                                    "type": "string"
-                                },
-                                "name": {
-                                    "type": "string"
-                                },
-                                "file": {
-                                    "type": "string"
-                                },
-                                "path": {
-                                    "type": "string"
-                                },
-                                "created_at": {
-                                    "type": "timestamp"
-                                },
-                                "updated_at": {
-                                    "type": "timestamp"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Missing Data"
-                    }
-                }
-            }
-        },
-        "api/ITinTeach/getITinTeach": {
-            "get": {
-                "description": "get file IT i Teach",
->>>>>>> BE
-                "responses": {
-                    "200": {
-                        "description": "Successfully",
-                        "schema": {
-                            "properties": {
-                                "id": {
-                                    "type": "integer"
-                                },
-                                "name": {
-                                    "type": "string"
-                                },
-                                "image": {
-                                    "type": "string"
-                                },
-                                "position": {
-                                    "type": "string"
-                                },
-                                "description": {
-                                    "type": "string"
-                                },
-                                "phone": {
-                                    "type": "string"
-                                },
-                                "facebook": {
-                                    "type": "string"
-                                },
-                                "skype": {
-                                    "type": "string"
-                                },
-                                "youtube": {
-                                    "type": "string"
-                                },
-                                "created_at": {
-                                    "type": "timestamp"
-                                },
-                                "updated_at": {
-<<<<<<< HEAD
-                                    "type": "timestamp"
-=======
-                                    "type": "datetime"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Missing Data"
-                    }
-                }
-            }
-        },
-        "api/news/getNews": {
-            "get": {
-                "description": "get news of news type",
-                "responses": {
-                    "200": {
-                        "description": "Successfully",
-                        "schema": {
-                            "properties": {
-                                "id": {
-                                    "type": "integer"
-                                },
-                                "type_name": {
-                                    "type": "string"
-                                },
-                                "description": {
-                                    "type": "string"
-                                },
-                                "file": {
-                                    "type": "string"
-                                },
-                                "path": {
-                                    "type": "string"
-                                },
-                                "image": {
-                                    "type": "string"
-                                },
-                                "status": {
-                                    "type": "string"
-                                },
-                                "created_at": {
-                                    "type": "datetime"
-                                },
-                                "updated_at": {
-                                    "type": "datetime"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Don't find id type !!!"
-                    }
-                }
-            }
-        },
-        "api/payment/momoPayment": {
-            "post": {
-                "description": "Momo payment",
-                "responses": {
-                    "200": {
-                        "description": "Successfully",
-                        "schema": {
-                            "properties": {
-                                "url": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Missing Data"
-                    }
-                },
-                "security": [
-                    {
-                        "api_key_security_example": []
-                    }
-                ]
-            }
-        },
-        "api/payment/checkResult": {
-            "post": {
-                "description": "Momo payment",
-                "responses": {
-                    "200": {
-                        "description": "Successfully",
-                        "schema": {
-                            "properties": {
-                                "response": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Missing Data"
-                    }
-                },
-                "security": [
-                    {
-                        "api_key_security_example": []
-                    }
-                ]
-            }
-        },
-        "api/payment/atmPayment": {
-            "post": {
-                "description": "Atm payment",
-                "responses": {
-                    "200": {
-                        "description": "Successfully",
-                        "schema": {
-                            "properties": {
-                                "url": {
-                                    "type": "string"
->>>>>>> BE
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Missing Data"
-                    }
-                },
-                "security": [
-                    {
-                        "api_key_security_example": []
-                    }
-                ]
-            }
-        },
-        "api/teacher/getTeacher/": {
-            "get": {
-                "description": "Return teacher's informaion.",
                 "responses": {
                     "200": {
                         "description": "Successfully",
@@ -1013,7 +1075,12 @@
                     "401": {
                         "description": "Missing Data"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         },
         "api/users/login/": {
