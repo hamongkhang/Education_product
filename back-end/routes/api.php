@@ -69,3 +69,7 @@ Route::post('/freeDocument/getFreeDocument', [App\Http\Controllers\FreeDocumentC
 Route::post('/freeDocumentCategory/createFreeDocumentCategory', [App\Http\Controllers\FreeDocumentCategoryController::class, 'createFreeDocumentCategory'])->name('freeDocumentCategory.createFreeDocumentCategory');
 Route::post('/freeDocumentCategory/updateFreeDocumentCategory/{id}', [App\Http\Controllers\FreeDocumentCategoryController::class, 'updateFreeDocumentCategory'])->name('freeDocumentCategory.updateFreeDocumentCategory');
 Route::post('/freeDocumentCategory/destroyFreeDocumentCategory/{id}', [App\Http\Controllers\FreeDocumentCategoryController::class, 'destroyFreeDocumentCategory'])->name('freeDocumentCategory.destroyFreeDocumentCategory');
+/* Api NewsType */
+Route::post('/newsType/createNewsType', [App\Http\Controllers\NewsTypeController::class, 'createNewsType'])->name('newsType.createNewsType');
+Route::post('/newsType/updateNewsType/{id}', [App\Http\Controllers\NewsTypeController::class, 'updateNewsType'])->name('newsType.updateNewsType');
+Route::post('/newsType/destroyNewsType/{id}', [App\Http\Controllers\NewsTypeController::class, 'destroyNewsType'])->name('newsType.destroyNewsType');
