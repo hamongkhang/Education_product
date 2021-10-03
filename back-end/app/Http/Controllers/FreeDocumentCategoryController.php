@@ -70,7 +70,7 @@ class FreeDocumentCategoryController extends Controller
                     'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
                     'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh')
                 ];
-                 $freeDocument = FreeDocumentcATEGORY::create($postArray);
+                 $freeDocument = FreeDocumentCategory::create($postArray);
               return Response()->json(array("Successfully. Upload successfully!"=> 1,"data"=>$postArray ));
     }else{
         return response()->json(["message" => "Name already exist!!!"]);
