@@ -54,20 +54,15 @@ class NewsController extends Controller
      */
     public function getNews(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'type_id' => 'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);      
-        }
-        $newsTypeFind = DB::table('news_type')->where('id', $request->type_id)->first();
-        $newsRespon=[];
-        if ($newsTypeFind) {
-            $newsFind = DB::table('news')->where('type_id', $newsTypeFind->id)->get();
+        $newsFind = DB::table('news')->get();
+        $dataRespon=[];
+        $dataRespon[0]=DB::table('news_type')->get();
+        $array=[];
             for ($i = 0; $i <count($newsFind); $i++) {
-                $newsRespon[$i]=array(
+                $data = DB::table('news_type')->where('id', $newsFind[$i]->type_id)->first();
+                $array[$i]=array(
                     'id' => $newsFind[$i]->id,
-                    'type_name' => $newsTypeFind->name,
+                    'type_name' => $data->name,
                     'name' => $newsFind[$i]->name,
                     'description' => $newsFind[$i]->description,
                     'file' => $newsFind[$i]->file,
@@ -77,9 +72,8 @@ class NewsController extends Controller
                     'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
                     'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
                 );
-            }
-            return response()->json(['data' => $newsRespon]);
         }
-        return response()->json(['message'=>"Don't find id type !!!"]);
+        $dataRespon[1]=$array;
+        return Response()->json(array("Successfully"=> 1,"data"=>$dataRespon ));
     }
 }
