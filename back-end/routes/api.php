@@ -54,6 +54,10 @@ Route::get('/comment/getComment', [App\Http\Controllers\CommentController::class
 Route::post('/comment/replyComment', [App\Http\Controllers\CommentController::class, 'replyComment'])->name('comment.replyComment');
 /* Api News */
 Route::get('/news/getNews', [App\Http\Controllers\NewsController::class, 'getNews'])->name('news.getNews');
+Route::post('/news/createNews', [App\Http\Controllers\NewsController::class, 'createNews'])->name('news.createNews');
+Route::post('/news/updateNews/{id}', [App\Http\Controllers\NewsController::class, 'updateNews'])->name('news.updateNews');
+Route::post('/news/destroyNews/{id}', [App\Http\Controllers\NewsController::class, 'destroyNews'])->name('news.destroyNews');
+Route::post('/news/blockActiveNews/{id}', [App\Http\Controllers\NewsController::class, 'blockActiveNews'])->name('news.blockActiveNews');
 /* Api Teacher */
 Route::get('/teacher/getTeacher', [App\Http\Controllers\TeacherController::class, 'getTeacher'])->name('teacher.getTeacher');
 Route::post('/teacher/createTeacher', [App\Http\Controllers\TeacherController::class, 'createTeacher'])->name('teacher.createTeacher');
