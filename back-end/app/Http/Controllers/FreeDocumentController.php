@@ -62,6 +62,8 @@ class FreeDocumentController extends Controller
                 'file' => $documentFind[$i]->file,
                 'path' => $documentFind[$i]->path,
                 'status' => $documentFind[$i]->status,
+                'created_at'=> $documentFind[$i]->created_at,
+                'updated_at'=> $documentFind[$i]->updated_at,
             );
         }
         $dataRespon[1]=$array;
