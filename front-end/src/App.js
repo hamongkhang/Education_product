@@ -1,9 +1,10 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-import Home from './components/Home'
-import Login from './components/Login'
-import Register from './components/Register'
+import Home from './components/Home';
+import Login from './components/Login';
+import Register from './components/Register';
+import Book_Detail from './components/Book_detail';
 function App() {
   return (
     <div className="container-fluid">
@@ -15,12 +16,14 @@ function App() {
             <div className="menu">
               <Link to="/login">Login</Link>
               <Link to="/register">Register</Link>
+              <Link to="/book_detail">Book Detail</Link>
             </div>
         </div>
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route path="/book_detail" component={Book_Detail} />
         </Switch>
       </Router>
     </div>

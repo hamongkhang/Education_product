@@ -99,6 +99,5 @@ $(document).ready(function(){
     $(".chat").show(1000);
     $(".bt-chat").hide();
   });
-
 });
 
