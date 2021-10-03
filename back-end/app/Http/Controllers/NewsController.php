@@ -69,8 +69,8 @@ class NewsController extends Controller
                     'path' => $newsFind[$i]->path,
                     'image' => $newsFind[$i]->image,
                     'status' => $newsFind[$i]->status,
-                    'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
-                    'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+                    'created_at'=>$newsFind[$i]->created_at,
+                    'updated_at'=> $newsFind[$i]->updated_at,
                 );
         }
         $dataRespon[1]=$array;
