@@ -78,7 +78,18 @@ class TableOfContentController extends Controller
             }
             
             $table_of_content = TableOfContent::find($request->id);
-            $table_of_content->name = $request->name;
+            if($table_of_content->name == $request->name){
+                $table_of_content->name = $request->name;
+            }
+            else{
+                $validator = Validator::make($request->all(), [
+                    'name' => 'unique:table_of_content,name',
+                ]);
+                if ($validator->fails()) {
+                    return response()->json(['error'=>$validator->errors()], 400);      
+                }
+                $table_of_content->name = $request->name;
+            }
             $table_of_content->course_id = $request->course_id;
             $table_of_content->status = $request->status;
             $table_of_content->updated_at = Carbon::now('Asia/Ho_Chi_Minh');

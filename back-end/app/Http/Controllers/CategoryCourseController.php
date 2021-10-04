@@ -79,7 +79,18 @@ class CategoryCourseController extends Controller
             }
             
             $category_course = CategoryCourse::find($request->id);
-            $category_course->name = $request->name;
+            if($category_course->name == $request->name){
+                $category_course->name = $request->name;
+            }
+            else{
+                $validator = Validator::make($request->all(), [
+                    'name' => 'unique:category_course,name',
+                ]);
+                if ($validator->fails()) {
+                    return response()->json(['error'=>$validator->errors()], 400);      
+                }
+                $category_course->name = $request->name;
+            }
             $category_course->description = $request->description;
             $category_course->status = $request->status;
             $category_course->updated_at = Carbon::now('Asia/Ho_Chi_Minh');

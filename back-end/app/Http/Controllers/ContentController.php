@@ -77,7 +77,18 @@ class ContentController extends Controller
             }
             
             $content = Content::find($request->id);
-            $content->name = $request->name;
+            if($content->name == $request->name){
+                $content->name = $request->name;
+            }
+            else{
+                $validator = Validator::make($request->all(), [
+                    'name' => 'unique:content,name',
+                ]);
+                if ($validator->fails()) {
+                    return response()->json(['error'=>$validator->errors()], 400);      
+                }
+                $content->name = $request->name;
+            }
             $content->table_of_content_id = $request->table_of_content_id;
             $content->status = $request->status;
             $content->updated_at = Carbon::now('Asia/Ho_Chi_Minh');

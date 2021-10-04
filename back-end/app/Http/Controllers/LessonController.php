@@ -112,7 +112,18 @@ class LessonController extends Controller
                 $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'lesson_files'.'/'.$newFileName;
             }
             $lesson = Lesson::find($request->id);
-            $lesson->name = $request->name;
+            if($lesson->name == $request->name){
+                $lesson->name = $request->name;
+            }
+            else{
+                $validator = Validator::make($request->all(), [
+                    'name' => 'unique:lesson,name',
+                ]);
+                if ($validator->fails()) {
+                    return response()->json(['error'=>$validator->errors()], 400);      
+                }
+                $lesson->name = $request->name;
+            }
             $lesson->content_id = $request->content_id;
             File::delete($destinationPath.'/'.$lesson->file_name);
             $lesson->file_name = $newFileName;

@@ -118,7 +118,18 @@ class CourseController extends Controller
                 $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'course_images'.'/'.$newImageName;
             }
             $course = Course::find($request->id);
-            $course->name = $request->name;
+            if($course->name == $request->name){
+                $course->name = $request->name;
+            }
+            else{
+                $validator = Validator::make($request->all(), [
+                    'name' => 'unique:course,name',
+                ]);
+                if ($validator->fails()) {
+                    return response()->json(['error'=>$validator->errors()], 400);      
+                }
+                $course->name = $request->name;
+            }
             $course->Initial_price = $request->Initial_price;
             $course->promotion = $request->promotion;
             $course->promotion_price = $request->Initial_price - round($request->promotion/100*$request->Initial_price);
