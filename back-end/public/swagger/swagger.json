@@ -749,7 +749,7 @@
                 }
             }
         },
-        "api/getAllBookType/": {
+        "api/getBookTypes/": {
             "get": {
                 "description": "Trả về toàn bộ type của sách",
                 "parameters": [
@@ -918,7 +918,7 @@
                 }
             }
         },
-        "api/getAllBook/": {
+        "api/getBooks/": {
             "get": {
                 "description": "Trả về toàn bộ sách",
                 "parameters": [
