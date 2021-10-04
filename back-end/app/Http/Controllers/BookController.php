@@ -127,7 +127,18 @@ class BookController extends Controller
                 $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'book_images'.'/'.$newImageName;
             }
             $book = Book::find($request->id);
-            $book->name = $request->name;
+            if($book->name == $request->name){
+                $book->name = $request->name;
+            }
+            else{
+                $validator = Validator::make($request->all(), [
+                    'name' => 'unique:book,name',
+                ]);
+                if ($validator->fails()) {
+                    return response()->json(['error'=>$validator->errors()], 400);      
+                }
+                $book->name = $request->name;
+            }
             $book->Initial_price = $request->Initial_price;
             $book->promotion = $request->promotion;
             $book->promotion_price = $request->Initial_price - round($request->promotion/100*$request->Initial_price);

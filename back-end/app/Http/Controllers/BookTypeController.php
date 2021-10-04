@@ -73,7 +73,18 @@ class BookTypeController extends Controller
         }
         $book_type = BookType::find($request->id);
         if($book_type){
-            $book_type->name = $request->name;
+            if($book_type->name == $request->name){
+                $book_type->name = $request->name;
+            }
+            else{
+                $validator = Validator::make($request->all(), [
+                    'name' => 'unique:book_type,name',
+                ]);
+                if ($validator->fails()) {
+                    return response()->json(['error'=>$validator->errors()], 400);      
+                }
+                $book_type->name = $request->name;
+            }
             $book_type->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
             $book_type->save();
             return response()->json([
