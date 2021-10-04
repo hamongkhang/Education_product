@@ -1,8 +1,10 @@
 import React from "react";
+import { BannerBook } from '../../../components/banner';
 
-const Book_Detail = () => {
+const BookDetails = () => {
   return (
     <div>
+      <BannerBook />
       <div className="book">
         <div className="book-left">
           <div className="book-left__image">
@@ -79,7 +81,7 @@ const Book_Detail = () => {
             Hướng dẫn thanh toán
           </h3>
           <div className="book-right__payment">
-            <img src="./Image/payment.png" />
+            <img src={`${window.location.origin}/assets/images/payment.png`} />
           </div>
         </div>
       </div>
@@ -118,4 +120,4 @@ const Book_Detail = () => {
   );
 };
 
-export default Book_Detail;
+export default BookDetails;

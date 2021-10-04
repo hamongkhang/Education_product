@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const BookItem = (props) => {
     return (
@@ -21,12 +22,13 @@ const BookItem = (props) => {
                     <span className="font-semibold group-hover:text-green-700">Mua ngay</span>
                     <i className="far fa-cart-plus transform duration-300 group-hover:translate-x-1.5 group-hover:text-green-700"></i>
                 </a>
-                <a href="#" className="space-x-2 group">
+                <Link to="/sach/sach-1" className="space-x-2 group">
                     <span className="font-semibold group-hover:text-indigo-600">Chi tiết</span>
                     <i className="far fa-arrow-right transform duration-300 group-hover:translate-x-1.5 group-hover:text-indigo-600"></i>
-                </a>
+                </Link>
             </div>
         </div>
     )
 }
-export default BookItem
+
+export default BookItem;
