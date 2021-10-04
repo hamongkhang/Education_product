@@ -13,7 +13,7 @@ const Login = (props) => {
                         <label htmlFor className="block mt-3 text-xl text-gray-700 text-center font-semibold">
                             Đăng nhập
                         </label>
-                        <form method="#" action="#" className="mt-10">
+                        <form method="#" action="#" className="mt-10 font-medium">
                             <div>
                                 <input type="email" placeholder="Email" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" required/>
                             </div>

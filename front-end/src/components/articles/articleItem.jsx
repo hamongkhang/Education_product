@@ -15,18 +15,11 @@ const ArticleItem = (props) => {
                     <p>Được đăng bởi:&nbsp; <span>Kha</span></p>
                 </div>
             </div>
-            <div className="flex p-3 z-40 space-x-3 py-8">
-                <div>
-                    <div className="w-14 h-7 text-white bg-green-500 flex items-center justify-center">
-                        04
-                    </div>
-                    <div className="w-14 h-7 bg-gray-300 flex items-center justify-center">
-                        Nov
-                    </div>
-                </div>
-                <div className="text-lg line-2 font-medium hover:text-gray-500 tracking-tighter">
+            <div className="z-40 space-x-3 pb-8 font-medium">
+                <div className="text-sm text-gray-600 text-right px-3">11/04/2021</div>
+                <div className="text-lg hover:text-gray-500 tracking-tighter">
                     <Link to="/">
-                        <h3>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</h3>
+                        <h3 className="line-2">Lorem ipsum dolor sit amet amet consectetur, adipisicing elit.</h3>
                     </Link>
                 </div>
             </div>

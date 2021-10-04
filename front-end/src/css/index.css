@@ -11,7 +11,7 @@ body::-webkit-scrollbar {
     width: 8px;
 }
 
-::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb {
     background-color: #777;
 }
 
@@ -250,7 +250,7 @@ body::-webkit-scrollbar {
     width: 4px;
 }
 
-::-webkit-scrollbar-thumb {
+.custom-scroll::-webkit-scrollbar-thumb {
     background-color: #777;
 }
 
@@ -258,8 +258,25 @@ body::-webkit-scrollbar {
     width: 8px;
 }
 
-::-webkit-scrollbar-thumb {
+.custom-scroll-1::-webkit-scrollbar-thumb {
     background-color: #ccc;
+}
+
+.custom-scroll-1 {
+    mask-image: linear-gradient(to top, transparent, black), linear-gradient(to left, transparent 17px, black 17px);
+    mask-size: 100% 20000px;
+    mask-position: left bottom;
+    -webkit-mask-image: linear-gradient(to top, transparent, black), linear-gradient(to left, transparent 17px, black 17px);
+    -webkit-mask-size: 100% 20000px;
+    -webkit-mask-position: left bottom;
+}
+
+.custom-scroll-1:hover {
+    -webkit-mask-position: left top;
+}
+
+.scroll-none::-webkit-scrollbar {
+    width: 0;
 }
 
 @media only screen and (max-width: 1023px) {

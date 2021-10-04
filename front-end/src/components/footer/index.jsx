@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = (props) => {
     return (
-        <div className="max-w-screen-2xl bg-indigo-700">
+        <div className="max-w-screen-2xl" style={{ backgroundColor: "#0773bb" }}>
             <footer className="text-gray-600 mx-auto">
                 <div className="container px-5 py-10 md:w-4/5 w-full mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
                     <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
@@ -85,7 +85,7 @@ const Footer = (props) => {
                         </div> */}
                     </div>
                 </div>
-                <div className="bg-indigo-900">
+                <div className="" style={{ backgroundColor: "#2f5596" }}>
                     <div className="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
                     <p className="text-white text-sm text-center sm:text-left">© 2021 -
                         <a href="https://twitter.com/knyttneve" rel="noopener noreferrer" className="text-gray-400 ml-1" target="_blank">Vật Lý 365</a>
