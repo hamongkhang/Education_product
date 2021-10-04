@@ -65,3 +65,39 @@ Route::post('/admin/blockAccount/{id}', [App\Http\Controllers\AdminController::c
 /* Api Free Document */
 Route::post('/freeDocument/getFreeDocument', [App\Http\Controllers\FreeDocumentController::class, 'getFreeDocument'])->name('freeDocument.getFreeDocument');
 //Route::post('/freeDocument/blockAccount', [App\Http\Controllers\FreeDocumentController::class, 'blockAccount'])->name('freeDocument.loginAdmin');
+
+/*Api Lesson*/
+Route::get('/getLessons', [App\Http\Controllers\LessonController::class, 'getAllLessons'])->name('lesson.get');
+Route::post('/getOneLesson', [App\Http\Controllers\LessonController::class, 'getOneLesson'])->name('lesson.getOne');
+Route::post('/addLesson', [App\Http\Controllers\LessonController::class, 'addNewLesson'])->name('lesson.add');
+Route::post('/updateLesson', [App\Http\Controllers\LessonController::class, 'updateLesson'])->name('lesson.update');
+Route::post('/deleteLesson', [App\Http\Controllers\LessonController::class, 'deleteLesson'])->name('lesson.delete');
+Route::post('/changeLessonStatus', [App\Http\Controllers\LessonController::class, 'changeStatusLesson'])->name('lesson.status');
+/*Api Content*/
+Route::get('/getContents', [App\Http\Controllers\ContentController::class, 'getAllContents'])->name('content.get');
+Route::post('/getOneContent', [App\Http\Controllers\ContentController::class, 'getOneContent'])->name('content.getOne');
+Route::post('/addContent', [App\Http\Controllers\ContentController::class, 'addNewContent'])->name('content.add');
+Route::post('/updateContent', [App\Http\Controllers\ContentController::class, 'updateContent'])->name('content.update');
+Route::post('/deleteContent', [App\Http\Controllers\ContentController::class, 'deleteContent'])->name('content.delete');
+Route::post('/changeContentStatus', [App\Http\Controllers\ContentController::class, 'changeStatusContent'])->name('content.status');
+/*Api TableOfContent*/
+Route::get('/getTableOfContents', [App\Http\Controllers\TableOfContentController::class, 'getAllTableOfContents'])->name('tableOfContent.get');
+Route::post('/getOneTableOfContent', [App\Http\Controllers\TableOfContentController::class, 'getOneTableOfContent'])->name('tableOfContent.getOne');
+Route::post('/addTableOfContent', [App\Http\Controllers\TableOfContentController::class, 'addNewTableOfContent'])->name('tableOfContent.add');
+Route::post('/updateTableOfContent', [App\Http\Controllers\TableOfContentController::class, 'updateTableOfContent'])->name('tableOfContent.update');
+Route::post('/deleteTableOfContent', [App\Http\Controllers\TableOfContentController::class, 'deleteTableOfContent'])->name('tableOfContent.delete');
+Route::post('/changeTableOfContentStatus', [App\Http\Controllers\TableOfContentController::class, 'changeStatusTableOfContent'])->name('tableOfContent.status');
+/*Api Course*/
+Route::get('/getCourses', [App\Http\Controllers\CourseController::class, 'getAllCourses'])->name('course.get');
+Route::post('/getOneCourse', [App\Http\Controllers\CourseController::class, 'getOneCourse'])->name('course.getOne');
+Route::post('/addCourse', [App\Http\Controllers\CourseController::class, 'addNewCourse'])->name('course.add');
+Route::post('/updateCourse', [App\Http\Controllers\CourseController::class, 'updateCourse'])->name('course.update');
+Route::post('/deleteCourse', [App\Http\Controllers\CourseController::class, 'deleteCourse'])->name('course.delete');
+Route::post('/changeCourseStatus', [App\Http\Controllers\CourseController::class, 'changeStatusCourse'])->name('course.status');
+/*Api CategoryCourse*/
+Route::get('/getCategoryCourses', [App\Http\Controllers\CategoryCourseController::class, 'getAllCategoryCourses'])->name('categoryCourse.get');
+Route::post('/getOneCategoryCourse', [App\Http\Controllers\CategoryCourseController::class, 'getOneCategoryCourse'])->name('categoryCourse.getOne');
+Route::post('/addCategoryCourse', [App\Http\Controllers\CategoryCourseController::class, 'addNewCategoryCourse'])->name('categoryCourse.add');
+Route::post('/updateCategoryCourse', [App\Http\Controllers\CategoryCourseController::class, 'updateCategoryCourse'])->name('categoryCourse.update');
+Route::post('/deleteCategoryCourse', [App\Http\Controllers\CategoryCourseController::class, 'deleteCategoryCourse'])->name('categoryCourse.delete');
+Route::post('/changeCategoryCourseStatus', [App\Http\Controllers\CategoryCourseController::class, 'changeStatusCategoryCourse'])->name('categoryCourse.status');
