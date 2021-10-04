@@ -156,7 +156,7 @@ const Register = () => {
             <div className="form-label">
                 <label>Name</label>
                 <input type="text" name="name" placeholder="" onChange={(e) => setDataForm({ ...dataForm, "name": e.target.value })} value={dataForm.name} />
-            </div>
+            </div> 
             <div className="form-label">
                 <label>Email</label>
                 <input type="email" name="name" placeholder="" onChange={(e) => setDataForm({ ...dataForm, "email": e.target.value })} value={dataForm.email} />
