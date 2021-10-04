@@ -51,9 +51,9 @@ const BookList = (props) => {
       };
     return (
         <div className="relative">
-            <div className="bg-green-700 shadow-md rounded-md h-12 my-10 flex items-center justify-between relative overflow-hidden z-0 text-white">
+            <div className="bg-purple-800 shadow-md rounded-md h-12 my-10 flex items-center justify-between relative overflow-hidden z-0 text-white">
             {/* <div className="w-40 h-40 bg-green-600 transform rotate-45 absolute z-0 -right-16"/> */}
-            <div className="w-40 h-40 rounded-full bg-yellow-700 absolute z-0 -top-3/4 -right-5"/>
+            <div className="w-40 h-40 rounded-full bg-yellow-400 border-4 border-white absolute z-0 -top-3/4 -right-5"/>
                 <div className="p-3 text-17 font-semibold uppercase ">
                     Sách
                 </div>

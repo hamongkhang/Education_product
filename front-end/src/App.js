@@ -8,7 +8,8 @@ import Call from './components/call';
 import Chat from './components/chat';
 import SearchBox from './components/searchBox';
 import Cart from './components/cart';
-import UserProfile from './views/home/userProfile'
+import UserProfile from './views/home/userProfile';
+import PlayCourse from './views/home/playCourse';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Router>
           <Switch>
             <Route path="/tai-khoan" component={UserProfile} />
+            <Route path="/bai-hoc" exact component={PlayCourse} />
             <Route path="/" component={HomePages} />
           </Switch>
           <Call/>

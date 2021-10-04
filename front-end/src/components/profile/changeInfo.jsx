@@ -13,7 +13,7 @@ const ChangeInfo = (props) => (
                 </div>
                 <div className="w-full mb-4">
                     <label htmlFor="facebookUrl" className="block w-full mb-0.5">Link Facebook</label>
-                    <input id="facebookUrl" type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Link Facebook" required/>
+                    <input id="facebookUrl" type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Ví dụ: https://www.facebook.com/vatly365" required/>
                 </div>
             </div>
             <div className="md1:flex md1:space-x-4">

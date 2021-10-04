@@ -17,58 +17,62 @@ const RegisterHome = (props) => {
                         <h3>Đăng ký</h3>
                     </div>
                     <div>
-                        <div className="md:flex md:space-x-4">
-                            <div className="w-full">
-                                <label htmlFor="name" className="block w-full mb-0.5">Họ và tên</label>
-                                <input id="name" type="text" className="px-4 py-2 mb-4 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Họ và tên" required/>
+                        <div>
+                            <div className="md:flex md:space-x-4">
+                                <div className="w-full mb-4">
+                                    <label htmlFor="name" className="block w-full mb-0.5">Họ và tên</label>
+                                    <input id="name" type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Họ và tên" required/>
+                                </div>
+                                <div className="w-full mb-4">
+                                    <label htmlFor="username" className="block w-full mb-0.5">Tên đăng nhập</label>
+                                    <input id="username" type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Tên đăng nhập" required/>
+                                </div>
                             </div>
-                            <div className="w-full">
-                                <label htmlFor="username" className="block w-full mb-0.5">Tên đăng nhập</label>
-                                <input id="username" type="text" className="px-4 py-2 mb-4 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Tên đăng nhập" required/>
+                            <div className="md:flex md:space-x-4">
+                                <div className="w-full mb-4">
+                                    <label htmlFor="facebookUrl" className="block w-full mb-0.5">Link Facebook</label>
+                                    <input id="facebookUrl" type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="VD: https://www.facebook.com/vatly365" required/>
+                                </div>
+                                <div className="w-full mb-4">
+                                    <label htmlFor="phone" className="block w-full mb-0.5">Số điện thoại</label>
+                                    <input id="phone" type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Số điện thoại" required/>
+                                </div>
                             </div>
-                        </div>
-                        <div className="md:flex md:space-x-4">
-                            <div className="w-full">
-                                <label htmlFor="facebookUrl" className="block w-full mb-0.5">Link Facebook</label>
-                                <input id="facebookUrl" type="text" className="px-4 py-2 mb-4 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Link Facebook" required/>
+                            <div className="md:flex md:space-x-4">
+                                <div className="w-full mb-4">
+                                    <label htmlFor="address" className="block w-full mb-0.5">Địa chỉ</label>
+                                    <input id="address" type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Địa chỉ" required/>
+                                </div>
+                                <div className="w-full mb-4">
+                                    <label htmlFor="gender" className="block w-full mb-0.5">Giới tính</label>
+                                    <select name="gender" id="" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2">
+                                        <option value="">Khác</option>
+                                        <option value="">Nam</option>
+                                        <option value="">Nữ</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div className="w-full">
-                                <label htmlFor="phone" className="block w-full mb-0.5">Số điện thoại</label>
-                                <input id="phone" type="text" className="px-4 py-2 mb-4 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Số điện thoại" required/>
+                            <div className="md:flex md:space-x-4">
+                                <div className="w-full mb-4">
+                                    <label htmlFor="email" className="block w-full mb-0.5 ">Email</label>
+                                    <input id="email" type="email" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Email" required/>
+                                    <span className="text-red-500 text-sm">Địa chỉ email đã tồn tại</span>
+                                </div>
+                                <div className="w-full mb-4">
+                                    <label htmlFor="birthday" className="block w-full mb-0.5">Ngày sinh</label>
+                                    <input id="birthday" type="date" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Xác nhận mật khẩu" required/>
+                                </div>
                             </div>
-                        </div>
-                        <div className="md:flex md:space-x-4">
-                            <div className="w-full">
-                                <label htmlFor="address" className="block w-full mb-0.5">Địa chỉ</label>
-                                <input id="address" type="text" className="px-4 py-2 mb-4 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Địa chỉ" required/>
-                            </div>
-                            <div className="w-full">
-                                <label htmlFor="gender" className="block w-full mb-0.5">Giới tính</label>
-                                <select name="gender" id="" className="px-4 py-2 mb-4 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2">
-                                    <option value="">Khác</option>
-                                    <option value="">Nam</option>
-                                    <option value="">Nữ</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="md:flex md:space-x-4">
-                            <div className="w-full">
-                                <label htmlFor="email" className="block w-full mb-0.5 ">Email</label>
-                                <input id="email" type="email" className="px-4 py-2 mb-4 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Email" required/>
-                            </div>
-                            <div className="w-full">
-                                <label htmlFor="birthday" className="block w-full mb-0.5">Ngày sinh</label>
-                                <input id="birthday" type="date" className="px-4 py-2 mb-4 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Xác nhận mật khẩu" required/>
-                            </div>
-                        </div>
-                        <div className="md:flex md:space-x-4">
-                            <div className="w-full">
-                                <label htmlFor="password" className="block w-full mb-0.5">Mật khẩu</label>
-                                <input id="password" type="text" className="px-4 py-2 mb-4 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Mật khẩu" required/>
-                            </div>
-                            <div className="w-full">
-                                <label htmlFor="cfpassword" className="block w-full mb-0.5">Xác nhận mật khẩu</label>
-                                <input id="cfpassword" type="text" className="px-4 py-2 mb-4 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Xác nhận mật khẩu" required/>
+                            <div className="md:flex md:space-x-4">
+                                <div className="w-full mb-4">
+                                    <label htmlFor="password" className="block w-full mb-0.5">Mật khẩu</label>
+                                    <input id="password" type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Mật khẩu" required/>
+                                </div>
+                                <div className="w-full mb-4">
+                                    <label htmlFor="cfpassword" className="block w-full mb-0.5">Xác nhận mật khẩu</label>
+                                    <input id="cfpassword" type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Xác nhận mật khẩu" required/>
+                                    <span className="text-red-500 text-sm"> Mật khẩu không khớp</span>
+                                </div>
                             </div>
                         </div>
                         <div className="float-right mb-5">
