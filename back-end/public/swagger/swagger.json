@@ -269,6 +269,303 @@
                 ]
             }
         },
+        "api/featuredPost/getFeaturedPost": {
+            "get": {
+                "description": "get featured posts",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "datetime"
+                                },
+                                "updated_at": {
+                                    "type": "datetime"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Don't find id featured post !!!"
+                    }
+                }
+            }
+        },
+        "api/featuredPost/createFeaturedPost/": {
+            "post": {
+                "description": "Return news's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "featured post name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "file",
+                        "in": "query",
+                        "description": "featured post file",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "featured post description",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "Image file",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/featuredPost/updateFeaturedPost/{id}": {
+            "post": {
+                "description": "Return featured post's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "featured post name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "file",
+                        "in": "query",
+                        "description": "featured post file",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "featured post description",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "Image file",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/featuredPost/destroyFeaturedPost/{id}": {
+            "post": {
+                "description": "Return featured post's informaion.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/featuredPost/blockActiveFeaturedPost/{id}": {
+            "post": {
+                "description": "Return featured post's informaion.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "api/freeDocumentCategory/createFreeDocumentCategory/": {
             "post": {
                 "description": "Return free document category's informaion.",
