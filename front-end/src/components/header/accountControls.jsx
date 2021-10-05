@@ -14,23 +14,23 @@ const AccountControls = (props) => {
                     <label className="absolute top-0 right-1 font-medium text-15">4</label>
                 </button>
             </div>
-            {/* <div>
+             <div>
                 <Link to="/dang-nhap">
                     <a  className="relative hidden sm:block btn-login duration-300 bg-transparent rounded-md bg-green-700 hover:shadow-2xl hover:bg-green-800 hover:text-white px-4 py-2 text-white font-semibold">
                         Đăng nhập
                     </a>
                 </Link>
-            </div> */}
+            </div> 
 
             <div className="hidden sm:block">
                 <LoginName />
             </div>
 
-            {/* <div className="hidden md:block">
+            <div className="hidden md:block">
                 <Link to="/dang-ky" className="relative btn-register font-semibold duration-200 box-border bg-indigo-600 px-4 py-2 text-white hover:shadow-xl hover:bg-indigo-700 rounded-sm">
                     <span>Đăng ký</span>
                 </Link>
-            </div> */}
+            </div> 
 
             <div className="nav-open w-6 text-2xl flex lg:hidden items-center text-white cursor-pointer hover:opacity-70">
                 <i class="far fa-bars"></i>

@@ -240,7 +240,7 @@ class UsersController extends Controller
                 'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
                 'updated_at'=>Carbon::now('Asia/Ho_Chi_Minh'),
                 'avatar'=>$sex,
-                'status'=>"active",
+                'status'=>"Active",
             ];
             $user = User::create($postArray);
             DB::delete('delete from user_code where id = ?',[$data->id]);
@@ -366,7 +366,7 @@ class UsersController extends Controller
             'password' => 'required|max:255|min:8',
             'confirm_password' => 'required|same:password',
             'address' => 'required',
-            'sex' => 'required|in:male,female',
+            'sex' => 'required|in:male,female,other',
         ]);
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 401);     
@@ -538,15 +538,19 @@ class UsersController extends Controller
         ]);
 
         if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json(['error'=>$validator->errors()], 401);  
         }
         if($request->old_password===$request->new_password){
-            return response()->json(['Old password is same new password'=>$validator->errors()], 401);     
-        }
+            return response()->json([
+                'error' => 'Old password is same new password',
+            ], 401);       
+         }
         $hashedPassword = auth()->user()->password;
         if (!Hash::check($request->old_password , $hashedPassword)) {
-            return response()->json(['Old password is not correct'=>$validator->errors()], 401);     
-        }
+            return response()->json([
+                'error' => 'Old password is not correct',
+            ], 401);  
+                }
         $userId = auth()->user()->id;
 
         $user = User::where('id',$userId)->update(
@@ -595,12 +599,12 @@ class UsersController extends Controller
         ]);
 
         if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json(['error'=>$validator->errors()], 401);  
         }
         $code=$random = Str::random(6);
         $data = DB::table('users')->where('email', $request->email)->first();
         if($data){
-            if($data->status!="block"){
+            if($data->status!="Block"){
                 $usercheck = DB::table('forgot_code')->where('email', $request->email)->first();
                 if($usercheck){
                     $user = ForgotCode::find($usercheck->id);
@@ -640,7 +644,7 @@ class UsersController extends Controller
                 }
         }else{
             return response()->json([
-                'error' => 'blocked',
+                'error' => 'Blocked',
             ], 401);
         }
         }
@@ -695,7 +699,7 @@ class UsersController extends Controller
         ]);
 
         if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json(['error'=>$validator->errors()], 401);  
         }
 
         $data = DB::table('forgot_code')->where('code', $request->code)->first();
@@ -780,7 +784,7 @@ class UsersController extends Controller
             'password' => 'required|string|min:8',
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);      
+            return response()->json(['error'=>$validator->errors()], 401);        
         }
         if (($request->email!=="web.vatly365@gmail.com")||($request->password!=="vatli365")) {
             return response()->json(['error' => 'Unauthorized'], 401);

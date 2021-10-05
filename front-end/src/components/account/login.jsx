@@ -1,7 +1,49 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import { Link } from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
+
 
 const Login = (props) => {
+    const [user, setUser] = useState({});
+    const history = useHistory();
+    const addUser = (event) => {
+        const target=event.target;
+        const field =target.name;
+        const value=target.value;
+        setUser({
+          ...user,
+          [field]: value,
+        });
+      };
+    
+
+    const onLogin = (e) => {
+        e.preventDefault();
+            if(user.email!="" && user.password!=""){
+            const _formData = new FormData();
+            _formData.append("email",user.email)
+            _formData.append("password",user.password)
+            const requestOptions = {
+                method: 'POST',
+                body: _formData
+            };
+            fetch('http://127.0.0.1:8000/api/users/login', requestOptions)
+            .then(res => res.json())
+            .then(json => {
+              if(json.error==='Unauthorized'){
+                  alert("Sai roi!!!");
+              }
+              else if(json.error==='Blocked'){
+                alert("bi block roi!!!");
+              }
+              else{
+                localStorage.setItem('access_token',json.access_token);
+                    alert("dung r!!!");
+                    history.push("/tai-khoan")
+              }
+            });
+        }
+    }
     return (
         <div className="relative py-28 px-5 bg-cover bg-center bg-no-repeat" style={{backgroundImage: `url("./assets/images/bg/about.jpg")`}}>
             <div className="bg-penetration-5 absolute inset-0 w-full h-full"></div>
@@ -13,12 +55,12 @@ const Login = (props) => {
                         <label htmlFor className="block mt-3 text-xl text-gray-700 text-center font-semibold">
                             Đăng nhập
                         </label>
-                        <form method="#" action="#" className="mt-10 font-medium">
+                        <form onSubmit={onLogin} className="mt-10 font-medium">
                             <div>
-                                <input type="email" placeholder="Email" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" required/>
+                                <input type="email" placeholder="Email" name="email"   onChange={(event) => addUser(event)} className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" required/>
                             </div>
                             <div className="mt-7">                
-                                <input type="password" placeholder="Mật khẩu" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" required/>
+                                <input type="password" placeholder="Mật khẩu" name="password"   onChange={(event) => addUser(event)} className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" required/>
                                 <span className="text-red-500 text-sm"> Mật khẩu không khớp</span>
                             </div>
                             <div className="mt-7 flex">
@@ -35,7 +77,7 @@ const Login = (props) => {
                                 </div>
                             </div>
                             <div className="mt-7">
-                                <button className="bg-blue-500 w-full py-3 rounded text-white hover:shadow-xl focus:outline-none">
+                                <button type="submit" className="bg-blue-500 w-full py-3 rounded text-white hover:shadow-xl focus:outline-none">
                                 Đăng nhập
                                 </button>
                             </div>

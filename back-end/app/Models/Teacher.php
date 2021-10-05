@@ -33,7 +33,6 @@ class Teacher extends Authenticatable implements JWTSubject
         'updated_at',
         'created_at',
     ];
-   
       /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *

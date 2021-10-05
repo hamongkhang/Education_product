@@ -3,36 +3,45 @@ import { Link } from 'react-router-dom'
 import {useHistory} from 'react-router-dom'
 
 
-const CodeVerification = (props) => {
-    const [codeRegister, setCodeRegister] = useState({});
+const CodeVerificationForgot = (props) => {
+    const [changePasswordForgot, setChangePasswordForgot] = useState({});
     const history = useHistory();
 
-    const addCodeRegister = (event) => {
+    const addChangePasswordForgot = (event) => {
         const target=event.target;
         const field =target.name;
         const value=target.value;
-        setCodeRegister({
-          ...codeRegister,
+        setChangePasswordForgot({
+          ...changePasswordForgot,
           [field]: value,
         });
       };
-      const onGetCodeRegister = (e) => {
+      const onChangePasswordForgot = (e) => {
         e.preventDefault();
-        if(codeRegister.code!="" ){
+        if(changePasswordForgot.code!="" && changePasswordForgot.new_password!="" && changePasswordForgot.new_password_confirmed!=""){
         const _formData = new FormData();
-        _formData.append("code",codeRegister.code)
+        _formData.append("code",changePasswordForgot.code)
+        _formData.append("new_password",changePasswordForgot.new_password)
+        _formData.append("new_password_confirmed",changePasswordForgot.new_password_confirmed)
         const requestOptions = {
             method: 'POST',
             body: _formData
         };
-        fetch('http://127.0.0.1:8000/api/users/register', requestOptions)
+        fetch('http://127.0.0.1:8000/api/users/changePasswordForgot', requestOptions)
         .then(res => res.json())
         .then(json => {
             if(!json.error){
-            history.push("/");
+                alert("Thành Công");
+                history.push("/dang-nhap")
             }
             else if(json.error.code){
                 alert(json.error.code)
+            }
+            else if(json.error.new_password){
+                alert(json.error.new_password)
+            }
+            else if(json.error.new_password_confirmed){
+                alert(json.error.new_password_confirmed)
             }
             else{
                 alert(json.error)
@@ -55,11 +64,20 @@ const CodeVerification = (props) => {
                         <label htmlFor className="block mt-3 text-xl text-gray-700 text-center font-semibold">
                             Nhập mã xác nhận
                         </label>
-                        <form onSubmit={onGetCodeRegister} className="mt-10 space-y-7">
+                        <form onSubmit={onChangePasswordForgot} className="mt-10 space-y-7">
                             <div>
-                                <input type="text" name="code" onChange={(event) => addCodeRegister(event)} placeholder="Nhập mã xác nhận" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" required/>
+                                <input type="text" name="code" onChange={(event) => addChangePasswordForgot(event)} placeholder="Nhập mã xác nhận" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" required/>
                                 <span className="text-red-500 text-sm"> Mã xác minh không khớp!</span>
                             </div>
+                            <div className="w-full mb-4">
+                    <label htmlFor="password" className="block w-full mb-0.5">Mật khẩu mới</label>
+                    <input id="password" type="password" name="new_password" onChange={(event) => addChangePasswordForgot(event)} className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Mật khẩu mới" required/>
+                </div>
+                <div className="w-full mb-4">
+                    <label htmlFor="cfpassword" className="block w-full mb-0.5">Xác nhận mật khẩu mới</label>
+                    <input id="cfpassword" name="new_password_confirmed" onChange={(event) => addChangePasswordForgot(event)} type="password" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Xác nhận mật khẩu mới" required/>
+                    <span className="text-red-500 text-sm"> Mật khẩu không khớp</span>
+                </div>
                             <div>
                                 <button className="bg-blue-500 w-full py-3 rounded text-white hover:shadow-xl focus:outline-none">
                                 Xác nhận
@@ -81,4 +99,4 @@ const CodeVerification = (props) => {
     )
 }
 
-export default CodeVerification
+export default CodeVerificationForgot
