@@ -37,7 +37,7 @@ class BookTypeController extends Controller
     }
     public function addBookType(Request $request){
         $login = auth()->user();
-        if($login->is_admin == true){
+        if($login && $login->is_admin == true){
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:1|max:255|unique:book_type,name',
         ]);
@@ -63,18 +63,18 @@ class BookTypeController extends Controller
     }
     public function updateBookType(Request $request){
         $login = auth()->user();
-        if($login->is_admin == true){
+        if($login && $login->is_admin == true){
         $validator = Validator::make($request->all(), [
             'id'    => 'required',
-            'name' => 'required|min:1|max:255|string',
+            'name' => 'max:255|string',
         ]);
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 400);      
         }
         $book_type = BookType::find($request->id);
         if($book_type){
-            if($book_type->name == $request->name){
-                $book_type->name = $request->name;
+            if($book_type->name == $request->name || $request->name == null){
+                $book_type->name = $book_type->name;
             }
             else{
                 $validator = Validator::make($request->all(), [

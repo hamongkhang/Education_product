@@ -753,6 +753,13 @@
             "get": {
                 "description": "Trả về toàn bộ type của sách",
                 "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin đăng nhập",
+                        "required": false,
+                        "type": "string"
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -772,6 +779,13 @@
             "post": {
                 "description": "Trả về một type của sách",
                 "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin đăng nhập",
+                        "required": false,
+                        "type": "string"
+                    },
                     {
                         "name": "id",
                         "in": "query",
@@ -922,6 +936,13 @@
             "get": {
                 "description": "Trả về toàn bộ sách",
                 "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin đăng nhập",
+                        "required": false,
+                        "type": "string"
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -941,6 +962,13 @@
             "post": {
                 "description": "Trả về một sách",
                 "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin đăng nhập",
+                        "required": false,
+                        "type": "string"
+                    },
                     {
                         "name": "id",
                         "in": "query",

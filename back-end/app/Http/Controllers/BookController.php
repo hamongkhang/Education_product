@@ -16,7 +16,13 @@ class BookController extends Controller
         $this->middleware('auth:api',['except' => ['getAllBooks','getOneBook','addBook','updateBook','deleteBook','changeStatus']]);
     }
     public function getAllBooks(Request $request){
-        $books = Book::all();
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $books = Book::all();
+        }
+        else{
+            $books = Book::where('status','Active')->get();
+        }
         return response()->json([
             'books'=>$books
         ], 200);  
@@ -28,8 +34,13 @@ class BookController extends Controller
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 400);      
         }
-
-        $book = Book::find($request->id);
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $book = Book::find($request->id);
+        }
+        else{
+            $book = Book::where('status','Active')->where('id',$request->id)->get();
+        }
         return response()->json([
             'book'=>$book
         ], 200);
@@ -37,7 +48,7 @@ class BookController extends Controller
     }
     public function addBook(Request $request){
         $login = auth()->user();
-        if($login->is_admin == true){
+        if($login && $login->is_admin == true){
             $validator = Validator::make($request->all(), [
                 'name' => 'required|min:1|max:255|unique:book,name',
                 'Initial_price'=>'required|numeric|min:0',
@@ -70,7 +81,9 @@ class BookController extends Controller
             $book->name = $request->name;
             $book->Initial_price = $request->Initial_price;
             $book->promotion = $request->promotion;
-            $book->promotion_price = $request->Initial_price - round($request->promotion/100*$request->Initial_price);
+            $request->Initial_price < 1 ?
+            $book->promotion_price = round($request->Initial_price - $request->promotion/100*$request->Initial_price, 1) :
+            $book->promotion_price = round($request->Initial_price - $request->promotion/100*$request->Initial_price);
             $book->image = $newImageName;
             $book->type = $request->type;
             $book->page_number = $request->page_number;
@@ -96,18 +109,18 @@ class BookController extends Controller
     }
     public function updateBook(Request $request){
         $login = auth()->user();
-        if($login->is_admin == true){
+        if($login && $login->is_admin == true){
             $validator = Validator::make($request->all(), [
                 'id' => 'required|exists:book,id',
-                'name' => 'required|min:1|max:255',
-                'Initial_price'=>'required|numeric|min:0',
-                'promotion'=>'required|numeric|between:0,100',
-                'image'=>'required|image|mimes:png,jpeg,jpg',
-                'type'=>'required|exists:book_type,id',
-                'page_number'=>'required|numeric|min:1',
-                'status'=>'required|in:Active,Block',
-                'author'=>'required|min:1',
-                'description'=>'required'
+                'name' => 'max:255',
+                'Initial_price'=>'numeric|min:0',
+                'promotion'=>'numeric|between:0,100',
+                'image'=>'image|mimes:png,jpeg,jpg',
+                'type'=>'exists:book_type,id',
+                'page_number'=>'numeric|min:1',
+                'status'=>'in:Active,Block',
+                'author'=>'',
+                'description'=>''
 
             ]);
             if ($validator->fails()) {
@@ -127,8 +140,8 @@ class BookController extends Controller
                 $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'book_images'.'/'.$newImageName;
             }
             $book = Book::find($request->id);
-            if($book->name == $request->name){
-                $book->name = $request->name;
+            if($book->name == $request->name || $request->name == null){
+                $book->name = $book->name;
             }
             else{
                 $validator = Validator::make($request->all(), [
@@ -139,16 +152,23 @@ class BookController extends Controller
                 }
                 $book->name = $request->name;
             }
-            $book->Initial_price = $request->Initial_price;
-            $book->promotion = $request->promotion;
-            $book->promotion_price = $request->Initial_price - round($request->promotion/100*$request->Initial_price);
-            File::delete($destinationPath.'/'.$book->image);
-            $book->image = $newImageName;
-            $book->type = $request->type;
-            $book->page_number = $request->page_number;
-            $book->author = $request->author;
-            $book->status = $request->status;
-            $book->description = $request->description;
+            $request->Initial_price == null ? $book->Initial_price = $book->Initial_price : $book->Initial_price = $request->Initial_price;
+            $request->promotion == null ? $book->promotion = $book->promotion : $book->promotion = $request->promotion;
+            $book->Initial_price < 1 ?
+            $book->promotion_price = round($book->Initial_price - $book->promotion/100*$book->Initial_price, 1) :
+            $book->promotion_price = round($book->Initial_price - $book->promotion/100*$book->Initial_price);
+            if($request->hasfile('image')){
+                File::delete($destinationPath.'/'.$book->image);
+                $book->image = $newImageName;
+            }
+            else{
+                $book->image = $book->image;
+            }
+            $request->type == null ? $book->type = $book->type : $book->type = $request->type;
+            $request->page_number == null ? $book->page_number = $book->page_number : $book->page_number = $request->page_number;
+            $request->author == null ? $book->author = $book->author : $book->author = $request->author;
+            $request->status == null ? $book->status = $book->status : $book->status = $request->status;
+            $request->description == null ? $book->description = $book->description : $book->description = $request->description;
             $book->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
             $book->save();
             return response()->json([
