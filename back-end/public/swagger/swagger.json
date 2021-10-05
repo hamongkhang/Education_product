@@ -1397,7 +1397,15 @@
         "api/getLessons/": {
             "get": {
                 "description": "Return all Lesson",
-                "parameters": [],
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Return successfully",
@@ -1421,6 +1429,13 @@
                         "in": "query",
                         "description": "id of lesson",
                         "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": false,
                         "type": "string"
                     }
                 ],
@@ -1742,7 +1757,15 @@
         "api/getContetns/": {
             "get": {
                 "description": "Return all contents",
-                "parameters": [],
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Return successfully",
@@ -1766,6 +1789,13 @@
                         "in": "query",
                         "description": "id of content",
                         "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": false,
                         "type": "string"
                     }
                 ],
@@ -2045,7 +2075,15 @@
         "api/getTableOfContents/": {
             "get": {
                 "description": "Return all TableOfContent",
-                "parameters": [],
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Return successfully",
@@ -2069,6 +2107,13 @@
                         "in": "query",
                         "description": "id of table of content",
                         "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": false,
                         "type": "string"
                     }
                 ],
@@ -2348,7 +2393,15 @@
         "api/getCourses/": {
             "get": {
                 "description": "Return all courses",
-                "parameters": [],
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Return successfully",
@@ -2372,6 +2425,13 @@
                         "in": "query",
                         "description": "id of course",
                         "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": false,
                         "type": "string"
                     }
                 ],
@@ -2707,7 +2767,15 @@
         "api/getCategoryCourses/": {
             "get": {
                 "description": "Return all category_course",
-                "parameters": [],
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Return successfully",
@@ -2731,6 +2799,13 @@
                         "in": "query",
                         "description": "id of category_course",
                         "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": false,
                         "type": "string"
                     }
                 ],

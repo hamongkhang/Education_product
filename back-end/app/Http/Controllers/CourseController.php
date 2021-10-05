@@ -18,9 +18,15 @@ class CourseController extends Controller
         $this->middleware('auth:api',['except' => ['getAllCourses','getOneCourse','addNewCourse','updateCourse','deleteCourse','changeStatusCourse']]);
     }
     public function getAllCourses(Request $request){
-        $lessons = Course::all();
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $courses = Course::all();
+        }
+        else{
+            $courses = Course::where('status','Active')->get();
+        }
         return response()->json([
-            'lessons'=>$lessons
+            'courses'=>$courses
         ], 200);
     }
     public function getOneCourse(Request $request){
@@ -30,15 +36,20 @@ class CourseController extends Controller
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 400);      
         }
-
-        $lesson = Course::find($request->id);
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $course = Course::find($request->id);
+        }
+        else{
+            $course = Course::where('status','Active')->where('id',$request->id)->get();
+        }
         return response()->json([
-            'lesson'=>$lesson
+            'course'=>$course
         ], 200);
     }
     public function addNewCourse(Request $request){
         $login = auth()->user();
-        if($login->is_admin == true){
+        if($login && $login->is_admin == true){
             $validator = Validator::make($request->all(), [
                 'name' => 'required|min:1|max:255|unique:course,name',
                 'Initial_price'=>'required|numeric|min:0',
@@ -68,7 +79,9 @@ class CourseController extends Controller
             $course->name = $request->name;
             $course->Initial_price = $request->Initial_price;
             $course->promotion = $request->promotion;
-            $course->promotion_price = $request->Initial_price - round($request->promotion/100*$request->Initial_price);
+            $course->Initial_price < 1 ?
+            $course->promotion_price = round($request->Initial_price - $request->promotion/100*$request->Initial_price, 1):
+            $course->promotion_price = round($request->Initial_price - $request->promotion/100*$request->Initial_price);
             $course->image = $newImageName;
             $course->category_course = $request->category_course;
             $course->status = $request->status;
@@ -90,19 +103,33 @@ class CourseController extends Controller
     }
     public function updateCourse(Request $request){
         $login = auth()->user();
-        if($login->is_admin == true){
+        if($login && $login->is_admin == true){
             $validator = Validator::make($request->all(), [
                 'id' => 'required|exists:course,id',
-                'name' => 'required|min:1|max:255',
-                'Initial_price'=>'required|numeric|min:0',
-                'promotion'=>'required|numeric|between:0,100',
-                'image'=>'required|image|mimes:png,jpeg,jpg',
-                'category_course'=>'required|exists:category_course,id',
-                'status'=>'required|in:Active,Block',
-                'description'=>'required'
+                'name' => 'min:1|max:255',
+                'Initial_price'=>'numeric|min:0',
+                'promotion'=>'numeric|between:0,100',
+                'image'=>'image|mimes:png,jpeg,jpg',
+                'category_course'=>'exists:category_course,id',
+                'status'=>'in:Active,Block',
+                'description'=>''
             ]);
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      
+            }
+           
+            $course = Course::find($request->id);
+            if($course->name == $request->name || $request->name == null){
+                $course->name = $course->name;
+            }
+            else{
+                $validator = Validator::make($request->all(), [
+                    'name' => 'unique:course,name',
+                ]);
+                if ($validator->fails()) {
+                    return response()->json(['error'=>$validator->errors()], 400);      
+                }
+                $course->name = $request->name;
             }
             if($request->hasfile('image')) {
                 $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'course_images';
@@ -117,27 +144,21 @@ class CourseController extends Controller
                 $file->move(public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'course_images', $newImageName);
                 $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'course_images'.'/'.$newImageName;
             }
-            $course = Course::find($request->id);
-            if($course->name == $request->name){
-                $course->name = $request->name;
+            $request->Initial_price == null ? $course->Initial_price = $course->Initial_price : $course->Initial_price = $request->Initial_price;
+            $request->promotion == null ? $course->promotion = $course->promotion : $course->promotion = $request->promotion;
+            $course->Initial_price < 1 ?
+            $course->promotion_price = round($request->Initial_price - $request->promotion/100*$request->Initial_price, 1):
+            $course->promotion_price = round($request->Initial_price - $request->promotion/100*$request->Initial_price);
+            if($request->hasfile('image')){
+                File::delete($destinationPath.'/'.$course->image);
+                $course->image = $newImageName;
             }
             else{
-                $validator = Validator::make($request->all(), [
-                    'name' => 'unique:course,name',
-                ]);
-                if ($validator->fails()) {
-                    return response()->json(['error'=>$validator->errors()], 400);      
-                }
-                $course->name = $request->name;
+                $course->image = $course->image;
             }
-            $course->Initial_price = $request->Initial_price;
-            $course->promotion = $request->promotion;
-            $course->promotion_price = $request->Initial_price - round($request->promotion/100*$request->Initial_price);
-            File::delete($destinationPath.'/'.$course->image);
-            $course->image = $newImageName;
-            $course->category_course = $request->category_course;
-            $course->status = $request->status;
-            $course->description = $request->description;
+            $request->category_course == null ? $course->category_course = $course->category_course : $course->category_course = $request->category_course;
+            $request->status == null ? $course->status = $course->status : $course->status = $request->status;
+            $request->description == null ? $course->description = $course->description : $course->description = $request->description;
             $course->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
             $course->save();
             return response()->json([
@@ -154,7 +175,7 @@ class CourseController extends Controller
     }
     public function deleteCourse(Request $request){
         $login = auth()->user();
-        if($login->is_admin == true){
+        if($login && $login->is_admin == true){
             $validator = Validator::make($request->all(), [
                 'id' => 'required|exists:course,id',
             ]);
@@ -191,7 +212,7 @@ class CourseController extends Controller
     }
     public function changeStatusCourse(Request $request){
         $login = auth()->user();
-        if($login->is_admin == true){
+        if($login && $login->is_admin == true){
             $validator = Validator::make($request->all(), [
                 'id' => 'required|exists:course,id',
             ]);

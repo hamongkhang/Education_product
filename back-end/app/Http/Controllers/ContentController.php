@@ -14,7 +14,14 @@ class ContentController extends Controller
         $this->middleware('auth:api',['except' => ['getAllContents','getOneContent','addNewContent','updateContent','deleteContent','changeStatusContent']]);
     }
     public function getAllContents(Request $request){
-        $contents = Content::all();
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $contents = Content::all();
+        }
+        else{
+            $contents = Content::where('status','Active')->get();
+        }
+       
         return response()->json([
             'contents'=>$contents
         ], 200);
@@ -26,15 +33,20 @@ class ContentController extends Controller
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 400);      
         }
-
-        $content = Content::find($request->id);
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $content = Content::find($request->id);
+        }
+        else{
+            $content = Content::where('status','Active')->where('id',$request->id)->get();
+        }
         return response()->json([
             'content'=>$content
         ], 200);
     }
     public function addNewContent(Request $request){
         $login = auth()->user();
-        if($login->is_admin == true){
+        if($login && $login->is_admin == true){
             $validator = Validator::make($request->all(), [
                 'name' => 'required|min:1|max:255|unique:content,name',
                 'table_of_content_id'=>'required|exists:table_of_content,id',
@@ -65,20 +77,20 @@ class ContentController extends Controller
     }
     public function updateContent(Request $request){
         $login = auth()->user();
-        if($login->is_admin == true){
+        if($login && $login->is_admin == true){
             $validator = Validator::make($request->all(), [
                 'id' => 'required|exists:content,id',
-                'name' => 'required|min:1|max:255',
-                'table_of_content_id'=>'required|exists:table_of_content,id',
-                'status'=>'required|in:Active,Block'
+                'name' => 'min:1|max:255',
+                'table_of_content_id'=>'exists:table_of_content,id',
+                'status'=>'in:Active,Block'
             ]);
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      
             }
             
             $content = Content::find($request->id);
-            if($content->name == $request->name){
-                $content->name = $request->name;
+            if($content->name == $request->name || $request->name == null){
+                $content->name = $content->name;
             }
             else{
                 $validator = Validator::make($request->all(), [
@@ -89,8 +101,8 @@ class ContentController extends Controller
                 }
                 $content->name = $request->name;
             }
-            $content->table_of_content_id = $request->table_of_content_id;
-            $content->status = $request->status;
+            $request->table_of_content_id == null ? $content->table_of_content_id = $content->table_of_content_id : $content->table_of_content_id = $request->table_of_content_id;
+            $request->status == null ? $content->status = $content->status : $content->status = $request->status;
             $content->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
             $content->save();
             return response()->json([
@@ -107,7 +119,7 @@ class ContentController extends Controller
     }
     public function deleteContent(Request $request){
         $login = auth()->user();
-        if($login->is_admin == true){
+        if($login && $login->is_admin == true){
             $validator = Validator::make($request->all(), [
                 'id' => 'required|exists:content,id',
             ]);
@@ -131,7 +143,7 @@ class ContentController extends Controller
     }
     public function changeStatusContent(Request $request){
         $login = auth()->user();
-        if($login->is_admin == true){
+        if($login && $login->is_admin == true){
             $validator = Validator::make($request->all(), [
                 'id' => 'required|exists:content,id',
             ]);

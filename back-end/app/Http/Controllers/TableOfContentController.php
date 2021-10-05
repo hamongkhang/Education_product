@@ -15,7 +15,13 @@ class TableOfContentController extends Controller
         $this->middleware('auth:api',['except' => ['getAllTableOfContents','getOneTableOfContent','addNewTableOfContent','updateTableOfContent','deleteTableOfContent','changeStatusTableOfContent']]);
     }
     public function getAllTableOfContents(Request $request){
-        $table_of_contents = TableOfContent::all();
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $table_of_contents = TableOfContent::all();
+        }
+        else{
+            $table_of_contents = TableOfContent::where('status','Active')->get();
+        }
         return response()->json([
             'table_of_contents'=>$table_of_contents
         ], 200);
@@ -27,15 +33,20 @@ class TableOfContentController extends Controller
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 400);      
         }
-
-        $table_of_content = TableOfContent::find($request->id);
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $table_of_content = TableOfContent::find($request->id);
+        }
+        else{
+            $table_of_content = TableOfContent::where('status','Active')->where('id',$request->id)->get();
+        }
         return response()->json([
             'table_of_content'=>$table_of_content
         ], 200);
     }
     public function addNewTableOfContent(Request $request){
         $login = auth()->user();
-        if($login->is_admin == true){
+        if($login && $login->is_admin == true){
             $validator = Validator::make($request->all(), [
                 'name' => 'required|min:1|max:255|unique:table_of_content,name',
                 'course_id'=>'required|exists:course,id',
@@ -66,20 +77,20 @@ class TableOfContentController extends Controller
     }
     public function updateTableOfContent(Request $request){
         $login = auth()->user();
-        if($login->is_admin == true){
+        if($login && $login->is_admin == true){
             $validator = Validator::make($request->all(), [
                 'id' => 'required|exists:table_of_content,id',
-                'name' => 'required|min:1|max:255',
-                'course_id'=>'required|exists:course,id',
-                'status'=>'required|in:Active,Block'
+                'name' => 'max:255',
+                'course_id'=>'exists:course,id',
+                'status'=>'in:Active,Block'
             ]);
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      
             }
             
             $table_of_content = TableOfContent::find($request->id);
-            if($table_of_content->name == $request->name){
-                $table_of_content->name = $request->name;
+            if($table_of_content->name == $request->name || $request->name == null){
+                $table_of_content->name = $table_of_content->name;
             }
             else{
                 $validator = Validator::make($request->all(), [
@@ -90,8 +101,8 @@ class TableOfContentController extends Controller
                 }
                 $table_of_content->name = $request->name;
             }
-            $table_of_content->course_id = $request->course_id;
-            $table_of_content->status = $request->status;
+            $request->course_id == null ? $table_of_content->course_id = $table_of_content->course_id : $table_of_content->course_id = $request->course_id;
+            $request->status == null ? $table_of_content->status = $table_of_content->status : $table_of_content->status = $request->status;
             $table_of_content->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
             $table_of_content->save();
             return response()->json([
@@ -108,7 +119,7 @@ class TableOfContentController extends Controller
     }
     public function deleteTableOfContent(Request $request){
         $login = auth()->user();
-        if($login->is_admin == true){
+        if($login && $login->is_admin == true){
             $validator = Validator::make($request->all(), [
                 'id' => 'required|exists:table_of_content,id',
             ]);
@@ -136,7 +147,7 @@ class TableOfContentController extends Controller
     }
     public function changeStatusTableOfContent(Request $request){
         $login = auth()->user();
-        if($login->is_admin == true){
+        if($login && $login->is_admin == true){
             $validator = Validator::make($request->all(), [
                 'id' => 'required|exists:table_of_content,id',
             ]);

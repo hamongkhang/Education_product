@@ -7,6 +7,7 @@ use App\Models\Lesson;
 use App\Models\TableOfContent;
 use App\Models\Content;
 use App\Models\CategoryCourse;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,7 +17,13 @@ class CategoryCourseController extends Controller
         $this->middleware('auth:api',['except' => ['getAllCategoryCourses','getOneCategoryCourse','addNewCategoryCourse','updateCategoryCourse','deleteCategoryCourse','changeStatusCategoryCourse']]);
     }
     public function getAllCategoryCourses(Request $request){
-        $category_courses = CategoryCourse::all();
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $category_courses = CategoryCourse::all();
+        }
+        else{
+            $category_courses = CategoryCourse::where('status','Active')->where('id',$request->id)->get();
+        }
         return response()->json([
             'category_courses'=>$category_courses
         ], 200);
@@ -28,19 +35,24 @@ class CategoryCourseController extends Controller
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 400);      
         }
-
-        $category_course = CategoryCourse::find($request->id);
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $category_course = CategoryCourse::find($request->id);
+        }
+        else{
+            $category_course = CategoryCourse::where('status','Active')->where('id',$request->id)->get();
+        }
         return response()->json([
             'category_course'=>$category_course
         ], 200);
     }
     public function addNewCategoryCourse(Request $request){
         $login = auth()->user();
-        if($login->is_admin == true){
+        if($login && $login->is_admin == true){
             $validator = Validator::make($request->all(), [
                 'name' => 'required|min:1|max:255|unique:category_course,name',
                 'status'=>'required|in:Active,Block',
-                'descrition'=>'required'
+                'description'=>'required'
             ]);
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      
@@ -67,20 +79,20 @@ class CategoryCourseController extends Controller
     }
     public function updateCategoryCourse(Request $request){
         $login = auth()->user();
-        if($login->is_admin == true){
+        if($login && $login->is_admin == true){
             $validator = Validator::make($request->all(), [
                 'id' => 'required|exists:category_course,id',
-                'name' => 'required|min:1|max:255',
-                'status'=>'required|in:Active,Block',
-                'descrition'=>'required'
+                'name' => 'min:1|max:255',
+                'status'=>'in:Active,Block',
+                'description'=>''
             ]);
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      
             }
             
             $category_course = CategoryCourse::find($request->id);
-            if($category_course->name == $request->name){
-                $category_course->name = $request->name;
+            if($category_course->name == $request->name || $request->name == null){
+                $category_course->name = $category_course->name;
             }
             else{
                 $validator = Validator::make($request->all(), [
@@ -91,8 +103,8 @@ class CategoryCourseController extends Controller
                 }
                 $category_course->name = $request->name;
             }
-            $category_course->description = $request->description;
-            $category_course->status = $request->status;
+            $request->description == null ? $category_course->description = $category_course->description : $category_course->description = $request->description;
+            $request->status == null ? $category_course->status = $category_course->status : $category_course->status = $request->status;
             $category_course->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
             $category_course->save();
             return response()->json([
@@ -109,7 +121,7 @@ class CategoryCourseController extends Controller
     }
     public function deleteCategoryCourse(Request $request){
         $login = auth()->user();
-        if($login->is_admin == true){
+        if($login && $login->is_admin == true){
             $validator = Validator::make($request->all(), [
                 'id' => 'required|exists:category_course,id',
             ]);
@@ -150,7 +162,7 @@ class CategoryCourseController extends Controller
     }
     public function changeStatusCategoryCourse(Request $request){
         $login = auth()->user();
-        if($login->is_admin == true){
+        if($login && $login->is_admin == true){
             $validator = Validator::make($request->all(), [
                 'id' => 'required|exists:category_course,id',
             ]);
