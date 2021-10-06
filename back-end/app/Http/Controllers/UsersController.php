@@ -788,7 +788,7 @@ class UsersController extends Controller
         if (! $token = auth()->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        if (auth()->user()->status==="block") {
+        if (auth()->user()->status==="Block") {
             return response()->json(['error' => 'Blocked'], 401);
         }
         $adminFind = DB::table('admin_account')->where('id', 1)->first();

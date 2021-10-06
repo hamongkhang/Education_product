@@ -269,47 +269,9 @@
                 ]
             }
         },
-        "api/freeDocument/getFreeDocument/": {
+        "api/featuredPost/getFeaturedPost": {
             "get": {
-                "description": "Return teacher's informaion.",
-                "responses": {
-                    "200": {
-                        "description": "Successfully",
-                        "schema": {
-                            "properties": {
-                                "id": {
-                                    "type": "integer"
-                                },
-                                "category_name": {
-                                    "type": "string"
-                                },
-                                "name": {
-                                    "type": "string"
-                                },
-                                "file": {
-                                    "type": "string"
-                                },
-                                "path": {
-                                    "type": "string"
-                                },
-                                "created_at": {
-                                    "type": "timestamp"
-                                },
-                                "updated_at": {
-                                    "type": "timestamp"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Missing Data"
-                    }
-                }
-            }
-        },
-        "api/ITinTeach/getITinTeach": {
-            "get": {
-                "description": "get file IT i Teach",
+                "description": "get featured posts",
                 "responses": {
                     "200": {
                         "description": "Successfully",
@@ -319,53 +281,6 @@
                                     "type": "integer"
                                 },
                                 "name": {
-                                    "type": "string"
-                                },
-                                "description": {
-                                    "type": "string"
-                                },
-                                "image": {
-                                    "type": "string"
-                                },
-                                "author": {
-                                    "type": "string"
-                                },
-                                "file": {
-                                    "type": "string"
-                                },
-                                "path": {
-                                    "type": "string"
-                                },
-                                "status": {
-                                    "type": "string"
-                                },
-                                "created_at": {
-                                    "type": "datetime"
-                                },
-                                "updated_at": {
-                                    "type": "datetime"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Missing Data"
-                    }
-                }
-            }
-        },
-        "api/news/getNews": {
-            "get": {
-                "description": "get news of news type",
-                "responses": {
-                    "200": {
-                        "description": "Successfully",
-                        "schema": {
-                            "properties": {
-                                "id": {
-                                    "type": "integer"
-                                },
-                                "type_name": {
                                     "type": "string"
                                 },
                                 "description": {
@@ -393,11 +308,167 @@
                         }
                     },
                     "401": {
-                        "description": "Don't find id type !!!"
+                        "description": "Don't find id featured post !!!"
                     }
                 }
             }
         },
+        "api/featuredPost/createFeaturedPost/": {
+            "post": {
+                "description": "Return news's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "featured post name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "file",
+                        "in": "query",
+                        "description": "featured post file",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "featured post description",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "Image file",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/featuredPost/updateFeaturedPost/{id}": {
+            "post": {
+                "description": "Return featured post's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "featured post name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "file",
+                        "in": "query",
+                        "description": "featured post file",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "featured post description",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "Image file",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+<<<<<<< HEAD
         "api/news/createNews/": {
             "post": {
                 "description": "Return news's informaion.",
@@ -678,6 +749,594 @@
             }
         },
         "api/payment/momoPayment": {
+=======
+        "api/featuredPost/destroyFeaturedPost/{id}": {
+>>>>>>> BE
+            "post": {
+                "description": "Return featured post's informaion.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/featuredPost/blockActiveFeaturedPost/{id}": {
+            "post": {
+                "description": "Return featured post's informaion.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/freeDocumentCategory/createFreeDocumentCategory/": {
+            "post": {
+                "description": "Return free document category's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Document category name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/freeDocumentCategory/updateFreeDocumentCategory/{id}": {
+            "post": {
+                "description": "Return free Document category's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Free Document Category's Name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/freeDocumentCategory/destroyFreeDocumentCategory/{id}": {
+            "post": {
+                "description": "Return freeDocument's informaion.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/freeDocument/getFreeDocument/": {
+            "get": {
+                "description": "Return teacher's informaion.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "category_name": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                }
+            }
+        },
+        "api/freeDocument/createFreeDocument/": {
+            "post": {
+                "description": "Return teacher's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Document name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "file",
+                        "in": "query",
+                        "description": "Document file",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "category",
+                        "in": "query",
+                        "description": "Category's id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "category_id": {
+                                    "type": "integer"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/freeDocument/updateFreeDocument/{id}": {
+            "post": {
+                "description": "Return free Document's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Fr\u00ea Document's Name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "category",
+                        "in": "query",
+                        "description": "Free Document's Type",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "file",
+                        "in": "query",
+                        "description": "Free Document's File",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "category_id": {
+                                    "type": "integer"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+<<<<<<< HEAD
+        "api/teacher/destroyTeacher/{id}": {
+            "post": {
+                "description": "Return teacher's informaion.",
+=======
+        "api/freeDocument/destroyFreeDocument/{id}": {
+            "post": {
+                "description": "Return freeDocument's informaion.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "category_id": {
+                                    "type": "integer"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/freeDocument/blockActiveFreeDocument/{id}": {
+            "post": {
+                "description": "Return freeDocument's informaion.",
+>>>>>>> BE
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "category_id": {
+                                    "type": "integer"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+<<<<<<< HEAD
+=======
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/ITinTeach/getITinTeach": {
+            "get": {
+                "description": "get file IT i Teach",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "author": {
+                                    "type": "string"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "datetime"
+                                },
+                                "updated_at": {
+                                    "type": "datetime"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Missing Data"
+                    }
+                }
+            }
+        },
+        "api/news/getNews": {
+            "get": {
+                "description": "get news of news type",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "type_name": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "datetime"
+                                },
+                                "updated_at": {
+                                    "type": "datetime"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Don't find id type !!!"
+                    }
+                }
+            }
+        },
+        "api/payment/momoPayment": {
             "post": {
                 "description": "Momo payment",
                 "responses": {
@@ -737,6 +1396,7 @@
                             "properties": {
                                 "url": {
                                     "type": "string"
+>>>>>>> BE
                                 }
                             }
                         }
@@ -752,6 +1412,9 @@
                 ]
             }
         },
+<<<<<<< HEAD
+        "api/users/login/": {
+=======
         "api/teacher/getTeacher/": {
             "get": {
                 "description": "Return teacher's informaion.",
@@ -803,6 +1466,7 @@
             }
         },
         "api/teacher/createTeacher/": {
+>>>>>>> BE
             "post": {
                 "description": "Return teacher's informaion.",
                 "parameters": [
@@ -1721,6 +2385,567 @@
                     },
                     "401": {
                         "description": "Unauthorized!"
+                    }
+                }
+            }
+        },
+        "api/getBookTypes/": {
+            "get": {
+                "description": "Trả về toàn bộ type của sách",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin đăng nhập",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về toàn bộ types của sách",
+                        "schema": {
+                            "properties": {
+                                "book_types":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/getOneBookType/": {
+            "post": {
+                "description": "Trả về một type của sách",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin đăng nhập",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Id của type sách đó",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về một type của sách",
+                        "schema": {
+                            "properties": {
+                                "book_type":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/addBookType/": {
+            "post": {
+                "description": "Trả về một type của sách",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Tên kiểu sách",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về type của sách vừa mới thêm",
+                        "schema": {
+                            "properties": {
+                                "book_type":{
+                                    "type": "object"
+                                },
+                                "success":{
+                                    "type":"integer"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Lỗi validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/updateBookType/": {
+            "post": {
+                "description": "Trả về một type của sách",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID kiểu sách",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Tên kiểu sách",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về type của sách vừa mới cập nhật",
+                        "schema": {
+                            "properties": {
+                                "book_type":{
+                                    "type": "object"
+                                },
+                                "success":{
+                                    "type":"integer"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Lỗi validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/deleteBookType/": {
+            "post": {
+                "description": "Xóa một type sách",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID kiểu sách",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về thông báo mới xóa",
+                        "schema": {
+                            "properties": {
+                                "success":{
+                                    "type":"integer"
+                                },
+                                "description":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Lỗi validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/getBooks/": {
+            "get": {
+                "description": "Trả về toàn bộ sách",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin đăng nhập",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về toàn bộ sách",
+                        "schema": {
+                            "properties": {
+                                "books":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/getOneBook/": {
+            "post": {
+                "description": "Trả về một sách",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin đăng nhập",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Id của sách",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về một type của sách",
+                        "schema": {
+                            "properties": {
+                                "book_type":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Lỗi validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/addBook/": {
+            "post": {
+                "description": "Trả về một sách đã thêm",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin đăng nhập",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Tên sách",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Initial_price",
+                        "in": "query",
+                        "description": "Giá gốc sách",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "promotion",
+                        "in": "query",
+                        "description": "phần trăm giảm giá",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "link ảnh",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": " Kiểu sách",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "page_number",
+                        "in": "query",
+                        "description": "số trang",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "author",
+                        "in": "query",
+                        "description": "tác giả",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Mô tả",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về sách vừa mới thêm",
+                        "schema": {
+                            "properties": {
+                                "book":{
+                                    "type": "object"
+                                },
+                                "success":{
+                                    "type":"integer"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Lỗi validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/updateBook/": {
+            "post": {
+                "description": "Trả về một sách đã chỉnh sửa",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin đăng nhập",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID sách",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Tên sách",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Initial_price",
+                        "in": "query",
+                        "description": "Giá gốc sách",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "promotion",
+                        "in": "query",
+                        "description": "phần trăm giảm giá",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "link ảnh",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": " Kiểu sách",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "page_number",
+                        "in": "query",
+                        "description": "số trang",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "trạng thái: active và block",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "author",
+                        "in": "query",
+                        "description": "tác giả",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Mô tả",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về sách vừa mới sửa",
+                        "schema": {
+                            "properties": {
+                                "book":{
+                                    "type": "object"
+                                },
+                                "success":{
+                                    "type":"integer"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Lỗi validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/deleteBook/": {
+            "post": {
+                "description": "Xóa một sách",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin đăng nhập",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID kiểu sách",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về thông báo mới xóa",
+                        "schema": {
+                            "properties": {
+                                "success":{
+                                    "type":"integer"
+                                },
+                                "description":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Lỗi validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/changeBookStatus/": {
+            "post": {
+                "description": "Đổi trạng thái của sách",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin đăng nhập",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID kiểu sách",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về thông báo mới xóa",
+                        "schema": {
+                            "properties": {
+                                "success":{
+                                    "type":"integer"
+                                },
+                                "description":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Lỗi validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Lỗi đăng nhập",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                },
+                                "description":{
+                                    "type": "string"
+                                }
+                            }
+                        }
                     }
                 }
             }
