@@ -15,6 +15,739 @@
         "http"
     ],
     "paths": {
+        "api/admin/blockAccount/": {
+            "post": {
+                "description": "Return a user's information",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Your email",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Your password(length>8)",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "email_verified_at": {
+                                    "type": "datetime"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                },
+                                "avatar": {
+                                    "type": "string"
+                                },
+                                "nameAccount": {
+                                    "type": "string"
+                                },
+                                "linkFB": {
+                                    "type": "string"
+                                },
+                                "phone": {
+                                    "type": "string"
+                                },
+                                "address": {
+                                    "type": "string"
+                                },
+                                "birthday": {
+                                    "type": "datetime"
+                                },
+                                "sex": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "id not found!"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/comment/addComment/": {
+            "post": {
+                "description": "Return a comment of client",
+                "parameters": [
+                    {
+                        "name": "message",
+                        "in": "query",
+                        "description": "Your message",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lessonId",
+                        "in": "query",
+                        "description": "id of lesson",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "userId": {
+                                    "type": "integer"
+                                },
+                                "lessonId": {
+                                    "type": "integer"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/comment/getComment/": {
+            "get": {
+                "description": "Return a comment of client",
+                "parameters": [
+                    {
+                        "name": "lessonId",
+                        "in": "query",
+                        "description": "id of lesson",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "userId": {
+                                    "type": "integer"
+                                },
+                                "lessonId": {
+                                    "type": "integer"
+                                },
+                                "id_reply": {
+                                    "type": "integer"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/comment/replyComment/": {
+            "post": {
+                "description": "Return a comment of client",
+                "parameters": [
+                    {
+                        "name": "message",
+                        "in": "query",
+                        "description": "Your message",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lessonId",
+                        "in": "query",
+                        "description": "id of lesson",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "id_reply",
+                        "in": "query",
+                        "description": "id of comment",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "userId": {
+                                    "type": "integer"
+                                },
+                                "lessonId": {
+                                    "type": "integer"
+                                },
+                                "id_reply": {
+                                    "type": "integer"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/freeDocumentCategory/createFreeDocumentCategory/": {
+            "post": {
+                "description": "Return free document category's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Document category name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/freeDocumentCategory/updateFreeDocumentCategory/{id}": {
+            "post": {
+                "description": "Return free Document category's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Free Document Category's Name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/freeDocumentCategory/destroyFreeDocumentCategory/{id}": {
+            "post": {
+                "description": "Return freeDocument's informaion.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/freeDocument/getFreeDocument/": {
+            "get": {
+                "description": "Return teacher's informaion.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "category_name": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                }
+            }
+        },
+        "api/freeDocument/createFreeDocument/": {
+            "post": {
+                "description": "Return teacher's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Document name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "file",
+                        "in": "query",
+                        "description": "Document file",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "category",
+                        "in": "query",
+                        "description": "Category's id",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "category_id": {
+                                    "type": "integer"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/freeDocument/updateFreeDocument/{id}": {
+            "post": {
+                "description": "Return free Document's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Fr\u00ea Document's Name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "category",
+                        "in": "query",
+                        "description": "Free Document's Type",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "file",
+                        "in": "query",
+                        "description": "Free Document's File",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "category_id": {
+                                    "type": "integer"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/freeDocument/destroyFreeDocument/{id}": {
+            "post": {
+                "description": "Return freeDocument's informaion.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "category_id": {
+                                    "type": "integer"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/freeDocument/blockActiveFreeDocument/{id}": {
+            "post": {
+                "description": "Return freeDocument's informaion.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "integer"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "category_id": {
+                                    "type": "integer"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/ITinTeach/getITinTeach": {
+            "get": {
+                "description": "get file IT i Teach",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "author": {
+                                    "type": "string"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "datetime"
+                                },
+                                "updated_at": {
+                                    "type": "datetime"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Missing Data"
+                    }
+                }
+            }
+        },
+        "api/news/getNews": {
+            "get": {
+                "description": "get news of news type",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "type_name": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "datetime"
+                                },
+                                "updated_at": {
+                                    "type": "datetime"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Don't find id type !!!"
+                    }
+                }
+            }
+        },
         "api/payment/momoPayment": {
             "post": {
                 "description": "Momo payment",
@@ -32,7 +765,12 @@
                     "422": {
                         "description": "Missing Data"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         },
         "api/payment/checkResult": {
@@ -52,7 +790,12 @@
                     "422": {
                         "description": "Missing Data"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         },
         "api/payment/atmPayment": {
@@ -72,7 +815,343 @@
                     "422": {
                         "description": "Missing Data"
                     }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/teacher/getTeacher/": {
+            "get": {
+                "description": "Return teacher's informaion.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "position": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "phone": {
+                                    "type": "string"
+                                },
+                                "facebook": {
+                                    "type": "string"
+                                },
+                                "skype": {
+                                    "type": "string"
+                                },
+                                "youtube": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
                 }
+            }
+        },
+        "api/teacher/createTeacher/": {
+            "post": {
+                "description": "Return teacher's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Your name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "Your image",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "position",
+                        "in": "query",
+                        "description": "Your position",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "Your phone",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Your description",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "facebook",
+                        "in": "query",
+                        "description": "Your facebook",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "skype",
+                        "in": "query",
+                        "description": "Your skype",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "youtube",
+                        "in": "query",
+                        "description": "Your youtube",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "position": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "phone": {
+                                    "type": "string"
+                                },
+                                "facebook": {
+                                    "type": "string"
+                                },
+                                "skype": {
+                                    "type": "string"
+                                },
+                                "youtube": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/teacher/updateTeacher/{id}": {
+            "post": {
+                "description": "Return teacher's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Your name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "Your image",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "position",
+                        "in": "query",
+                        "description": "Your position",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "Your phone",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Your description",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "facebook",
+                        "in": "query",
+                        "description": "Your facebook",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "skype",
+                        "in": "query",
+                        "description": "Your skype",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "youtube",
+                        "in": "query",
+                        "description": "Your youtube",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "position": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "phone": {
+                                    "type": "string"
+                                },
+                                "facebook": {
+                                    "type": "string"
+                                },
+                                "skype": {
+                                    "type": "string"
+                                },
+                                "youtube": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/teacher/destroyTeacher/{id}": {
+            "post": {
+                "description": "Return teacher's informaion.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "position": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "phone": {
+                                    "type": "string"
+                                },
+                                "facebook": {
+                                    "type": "string"
+                                },
+                                "skype": {
+                                    "type": "string"
+                                },
+                                "youtube": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
             }
         },
         "api/users/login/": {
@@ -627,124 +1706,92 @@
                 }
             }
         },
-        "api/inbox/": {
+        "api/admin/loginAdmin/": {
             "post": {
-                "description": "Trả về messages của account đang đăng nhập, nếu là admin thì trả thêm user ID",
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": "Trả về messages của user đang đăng nhập",
-                        "schema": {
-                            "properties": {
-                                "success":{
-                                    "type": "integer"
-                                },
-                                "messages": {
-                                    "type": "object"
-                                },
-                                "users":{
-                                    "types":"integer"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "api/inbox_admin/": {
-            "post": {
-                "description": "API chỉ dùng cho acc admin, Trả về messages của user bất kì do admin chọn",
+                "description": "Return a user's information",
                 "parameters": [
                     {
-                        "name": "sender_id",
+                        "name": "email",
                         "in": "query",
-                        "description": "ID user được admin truy vấn",
+                        "description": "Your email",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Your password(length>8)",
                         "required": true,
                         "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Trả về messages của user đang được chọn",
+                        "description": "login successfully",
                         "schema": {
                             "properties": {
-                                "success":{
+                                "access_token": {
+                                    "type": "string"
+                                },
+                                "token_type": {
+                                    "type": "string"
+                                },
+                                "expires_in": {
                                     "type": "integer"
                                 },
-                                "messages": {
+                                "user": {
                                     "type": "object"
                                 },
-                                "users":{
-                                    "types":"integer"
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "email_verified_at": {
+                                    "type": "datetime"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                },
+                                "avatar": {
+                                    "type": "string"
+                                },
+                                "nameAccount": {
+                                    "type": "string"
+                                },
+                                "linkFB": {
+                                    "type": "string"
+                                },
+                                "phone": {
+                                    "type": "string"
+                                },
+                                "address": {
+                                    "type": "string"
+                                },
+                                "birthday": {
+                                    "type": "datetime"
+                                },
+                                "sex": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "level": {
+                                    "type": "string"
                                 }
                             }
                         }
                     },
                     "401": {
-                        "description": "Trả về lỗi do thiếu sender_id",
-                        "schema": {
-                            "properties": {
-                                "error":{
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Trả về lỗi do không đăng nhập account admin",
-                        "schema": {
-                            "properties": {
-                                "error":{
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "api/sendmess/": {
-            "post": {
-                "description": "Gửi tin nhắn",
-                "parameters": [
-                    {
-                        "name": "acccess_token",
-                        "in": "query",
-                        "description": "Người dùng đăng nhập hoặc không",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "sender_id",
-                        "in": "query",
-                        "description": "ID user được nhận message",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "message",
-                        "in": "query",
-                        "description": "Nội dung message được gửi đi",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Trả về message vừa mới gửi",
-                        "schema": {
-                            "properties": {
-                                "success":{
-                                    "type": "integer"
-                                },
-                                "new_message": {
-                                    "type": "object"
-                                },
-                                "users":{
-                                    "types":"object"
-                                }
-                            }
-                        }
+                        "description": "Unauthorized!"
                     }
                 }
             }

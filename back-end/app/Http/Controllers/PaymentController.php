@@ -41,7 +41,10 @@ class PaymentController extends Controller
      *     @SWG\Response(
      *         response=422,
      *         description="Missing Data"
-     *     )
+     *     ),
+     *  security={
+     *           {"api_key_security_example": {}}
+     *       }
      * )
      */
     public function momoPayment(Request $request)
@@ -127,7 +130,10 @@ class PaymentController extends Controller
      *     @SWG\Response(
      *         response=422,
      *         description="Missing Data"
-     *     )
+     *     ),
+     *  security={
+     *           {"api_key_security_example": {}}
+     *       }
      * )
      */
  public function checkResult(){
@@ -203,7 +209,10 @@ class PaymentController extends Controller
      *     @SWG\Response(
      *         response=422,
      *         description="Missing Data"
-     *     )
+     *     ),
+     *  security={
+     *           {"api_key_security_example": {}}
+     *       }
      * )
      */
     public function atmPayment(Request $request)
