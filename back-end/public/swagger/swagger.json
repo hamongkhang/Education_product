@@ -389,28 +389,144 @@
                 ]
             }
         },
+<<<<<<< HEAD
+        "api/ITinTeach/createITinTeach/": {
+            "post": {
+                "description": "Return IT in teach's informaion.",
+=======
         "api/featuredPost/updateFeaturedPost/{id}": {
             "post": {
                 "description": "Return featured post's informaion.",
+>>>>>>> BE
                 "parameters": [
                     {
                         "name": "name",
                         "in": "query",
-                        "description": "featured post name",
+<<<<<<< HEAD
+                        "description": "IT in Teach name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "IT in Teach description",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "IT in Teach image",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "author",
+                        "in": "query",
+                        "description": "IT in Teach author",
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "file",
                         "in": "query",
+                        "description": "IT in Teach file",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "author": {
+                                    "type": "string"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "datetime"
+                                },
+                                "updated_at": {
+                                    "type": "datetime"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/ITinTeach/updateITinTeach/{id}": {
+            "post": {
+                "description": "Return ITinTeach's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "IT in teach name",
+=======
+                        "description": "featured post name",
+>>>>>>> BE
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "file",
+                        "in": "query",
+<<<<<<< HEAD
+                        "description": "IT in teach file",
+=======
                         "description": "featured post file",
+>>>>>>> BE
                         "required": true,
                         "type": "file"
                     },
                     {
+<<<<<<< HEAD
+                        "name": "author",
+                        "in": "query",
+                        "description": "IT in teach's author",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "IT in teach description",
+=======
                         "name": "description",
                         "in": "query",
                         "description": "featured post description",
+>>>>>>> BE
                         "required": true,
                         "type": "string"
                     },
@@ -422,6 +538,165 @@
                         "type": "file"
                     }
                 ],
+<<<<<<< HEAD
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "author": {
+                                    "type": "string"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "datetime"
+                                },
+                                "updated_at": {
+                                    "type": "datetime"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/ITinTeach/destroyITinTeach/{id}": {
+            "post": {
+                "description": "Return IT in teach's informaion.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "author": {
+                                    "type": "string"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "datetime"
+                                },
+                                "updated_at": {
+                                    "type": "datetime"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/ITinTeach/blockActiveITinTeach/{id}": {
+            "post": {
+                "description": "Return IT in Teach's informaion.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "image": {
+                                    "type": "string"
+                                },
+                                "author": {
+                                    "type": "string"
+                                },
+                                "file": {
+                                    "type": "string"
+                                },
+                                "path": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "datetime"
+                                },
+                                "updated_at": {
+                                    "type": "datetime"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/news/getNews": {
+            "get": {
+                "description": "get news of news type",
+=======
+>>>>>>> BE
                 "responses": {
                     "200": {
                         "description": "Successfully",
@@ -862,6 +1137,11 @@
                 ]
             }
         },
+<<<<<<< HEAD
+        "api/teacher/destroyTeacher/{id}": {
+            "post": {
+                "description": "Return teacher's informaion.",
+=======
         "api/freeDocument/destroyFreeDocument/{id}": {
             "post": {
                 "description": "Return freeDocument's informaion.",
@@ -911,6 +1191,7 @@
         "api/freeDocument/blockActiveFreeDocument/{id}": {
             "post": {
                 "description": "Return freeDocument's informaion.",
+>>>>>>> BE
                 "responses": {
                     "200": {
                         "description": "Successfully",
@@ -939,6 +1220,8 @@
                                 },
                                 "updated_at": {
                                     "type": "timestamp"
+<<<<<<< HEAD
+=======
                                 }
                             }
                         }
@@ -1105,6 +1388,7 @@
                             "properties": {
                                 "url": {
                                     "type": "string"
+>>>>>>> BE
                                 }
                             }
                         }
@@ -1120,6 +1404,9 @@
                 ]
             }
         },
+<<<<<<< HEAD
+        "api/users/login/": {
+=======
         "api/teacher/getTeacher/": {
             "get": {
                 "description": "Return teacher's informaion.",
@@ -1171,6 +1458,7 @@
             }
         },
         "api/teacher/createTeacher/": {
+>>>>>>> BE
             "post": {
                 "description": "Return teacher's informaion.",
                 "parameters": [
