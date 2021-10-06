@@ -96,6 +96,12 @@ Route::post('/freeDocument/getFreeDocument', [App\Http\Controllers\FreeDocumentC
 Route::post('/freeDocumentCategory/createFreeDocumentCategory', [App\Http\Controllers\FreeDocumentCategoryController::class, 'createFreeDocumentCategory'])->name('freeDocumentCategory.createFreeDocumentCategory');
 Route::post('/freeDocumentCategory/updateFreeDocumentCategory/{id}', [App\Http\Controllers\FreeDocumentCategoryController::class, 'updateFreeDocumentCategory'])->name('freeDocumentCategory.updateFreeDocumentCategory');
 Route::post('/freeDocumentCategory/destroyFreeDocumentCategory/{id}', [App\Http\Controllers\FreeDocumentCategoryController::class, 'destroyFreeDocumentCategory'])->name('freeDocumentCategory.destroyFreeDocumentCategory');
+<<<<<<< HEAD
+/* Api NewsType */
+Route::post('/newsType/createNewsType', [App\Http\Controllers\NewsTypeController::class, 'createNewsType'])->name('newsType.createNewsType');
+Route::post('/newsType/updateNewsType/{id}', [App\Http\Controllers\NewsTypeController::class, 'updateNewsType'])->name('newsType.updateNewsType');
+Route::post('/newsType/destroyNewsType/{id}', [App\Http\Controllers\NewsTypeController::class, 'destroyNewsType'])->name('newsType.destroyNewsType');
+=======
 
 Route::get('/freeDocument/getFreeDocument', [App\Http\Controllers\FreeDocumentController::class, 'getFreeDocument'])->name('freeDocument.getFreeDocument');
 Route::post('/freeDocument/createFreeDocument', [App\Http\Controllers\FreeDocumentController::class, 'createFreeDocument'])->name('freeDocument.createFreeDocument');
@@ -105,3 +111,4 @@ Route::post('/freeDocument/blockActiveFreeDocument/{id}', [App\Http\Controllers\
 
 =======
 >>>>>>> be#45801
+>>>>>>> BE

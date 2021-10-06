@@ -874,6 +874,152 @@
                         }
                     },
                     "401": {
+<<<<<<< HEAD
+                        "description": "Don't find id type !!!"
+                    }
+                }
+            }
+        },
+        "api/newsType/createNewsType/": {
+            "post": {
+                "description": "Return news type's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "New Type name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/newsType/updateNewsType/{id}": {
+            "post": {
+                "description": "Return news type's informaion.",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "news type's Name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/newsType/destroyNewsType/{id}": {
+            "post": {
+                "description": "Return news type's informaion.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "timestamp"
+                                },
+                                "updated_at": {
+                                    "type": "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing Data"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "api/payment/momoPayment": {
+            "post": {
+                "description": "Momo payment",
+                "responses": {
+                    "200": {
+                        "description": "Successfully",
+                        "schema": {
+                            "properties": {
+                                "url": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+=======
+>>>>>>> BE
                         "description": "Missing Data"
                     }
                 },
