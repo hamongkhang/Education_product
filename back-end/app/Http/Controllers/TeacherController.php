@@ -166,7 +166,7 @@ class TeacherController extends Controller
               $filename  = $file->getClientOriginalName();
               $extension = $file->getClientOriginalExtension();
               $picture   = $filename;
-              $file->move('upload\images', $picture);
+              $file->move('upload\images\teacher', $picture);
               $postArray = [
                     'name'  => $request->name,
                     'position'  => $request->position,
@@ -342,7 +342,7 @@ public function updateTeacher($id,Request $request){
           $filename  = $file->getClientOriginalName();
           $extension = $file->getClientOriginalExtension();
           $picture   = $filename;
-          $file->move('upload\images', $picture);
+          $file->move('upload\images\teacher', $picture);
           $teacherFind->image=$picture;
           $teacherFind->name=$name;
           $teacherFind->description=$description;  

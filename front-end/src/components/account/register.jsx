@@ -1,7 +1,95 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import { Link } from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
+
 
 const Register = (props) => {
+    const [registerUser, setRegisterUser] = useState({});
+    const history = useHistory();
+
+    const addAccount = (event) => {
+        const target=event.target;
+        const field =target.name;
+        const value=target.value;
+        setRegisterUser({
+          ...registerUser,
+          [field]: value,
+        });
+      };
+    
+
+    const onRegister = (e) => {
+            e.preventDefault();
+            if(registerUser.email!="" && registerUser.password!="" && registerUser.fullName!="" && registerUser.confirm_password!="" && registerUser.sex!=""&& registerUser.phone!=""&& registerUser.address!="" && registerUser.birthday!="" && registerUser.linkFB!="" && registerUser.nameAccount!="" ){
+            const _formData = new FormData();
+            _formData.append("email",registerUser.email)
+            _formData.append("fullName",registerUser.fullName)
+            _formData.append("nameAccount",registerUser.nameAccount)
+            _formData.append("linkFB",registerUser.linkFB)
+            _formData.append("phone",registerUser.phone)
+            _formData.append("address",registerUser.address)
+            _formData.append("birthday",registerUser.birthday)
+            _formData.append("password",registerUser.password)
+            if (registerUser.sex==="Nam"){
+            _formData.append("sex","male")
+            }else if (registerUser.sex==="Nữ"){
+                _formData.append("sex","female")
+            }
+            else{
+                _formData.append("sex","other")
+            }
+            _formData.append("confirm_password",registerUser.confirm_password)
+            const requestOptions = {
+                method: 'POST',
+                body: _formData
+            };
+            fetch('http://127.0.0.1:8000/api/users/getCode', requestOptions)
+            .then(res => res.json())
+            .then(json => {
+                if(!json.error){
+                history.push("/xac-nhan-ma");
+                }else{
+                  if(json.error.fullName){
+                      alert(json.error.fullName)
+                  }
+                  else if(json.error.nameAccount){
+                      alert(json.error.nameAccount)
+                  }
+                  else if (json.error.linkFB){
+                    alert(json.error.linkFB)
+                  }
+                  else if (json.error.phone){
+                    alert(json.error.phone)
+                  }
+                  else if (json.error.email){
+                    alert(json.error.email)
+                  }
+                  else if (json.error.birthday){
+                    alert(json.error.birthday)
+                  }
+                  else if (json.error.password){
+                    alert(json.error.password)
+                  }
+                  else if (json.error.confirm_password){
+                    alert(json.error.confirm_password)
+                  }
+                  else if (json.error.address){
+                    alert(json.error.address)
+                  }
+                  else if (json.error.sex){
+                    alert(json.error.sex)
+                  }
+                  else{
+                    alert(json.error)
+                  }
+                }
+            });
+        }
+        else{
+            alert("Không được bỏ trống")
+        }
+
+    }
     return (
         <div className="relative py-28 px-5 bg-cover bg-center bg-no-repeat" style={{backgroundImage: `url("./assets/images/bg/about.jpg")`}}>
             <div className="bg-penetration-5 absolute inset-0 w-full h-full"/>
@@ -13,61 +101,61 @@ const Register = (props) => {
                         <label htmlFor className="block mt-3 text-xl text-gray-700 text-center font-semibold">
                         Đăng ký
                         </label>
-                        <form action="#" className="w-full px-5 font-semibold mt-10">
+                        <form onSubmit={onRegister} className="w-full px-5 font-semibold mt-10">
                             <div>
                                 <div className="md:flex md:space-x-4">
                                     <div className="w-full mb-4">
                                         <label htmlFor="name" className="block w-full mb-0.5">Họ và tên</label>
-                                        <input id="name" type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Họ và tên" required/>
+                                        <input id="name" name="fullName" onChange={(event) => addAccount(event)} type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Họ và tên" required/>
                                     </div>
                                     <div className="w-full mb-4">
                                         <label htmlFor="username" className="block w-full mb-0.5">Tên đăng nhập</label>
-                                        <input id="username" type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Tên đăng nhập" required/>
+                                        <input id="username" name="nameAccount" onChange={(event) => addAccount(event)} type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Tên đăng nhập" required/>
                                     </div>
                                 </div>
                                 <div className="md:flex md:space-x-4">
                                     <div className="w-full mb-4">
                                         <label htmlFor="facebookUrl" className="block w-full mb-0.5">Link Facebook</label>
-                                        <input id="facebookUrl" type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="VD: https://www.facebook.com/vatly365" required/>
+                                        <input id="facebookUrl" name="linkFB" onChange={(event) => addAccount(event)} type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="VD: https://www.facebook.com/vatly365" required/>
                                     </div>
                                     <div className="w-full mb-4">
                                         <label htmlFor="phone" className="block w-full mb-0.5">Số điện thoại</label>
-                                        <input id="phone" type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Số điện thoại" required/>
+                                        <input id="phone" name="phone" onChange={(event) => addAccount(event)} type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Số điện thoại" required/>
                                     </div>
                                 </div>
                                 <div className="md:flex md:space-x-4">
                                     <div className="w-full mb-4">
                                         <label htmlFor="address" className="block w-full mb-0.5">Địa chỉ</label>
-                                        <input id="address" type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Địa chỉ" required/>
+                                        <input id="address" name="address" onChange={(event) => addAccount(event)} type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Địa chỉ" required/>
                                     </div>
                                     <div className="w-full mb-4">
                                         <label htmlFor="gender" className="block w-full mb-0.5">Giới tính</label>
-                                        <select name="gender" id="" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2">
-                                            <option value="">Khác</option>
-                                            <option value="">Nam</option>
-                                            <option value="">Nữ</option>
+                                        <select name="sex" onChange={(event) => addAccount(event)} id="" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2">
+                                            <option value="Khác" name="sex">Khác</option>
+                                            <option value="Nam" name="sex">Nam</option>
+                                            <option value="Nữ" name="sex">Nữ</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div className="md:flex md:space-x-4">
                                     <div className="w-full mb-4">
                                         <label htmlFor="email" className="block w-full mb-0.5 ">Email</label>
-                                        <input id="email" type="email" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Email" required/>
+                                        <input id="email" name="email" onChange={(event) => addAccount(event)} type="email" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Email" required/>
                                         <span className="text-red-500 text-sm">Địa chỉ email đã tồn tại</span>
                                     </div>
                                     <div className="w-full mb-4">
-                                        <label htmlFor="birthday" className="block w-full mb-0.5">Ngày sinh</label>
-                                        <input id="birthday" type="date" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Xác nhận mật khẩu" required/>
+                                        <label htmlFor="birthday"  className="block w-full mb-0.5">Ngày sinh</label>
+                                        <input id="birthday" name="birthday" onChange={(event) => addAccount(event)} type="date" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Xác nhận mật khẩu" required/>
                                     </div>
                                 </div>
                                 <div className="md:flex md:space-x-4">
                                     <div className="w-full mb-4">
-                                        <label htmlFor="password" className="block w-full mb-0.5">Mật khẩu</label>
-                                        <input id="password" type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Mật khẩu" required/>
+                                        <label htmlFor="password"  className="block w-full mb-0.5">Mật khẩu</label>
+                                        <input id="password" type="password" name="password" onChange={(event) => addAccount(event)} className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Mật khẩu" required/>
                                     </div>
                                     <div className="w-full mb-4">
                                         <label htmlFor="cfpassword" className="block w-full mb-0.5">Xác nhận mật khẩu</label>
-                                        <input id="cfpassword" type="text" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Xác nhận mật khẩu" required/>
+                                        <input id="cfpassword" name="confirm_password" onChange={(event) => addAccount(event)} type="password" className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" placeholder="Xác nhận mật khẩu" required/>
                                         <span className="text-red-500 text-sm"> Mật khẩu không khớp</span>
                                     </div>
                                 </div>

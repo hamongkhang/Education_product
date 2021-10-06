@@ -6,7 +6,7 @@ import Courses from './courses';
 import CourseDetails from './courseDetails';
 import BookDetails from './bookDetails';
 import Books from './books';
-import { Login, Register, ForgotPassword, CodeVerification, ResetPassword } from '../../components/account';
+import { Login, Register, ForgotPassword, CodeVerification, ResetPassword, CodeVerificationForgot } from '../../components/account';
 import Home from './home';
 import ITinTeaching from './ITinTeaching';
 const HomePages = (props) => {
@@ -19,6 +19,7 @@ const HomePages = (props) => {
                 <Route path="/dang-nhap" exact component={Login} />
                 <Route path="/quen-mat-khau" exact component={ForgotPassword} />
                 <Route path="/xac-nhan-ma" exact component={CodeVerification} />
+                <Route path="/xac-nhan-ma-quen-mat-khau" exact component={CodeVerificationForgot} />
                 <Route path="/dat-lai-mat-khau" exact component={ResetPassword} />
                 <Route path="/sach" exact component={Books} />
                 <Route path="/sach/sach-1" exact component={BookDetails} />
