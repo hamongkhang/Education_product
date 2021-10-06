@@ -46,6 +46,21 @@ Route::post('/payment/momoPayment', [App\Http\Controllers\PaymentController::cla
 Route::post('/payment/checkResult', [App\Http\Controllers\PaymentController::class, 'checkResult'])->name('payment.checkResult');
 Route::post('/payment/atmPayment', [App\Http\Controllers\PaymentController::class, 'atmPayment'])->name('payment.atmPayment');
 //Route::post('/payment/checkResultATM', [App\Http\Controllers\PaymentController::class, 'checkResultATM'])->name('payment.checkResultATM');
+
+
+Route::get('/getBookTypes', [App\Http\Controllers\BookTypeController::class, 'getAllBookTypes'])->name('booktype.get');
+Route::post('/getOneBookType', [App\Http\Controllers\BookTypeController::class, 'getOneBookType'])->name('booktype.getOne');
+Route::post('/addBookType', [App\Http\Controllers\BookTypeController::class, 'addBookType'])->name('booktype.add');
+Route::post('/updateBookType', [App\Http\Controllers\BookTypeController::class, 'updateBookType'])->name('booktype.update');
+Route::post('/deleteBookType', [App\Http\Controllers\BookTypeController::class, 'deleteBookType'])->name('booktype.delete');
+
+Route::get('/getBooks', [App\Http\Controllers\BookController::class, 'getAllBooks'])->name('book.get');
+Route::post('/getOneBook', [App\Http\Controllers\BookController::class, 'getOneBook'])->name('book.getOne');
+Route::post('/addBook', [App\Http\Controllers\BookController::class, 'addBook'])->name('book.add');
+Route::post('/updateBook', [App\Http\Controllers\BookController::class, 'updateBook'])->name('book.update');
+Route::post('/deleteBook', [App\Http\Controllers\BookController::class, 'deleteBook'])->name('book.delete');
+Route::post('/changeBookStatus', [App\Http\Controllers\BookController::class, 'changeStatus'])->name('book.status');
+
 /* Api ITinTeach */
 Route::get('/ITinTeach/getITinTeach', [App\Http\Controllers\ITinTeachController::class, 'getITinTeach'])->name('ITinTeach.getITinTeach');
 /* Api Comment */
@@ -59,10 +74,21 @@ Route::get('/teacher/getTeacher', [App\Http\Controllers\TeacherController::class
 Route::post('/teacher/createTeacher', [App\Http\Controllers\TeacherController::class, 'createTeacher'])->name('teacher.createTeacher');
 Route::post('/teacher/destroyTeacher/{id}', [App\Http\Controllers\TeacherController::class, 'destroyTeacher'])->name('teacher.destroyTeacher');
 Route::post('/teacher/updateTeacher/{id}', [App\Http\Controllers\TeacherController::class, 'updateTeacher'])->name('teacher.updateTeacher');
+/* Api Featured Post */
+Route::get('/featuredPost/getFeaturedPost', [App\Http\Controllers\FeaturedPostController::class, 'getFeaturedPost'])->name('featuredPost.getFeaturedPost');
+Route::post('/featuredPost/createFeaturedPost', [App\Http\Controllers\FeaturedPostController::class, 'createFeaturedPost'])->name('featuredPost.createFeaturedPost');
+Route::post('/featuredPost/destroyFeaturedPost/{id}', [App\Http\Controllers\FeaturedPostController::class, 'destroyFeaturedPost'])->name('featuredPost.destroyFeaturedPost');
+Route::post('/featuredPost/updateFeaturedPost/{id}', [App\Http\Controllers\FeaturedPostController::class, 'updateFeaturedPost'])->name('featuredPost.updateFeaturedPost');
+Route::post('/featuredPost/blockActiveFeaturedPost/{id}', [App\Http\Controllers\FeaturedPostController::class, 'blockActiveFeaturedPost'])->name('featuredPost.blockActiveFeaturedPost');
 /* Api Admin */
 Route::post('/admin/loginAdmin', [App\Http\Controllers\UsersController::class, 'loginAdmin'])->name('admin.loginAdmin');
 Route::post('/admin/blockAccount/{id}', [App\Http\Controllers\AdminController::class, 'blockAccount'])->name('admin.loginAdmin');
 /* Api Free Document */
+<<<<<<< HEAD
+=======
+
+<<<<<<< HEAD
+>>>>>>> developer_alpha
 Route::post('/freeDocument/getFreeDocument', [App\Http\Controllers\FreeDocumentController::class, 'getFreeDocument'])->name('freeDocument.getFreeDocument');
 //Route::post('/freeDocument/blockAccount', [App\Http\Controllers\FreeDocumentController::class, 'blockAccount'])->name('freeDocument.loginAdmin');
 /* Api Free Document Category */
@@ -76,3 +102,8 @@ Route::post('/freeDocument/updateFreeDocument/{id}', [App\Http\Controllers\FreeD
 Route::post('/freeDocument/destroyFreeDocument/{id}', [App\Http\Controllers\FreeDocumentController::class, 'destroyFreeDocument'])->name('freeDocument.destroyFreeDocument');
 Route::post('/freeDocument/blockActiveFreeDocument/{id}', [App\Http\Controllers\FreeDocumentController::class, 'blockActiveFreeDocument'])->name('freeDocument.blockActiveFreeDocument');
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> be#45801
+>>>>>>> developer_alpha
