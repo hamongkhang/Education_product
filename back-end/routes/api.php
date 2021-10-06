@@ -74,11 +74,18 @@ Route::get('/teacher/getTeacher', [App\Http\Controllers\TeacherController::class
 Route::post('/teacher/createTeacher', [App\Http\Controllers\TeacherController::class, 'createTeacher'])->name('teacher.createTeacher');
 Route::post('/teacher/destroyTeacher/{id}', [App\Http\Controllers\TeacherController::class, 'destroyTeacher'])->name('teacher.destroyTeacher');
 Route::post('/teacher/updateTeacher/{id}', [App\Http\Controllers\TeacherController::class, 'updateTeacher'])->name('teacher.updateTeacher');
+/* Api Featured Post */
+Route::get('/featuredPost/getFeaturedPost', [App\Http\Controllers\FeaturedPostController::class, 'getFeaturedPost'])->name('featuredPost.getFeaturedPost');
+Route::post('/featuredPost/createFeaturedPost', [App\Http\Controllers\FeaturedPostController::class, 'createFeaturedPost'])->name('featuredPost.createFeaturedPost');
+Route::post('/featuredPost/destroyFeaturedPost/{id}', [App\Http\Controllers\FeaturedPostController::class, 'destroyFeaturedPost'])->name('featuredPost.destroyFeaturedPost');
+Route::post('/featuredPost/updateFeaturedPost/{id}', [App\Http\Controllers\FeaturedPostController::class, 'updateFeaturedPost'])->name('featuredPost.updateFeaturedPost');
+Route::post('/featuredPost/blockActiveFeaturedPost/{id}', [App\Http\Controllers\FeaturedPostController::class, 'blockActiveFeaturedPost'])->name('featuredPost.blockActiveFeaturedPost');
 /* Api Admin */
 Route::post('/admin/loginAdmin', [App\Http\Controllers\UsersController::class, 'loginAdmin'])->name('admin.loginAdmin');
 Route::post('/admin/blockAccount/{id}', [App\Http\Controllers\AdminController::class, 'blockAccount'])->name('admin.loginAdmin');
 /* Api Free Document */
 
+<<<<<<< HEAD
 Route::post('/freeDocument/getFreeDocument', [App\Http\Controllers\FreeDocumentController::class, 'getFreeDocument'])->name('freeDocument.getFreeDocument');
 //Route::post('/freeDocument/blockAccount', [App\Http\Controllers\FreeDocumentController::class, 'blockAccount'])->name('freeDocument.loginAdmin');
 /* Api Free Document Category */
@@ -92,3 +99,5 @@ Route::post('/freeDocument/updateFreeDocument/{id}', [App\Http\Controllers\FreeD
 Route::post('/freeDocument/destroyFreeDocument/{id}', [App\Http\Controllers\FreeDocumentController::class, 'destroyFreeDocument'])->name('freeDocument.destroyFreeDocument');
 Route::post('/freeDocument/blockActiveFreeDocument/{id}', [App\Http\Controllers\FreeDocumentController::class, 'blockActiveFreeDocument'])->name('freeDocument.blockActiveFreeDocument');
 
+=======
+>>>>>>> be#45801
