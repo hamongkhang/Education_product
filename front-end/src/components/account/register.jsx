@@ -88,7 +88,6 @@ const Register = (props) => {
         else{
             alert("Không được bỏ trống")
         }
-
     }
     return (
         <div className="relative py-28 px-5 bg-cover bg-center bg-no-repeat" style={{backgroundImage: `url("./assets/images/bg/about.jpg")`}}>
