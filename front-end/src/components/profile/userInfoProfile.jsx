@@ -19,7 +19,6 @@ const UserInfoProfile = (props) => {
         fetch("http://localhost:8000/api/users/userProfile",requestOptions)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             setProfile(data);
             if(data.sex==="female"){
                                 setOption({

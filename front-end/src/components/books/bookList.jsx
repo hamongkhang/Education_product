@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
@@ -6,22 +6,31 @@ import BookItem from './bookItem'
 import { Link } from 'react-router-dom'
 import { NextArrow, PrevArrow } from '../customArrowsSlider'
 
-const arr = [
-    {
-        name: "12"
-    },
-    {
-        name: "THPT"
-    },
-    {
-        name: "11"
-    },
-    {
-        name: "10"
-    },
-]
 
 const BookList = (props) => {
+    const $token=localStorage.getItem('access_token');
+    const [book, setBook] = useState([]);
+    
+        useEffect(() => {
+            if($token){
+            fetch("http://localhost:8000/api/getBooks", {
+                method: "GET",
+                headers: {"Authorization": `Bearer `+$token}
+              })
+            .then(response => response.json())
+            .then(data => setBook(data.books));
+            return () => {
+            }
+        }
+    else{
+         fetch("http://localhost:8000/api/getBooks")
+         .then(response => response.json())
+         .then(data => setBook(data.books));
+         return () => {
+         }
+        }
+    }
+        , []);
     const settings = {
         infinite: true,
         autoplay: true,
@@ -64,9 +73,9 @@ const BookList = (props) => {
 
             <div className="relative custom-btn-arrow">
                 <Slider {...settings}>
-                    {
-                        arr.map((item, index) => (<BookItem key={index} {...item}/>))
-                    }
+                {book.map(
+                         (item, index) => (<BookItem key={index} {...item}/>)
+                )}
                 </Slider>
             </div>
         </div>

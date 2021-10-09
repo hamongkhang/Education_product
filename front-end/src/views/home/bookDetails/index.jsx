@@ -1,7 +1,43 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
+import { useRouteMatch } from 'react-router';
 import { BannerBook } from '../../../components/banner';
 
 const BookDetails = () => {
+  const match = useRouteMatch();
+  const $link="http://localhost:8000/upload/images/book/";
+  const $token=localStorage.getItem('access_token');
+  const [bookk, setBookk] = useState([]);
+  
+      useEffect(() => {
+          if($token){
+            const _formData = new FormData();
+            _formData.append("id",match.params.id)
+            const requestOptions = {
+                method: 'POST',
+                body: _formData,
+                headers: {"Authorization": `Bearer `+$token}
+            };
+          fetch("http://localhost:8000/api/getOneBook", requestOptions)
+          .then(response => response.json())
+          .then(data => setBookk(data.book));
+          return () => {
+          }
+      }
+  else{
+    const _formData = new FormData();
+    _formData.append("id",match.params.id)
+    const requestOptions = {
+        method: 'POST',
+        body: _formData,
+    };
+  fetch("http://localhost:8000/api/getOneBook", requestOptions)
+  .then(response => response.json())
+  .then(data => setBookk(data.book));
+  return () => {
+  }
+      }
+  }
+      , []);
   return (
     <div>
       <BannerBook />
@@ -9,34 +45,40 @@ const BookDetails = () => {
         <div className="book-left">
           <div className="book-left__image">
             <img
-              src="https://api.bschool.vn/uploads/books/16/featureds/2000-cau-trac-nghiem-tong-on-tieng-anh-8-28e4dfa4-f620-46d3-aeb5-f85c92319eb2.png"
-             
-            />
+              src={$link+bookk.image}/>
             <br />
           </div>
           <figure className="book-intr__image">
-            <img src="https://api.bschool.vn/uploads/books/16/featureds/2000-cau-trac-nghiem-tong-on-tieng-anh-8-28e4dfa4-f620-46d3-aeb5-f85c92319eb2.png" />
+            <img src={$link+bookk.image}/>
           </figure>
         </div>
 
         <div className="book-right">
           <div className="book-right__discript">
-            <h2>2000 câu trắc nghiệm Tổng ôn Tiếng Anh 8 +</h2>
+            <h2>{bookk.name}</h2>
             <p>
               Tình trạng:&nbsp;{" "}
               <span className="book-right__available">Có sẵn</span>
             </p>
             <p>
+              Số trang:&nbsp;{" "}
+              <span className="book-right__save">{bookk.page_number+" trang"}</span>
+            </p>
+            <p>
               Giá bìa:&nbsp;{" "}
-              <span className="book-right__price">200.000₫ </span>
+              <span className="book-right__price">{bookk.Initial_price+" đồng"}</span>
             </p>
             <p>
               Giá đang giảm:&nbsp;{" "}
-              <span className="book-right__discount">70.000₫</span>
+              <span className="book-right__discount">{bookk.promotion_price+" đồng"}</span>
             </p>
             <p>
               Tiết kiệm:&nbsp;{" "}
-              <span className="book-right__save">130.000₫&nbsp;(-65%)</span>
+              <span className="book-right__save">{bookk.Initial_price-bookk.promotion_price+" đồng"}&nbsp;{"( -"+bookk.promotion+"% )"}</span>
+            </p>
+            <p>
+              Tác giả:&nbsp;{" "}
+              <span className="book-right__save">{bookk.author}</span>
             </p>
             <div className="book-right__content">
               <p>
@@ -93,27 +135,7 @@ const BookDetails = () => {
 
         </div>
         <div className="book-intr__content">
-          <p>
-            Đây là cuốn sách tổng hợp kiến thức trọng tâm của chương trình Vật
-            Lý lớp 11 như điện học, từ học và quang học... . Cuốn sách được tác
-            giả tóm tắt chi tiết các kiến thức lý thuyết quan trọng và hệ thống
-            công thức tính nhanh hay sử dụng, từ đó đưa các ví dụ, bài tập minh
-            họa để vận dụng công thức từ cơ bản đến nâng cao.
-          </p>
-          <p>
-            Đặc biệt, cuốn sách đưa ra lộ trình học tập cụ thể cho bạn đọc, giúp
-            bạn đọc có thể làm chủ kiến thức Vật lý 11 trong 60 ngày tự học.
-            Lượng kiến thức đã được tác giả phân bố từ dễ đến khó theo các
-            chuyên đề và theo từng ngày giúp bạn đọc dễ dàng sử dụng cuốn sách
-            trong quá trình tham khảo.
-          </p>
-          <p>
-            Tác giả thực sự tin rằng “60 ngày làm chủ kiến thức Vật lý 11" sẽ
-            giúp các bạn nắm chắc được các kiến thức nền tảng của môn học này.
-            Đồng thời cũng mong muốn với sự tâm huyết nghiên cứu kỹ càng các
-            phương pháp giải nhanh, dễ học, dễ nhớ trong cuốn sách sẽ giúp bạn
-            đọc trở nên yêu thích môn học này.
-          </p>
+          {bookk.description}
         </div>
       </div>
     </div>

@@ -20,7 +20,6 @@ const ChangeInfo = (props) => {
       };
      const onUpdateProfile = (e) => {
         e.preventDefault();
-        console.log(updateProfile)
       if($token){
             const _formData = new FormData();
             _formData.append("email",updateProfile.email)

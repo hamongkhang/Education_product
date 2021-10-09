@@ -61,6 +61,7 @@ Route::post('/addBook', [App\Http\Controllers\BookController::class, 'addBook'])
 Route::post('/updateBook', [App\Http\Controllers\BookController::class, 'updateBook'])->name('book.update');
 Route::post('/deleteBook', [App\Http\Controllers\BookController::class, 'deleteBook'])->name('book.delete');
 Route::post('/changeBookStatus', [App\Http\Controllers\BookController::class, 'changeStatus'])->name('book.status');
+Route::post('/getBookTypeSearch', [App\Http\Controllers\BookController::class, 'getBookTypeSearch'])->name('book.getBookTypeSearch');
 
 /* Api ITinTeach */
 Route::get('/ITinTeach/getITinTeach', [App\Http\Controllers\ITinTeachController::class, 'getITinTeach'])->name('ITinTeach.getITinTeach');

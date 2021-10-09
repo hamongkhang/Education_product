@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import ArticleItem from './articleItem'
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css"
@@ -6,6 +6,33 @@ import "slick-carousel/slick/slick-theme.css"
 import { NextArrow, PrevArrow } from '../customArrowsSlider'
 
 const ArticleList = (props) => {
+    const [featuredPost, setFeaturedPost] = useState([]);
+    const $user=window.localStorage.getItem('nameAccount');
+    const $token=localStorage.getItem('access_token');
+
+    useEffect(() => {
+        if($token){
+            fetch("http://localhost:8000/api/featuredPost/getFeaturedPost",{
+                method: "GET",
+                headers: {"Authorization": `Bearer `+$token}
+          }  )
+        .then(response => response.json())
+        .then(data => setFeaturedPost(data.data)
+        );
+        return () => {
+        }
+        }
+    else{
+        fetch("http://localhost:8000/api/featuredPost/getFeaturedPost",{
+            method: "GET",
+      }  )
+    .then(response => response.json())
+    .then(data => setFeaturedPost(data.data)
+    );
+    return () => {
+    }
+        }
+    }, []);
     const settings = {
         infinite: false,
         autoplay: true,
@@ -40,11 +67,12 @@ const ArticleList = (props) => {
             </div>
             <div className="custom-btn-arrow">
                 <Slider {...settings}>
-                    <ArticleItem/>
-                    <ArticleItem/>
-                    <ArticleItem/>
-                    <ArticleItem/>
-                    <ArticleItem/>
+                {featuredPost.map((item) => {
+                      return(
+                        <ArticleItem data={item} user={$user}/>
+                      );
+                    }
+                    )}
                 </Slider>
             </div>
         </div>

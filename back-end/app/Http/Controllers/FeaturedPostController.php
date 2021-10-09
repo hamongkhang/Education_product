@@ -26,7 +26,7 @@ class FeaturedPostController extends Controller
     public function __construct() {
         $this->middleware('auth:api', ['except' => ['getNews','getFeaturedPost','onLogin','getITinTeach', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
-    
+
       /**
      * @SWG\GET(
      *     path="api/featuredPost/getFeaturedPost",
@@ -54,8 +54,14 @@ class FeaturedPostController extends Controller
      */
     public function getFeaturedPost(Request $request)
     {
-        $featuredPostFind = DB::table('featured_post')->get();
-        return Response()->json(array("Successfully"=> 1,"data"=>$featuredPostFind ));
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $featuredPostFind = DB::table('featured_post')->get();
+        }
+        else{
+            $featuredPostFind = DB::table('featured_post')->where('status','Active')->get();
+        } 
+        return Response()->json(array("Successfully"=> 1,"data"=>$featuredPostFind));
     }
 
 
@@ -126,6 +132,7 @@ class FeaturedPostController extends Controller
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 401);     
         }
+
         if (($request->hasFile('file'))&&($request->hasFile('image')))
         {
               $file      = $request->file('file');      
@@ -144,7 +151,8 @@ class FeaturedPostController extends Controller
               $postArray = [
                     'name'  => $request->name,
                     'file'  => $picture,
-                    'path'=>$path,
+                    'path'  =>$path,
+                    'author' =>$adminFind->nameAccount,
                     'description'=>$request->description,
                     'image'=>$picture2,
                     'status'=>"Active",
@@ -242,6 +250,7 @@ public function updateFeaturedPost($id,Request $request){
     $created_at=$featuredPost->created_at;
     $status=$featuredPost->status;
     $path=$featuredPost->path;
+    $author=$adminFind->nameAccount;
     if ($request->name==null){
         $name=$featuredPost->name;
     }else{
@@ -271,6 +280,7 @@ public function updateFeaturedPost($id,Request $request){
             $featuredPost->file=$picture;
             $featuredPost->name=$name;
             $featuredPost->status=$status;  
+            $featuredPost->author=$author;  
             $featuredPost->description=$description;    
             $featuredPost->path=$path;                
             $featuredPost->image=$picture2;           
@@ -284,6 +294,7 @@ public function updateFeaturedPost($id,Request $request){
             $featuredPost->name=$name;        
             $featuredPost->file=$picture;     
             $featuredPost->path=$path;    
+            $featuredPost->author=$author;  
             $featuredPost->description=$description; 
             $featuredPost->image=$image;           
             $featuredPost->status=$status;      
@@ -305,6 +316,7 @@ public function updateFeaturedPost($id,Request $request){
             $file2->move('upload\images\featured_post', $picture2);
             $featuredPost->file=$file;
             $featuredPost->name=$name;
+            $featuredPost->author=$author;  
             $featuredPost->status=$status;  
             $featuredPost->description=$description;    
             $featuredPost->path=$path;                
@@ -319,6 +331,7 @@ public function updateFeaturedPost($id,Request $request){
             $featuredPost->name=$name;          
             $featuredPost->file=$file;     
             $featuredPost->path=$path;    
+            $featuredPost->author=$author;  
             $featuredPost->description=$description; 
             $featuredPost->image=$image;           
             $featuredPost->status=$status;      
