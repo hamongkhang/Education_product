@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\TableOfContent;
@@ -232,6 +233,7 @@ class CourseController extends Controller
                 $content->delete();
             }
             $table_of_content->delete();
+            $cart = Cart::where('product_id',$request->id)->where('type','course')->delete();
             $course->delete();
                 return response()->json([
                     'success'=>1,
