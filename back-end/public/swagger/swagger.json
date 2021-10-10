@@ -3370,6 +3370,252 @@
                     }
                 }
             }
+        },
+        "api/cart/getCart/": {
+            "post": {
+                "description": "Trả về giỏ hàng của user đang login",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "token của account đang login",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về giỏ hàng của account đang login",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "integer"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "cart": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User chưa đăng nhập",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "integer"
+                                },
+                                "description": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        },
+        "api/cart/addCart/": {
+            "post": {
+                "description": "Trả về trạng thái đã thêm vào giỏ hàng",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "token của account đang login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "product_id",
+                        "in": "query",
+                        "description": "id của product",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "kiểu của product",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về trạng thái giỏ hàng của account đang login",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "integer"
+                                },
+                                "cart":{
+                                    "type":"object"
+                                },
+                                "description": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Missing data",
+                        "schema": {
+                            "properties": {
+                                "error": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "sản phẩm đang bị block",
+                        "schema": {
+                            "properties": {
+                                "block": {
+                                    "type": "integer"
+                                },
+                                "description": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/cart/updateCart/": {
+            "post": {
+                "description": "Trả về trạng thái đã thêm vào giỏ hàng, và giỏ hàng vừa cập nhật",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "token của account đang login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "product_id",
+                        "in": "query",
+                        "description": "id của product",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "kiểu của product",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "quantity",
+                        "in": "query",
+                        "description": "Số lượng của sản phẩm",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về trạng thái giỏ hàng của account đang login",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "integer"
+                                },
+                                "cart":{
+                                    "type":"object"
+                                },
+                                "description": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Missing data",
+                        "schema": {
+                            "properties": {
+                                "error": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "properties": {
+                                "error": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        },
+        "api/cart/removeCart/": {
+            "post": {
+                "description": "Trả về trạng thái đã xóa giỏ hàng",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "query",
+                        "description": "token của account đang login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "product_id",
+                        "in": "query",
+                        "description": "id của product",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "kiểu của product",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Trả về trạng thái đã xóa cart",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "integer"
+                                },
+                                "description": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Missing data",
+                        "schema": {
+                            "properties": {
+                                "succcess": {
+                                    "type": "integer"
+                                },
+                                "description": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+            }
         }
     },
     "definitions": {}
