@@ -22,7 +22,7 @@ class CategoryCourseController extends Controller
             $category_courses = CategoryCourse::all();
         }
         else{
-            $category_courses = CategoryCourse::where('status','Active')->where('id',$request->id)->get();
+            $category_courses = CategoryCourse::where('status','Active')->get();
         }
         return response()->json([
             'category_courses'=>$category_courses
@@ -57,7 +57,6 @@ class CategoryCourseController extends Controller
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      
             }
-            
             $category_course = new CategoryCourse();
             $category_course->name = $request->name;
             $category_course->status = $request->status;
@@ -91,7 +90,7 @@ class CategoryCourseController extends Controller
             }
             
             $category_course = CategoryCourse::find($request->id);
-            if($category_course->name == $request->name || $request->name == null){
+            if($category_course->name == $request->name || $request->name == null || $request->name =='undefined'){
                 $category_course->name = $category_course->name;
             }
             else{
@@ -103,8 +102,13 @@ class CategoryCourseController extends Controller
                 }
                 $category_course->name = $request->name;
             }
-            $request->description == null ? $category_course->description = $category_course->description : $category_course->description = $request->description;
-            $request->status == null ? $category_course->status = $category_course->status : $category_course->status = $request->status;
+            $request->description == null || $request->description =='undefined'
+            ? $category_course->description = $category_course->description 
+            : $category_course->description = $request->description;
+            $request->status == null || $request->status == 'undefined'
+            ? $category_course->status = $category_course->status 
+            : $category_course->status = $request->status;
+
             $category_course->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
             $category_course->save();
             return response()->json([
@@ -137,10 +141,12 @@ class CategoryCourseController extends Controller
                 foreach($table_of_content->get() as $toc){
                     $content = Content::where('table_of_content_id',$toc->id);
                     foreach($content->get() as $c){
-                        $lesson = Lesson::where('content_id',$c->id);
+                        $lessons = Lesson::where('content_id',$c->id);
+                        foreach($lessons->get() as $l){
                         $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'lesson_files';
-                        File::delete($destinationPath.'/'.$lesson->get()->file_name);
-                        $lesson->delete();
+                        File::delete($destinationPath.'/'.$l->file_name);
+                        }
+                        $lessons->delete();
                     }
                     $content->delete();
                 }
