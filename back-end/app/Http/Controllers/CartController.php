@@ -95,11 +95,12 @@ class CartController extends Controller
                 return response()->json($validator->errors(), 422);      
             }
             $checkStatus = DB::table('book')->where('id', $request->product_id)->value('status');
-            if($checkStatus == 'block'){
+            $checkQuantity = DB::table('book')->where('id', $request->product_id)->value('quantity');
+            if($checkStatus == 'block' || $checkQuantity < 1){
                 return response()->json(
                     [
-                        'block' => 1,
-                        'description'=> 'book is blocked',
+                        'error' => 1,
+                        'description'=> 'can not add to cart',
                     ], 401);
             }
         }
@@ -121,6 +122,13 @@ class CartController extends Controller
             }
             else{
                 $findCart -> quantity = $findCart -> quantity + 1;
+                if($checkQuantity < $findCart->quantity){
+                    return response()->json(
+                        [
+                            'error' => 1,
+                            'description'=> 'can not add to cart',
+                        ], 401);
+                }
                 $findCart->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
                 $findCart -> save();
                 return response()->json(
