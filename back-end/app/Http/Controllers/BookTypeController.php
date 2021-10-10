@@ -15,11 +15,12 @@ class BookTypeController extends Controller
     public function __construct() {
         $this->middleware('auth:api',['except' => ['getAllBookTypes','getOneBookType','addBookType','updateBookType','deleteBookType']]);
     }
+
     public function getAllBookTypes(Request $request){
         $book_types = BookType::all();
         return response()->json([
             'book_types'=>$book_types
-        ], 200);
+        ], 200);  
     }
     public function getOneBookType(Request $request){
         $validator = Validator::make($request->all(), [

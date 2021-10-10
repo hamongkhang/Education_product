@@ -13,8 +13,9 @@ use Illuminate\Support\Facades\File;
 class BookController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api',['except' => ['getAllBooks','getOneBook','addBook','updateBook','deleteBook','changeStatus']]);
+        $this->middleware('auth:api',['except' => ['getBookTypeSearch','getAllBooks','getOneBook','addBook','updateBook','deleteBook','changeStatus']]);
     }
+
     public function getAllBooks(Request $request){
         $login = auth()->user();
         if($login && $login->is_admin == true){
@@ -27,6 +28,7 @@ class BookController extends Controller
             'books'=>$books
         ], 200);  
     }
+    
     public function getOneBook(Request $request){
         $validator = Validator::make($request->all(), [
             'id' => 'required|exists:book,id',
@@ -39,13 +41,50 @@ class BookController extends Controller
             $book = Book::find($request->id);
         }
         else{
-            $book = Book::where('status','Active')->where('id',$request->id)->get();
+            $book = Book::where('status','Active')->where('id',$request->id)->first();
         }
         return response()->json([
             'book'=>$book
         ], 200);
        
     }
+    public function getBookTypeSearch(Request $request){
+        if($request->id!=="allBook"){
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:book,type',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 400);      
+        }
+       
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $book = Book::where('type',$request->id)->get();
+        }
+        else{
+            $book = Book::where('status','Active')->where('type',$request->id)->get();
+        }
+
+        return response()->json([
+            'bookTypeSearch'=>$book
+        ], 200);
+    }else{
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $books = Book::all();
+        }
+        else{
+            $books = Book::where('status','Active')->get();
+        }
+        return response()->json([
+            'bookTypeSearch'=>$books
+        ], 200);  
+    }
+    }
+
+
+
+
     public function addBook(Request $request){
         $login = auth()->user();
         if($login && $login->is_admin == true){

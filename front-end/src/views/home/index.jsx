@@ -22,7 +22,7 @@ const HomePages = (props) => {
                 <Route path="/xac-nhan-ma-quen-mat-khau" exact component={CodeVerificationForgot} />
                 <Route path="/dat-lai-mat-khau" exact component={ResetPassword} />
                 <Route path="/sach" exact component={Books} />
-                <Route path="/sach/sach-1" exact component={BookDetails} />
+                <Route path="/sach/:id" exact component={BookDetails} />
                 <Route path="/khoa-hoc/khoa-hoc-1" exact component={CourseDetails} />
                 <Route path="/khoa-hoc" exact component={Courses} />
                 <Route path="/tin-tuc" exact component={Articles} />

@@ -2,14 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const BookItem = (props) => {
+    const $link="http://localhost:8000/upload/images/book/";
     return (
         <div className="shadow-md bg-indigo-100 overflow-hidden h-96 mr-2 rounded-md mb-10">
             <div className="w-full h-64 flex items-center justify-center">
-                <img src="./assets/images/slider/city.jpg" className="w-40 h-52 object-cover transform hover:translate-x-3 duration-300" alt="" />
+                <img src={$link+props.image} className="w-40 h-52 object-cover transform hover:translate-x-3 duration-300" alt="" />
             </div>
             <div className="px-6 text-center h-10">
-                <label htmlFor="" className="text-indigo-600 font-semibold">390.000<sup>đ</sup></label>
-                <label htmlFor="" className="line-through text-xs ml-2">490.000<sup>đ</sup></label>
+                <label htmlFor="" className="text-indigo-600 font-semibold">{props.promotion_price}<sup>đ</sup></label>
+                <label htmlFor="" className="line-through text-xs ml-2">{props.Initial_price}<sup>đ</sup></label>
                 <h3 className="font-semibold line-2">{props.name}</h3>
             </div>
             {/* <div className="text-center w-full text-white h-12 bg-red-400 relative transform group-hover:translate-y-10 translate-y-19 duration-300 grid grid-cols-2">
@@ -22,7 +23,7 @@ const BookItem = (props) => {
                     <span className="font-semibold group-hover:text-green-700">Mua ngay</span>
                     <i className="far fa-cart-plus transform duration-300 group-hover:translate-x-1.5 group-hover:text-green-700"></i>
                 </a>
-                <Link to="/sach/sach-1" className="space-x-2 group">
+                <Link to={"/sach/"+props.id} className="space-x-2 group">
                     <span className="font-semibold group-hover:text-indigo-600">Chi tiết</span>
                     <i className="far fa-arrow-right transform duration-300 group-hover:translate-x-1.5 group-hover:text-indigo-600"></i>
                 </Link>

@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import { Link } from 'react-router-dom'
 
-
 const TeacherItem = (props) => {
     const $link="http://localhost:8000/upload/images/teacher/";
     return (

@@ -38,11 +38,14 @@ const Login = (props) => {
               }
               else{
                 localStorage.setItem('access_token',json.access_token);
+                localStorage.setItem('nameAccount',json.user.nameAccount);
+                localStorage.setItem('avatar',json.user.avatar);
                     alert("dung r!!!");
                     history.push("/tai-khoan")
               }
             });
         }
+       
     }
     return (
         <div className="relative py-28 px-5 bg-cover bg-center bg-no-repeat" style={{backgroundImage: `url("./assets/images/bg/about.jpg")`}}>

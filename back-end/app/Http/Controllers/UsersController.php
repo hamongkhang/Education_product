@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Mockery\Undefined;
 
 class UsersController extends Controller
 {
@@ -172,6 +173,7 @@ class UsersController extends Controller
      *       }
      * )
      */
+
     public function refresh() {
         return $this->createNewToken(auth()->refresh());
     }
@@ -485,7 +487,9 @@ class UsersController extends Controller
      * )
      */
     public function userProfile() {
-        return response()->json(auth()->user());
+        $user = auth()->user();
+        $user->birthday = explode(' ', $user->birthday)[0];
+        return response()->json($user);
     }
 
      /**
@@ -803,5 +807,191 @@ class UsersController extends Controller
             'user' => $adminFind
         ]);
         return $dataRespon; 
+        }
+
+
+        public function updateProfile(Request $request){
+            $userFind=auth()->user();
+            if($request->fullName==="undefined"||$request->fullName===null){
+                $request->fullName=$userFind->fullName;
+            }
+            else{
+                $request->fullName=$request->fullName;
+            }
+            if($request->nameAccount==="undefined"||$request->nameAccount===null){
+                $request->nameAccount=$userFind->nameAccount;
+            }
+            else{
+                $request->nameAccount=$request->nameAccount;
+            }
+            if($request->linkFB==="undefined"||$request->linkFB===null){
+                $request->linkFB=$userFind->linkFB;
+            }
+            else{
+                $request->linkFB=$request->linkFB;
+            }
+            if($request->email==="undefined"||$request->email===null){
+                $request->email=$userFind->email;
+            }
+            else{
+                $request->email=$request->email;
+            }
+            if($request->birthday==="undefined"||$request->birthday===null){
+                $request->birthday=$userFind->birthday;
+            }
+            else{
+                $request->birthday=$request->birthday;
+            }
+            if($request->address==="undefined"||$request->address===null){
+                $request->address=$userFind->address;
+            }
+            else{
+                $request->address=$request->address;
+            }
+            if($request->sex==="undefined"||$request->sex===null){
+                $request->sex=$userFind->sex;
+            }
+            else{
+                $request->sex=$request->sex;
+            }
+            if($request->phone==="undefined"||$request->phone===null){
+                $avatar=$userFind->avatar;
+                $created_at=$userFind->created_at;
+                $validator = Validator::make($request->all(), [
+                    'fullName' => 'max:255',
+                    'nameAccount' => 'max:255',
+                    'linkFB'=>'',
+                    'email' => '',
+                    'avatar'=>'max:2048',
+                    'birthday' => 'before:today',
+                    'address' => '',
+                    'sex' => 'in:male,female,other',
+                    ]);
+                   $request->phone=(String)$request->phone;
+                    if($validator->fails()){
+                        return response()->json(['error'=>$validator->errors()], 401);  
+                    }
+                    if ($request->hasFile('avatar'))
+                    {
+                        $file      = $request->file('avatar');
+                        $filename  = $file->getClientOriginalName();
+                        $extension = $file->getClientOriginalExtension();
+                        $picture   = $filename;
+                        $path      = 'upload\images\avatar';
+                        $file->move('upload\images\avatar', $picture);
+                    $user = User::where('id',$userFind->id)->update(
+                                    [
+                                        'fullName' => $request->fullName,
+                                        'nameAccount'=>$request->nameAccount,
+                                        'avatar'=>$picture,
+                                        'linkFB'=>$request->linkFB,
+                                        'phone'=>$userFind->phone,
+                                        'email'=>$request->email,
+                                        'address'=>$request->address,
+                                        'birthday'=> $request->birthday,
+                                        'sex'=>$request->sex,
+                                        'created_at'=>$created_at,               
+                                        'updated_at'=>Carbon::now('Asia/Ho_Chi_Minh')
+                                    ]
+                                );
+                        return response()->json([
+                            'message' => 'User successfully changed password',
+                            'user' => $user
+        
+                        ], 201);  
+                    }else{
+                        $user = User::where('id',$userFind->id)->update(
+                            [
+                                'fullName' => $request->fullName,
+                                'nameAccount'=>$request->nameAccount,
+                                'avatar'=>$avatar,
+                                'linkFB'=>$request->linkFB,
+                                'phone'=>$userFind->phone,
+                                'email'=>$request->email,
+                                'address'=>$request->address,
+                                'birthday'=> $request->birthday,
+                                'sex'=>$request->sex,
+                                'created_at'=>$created_at,               
+                                'updated_at'=>Carbon::now('Asia/Ho_Chi_Minh')
+                            ]
+                        );
+                return response()->json([
+                    'message' => 'User successfully changed password',
+                    'user' => $user
+
+                ], 201);  
+                    }
+            }
+            else{
+                $avatar=$userFind->avatar;
+                $created_at=$userFind->created_at;
+                $request->phone=(int)$request->phone;
+                $validator = Validator::make($request->all(), [
+                    'fullName' => 'max:255',
+                    'nameAccount' => 'max:255',
+                    'avatar'=>'max:2048',
+                    'linkFB'=>'',
+                    'phone' => '|numeric|digits_between:10,12',
+                    'email' => '',
+                    'birthday' => 'before:today',
+                    'address' => '',
+                    'sex' => 'in:male,female,other',
+                    ]);
+                    $request->phone=(String)$request->phone;
+                    if($validator->fails()){
+                        return response()->json(['error'=>$validator->errors()], 401);  
+                    }
+                    if ($request->hasFile('avatar'))
+                    {
+                        $file      = $request->file('avatar');
+                        $filename  = $file->getClientOriginalName();
+                        $extension = $file->getClientOriginalExtension();
+                        $picture   = $filename;
+                        $path      = 'upload\images\avatar';
+                        $file->move('upload\images\avatar', $picture);
+                    $user = User::where('id',$userFind->id)->update(
+                                    [
+                                        'fullName' => $request->fullName,
+                                        'nameAccount'=>$request->nameAccount,
+                                        'avatar'=>$picture,
+                                        'linkFB'=>$request->linkFB,
+                                        'phone'=>"0".$request->phone,
+                                        'email'=>$request->email,
+                                        'address'=>$request->address,
+                                        'birthday'=> $request->birthday,
+                                        'sex'=>$request->sex,
+                                        'created_at'=>$created_at,               
+                                        'updated_at'=>Carbon::now('Asia/Ho_Chi_Minh')
+                                    ]
+                                );
+                        return response()->json([
+                            'message' => 'User successfully changed password',
+                            'user' =>$user
+        
+                        ], 201);
+                    }
+                    else{
+                        $user = User::where('id',$userFind->id)->update(
+                            [
+                                'fullName' => $request->fullName,
+                                'nameAccount'=>$request->nameAccount,
+                                'avatar'=>$avatar,
+                                'linkFB'=>$request->linkFB,
+                                'phone'=>"0".$request->phone,
+                                'email'=>$request->email,
+                                'address'=>$request->address,
+                                'birthday'=> $request->birthday,
+                                'sex'=>$request->sex,
+                                'created_at'=>$created_at,               
+                                'updated_at'=>Carbon::now('Asia/Ho_Chi_Minh')
+                            ]
+                        );
+                return response()->json([
+                    'message' => 'User successfully changed password',
+                    'user' =>$user
+
+                ], 201);
+                    }
+            }   
         }
 }

@@ -22,23 +22,23 @@ const UserInfoProfile = (props) => {
             setProfile(data);
             if(data.sex==="female"){
                                 setOption({
-                                option1:<option value="">Khác</option>,
-                                option2:<option value="">Nam</option>,
-                                option3:<option selected value="">Nữ</option>
+                                option1:<option value="Khác">Khác</option>,
+                                option2:<option value="Nam">Nam</option>,
+                                option3:<option selected value="Nữ">Nữ</option>
                                 });
                         }
                         else if(data.sex==="male"){
                             setOption({
-                            option1:<option value="">Khác</option>,
-                            option2:<option selected value="">Nam</option>,
-                            option3:<option value="">Nữ</option>
+                            option1:<option value="Khác">Khác</option>,
+                            option2:<option selected value="Nam">Nam</option>,
+                            option3:<option value="Nữ">Nữ</option>
                             });
                     }
                     else{
                         setOption({
-                            option1:<option selected value="">Khác</option>,
-                            option2:<option value="">Nam</option>,
-                            option3:<option value="">Nữ</option>
+                            option1:<option selected value="Khác">Khác</option>,
+                            option2:<option value="Nam">Nam</option>,
+                            option3:<option value="Nữ">Nữ</option>
                             });
                     }
         });

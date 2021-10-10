@@ -26,6 +26,7 @@ class FeaturedPost extends Authenticatable implements JWTSubject
         'description',
         'file',
         'path',
+        'author',
         'image',
         'status',
         'updated_at',
