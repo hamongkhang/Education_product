@@ -389,20 +389,13 @@
                 ]
             }
         },
-<<<<<<< HEAD
         "api/ITinTeach/createITinTeach/": {
             "post": {
                 "description": "Return IT in teach's informaion.",
-=======
-        "api/featuredPost/updateFeaturedPost/{id}": {
-            "post": {
-                "description": "Return featured post's informaion.",
->>>>>>> BE
                 "parameters": [
                     {
                         "name": "name",
                         "in": "query",
-<<<<<<< HEAD
                         "description": "IT in Teach name",
                         "required": true,
                         "type": "string"
@@ -493,25 +486,17 @@
                         "name": "name",
                         "in": "query",
                         "description": "IT in teach name",
-=======
-                        "description": "featured post name",
->>>>>>> BE
                         "required": true,
                         "type": "string"
                     },
                     {
                         "name": "file",
                         "in": "query",
-<<<<<<< HEAD
                         "description": "IT in teach file",
-=======
-                        "description": "featured post file",
->>>>>>> BE
                         "required": true,
                         "type": "file"
                     },
                     {
-<<<<<<< HEAD
                         "name": "author",
                         "in": "query",
                         "description": "IT in teach's author",
@@ -522,11 +507,6 @@
                         "name": "description",
                         "in": "query",
                         "description": "IT in teach description",
-=======
-                        "name": "description",
-                        "in": "query",
-                        "description": "featured post description",
->>>>>>> BE
                         "required": true,
                         "type": "string"
                     },
@@ -538,7 +518,6 @@
                         "type": "file"
                     }
                 ],
-<<<<<<< HEAD
                 "responses": {
                     "200": {
                         "description": "Successfully",
@@ -695,8 +674,6 @@
         "api/news/getNews": {
             "get": {
                 "description": "get news of news type",
-=======
->>>>>>> BE
                 "responses": {
                     "200": {
                         "description": "Successfully",
@@ -743,7 +720,6 @@
                 ]
             }
         },
-<<<<<<< HEAD
         "api/news/createNews/": {
             "post": {
                 "description": "Return news's informaion.",
@@ -1024,9 +1000,6 @@
             }
         },
         "api/payment/momoPayment": {
-=======
-        "api/featuredPost/destroyFeaturedPost/{id}": {
->>>>>>> BE
             "post": {
                 "description": "Return featured post's informaion.",
                 "responses": {
@@ -1157,7 +1130,6 @@
                         }
                     },
                     "401": {
-<<<<<<< HEAD
                         "description": "Don't find id type !!!"
                     }
                 }
@@ -1276,33 +1248,6 @@
                         }
                     },
                     "401": {
-                        "description": "Missing Data"
-                    }
-                },
-                "security": [
-                    {
-                        "api_key_security_example": []
-                    }
-                ]
-            }
-        },
-        "api/payment/momoPayment": {
-            "post": {
-                "description": "Momo payment",
-                "responses": {
-                    "200": {
-                        "description": "Successfully",
-                        "schema": {
-                            "properties": {
-                                "url": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-=======
->>>>>>> BE
                         "description": "Missing Data"
                     }
                 },
@@ -1566,11 +1511,6 @@
                 ]
             }
         },
-<<<<<<< HEAD
-        "api/teacher/destroyTeacher/{id}": {
-            "post": {
-                "description": "Return teacher's informaion.",
-=======
         "api/freeDocument/destroyFreeDocument/{id}": {
             "post": {
                 "description": "Return freeDocument's informaion.",
@@ -1620,7 +1560,6 @@
         "api/freeDocument/blockActiveFreeDocument/{id}": {
             "post": {
                 "description": "Return freeDocument's informaion.",
->>>>>>> BE
                 "responses": {
                     "200": {
                         "description": "Successfully",
@@ -1649,8 +1588,6 @@
                                 },
                                 "updated_at": {
                                     "type": "timestamp"
-<<<<<<< HEAD
-=======
                                 }
                             }
                         }
@@ -1713,75 +1650,6 @@
                 }
             }
         },
-        "api/news/getNews": {
-            "get": {
-                "description": "get news of news type",
-                "responses": {
-                    "200": {
-                        "description": "Successfully",
-                        "schema": {
-                            "properties": {
-                                "id": {
-                                    "type": "integer"
-                                },
-                                "type_name": {
-                                    "type": "string"
-                                },
-                                "description": {
-                                    "type": "string"
-                                },
-                                "file": {
-                                    "type": "string"
-                                },
-                                "path": {
-                                    "type": "string"
-                                },
-                                "image": {
-                                    "type": "string"
-                                },
-                                "status": {
-                                    "type": "string"
-                                },
-                                "created_at": {
-                                    "type": "datetime"
-                                },
-                                "updated_at": {
-                                    "type": "datetime"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Don't find id type !!!"
-                    }
-                }
-            }
-        },
-        "api/payment/momoPayment": {
-            "post": {
-                "description": "Momo payment",
-                "responses": {
-                    "200": {
-                        "description": "Successfully",
-                        "schema": {
-                            "properties": {
-                                "url": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Missing Data"
-                    }
-                },
-                "security": [
-                    {
-                        "api_key_security_example": []
-                    }
-                ]
-            }
-        },
         "api/payment/checkResult": {
             "post": {
                 "description": "Momo payment",
@@ -1817,7 +1685,6 @@
                             "properties": {
                                 "url": {
                                     "type": "string"
->>>>>>> BE
                                 }
                             }
                         }
@@ -1833,9 +1700,6 @@
                 ]
             }
         },
-<<<<<<< HEAD
-        "api/users/login/": {
-=======
         "api/teacher/getTeacher/": {
             "get": {
                 "description": "Return teacher's informaion.",
@@ -1887,7 +1751,6 @@
             }
         },
         "api/teacher/createTeacher/": {
->>>>>>> BE
             "post": {
                 "description": "Return teacher's informaion.",
                 "parameters": [
@@ -3613,6 +3476,1694 @@
                             }
                         }
                         
+                    }
+                }
+            }
+        },
+        "api/getLessons/": {
+            "get": {
+                "description": "Return all Lesson",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return successfully",
+                        "schema": {
+                            "properties": {
+                                "lessons":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/getOneLesson/": {
+            "post": {
+                "description": "Return one lesson",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "id of lesson",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return successfully",
+                        "schema": {
+                            "properties": {
+                                "lesson":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/addLesson/": {
+            "post": {
+                "description": "Return lesson was added",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name Lesson",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "file",
+                        "in": "query",
+                        "description": "file in Lesson",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "content_id",
+                        "in": "query",
+                        "description": "Id in content table",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "path",
+                        "in": "query",
+                        "description": "path of Lesson",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "status of Lesson",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "description of Lesson",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Added successfully",
+                        "schema": {
+                            "properties": {
+                                "lesson":{
+                                    "type": "object"
+                                },
+                                "success":{
+                                    "type":"integer"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error of validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error of login",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/updateLesson/": {
+            "post": {
+                "description": "Return lesson was updated",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID lesson",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name Lesson",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "file",
+                        "in": "query",
+                        "description": "file in Lesson",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "content_id",
+                        "in": "query",
+                        "description": "Id in content table",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "path",
+                        "in": "query",
+                        "description": "path of Lesson",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "status of Lesson",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "description of Lesson",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Updated successfully",
+                        "schema": {
+                            "properties": {
+                                "lesson":{
+                                    "type": "object"
+                                },
+                                "success":{
+                                    "type":"integer"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error of validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error of login",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/deleteLesson/": {
+            "post": {
+                "description": "Delete a lesson",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "id lesson",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted successfully",
+                        "schema": {
+                            "properties": {
+                                "success":{
+                                    "type":"integer"
+                                },
+                                "description":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error of validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error of login",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/changeLessonStatus/": {
+            "post": {
+                "description": "Change lesson of status",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID of lesson",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update successfully",
+                        "schema": {
+                            "properties": {
+                                "success":{
+                                    "type":"integer"
+                                },
+                                "lesson":{
+                                    "type":"object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error of validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error of login",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/getContetns/": {
+            "get": {
+                "description": "Return all contents",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return successfully",
+                        "schema": {
+                            "properties": {
+                                "contents":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/getOneContent/": {
+            "post": {
+                "description": "Return one content",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "id of content",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return successfully",
+                        "schema": {
+                            "properties": {
+                                "content":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/addContent/": {
+            "post": {
+                "description": "Return content was added",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name content",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "table_of_content_id",
+                        "in": "query",
+                        "description": "Id in table_content table",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "status of content",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Added successfully",
+                        "schema": {
+                            "properties": {
+                                "content":{
+                                    "type": "object"
+                                },
+                                "success":{
+                                    "type":"integer"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error of validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error of login",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/updateContent/": {
+            "post": {
+                "description": "Return content was updated",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID content",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name content",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "table_of_content_id",
+                        "in": "query",
+                        "description": "Id in table_content table",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "status of content",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "updated successfully",
+                        "schema": {
+                            "properties": {
+                                "content":{
+                                    "type": "object"
+                                },
+                                "success":{
+                                    "type":"integer"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error of validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error of login",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/deleteContent/": {
+            "post": {
+                "description": "Delete a content",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "id content",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted successfully",
+                        "schema": {
+                            "properties": {
+                                "success":{
+                                    "type":"integer"
+                                },
+                                "description":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error of validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error of login",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/changeContentStatus/": {
+            "post": {
+                "description": "Change content of status",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID of content",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update successfully",
+                        "schema": {
+                            "properties": {
+                                "success":{
+                                    "type":"integer"
+                                },
+                                "content":{
+                                    "type":"object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error of validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error of login",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/getTableOfContents/": {
+            "get": {
+                "description": "Return all TableOfContent",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return successfully",
+                        "schema": {
+                            "properties": {
+                                "lessons":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/getOneTableOfContent/": {
+            "post": {
+                "description": "Return one table of content",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "id of table of content",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return successfully",
+                        "schema": {
+                            "properties": {
+                                "table_of_content":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/addTableOfContent/": {
+            "post": {
+                "description": "Return table of content was added",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name table of content",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "course_id",
+                        "in": "query",
+                        "description": "Id in content table",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "status of Lesson",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Added successfully",
+                        "schema": {
+                            "properties": {
+                                "table_of_content":{
+                                    "type": "object"
+                                },
+                                "success":{
+                                    "type":"integer"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error of validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error of login",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/updateTableOfContent/": {
+            "post": {
+                "description": "Return table of content was updated",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID table of content",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name table of content",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "course_id",
+                        "in": "query",
+                        "description": "Id in content table",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "status of Lesson",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "updated successfully",
+                        "schema": {
+                            "properties": {
+                                "table_of_content":{
+                                    "type": "object"
+                                },
+                                "success":{
+                                    "type":"integer"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error of validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error of login",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/deleteTableOfContent/": {
+            "post": {
+                "description": "Delete a table of content",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "id table of content",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted successfully",
+                        "schema": {
+                            "properties": {
+                                "success":{
+                                    "type":"integer"
+                                },
+                                "description":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error of validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error of login",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/changeTableOfContentStatus/": {
+            "post": {
+                "description": "Change table of content of status",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID of table of content",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update successfully",
+                        "schema": {
+                            "properties": {
+                                "success":{
+                                    "type":"integer"
+                                },
+                                "lesson":{
+                                    "type":"object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error of validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error of login",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/getCourses/": {
+            "get": {
+                "description": "Return all courses",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return successfully",
+                        "schema": {
+                            "properties": {
+                                "courses":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/getOneCourse/": {
+            "post": {
+                "description": "Return one course",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "id of course",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return successfully",
+                        "schema": {
+                            "properties": {
+                                "course":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/addCourse/": {
+            "post": {
+                "description": "Return course was added",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name course",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Initial_price",
+                        "in": "query",
+                        "description": "Price of course",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "promotion",
+                        "in": "query",
+                        "description": "promotion of course",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "Name image",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "status of course",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "description of course",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "category_course",
+                        "in": "query",
+                        "description": "id of category_course",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Added successfully",
+                        "schema": {
+                            "properties": {
+                                "course":{
+                                    "type": "object"
+                                },
+                                "success":{
+                                    "type":"integer"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error of validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error of login",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/updateCourse/": {
+            "post": {
+                "description": "Return course was updated",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID course",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name course",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "Initial_price",
+                        "in": "query",
+                        "description": "Price of course",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "promotion",
+                        "in": "query",
+                        "description": "promotion of course",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "Name image",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "status of course",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "description of course",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "category_course",
+                        "in": "query",
+                        "description": "id of category_course",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "updated successfully",
+                        "schema": {
+                            "properties": {
+                                "course":{
+                                    "type": "object"
+                                },
+                                "success":{
+                                    "type":"integer"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error of validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error of login",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/deleteCourse/": {
+            "post": {
+                "description": "Delete a course",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "id course",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted successfully",
+                        "schema": {
+                            "properties": {
+                                "success":{
+                                    "type":"integer"
+                                },
+                                "description":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error of validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error of login",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/changeCourseStatus/": {
+            "post": {
+                "description": "Change course of status",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID of course",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update successfully",
+                        "schema": {
+                            "properties": {
+                                "success":{
+                                    "type":"integer"
+                                },
+                                "course":{
+                                    "type":"object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error of validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error of login",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/getCategoryCourses/": {
+            "get": {
+                "description": "Return all category_course",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return successfully",
+                        "schema": {
+                            "properties": {
+                                "category_course":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/getOneCategoryCourse/": {
+            "post": {
+                "description": "Return one category_course",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "id of category_course",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return successfully",
+                        "schema": {
+                            "properties": {
+                                "category_course":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/addCategoryCourse/": {
+            "post": {
+                "description": "Return category_course was added",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name category_course ",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Descrition for category",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "status of category_course",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Added successfully",
+                        "schema": {
+                            "properties": {
+                                "category_course":{
+                                    "type": "object"
+                                },
+                                "success":{
+                                    "type":"integer"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error of validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error of login",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/updateCategoryCourse/": {
+            "post": {
+                "description": "Return category_course was updated",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID category_course",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name category_course ",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Descrition for category",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "status of category_course",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "updated successfully",
+                        "schema": {
+                            "properties": {
+                                "category_course":{
+                                    "type": "object"
+                                },
+                                "success":{
+                                    "type":"integer"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error of validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error of login",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/deleteCategoryCourse/": {
+            "post": {
+                "description": "Delete a category_course",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "id category_course",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted successfully",
+                        "schema": {
+                            "properties": {
+                                "success":{
+                                    "type":"integer"
+                                },
+                                "description":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error of validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error of login",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/changeCategoryCourseStatus/": {
+            "post": {
+                "description": "Change category_course of status",
+                "parameters": [
+                    {
+                        "name": "acccess_token",
+                        "in": "query",
+                        "description": "account admin",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID of category_course",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update successfully",
+                        "schema": {
+                            "properties": {
+                                "success":{
+                                    "type":"integer"
+                                },
+                                "category_course":{
+                                    "type":"object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error of validate",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error of login",
+                        "schema": {
+                            "properties": {
+                                "error":{
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
