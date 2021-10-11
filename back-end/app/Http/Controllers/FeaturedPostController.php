@@ -6,7 +6,7 @@ use App\Http\Resources\UsersResource;
 use App\Jobs\SendEmail;
 use App\Models\NewsType;
 use App\Models\News;
-use App\Models\ITinTeach;
+use App\Models\FeaturedPost;
 use App\Models\UserCode;
 use App\Models\UserCourse;
 use App\Models\ForgotCode;
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-class NewsController extends Controller
+class FeaturedPostController extends Controller
 {
      /**
      * Create a new AuthController instance.
@@ -24,19 +24,19 @@ class NewsController extends Controller
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['getNews','onLogin','getITinTeach', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
+        $this->middleware('auth:api', ['except' => ['getNews','getFeaturedPost','onLogin','getITinTeach', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
     
       /**
      * @SWG\GET(
-     *     path="api/news/getNews",
-     *     description="get news of news type",
+     *     path="api/featuredPost/getFeaturedPost",
+     *     description="get featured posts",
      *     @SWG\Response(
      *         response=200,
      *         description="Successfully",
      *         @SWG\Schema(
      *             @SWG\Property(property="id", type="integer"),
-     *             @SWG\Property(property="type_name", type="string"),
+     *             @SWG\Property(property="name", type="string"),
      *             @SWG\Property(property="description", type="string"),
      *             @SWG\Property(property="file", type="string"),
      *             @SWG\Property(property="path", type="string"),
@@ -48,66 +48,40 @@ class NewsController extends Controller
      *     ),
      *     @SWG\Response(
      *         response=401,
-     *         description="Don't find id type !!!"
+     *         description="Don't find id featured post !!!"
      *     )
      * )
      */
-    public function getNews(Request $request)
+    public function getFeaturedPost(Request $request)
     {
-        $newsFind = DB::table('news')->get();
-        $dataRespon=[];
-        $dataRespon[0]=DB::table('news_type')->get();
-        $array=[];
-            for ($i = 0; $i <count($newsFind); $i++) {
-                $data = DB::table('news_type')->where('id', $newsFind[$i]->type_id)->first();
-                $array[$i]=array(
-                    'id' => $newsFind[$i]->id,
-                    'type_name' => $data->name,
-                    'name' => $newsFind[$i]->name,
-                    'description' => $newsFind[$i]->description,
-                    'file' => $newsFind[$i]->file,
-                    'path' => $newsFind[$i]->path,
-                    'image' => $newsFind[$i]->image,
-                    'status' => $newsFind[$i]->status,
-                    'created_at'=>$newsFind[$i]->created_at,
-                    'updated_at'=> $newsFind[$i]->updated_at,
-                );
-        }
-        $dataRespon[1]=$array;
-        return Response()->json(array("Successfully"=> 1,"data"=>$dataRespon ));
+        $featuredPostFind = DB::table('featured_post')->get();
+        return Response()->json(array("Successfully"=> 1,"data"=>$featuredPostFind ));
     }
 
 
      /**
      * @SWG\POST(
-     *     path="api/news/createNews/",
+     *     path="api/featuredPost/createFeaturedPost/",
      *     description="Return news's informaion.",
      * @SWG\Parameter(
      *         name="name",
      *         in="query",
      *         type="string",
-     *         description="News name",
+     *         description="featured post name",
      *         required=true,
      *     ),
      * @SWG\Parameter(
      *         name="file",
      *         in="query",
      *         type="file",
-     *         description="Document file",
-     *         required=true,
-     *     ),
-     * @SWG\Parameter(
-     *         name="type",
-     *         in="query",
-     *         type="integer",
-     *         description="Type's id",
+     *         description="featured post file",
      *         required=true,
      *     ),
      *  * @SWG\Parameter(
      *         name="description",
      *         in="query",
      *         type="string",
-     *         description="News description",
+     *         description="featured post description",
      *         required=true,
      *     ),
      * * @SWG\Parameter(
@@ -123,7 +97,6 @@ class NewsController extends Controller
      *         @SWG\Schema(
      *             @SWG\Property(property="name", type="integer"),
      *             @SWG\Property(property="file", type="string"),
-     *             @SWG\Property(property="type_id", type="integer"),
      *             @SWG\Property(property="path", type="string"),
      *             @SWG\Property(property="status", type="string"),
      *             @SWG\Property(property="description", type="string"),
@@ -141,40 +114,36 @@ class NewsController extends Controller
      *       }
      * )
      */
-    public function createNews(Request $request){
+    public function createFeaturedPost(Request $request){
         $adminFind = auth()->user();
         if (($adminFind->email==="web.vatly365@gmail.com")){
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
             'file'=>'required|max:2048',
-            'type' => 'required|numeric|digits_between:1,12',
             'image'=>'required|max:2048',
             'description'=>'required',
         ]);
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 401);     
         }
-        $data = DB::table('news_type')->where('id', $request->type)->first();
-        if ($data){
         if (($request->hasFile('file'))&&($request->hasFile('image')))
         {
               $file      = $request->file('file');      
-              $path      = 'upload\images\new';
+              $path      = 'upload\images\featured_post';
               $filename  = $file->getClientOriginalName();
               $extension = $file->getClientOriginalExtension();
               $picture   = $filename;
-              $file->move('upload\images\new', $picture);
+              $file->move('upload\images\featured_post', $picture);
 
               $file2      = $request->file('image');      
-              $path      = 'upload\images\new';
+              $path      = 'upload\images\featured_post';
               $filename2  = $file2->getClientOriginalName();
               $extension2 = $file2->getClientOriginalExtension();
               $picture2   = $filename2;
-              $file2->move('upload\images\new', $picture2);
+              $file2->move('upload\images\featured_post', $picture2);
               $postArray = [
                     'name'  => $request->name,
                     'file'  => $picture,
-                    'type_id'  => $request->type,
                     'path'=>$path,
                     'description'=>$request->description,
                     'image'=>$picture2,
@@ -182,17 +151,13 @@ class NewsController extends Controller
                     'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
                     'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh')
                 ];
-                 $news = News::create($postArray);
+                 $news = FeaturedPost::create($postArray);
               return Response()->json(array("Successfully. Upload successfully!"=> 1,"data"=>$postArray ));
         } 
         else
         {
               return response()->json(["message" => "Upload Failed"]);
         }
-    }else{
-        return response()->json(["message" => "id type not found!!!"]);
-
-    }
 }
     else{
         return response()->json([
@@ -204,34 +169,27 @@ class NewsController extends Controller
 
     /**
      * @SWG\POST(
-     *     path="api/news/updateNews/{id}",
-     *     description="Return news's informaion.",
+     *     path="api/featuredPost/updateFeaturedPost/{id}",
+     *     description="Return featured post's informaion.",
      * @SWG\Parameter(
      *         name="name",
      *         in="query",
      *         type="string",
-     *         description="News name",
+     *         description="featured post name",
      *         required=true,
      *     ),
      * @SWG\Parameter(
      *         name="file",
      *         in="query",
      *         type="file",
-     *         description="Document file",
-     *         required=true,
-     *     ),
-     * @SWG\Parameter(
-     *         name="type",
-     *         in="query",
-     *         type="integer",
-     *         description="Type's id",
+     *         description="featured post file",
      *         required=true,
      *     ),
      *  * @SWG\Parameter(
      *         name="description",
      *         in="query",
      *         type="string",
-     *         description="News description",
+     *         description="featured post description",
      *         required=true,
      *     ),
      * * @SWG\Parameter(
@@ -248,7 +206,6 @@ class NewsController extends Controller
      *             @SWG\Property(property="id", type="integer"),
      *             @SWG\Property(property="name", type="integer"),
      *             @SWG\Property(property="file", type="string"),
-     *             @SWG\Property(property="type_id", type="integer"),
      *             @SWG\Property(property="path", type="string"),
      *             @SWG\Property(property="status", type="string"),
      *             @SWG\Property(property="description", type="string"),
@@ -266,46 +223,34 @@ class NewsController extends Controller
      *       }
      * )
      */
-public function updateNews($id,Request $request){
+public function updateFeaturedPost($id,Request $request){
     $adminFind = auth()->user();
     if (($adminFind->email==="web.vatly365@gmail.com")){
     $validator = Validator::make($request->all(), [
         'name' => 'max:255',
         'file'=>'max:2048',
-        'type' => 'numeric|digits_between:1,12',
         'image'=>'max:2048',
         'description'=>'',
     ]);
     if ($validator->fails()) {
         return response()->json(['error'=>$validator->errors()], 401);     
     }
-    $news = News::find($id);
-    if($news){
-    $file=$news->file;
-    $image=$news->image;
-    $created_at=$news->created_at;
-    $status=$news->status;
-    $path=$news->path;
+    $featuredPost = FeaturedPost::find($id);
+    if($featuredPost){
+    $file=$featuredPost->file;
+    $image=$featuredPost->image;
+    $created_at=$featuredPost->created_at;
+    $status=$featuredPost->status;
+    $path=$featuredPost->path;
     if ($request->name==null){
-        $name=$news->name;
+        $name=$featuredPost->name;
     }else{
         $name=$request->name;
     }
     if ($request->description==null){
-        $description=$news->description;
+        $description=$featuredPost->description;
     }else{
         $description=$request->description;
-    }
-    if ($request->type==null){
-        $type=$news->type_id;
-    }else{
-        $data = DB::table('news_type')->where('id', $request->type)->first();
-        if ($data){
-        $type=$request->type;
-        }
-        else{
-            return response()->json(["message" => "id type not found!!!"]);
-        }
     }
     if ($request->hasFile('file'))
     {
@@ -313,41 +258,39 @@ public function updateNews($id,Request $request){
           $filename  = $file->getClientOriginalName();
           $extension = $file->getClientOriginalExtension();
           $picture   = $filename;
-          $path      = 'upload\images\new';
-          $file->move('upload\images\new', $picture);
+          $path      = 'upload\images\featured_post';
+          $file->move('upload\images\featured_post', $picture);
           if ($request->hasFile('image'))
           {
             $file2      = $request->file('image');
             $filename2  = $file2->getClientOriginalName();
             $extension2 = $file2->getClientOriginalExtension();
             $picture2   = $filename2;
-            $path2      = 'upload\images\new';
-            $file2->move('upload\images\new', $picture2);
-            $news->file=$picture;
-            $news->name=$name;
-            $news->status=$status;  
-            $news->description=$description;    
-            $news->path=$path;                
-            $news->type_id=$type; 
-            $news->image=$picture2;           
-            $news->created_at=$created_at;               
-            $news->updated_at=Carbon::now('Asia/Ho_Chi_Minh');      
-            $news->save();
-            return Response()->json(array("Successfully. Update successfully!"=> 1,"data"=>$news ));
+            $path2      = 'upload\images\featured_post';
+            $file2->move('upload\images\featured_post', $picture2);
+            $featuredPost->file=$picture;
+            $featuredPost->name=$name;
+            $featuredPost->status=$status;  
+            $featuredPost->description=$description;    
+            $featuredPost->path=$path;                
+            $featuredPost->image=$picture2;           
+            $featuredPost->created_at=$created_at;               
+            $featuredPost->updated_at=Carbon::now('Asia/Ho_Chi_Minh');      
+            $featuredPost->save();
+            return Response()->json(array("Successfully. Update successfully!"=> 1,"data"=>$featuredPost ));
           }
           else
           {
-            $news->name=$name;      
-            $news->type_id=$type;      
-            $news->file=$picture;     
-            $news->path=$path;    
-            $news->description=$description; 
-            $news->image=$image;           
-            $news->status=$status;      
-            $news->created_at=$created_at;      
-            $news->updated_at=Carbon::now('Asia/Ho_Chi_Minh');      
-            $news->save();
-            return Response()->json(array("Successfully. Update successfully!"=> 1,"data"=>$news ));
+            $featuredPost->name=$name;        
+            $featuredPost->file=$picture;     
+            $featuredPost->path=$path;    
+            $featuredPost->description=$description; 
+            $featuredPost->image=$image;           
+            $featuredPost->status=$status;      
+            $featuredPost->created_at=$created_at;      
+            $featuredPost->updated_at=Carbon::now('Asia/Ho_Chi_Minh');      
+            $featuredPost->save();
+            return Response()->json(array("Successfully. Update successfully!"=> 1,"data"=>$featuredPost ));
           }
         }
     else
@@ -358,33 +301,31 @@ public function updateNews($id,Request $request){
             $filename2  = $file2->getClientOriginalName();
             $extension2 = $file2->getClientOriginalExtension();
             $picture2   = $filename2;
-            $path2      = 'upload\images\new';
-            $file2->move('upload\images\new', $picture2);
-            $news->file=$file;
-            $news->name=$name;
-            $news->status=$status;  
-            $news->description=$description;    
-            $news->path=$path;                
-            $news->type_id=$type; 
-            $news->image=$picture2;           
-            $news->created_at=$created_at;               
-            $news->updated_at=Carbon::now('Asia/Ho_Chi_Minh');      
-            $news->save();
-            return Response()->json(array("Successfully. Update successfully!"=> 1,"data"=>$news ));
+            $path2      = 'upload\images\featured_post';
+            $file2->move('upload\images\featured_post', $picture2);
+            $featuredPost->file=$file;
+            $featuredPost->name=$name;
+            $featuredPost->status=$status;  
+            $featuredPost->description=$description;    
+            $featuredPost->path=$path;                
+            $featuredPost->image=$picture2;           
+            $featuredPost->created_at=$created_at;               
+            $featuredPost->updated_at=Carbon::now('Asia/Ho_Chi_Minh');      
+            $featuredPost->save();
+            return Response()->json(array("Successfully. Update successfully!"=> 1,"data"=>$featuredPost ));
           }
           else
           {
-            $news->name=$name;      
-            $news->type_id=$type;      
-            $news->file=$file;     
-            $news->path=$path;    
-            $news->description=$description; 
-            $news->image=$image;           
-            $news->status=$status;      
-            $news->created_at=$created_at;      
-            $news->updated_at=Carbon::now('Asia/Ho_Chi_Minh');      
-            $news->save();
-            return Response()->json(array("Successfully. Update successfully!"=> 1,"data"=>$news ));
+            $featuredPost->name=$name;          
+            $featuredPost->file=$file;     
+            $featuredPost->path=$path;    
+            $featuredPost->description=$description; 
+            $featuredPost->image=$image;           
+            $featuredPost->status=$status;      
+            $featuredPost->created_at=$created_at;      
+            $featuredPost->updated_at=Carbon::now('Asia/Ho_Chi_Minh');      
+            $featuredPost->save();
+            return Response()->json(array("Successfully. Update successfully!"=> 1,"data"=>$featuredPost ));
           }
     }
 }else{
@@ -400,8 +341,8 @@ else{
 
 /**
      * @SWG\POST(
-     *     path="api/news/destroyNews/{id}",
-     *     description="Return news's informaion.",
+     *     path="api/featuredPost/destroyFeaturedPost/{id}",
+     *     description="Return featured post's informaion.",
      *     @SWG\Response(
      *         response=200,
      *         description="Successfully",
@@ -409,7 +350,6 @@ else{
      *             @SWG\Property(property="id", type="integer"),
      *             @SWG\Property(property="name", type="integer"),
      *             @SWG\Property(property="file", type="string"),
-     *             @SWG\Property(property="type_id", type="integer"),
      *             @SWG\Property(property="path", type="string"),
      *             @SWG\Property(property="status", type="string"),
      *             @SWG\Property(property="description", type="string"),
@@ -427,14 +367,14 @@ else{
      *       }
      * )
      */
-    public function destroyNews($id){
+    public function destroyFeaturedPost($id){
         $adminFind = auth()->user();
         if (($adminFind->email==="web.vatly365@gmail.com")){
-        $newsFind= News::find($id);
-        if ($newsFind){
-        $newsFind->delete();
+        $featuredPostFind= FeaturedPost::find($id);
+        if ($featuredPostFind){
+        $featuredPostFind->delete();
         return response()->json([
-        'data' => $newsFind
+        'data' => $featuredPostFind
     ]);}
     else{
         return response()->json(["message" => "Delete failed"]);
@@ -449,8 +389,8 @@ else{
 
     /**
      * @SWG\POST(
-     *     path="api/news/blockActiveNews/{id}",
-     *     description="Return news's informaion.",
+     *     path="api/featuredPost/blockActiveFeaturedPost/{id}",
+     *     description="Return featured post's informaion.",
      *     @SWG\Response(
      *         response=200,
      *         description="Successfully",
@@ -458,7 +398,6 @@ else{
      *             @SWG\Property(property="id", type="integer"),
      *             @SWG\Property(property="name", type="integer"),
      *             @SWG\Property(property="file", type="string"),
-     *             @SWG\Property(property="type_id", type="integer"),
      *             @SWG\Property(property="path", type="string"),
      *             @SWG\Property(property="status", type="string"),
      *             @SWG\Property(property="description", type="string"),
@@ -476,22 +415,22 @@ else{
      *       }
      * )
      */
-    public function blockActiveNews($id){
+    public function blockActiveFeaturedPost($id){
         $adminFind = auth()->user();
         if (($adminFind->email==="web.vatly365@gmail.com")){
-            $newsFind = DB::table('news')->where('id', $id)->first();
-            if ($newsFind){ 
-                if ($newsFind->status==="Block"){
-                    DB::table('news')->where('id', $newsFind->id)->update(['status'	=>	"Active"]);  
-                    $freeDocumentRespon = DB::table('news')->where('id', $id)->first();
+            $featuredPostFind = DB::table('featured_post')->where('id', $id)->first();
+            if ($featuredPostFind){ 
+                if ($featuredPostFind->status==="Block"){
+                    DB::table('featured_post')->where('id', $featuredPostFind->id)->update(['status'	=>	"Active"]);  
+                    $freeDocumentRespon = DB::table('featured_post')->where('id', $id)->first();
                     return response()->json([
                         'message' => 'successfully',
                         'user' => $freeDocumentRespon
                     ], 201);
                 }
                 else{
-                    DB::table('news')->where('id', $newsFind->id)->update(['status'	=>	"Block"]);  
-                    $freeDocumentRespon = DB::table('news')->where('id', $id)->first();
+                    DB::table('featured_post')->where('id', $featuredPostFind->id)->update(['status'	=>	"Block"]);  
+                    $freeDocumentRespon = DB::table('featured_post')->where('id', $id)->first();
                     return response()->json([
                         'message' => 'successfully',
                         'user' => $freeDocumentRespon

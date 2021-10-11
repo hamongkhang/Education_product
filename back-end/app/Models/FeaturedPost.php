@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
-class Cart extends Authenticatable implements JWTSubject
+class FeaturedPost extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -20,14 +19,15 @@ class Cart extends Authenticatable implements JWTSubject
      *
      * @var string[]
      */
-    protected $table="cart";
+    protected $table="featured_post";
     protected $fillable = [
         'id',
-        'id_payment',
-        'userId',
-        'product_id',
-        'type',
-        'quantity',
+        'name',
+        'description',
+        'file',
+        'path',
+        'image',
+        'status',
         'updated_at',
         'created_at',
     ];
