@@ -101,10 +101,6 @@ Route::post('/admin/loginAdmin', [App\Http\Controllers\UsersController::class, '
 Route::post('/admin/blockAccount/{id}', [App\Http\Controllers\AdminController::class, 'blockAccount'])->name('admin.loginAdmin');
 /* Api Free Document */
 
-<<<<<<< HEAD
-
-=======
->>>>>>> developer_alpha
 Route::post('/freeDocument/getFreeDocument', [App\Http\Controllers\FreeDocumentController::class, 'getFreeDocument'])->name('freeDocument.getFreeDocument');
 //Route::post('/freeDocument/blockAccount', [App\Http\Controllers\FreeDocumentController::class, 'blockAccount'])->name('freeDocument.loginAdmin');
 
@@ -160,11 +156,9 @@ Route::post('/freeDocument/updateFreeDocument/{id}', [App\Http\Controllers\FreeD
 Route::post('/freeDocument/destroyFreeDocument/{id}', [App\Http\Controllers\FreeDocumentController::class, 'destroyFreeDocument'])->name('freeDocument.destroyFreeDocument');
 Route::post('/freeDocument/blockActiveFreeDocument/{id}', [App\Http\Controllers\FreeDocumentController::class, 'blockActiveFreeDocument'])->name('freeDocument.blockActiveFreeDocument');
 
-<<<<<<< HEAD
+
 Route::post('/cart/getCart', [App\Http\Controllers\CartController::class, 'getCart'])->name('cart.get');
 Route::post('/cart/addCart', [App\Http\Controllers\CartController::class, 'addNewCart'])->name('cart.add');
 Route::post('/cart/updateCart', [App\Http\Controllers\CartController::class, 'updateCart'])->name('cart.update');
 Route::post('/cart/removeCart', [App\Http\Controllers\CartController::class, 'removeCart'])->name('cart.remove');
 
-=======
->>>>>>> developer_alpha
