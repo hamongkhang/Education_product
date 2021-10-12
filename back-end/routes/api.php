@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use app\Http\Controller\Api\UsersController;
+use App\Http\Controllers\FbController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +44,10 @@ Route::post('/users/changePassword', [App\Http\Controllers\UsersController::clas
 Route::post('/users/getCodeForgotPassword', [App\Http\Controllers\UsersController::class, 'getCodeForgotPassword'])->name('user.getCodeForgotPassword');
 Route::post('/users/changePasswordForgot', [App\Http\Controllers\UsersController::class, 'changePasswordForgot'])->name('user.changePasswordForgot');
 Route::post('/users/updateProfile', [App\Http\Controllers\UsersController::class, 'updateProfile'])->name('user.updateProfile');
+Route::get('/auth/redirect/{provider}', [App\Http\Controllers\SocialController::class, 'redirect'])->name('user.redirect');
+Route::get('/callback/{provider}',  [App\Http\Controllers\SocialController::class, 'callback'])->name('user.callback');
+Route::get('/auth/facebook', [FbController::class, 'redirectToFacebook']);
+Route::get('/auth/facebook/callback', [FbController::class, 'callBackFaceBook']);
 /* Api Payment */
 Route::post('/payment/momoPayment', [App\Http\Controllers\PaymentController::class, 'momoPayment'])->name('payment.momoPayment');
 Route::post('/payment/checkResult', [App\Http\Controllers\PaymentController::class, 'checkResult'])->name('payment.checkResult');

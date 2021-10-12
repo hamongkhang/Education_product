@@ -31,6 +31,8 @@ class User extends Authenticatable implements JWTSubject
         'birthday',
         'phone',
         'linkFB',
+        'provider', 
+        'provider_id',
         'nameAccount',
         'status',
     ];
