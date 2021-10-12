@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const Logo = (props) => {
     return (
         <Link to="/">
-            <img src={`http://localhost:8000/upload/images/logo vl 365.png`} className="block w-24 h-14 pt-1 object-cover" alt="" />
+            <img srcSet={`http://localhost:8000/upload/images/logo-vl-365.png 2x`} className="block w-24 h-14 pt-1 object-cover" alt="" />
         </Link>
     )
 }

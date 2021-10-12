@@ -27,5 +27,4 @@ const Cart = (props) => (
         <div className="cart-overlay fixed top-0 bottom-0 left-0 z-30 transform -translate-x-full duration-500 bg-penetration-5 cursor-pointer w-0 md:w-1/2 lg:w-4/6"></div>
     </div>
 )
-
 export default Cart

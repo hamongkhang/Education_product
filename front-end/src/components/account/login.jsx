@@ -1,10 +1,14 @@
 import React,{useState,useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import {useHistory} from 'react-router-dom'
+import { useRouteMatch } from 'react-router'
+import queryString from 'query-string'
+
 
 
 const Login = (props) => {
     const [user, setUser] = useState({});
+    const match = useRouteMatch();
     const history = useHistory();
     const addUser = (event) => {
         const target=event.target;
@@ -15,7 +19,52 @@ const Login = (props) => {
           [field]: value,
         });
       };
-    
+      const value=queryString.parse(props.location.search);
+      const nameAccount=value.nameAccount;
+      const avatar=value.avatar;
+      const avatar_google=value.avatar_google;
+      const access_token=value.access_token;
+      const error=value.error;
+            useEffect(() => {
+                   if(access_token){
+                    localStorage.setItem('access_token',access_token);
+                    localStorage.setItem('nameAccount',nameAccount);
+                    if(avatar_google){
+                        localStorage.setItem('avatar_google',avatar_google);
+                    }else{
+                        localStorage.setItem('avatar',avatar);
+                    }
+                        alert("dung r!!!");
+                        history.push("/tai-khoan")
+                }
+                else if(error){
+                    alert(error);
+                }
+             }
+            , []);
+
+
+
+      const loginGoogle = (event) => {
+        const requestOptions = {
+            method: 'GET'
+                };
+        fetch('http://127.0.0.1:8000/api/auth/redirect/google',requestOptions)
+            .then(res => res.json())
+            .then(json => {
+             window.location.href = json.link;
+            });
+      };
+      const loginFacebook = (event) => {
+        const requestOptions = {
+            method: 'GET'
+                };
+        fetch('http://127.0.0.1:8000/api/auth/facebook',requestOptions)
+            .then(res => res.json())
+            .then(json => {
+             window.location.href = json.link;
+            });
+      };
 
     const onLogin = (e) => {
         e.preventDefault();
@@ -94,11 +143,11 @@ const Login = (props) => {
                             <div className="flex mt-7 justify-center w-full ">
                                 <button type="button" className="mr-5 bg-blue-500 border-none px-4 py-2 rounded cursor-pointer text-white space-x-2 hover:shadow-xl">
                                     <i class="fab fa-facebook-f"></i>
-                                    <span>Facebook</span>
+                                    <span onClick={(event) => loginFacebook(event)}>Facebook</span>
                                 </button>
                                 <button type="button" className="bg-red-500 border-none px-4 py-2 rounded-md cursor-pointer text-white space-x-2 hover:shadow-xl">
                                     <i class="fab fa-google"></i>
-                                    <span>Google</span>
+                                    <span onClick={(event) => loginGoogle(event)}>Google</span>
                                 </button>
                             </div>
                             <div className="mt-7">
