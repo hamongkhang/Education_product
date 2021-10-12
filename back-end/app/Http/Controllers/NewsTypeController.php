@@ -9,8 +9,8 @@ use App\Models\Cart;
 use App\Models\History;
 use App\Models\Teacher;
 use App\Models\UserCourse;
-use App\Models\FreeDocument;
-use App\Models\FreeDocumentCategory;
+use App\Models\News;
+use App\Models\NewsType;
 use App\Models\CommentReply;
 use App\Models\momoOrderDetail;
 use Illuminate\Support\Facades\Hash;
@@ -18,20 +18,20 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-class FreeDocumentCategoryController extends Controller
+class NewsTypeController extends Controller
 {
     public function __construct() {
         $this->middleware('auth:api', ['except' => ['onLogin','getFreeDocument','getTeacher', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
     /**
      * @SWG\POST(
-     *     path="api/freeDocumentCategory/createFreeDocumentCategory/",
-     *     description="Return free document category's informaion.",
+     *     path="api/newsType/createNewsType/",
+     *     description="Return news type's informaion.",
      * @SWG\Parameter(
      *         name="name",
      *         in="query",
      *         type="string",
-     *         description="Document category name",
+     *         description="New Type name",
      *         required=true,
      *     ),
      *     @SWG\Response(
@@ -53,7 +53,7 @@ class FreeDocumentCategoryController extends Controller
      *       }
      * )
      */
-    public function createFreeDocumentCategory(Request $request){
+    public function createNewsType(Request $request){
         $adminFind = auth()->user();
         if (($adminFind->email==="web.vatly365@gmail.com")){
         $validator = Validator::make($request->all(), [
@@ -62,7 +62,7 @@ class FreeDocumentCategoryController extends Controller
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 401);     
         }
-        $data = DB::table('free_document_category')->where('name', $request->name)->first();
+        $data = DB::table('news_type')->where('name', $request->name)->first();
         if (!$data){
               $postArray = [
                     'name'  => $request->name,
@@ -70,7 +70,7 @@ class FreeDocumentCategoryController extends Controller
                     'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
                     'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh')
                 ];
-                 $freeDocument = FreeDocumentCategory::create($postArray);
+                 $newsType = NewsType::create($postArray);
               return Response()->json(array("Successfully. Upload successfully!"=> 1,"data"=>$postArray ));
     }else{
         return response()->json(["message" => "Name already exist!!!"]);
@@ -86,13 +86,13 @@ class FreeDocumentCategoryController extends Controller
 
     /**
      * @SWG\POST(
-     *     path="api/freeDocumentCategory/updateFreeDocumentCategory/{id}",
-     *     description="Return free Document category's informaion.",
+     *     path="api/newsType/updateNewsType/{id}",
+     *     description="Return news type's informaion.",
      *  @SWG\Parameter(
      *         name="name",
      *         in="query",
      *         type="string",
-     *         description="Free Document Category's Name",
+     *         description="news type's Name",
      *         required=true,
      *     ),
      *     @SWG\Response(
@@ -114,7 +114,7 @@ class FreeDocumentCategoryController extends Controller
      *       }
      * )
      */
-public function updateFreeDocumentCategory($id,Request $request){
+public function updateNewsType($id,Request $request){
     $adminFind = auth()->user();
     if (($adminFind->email==="web.vatly365@gmail.com")){
     $validator = Validator::make($request->all(), [
@@ -124,27 +124,27 @@ public function updateFreeDocumentCategory($id,Request $request){
     if ($validator->fails()) {
         return response()->json(['error'=>$validator->errors()], 401);     
     }
-    $freeDocumentCategory = FreeDocumentCategory::find($id);
-    if($freeDocumentCategory){
-    $created_at=$freeDocumentCategory->created_at;
-    $status=$freeDocumentCategory->status;
+    $newsType = NewsType::find($id);
+    if($newsType){
+    $created_at=$newsType->created_at;
+    $status=$newsType->status;
     if ($request->name==null){
-        $name=$freeDocumentCategory->name;
+        $name=$newsType->name;
     }else{
-        $data = DB::table('free_document_category')->where('name', $request->name)->first();
+        $data = DB::table('news_type')->where('name', $request->name)->first();
         if ($data){
             return response()->json([
-                'error' => 'free document category name already exist'
+                'error' => 'free news type name already exist'
             ], 401); 
         }
         $name=$request->name;
     }
-    $freeDocumentCategory->name=$name;
-    $freeDocumentCategory->status=$status;            
-    $freeDocumentCategory->created_at=$created_at;               
-    $freeDocumentCategory->updated_at=Carbon::now('Asia/Ho_Chi_Minh');      
-    $freeDocumentCategory->save();
-    return Response()->json(array("Successfully. Update successfully!"=> 1,"data"=>$freeDocumentCategory ));
+    $newsType->name=$name;
+    $newsType->status=$status;            
+    $newsType->created_at=$created_at;               
+    $newsType->updated_at=Carbon::now('Asia/Ho_Chi_Minh');      
+    $newsType->save();
+    return Response()->json(array("Successfully. Update successfully!"=> 1,"data"=>$newsType ));
 }else{
     return Response()->json(array("error!"=> 401,"message"=>"Id Not Found" ));
 }
@@ -158,8 +158,8 @@ else{
 
 /**
      * @SWG\POST(
-     *     path="api/freeDocumentCategory/destroyFreeDocumentCategory/{id}",
-     *     description="Return freeDocument's informaion.",
+     *     path="api/newsType/destroyNewsType/{id}",
+     *     description="Return news type's informaion.",
      *     @SWG\Response(
      *         response=200,
      *         description="Successfully",
@@ -180,15 +180,15 @@ else{
      *       }
      * )
      */
-    public function destroyFreeDocumentCategory($id){
+    public function destroyNewsType($id){
         $adminFind = auth()->user();
         if (($adminFind->email==="web.vatly365@gmail.com")){
-        $freeDocumentCategoryFind= FreeDocumentCategory::find($id);
-        if ($freeDocumentCategoryFind){
-        DB::delete('delete from free_document where category_id = ?',[$id]);
-        $freeDocumentCategoryFind->delete();
+        $newsTypeFind= NewsType::find($id);
+        if ($newsTypeFind){
+        DB::delete('delete from news where type_id = ?',[$id]);
+        $newsTypeFind->delete();
         return response()->json([
-        'data' => $freeDocumentCategoryFind
+        'data' => $newsTypeFind
     ]);}
     else{
         return response()->json(["message" => "Delete failed"]);
