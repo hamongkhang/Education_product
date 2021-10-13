@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Content;
 use App\Models\Lesson;
@@ -14,8 +15,36 @@ use Illuminate\Support\Facades\Validator;
 class TableOfContentController extends Controller
 {
      public function __construct() {
-        $this->middleware('auth:api',['except' => ['getAllTableOfContents','getOneTableOfContent','addNewTableOfContent','updateTableOfContent','deleteTableOfContent','changeStatusTableOfContent']]);
+        $this->middleware('auth:api',['except' => ['getTableHome','getAllTableOfContents','getOneTableOfContent','addNewTableOfContent','updateTableOfContent','deleteTableOfContent','changeStatusTableOfContent']]);
     }
+
+
+
+    public function getTableHome(Request $request){
+        $login = auth()->user();
+        $table=[];
+        $array=[];
+        if($login && $login->is_admin == true){
+            $table = TableOfContent::all();
+        }
+        else{
+            $course_category = CategoryCourse::where('status','Active')->get();
+            for ($i = 0; $i <count($course_category); $i++) {
+                $data = DB::table('course')->where('category_course', $course_category[$i]->id)->Where('status','Active')->get();
+                for ($k = 0; $k <count($data); $k++) {  
+                    $data2 = DB::table('table_of_content')->where('course_id', $data[$k]->id)->Where('status','Active')->get();
+                    for ($h = 0; $h <count($data2); $h++) {                  
+                                array_push($table, $data2[$h]);
+                     }
+                    }
+                }
+        return Response()->json(array("Successfully"=> 1,"data"=>$table));
+    }
+    
+    }
+
+
+
     public function getAllTableOfContents(Request $request){
         $login = auth()->user();
         if($login && $login->is_admin == true){

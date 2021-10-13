@@ -16,6 +16,7 @@ class CategoryCourseController extends Controller
     public function __construct() {
         $this->middleware('auth:api',['except' => ['getAllCategoryCourses','getOneCategoryCourse','addNewCategoryCourse','updateCategoryCourse','deleteCategoryCourse','changeStatusCategoryCourse']]);
     }
+
     public function getAllCategoryCourses(Request $request){
         $login = auth()->user();
         if($login && $login->is_admin == true){
@@ -28,6 +29,7 @@ class CategoryCourseController extends Controller
             'category_courses'=>$category_courses
         ], 200);
     }
+    
     public function getOneCategoryCourse(Request $request){
         $validator = Validator::make($request->all(), [
             'id' => 'required|exists:category_course,id',

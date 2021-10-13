@@ -48,6 +48,8 @@ Route::get('/auth/redirect/{provider}', [App\Http\Controllers\SocialController::
 Route::get('/callback/{provider}',  [App\Http\Controllers\SocialController::class, 'callback'])->name('user.callback');
 Route::get('/auth/facebook', [FbController::class, 'redirectToFacebook']);
 Route::get('/auth/facebook/callback', [FbController::class, 'callBackFaceBook']);
+Route::get('/users/getAdmin', [App\Http\Controllers\UsersController::class, 'getAdmin'])->name('user.getAdmin');
+
 /* Api Payment */
 Route::post('/payment/momoPayment', [App\Http\Controllers\PaymentController::class, 'momoPayment'])->name('payment.momoPayment');
 Route::post('/payment/checkResult', [App\Http\Controllers\PaymentController::class, 'checkResult'])->name('payment.checkResult');
@@ -105,6 +107,7 @@ Route::post('/freeDocument/getFreeDocument', [App\Http\Controllers\FreeDocumentC
 //Route::post('/freeDocument/blockAccount', [App\Http\Controllers\FreeDocumentController::class, 'blockAccount'])->name('freeDocument.loginAdmin');
 
 /*Api Lesson*/
+Route::get('/getLessonHome', [App\Http\Controllers\LessonController::class, 'getLessonHome'])->name('lesson.getLessonHome');
 Route::get('/getLessons', [App\Http\Controllers\LessonController::class, 'getAllLessons'])->name('lesson.get');
 Route::post('/getOneLesson', [App\Http\Controllers\LessonController::class, 'getOneLesson'])->name('lesson.getOne');
 Route::post('/addLesson', [App\Http\Controllers\LessonController::class, 'addNewLesson'])->name('lesson.add');
@@ -112,6 +115,7 @@ Route::post('/updateLesson', [App\Http\Controllers\LessonController::class, 'upd
 Route::post('/deleteLesson', [App\Http\Controllers\LessonController::class, 'deleteLesson'])->name('lesson.delete');
 Route::post('/changeLessonStatus', [App\Http\Controllers\LessonController::class, 'changeStatusLesson'])->name('lesson.status');
 /*Api Content*/
+Route::get('/getContentHome', [App\Http\Controllers\ContentController::class, 'getContentHome'])->name('content.getContentHome');
 Route::get('/getContents', [App\Http\Controllers\ContentController::class, 'getAllContents'])->name('content.get');
 Route::post('/getOneContent', [App\Http\Controllers\ContentController::class, 'getOneContent'])->name('content.getOne');
 Route::post('/addContent', [App\Http\Controllers\ContentController::class, 'addNewContent'])->name('content.add');
@@ -119,6 +123,7 @@ Route::post('/updateContent', [App\Http\Controllers\ContentController::class, 'u
 Route::post('/deleteContent', [App\Http\Controllers\ContentController::class, 'deleteContent'])->name('content.delete');
 Route::post('/changeContentStatus', [App\Http\Controllers\ContentController::class, 'changeStatusContent'])->name('content.status');
 /*Api TableOfContent*/
+Route::get('/getTableHome', [App\Http\Controllers\TableOfContentController::class, 'getTableHome'])->name('lesson.getTableHome');
 Route::get('/getTableOfContents', [App\Http\Controllers\TableOfContentController::class, 'getAllTableOfContents'])->name('tableOfContent.get');
 Route::post('/getOneTableOfContent', [App\Http\Controllers\TableOfContentController::class, 'getOneTableOfContent'])->name('tableOfContent.getOne');
 Route::post('/addTableOfContent', [App\Http\Controllers\TableOfContentController::class, 'addNewTableOfContent'])->name('tableOfContent.add');
@@ -126,6 +131,7 @@ Route::post('/updateTableOfContent', [App\Http\Controllers\TableOfContentControl
 Route::post('/deleteTableOfContent', [App\Http\Controllers\TableOfContentController::class, 'deleteTableOfContent'])->name('tableOfContent.delete');
 Route::post('/changeTableOfContentStatus', [App\Http\Controllers\TableOfContentController::class, 'changeStatusTableOfContent'])->name('tableOfContent.status');
 /*Api Course*/
+Route::get('/getCourseHome', [App\Http\Controllers\CourseController::class, 'getCourseHome'])->name('course.getCourseHome');
 Route::get('/getCourses', [App\Http\Controllers\CourseController::class, 'getAllCourses'])->name('course.get');
 Route::post('/getOneCourse', [App\Http\Controllers\CourseController::class, 'getOneCourse'])->name('course.getOne');
 Route::post('/addCourse', [App\Http\Controllers\CourseController::class, 'addNewCourse'])->name('course.add');
