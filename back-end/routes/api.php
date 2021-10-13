@@ -131,6 +131,8 @@ Route::post('/updateTableOfContent', [App\Http\Controllers\TableOfContentControl
 Route::post('/deleteTableOfContent', [App\Http\Controllers\TableOfContentController::class, 'deleteTableOfContent'])->name('tableOfContent.delete');
 Route::post('/changeTableOfContentStatus', [App\Http\Controllers\TableOfContentController::class, 'changeStatusTableOfContent'])->name('tableOfContent.status');
 /*Api Course*/
+Route::POST('/getCourseSearch', [App\Http\Controllers\CourseController::class, 'getCourseSearch'])->name('course.getCourseSearch');
+Route::POST('/getCountLesson', [App\Http\Controllers\CourseController::class, 'getCountLesson'])->name('course.getCountLesson');
 Route::get('/getCourseHome', [App\Http\Controllers\CourseController::class, 'getCourseHome'])->name('course.getCourseHome');
 Route::get('/getCourses', [App\Http\Controllers\CourseController::class, 'getAllCourses'])->name('course.get');
 Route::post('/getOneCourse', [App\Http\Controllers\CourseController::class, 'getOneCourse'])->name('course.getOne');
