@@ -23,7 +23,7 @@ const HomePages = (props) => {
                 <Route path="/dat-lai-mat-khau" exact component={ResetPassword} />
                 <Route path="/sach" exact component={Books} />
                 <Route path="/sach/:id" exact component={BookDetails} />
-                <Route path="/khoa-hoc/:id/:count" exact component={CourseDetails} />
+                <Route path="/khoa-hoc/:id" exact component={CourseDetails} />
                 <Route path="/khoa-hoc" exact component={Courses} />
                 <Route path="/tin-tuc" exact component={Articles} />
                 <Route path="/it-trong-day-hoc" exact component={ITinTeaching} />

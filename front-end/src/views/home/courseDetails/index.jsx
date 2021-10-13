@@ -19,7 +19,21 @@ const CourseDetails = () => {
             setClasses("right-0 translate-x-full");
         }, 5000);
     }
+
+    const getCountLesson=()=>{
+            const _formData = new FormData();
+            _formData.append("id",match.params.id)
+            const requestOptions = {
+                method: 'POST',
+                body: _formData,            };
+            fetch('http://127.0.0.1:8000/api/getCountLesson', requestOptions)
+            .then(res => res.json())
+            .then(data =>  setCount(data.data));
+        return () => {
+    }
+}
     useEffect(() => {
+        getCountLesson();
         if($token){
           const _formData = new FormData();
           _formData.append("id",match.params.id)
@@ -74,7 +88,7 @@ return () => {
                                 </div>
                                 <div className="flex space-x-2 py-3 border-b border-gray-300">
                                     <div className="w-5 text-center"> <i className="fad fa-book-open text-indigo-600"></i> </div>
-                                    <div> Bài giảng: <span className="text-gray-500">{match.params.count} bài giảng</span> </div>
+                                    <div> Bài giảng: <span className="text-gray-500">{count} bài giảng</span> </div>
                                 </div>
                                 <div className="flex space-x-2 py-3 border-b border-gray-300">
                                     <div className="w-5 text-center"> <i className="fad fa-clock text-indigo-600"></i> </div>

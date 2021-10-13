@@ -18,8 +18,46 @@ use Illuminate\Support\Facades\File;
 class CourseController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api',['except' => ['getCourseHome','getAllCourses','getOneCourse','addNewCourse','updateCourse','deleteCourse','changeStatusCourse']]);
+        $this->middleware('auth:api',['except' => ['getCourseSearch','getCountLesson','getCourseHome','getAllCourses','getOneCourse','addNewCourse','updateCourse','deleteCourse','changeStatusCourse']]);
     }
+
+
+
+    public function getCourseSearch(Request $request){
+        if($request->id!=="allCourse"){
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:course,category_course',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 400);      
+        }
+       
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $course = Course::where('category_course',$request->id)->get();
+        }
+        else{
+            $course = Course::where('status','Active')->where('category_course',$request->id)->get();
+        }
+
+        return response()->json([
+            'data'=>$course
+        ], 200);
+    }else{
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $course = Course::all();
+        }
+        else{
+            $course = Course::where('status','Active')->get();
+        }
+        return response()->json([
+            'data'=>$course
+        ], 200);  
+    }
+    }
+
+
 
     public function getCourseHome(Request $request){
         $lesson=[];
@@ -94,6 +132,85 @@ class CourseController extends Controller
                     array_push($a,$sum);
                         }
         return Response()->json(array("Successfully"=> 1,"data"=>$a));
+    }
+
+    public function getCountLesson(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:course,id',
+        ]);
+        $lesson=[];
+        $courses=[];
+        $table=[];
+        $content=[];
+
+        $course_category = CategoryCourse::where('status','Active')->get();
+
+        $courseFind = DB::table('course')->where('id', $request->id)->first();
+
+
+
+        for ($i = 0; $i <count($course_category); $i++) {
+            $data = DB::table('course')->where('category_course', $course_category[$i]->id)->get();
+            for ($j = 0; $j <count($data); $j++) {                    
+                array_push($courses, $data[$j]);
+            }
+        }
+
+        for ($i = 0; $i <count($course_category); $i++) {
+            $data = DB::table('course')->where('category_course', $course_category[$i]->id)->Where('status','Active')->get();
+            for ($k = 0; $k <count($data); $k++) {  
+                $data2 = DB::table('table_of_content')->where('course_id', $data[$k]->id)->Where('status','Active')->get();
+                for ($h = 0; $h <count($data2); $h++) {                  
+                            array_push($table, $data2[$h]);
+                 }
+                }
+            }
+
+            for ($i = 0; $i <count($course_category); $i++) {
+                $data = DB::table('course')->where('category_course', $course_category[$i]->id)->Where('status','Active')->get();
+                for ($k = 0; $k <count($data); $k++) {  
+                    $data2 = DB::table('table_of_content')->where('course_id', $data[$k]->id)->Where('status','Active')->get();
+                    for ($h = 0; $h <count($data2); $h++) {  
+                        $data3 = DB::table('content')->where('table_of_content_id', $data2[$h]->id)->Where('status','Active')->get();
+                        for ($l = 0; $l <count($data3); $l++) {            
+                                array_push($content, $data3[$l]);
+                       }
+                            }
+                     }
+                    }
+
+            for ($i = 0; $i <count($course_category); $i++) {
+                $data = DB::table('course')->where('category_course', $course_category[$i]->id)->Where('status','Active')->get();
+                for ($k = 0; $k <count($data); $k++) {  
+                    $data2 = DB::table('table_of_content')->where('course_id', $data[$k]->id)->Where('status','Active')->get();
+                    for ($h = 0; $h <count($data2); $h++) {  
+                        $data3 = DB::table('content')->where('table_of_content_id', $data2[$h]->id)->Where('status','Active')->get();
+                        for ($l = 0; $l <count($data3); $l++) {  
+                           $data4 = DB::table('lesson')->where('content_id', $data3[$l]->id)->Where('status','Active')->get();     
+                           for ($m = 0; $m <count($data4); $m++) {                    
+                                array_push($lesson, $data4[$m]);
+                            }
+                       }
+                            }
+                     }
+                    }
+
+                         $sum=0;
+                         for ($j = 0; $j < count($table); $j++) {
+                                         if($courseFind->id===$table[$j]->course_id){
+                                            for ($k = 0; $k < count($content); $k++) {
+                                                if($table[$j]->id==$content[$k]->table_of_content_id){
+                                                    for ($h = 0; $h < count($lesson); $h++) {
+                                                        if($lesson[$h]->content_id==$content[$k]->id){
+                                                            $sum=$sum+1;
+                                                        }
+                                                    }
+                                               }
+                                        }
+                         }
+                      }
+                    
+        return Response()->json(array("Successfully"=> 1,"data"=>$sum));
     }
 
 
