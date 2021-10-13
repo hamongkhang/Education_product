@@ -1,16 +1,54 @@
-import React, { useState } from 'react'
+import React,{useState,useEffect} from 'react'
 import { Link } from 'react-router-dom'
+import { useRouteMatch } from 'react-router';
 import { BannerBook } from '../../../components/banner'
 import CourseDesc from './courseDesc'
+import moment from 'moment';
 
 const CourseDetails = () => {
+    const $link="http://localhost:8000/upload/images/course/";
     const [classes, setClasses] = useState("right-0 translate-x-full");
+    const match = useRouteMatch();
+    const [course, setCourse] = useState([]);
+    const [count, setCount] = useState([]);
+    const $token=localStorage.getItem('access_token');
+
     const notification = () => {
         setClasses("right-5 translate-x-0");
         setTimeout(() => {
             setClasses("right-0 translate-x-full");
         }, 5000);
     }
+    useEffect(() => {
+        if($token){
+          const _formData = new FormData();
+          _formData.append("id",match.params.id)
+          const requestOptions = {
+              method: 'POST',
+              body: _formData,
+              headers: {"Authorization": `Bearer `+$token}
+          };
+        fetch("http://localhost:8000/api/getOneCourse", requestOptions)
+        .then(response => response.json())
+        .then(data => setCourse(data.course));
+        return () => {
+        }
+    }
+else{
+  const _formData = new FormData();
+  _formData.append("id",match.params.id)
+  const requestOptions = {
+      method: 'POST',
+      body: _formData,
+  };
+fetch("http://localhost:8000/api/getOneCourse", requestOptions)
+.then(response => response.json())
+.then(data => setCourse(data.course));
+return () => {
+}
+    }
+}
+    , []);
     return (
         <>
             <BannerBook/>
@@ -18,25 +56,25 @@ const CourseDetails = () => {
                 <div className="flex flex-col lg:flex-row lg:space-x-6">
                     <div className="w-full lg:w-4/6">
                         <div className="space-y-3 mt-1">
-                            <h2 className="font-semibold uppercase text-xl md:text-3xl">Luyện thi thpt quốc gia 2022</h2>
-                            <img src={`${window.location.origin}/assets/images/slider/city.jpg`} className="w-full h-60 md:h-96 object-cover pt-3" alt="" />
+                            <h2 className="font-semibold uppercase text-xl md:text-3xl">{course.name}</h2>
+                            <img src={$link+course.image} className="w-full h-60 md:h-96 object-cover pt-3" alt="" />
                         </div>
-                        <CourseDesc />
+                        <CourseDesc data={course} />
                     </div>
                     <div className="w-full lg:w-2/6 py-4">
                         <div className="p-5 border-b-2 border-gray-400 space-y-4 rounded-md shadow-lg">
                             <div className="flex justify-center items-end space-x-3">
-                                <span className="text-xl text-green-700">300.000<sup>đ</sup></span>
-                                <span className="text-base line-through font-light text-gray-500">500.000<sup>đ</sup></span>
+                                <span className="text-xl text-green-700">{course.promotion_price}<sup> đ</sup></span>
+                                <span className="text-base line-through font-light text-gray-500">{course.Initial_price}<sup>đ</sup></span>
                             </div>
                             <div>
                                 <div className="flex space-x-2 py-3 border-b border-gray-300">
                                     <div className="w-5 text-center"> <i className="fad fa-chalkboard-teacher text-indigo-600"></i> </div>
-                                    <div> Giáo viên: <span className="text-gray-500">14</span> </div>
+                                    <div> Giáo viên: <span className="text-gray-500">Trần Quốc Quân</span> </div>
                                 </div>
                                 <div className="flex space-x-2 py-3 border-b border-gray-300">
                                     <div className="w-5 text-center"> <i className="fad fa-book-open text-indigo-600"></i> </div>
-                                    <div> Bài giảng: <span className="text-gray-500">14</span> </div>
+                                    <div> Bài giảng: <span className="text-gray-500">{match.params.count} bài giảng</span> </div>
                                 </div>
                                 <div className="flex space-x-2 py-3 border-b border-gray-300">
                                     <div className="w-5 text-center"> <i className="fad fa-clock text-indigo-600"></i> </div>
@@ -44,11 +82,11 @@ const CourseDetails = () => {
                                 </div>
                                 <div className="flex space-x-2 py-3 border-b border-gray-300">
                                     <div className="w-5 text-center"> <i className="fad fa-user text-indigo-600"></i> </div>
-                                    <div> Đã đăng ký: <span className="text-gray-500">20</span> </div>
+                                    <div> Đã đăng ký: <span className="text-gray-500">***</span> </div>
                                 </div>
                                 <div className="flex space-x-2 py-3">
                                     <div className="w-5 text-center"> <i className="fad fa-edit text-indigo-600"></i> </div>
-                                    <div> Cập nhật lần cuối: <span className="text-gray-500">18/12/2001</span> </div>
+                                    <div> Cập nhật lần cuối: <span className="text-gray-500">{moment(course.updated_at).format("DD-MM-YYYY")}</span> </div>
                                 </div>
                                 
                             </div>

@@ -25,7 +25,7 @@ class UsersController extends Controller
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['onLogin','loginAdmin', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
+        $this->middleware('auth:api', ['except' => ['getAdmin','onLogin','loginAdmin', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
      /**
      * @SWG\POST(
@@ -994,4 +994,9 @@ class UsersController extends Controller
                     }
             }   
         }
+        
+    public function getAdmin(Request $request) {
+        $user = DB::table('users')->where('email', 'web.vatly365@gmail.com')->first();
+        return Response()->json(array("Successfully"=> 1,"data"=>$user));
+    }
 }

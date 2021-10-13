@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Lesson;
 use App\Models\Content;
@@ -17,8 +18,40 @@ class LessonController extends Controller
 {
     
     public function __construct() {
-        $this->middleware('auth:api',['except' => ['getAllLessons','getOneLesson','addNewLesson','updateLesson','deleteLesson','changeStatusLesson']]);
+        $this->middleware('auth:api',['except' => ['getLessonHome','getAllLessons','getOneLesson','addNewLesson','updateLesson','deleteLesson','changeStatusLesson']]);
     }
+
+
+    public function getLessonHome(Request $request){
+        $login = auth()->user();
+        $lesson=[];
+        $array=[];
+        if($login && $login->is_admin == true){
+            $lesson = Lesson::all();
+        }
+        else{
+            $course_category = CategoryCourse::where('status','Active')->get();
+            for ($i = 0; $i <count($course_category); $i++) {
+                $data = DB::table('course')->where('category_course', $course_category[$i]->id)->Where('status','Active')->get();
+                for ($k = 0; $k <count($data); $k++) {  
+                    $data2 = DB::table('table_of_content')->where('course_id', $data[$k]->id)->Where('status','Active')->get();
+                    for ($h = 0; $h <count($data2); $h++) {  
+                        $data3 = DB::table('content')->where('table_of_content_id', $data2[$h]->id)->Where('status','Active')->get();
+                        for ($l = 0; $l <count($data3); $l++) {  
+                           $data4 = DB::table('lesson')->where('content_id', $data3[$l]->id)->Where('status','Active')->get();     
+                           for ($m = 0; $m <count($data4); $m++) {                    
+                                array_push($lesson, $data4[$m]);
+                            }
+                       }
+                            }
+                     }
+                    }
+                }
+        return Response()->json(array("Successfully"=> 1,"data"=>$lesson));
+    }
+
+
+
     public function getAllLessons(Request $request){
         $login = auth()->user();
         if($login && $login->is_admin == true){

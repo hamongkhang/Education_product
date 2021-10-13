@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Cart;
 use App\Models\Course;
@@ -17,26 +18,109 @@ use Illuminate\Support\Facades\File;
 class CourseController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api',['except' => ['getAllCourses','getOneCourse','addNewCourse','updateCourse','deleteCourse','changeStatusCourse']]);
+        $this->middleware('auth:api',['except' => ['getCourseHome','getAllCourses','getOneCourse','addNewCourse','updateCourse','deleteCourse','changeStatusCourse']]);
     }
+
+    public function getCourseHome(Request $request){
+        $lesson=[];
+        $courses=[];
+        $table=[];
+        $content=[];
+
+        $course_category = CategoryCourse::where('status','Active')->get();
+
+        for ($i = 0; $i <count($course_category); $i++) {
+            $data = DB::table('course')->where('category_course', $course_category[$i]->id)->get();
+            for ($j = 0; $j <count($data); $j++) {                    
+                array_push($courses, $data[$j]);
+            }
+        }
+
+        for ($i = 0; $i <count($course_category); $i++) {
+            $data = DB::table('course')->where('category_course', $course_category[$i]->id)->Where('status','Active')->get();
+            for ($k = 0; $k <count($data); $k++) {  
+                $data2 = DB::table('table_of_content')->where('course_id', $data[$k]->id)->Where('status','Active')->get();
+                for ($h = 0; $h <count($data2); $h++) {                  
+                            array_push($table, $data2[$h]);
+                 }
+                }
+            }
+
+            for ($i = 0; $i <count($course_category); $i++) {
+                $data = DB::table('course')->where('category_course', $course_category[$i]->id)->Where('status','Active')->get();
+                for ($k = 0; $k <count($data); $k++) {  
+                    $data2 = DB::table('table_of_content')->where('course_id', $data[$k]->id)->Where('status','Active')->get();
+                    for ($h = 0; $h <count($data2); $h++) {  
+                        $data3 = DB::table('content')->where('table_of_content_id', $data2[$h]->id)->Where('status','Active')->get();
+                        for ($l = 0; $l <count($data3); $l++) {            
+                                array_push($content, $data3[$l]);
+                       }
+                            }
+                     }
+                    }
+
+            for ($i = 0; $i <count($course_category); $i++) {
+                $data = DB::table('course')->where('category_course', $course_category[$i]->id)->Where('status','Active')->get();
+                for ($k = 0; $k <count($data); $k++) {  
+                    $data2 = DB::table('table_of_content')->where('course_id', $data[$k]->id)->Where('status','Active')->get();
+                    for ($h = 0; $h <count($data2); $h++) {  
+                        $data3 = DB::table('content')->where('table_of_content_id', $data2[$h]->id)->Where('status','Active')->get();
+                        for ($l = 0; $l <count($data3); $l++) {  
+                           $data4 = DB::table('lesson')->where('content_id', $data3[$l]->id)->Where('status','Active')->get();     
+                           for ($m = 0; $m <count($data4); $m++) {                    
+                                array_push($lesson, $data4[$m]);
+                            }
+                       }
+                            }
+                     }
+                    }
+
+                    $a=[];
+                    for ($i = 0; $i <count($courses); $i++) {
+                         $sum=0;
+                         for ($j = 0; $j < count($table); $j++) {
+                                         if($courses[$i]->id===$table[$j]->course_id){
+                                            for ($k = 0; $k < count($content); $k++) {
+                                                if($table[$j]->id==$content[$k]->table_of_content_id){
+                                                    for ($h = 0; $h < count($lesson); $h++) {
+                                                        if($lesson[$h]->content_id==$content[$k]->id){
+                                                            $sum=$sum+1;
+                                                        }
+                                                    }
+                                               }
+                                        }
+                         }
+                      }
+                    array_push($a,$sum);
+                        }
+        return Response()->json(array("Successfully"=> 1,"data"=>$a));
+    }
+
+
+
+
+
+
     public function getAllCourses(Request $request){
         $login = auth()->user();
+        $courses=[];
+        $array=[];
         if($login && $login->is_admin == true){
             $courses = Course::all();
         }
         else{
-            $courses = Course::where('status','Active')->get();
-            foreach($courses as $i=>$course){
-                $category_course = CategoryCourse::find($course->category_course);
-                if($category_course && $category_course->status == 'Block'){
-                    unset($courses[$i]);
+            $course_category = CategoryCourse::where('status','Active')->get();
+            for ($i = 0; $i <count($course_category); $i++) {
+                $data = DB::table('course')->where('category_course', $course_category[$i]->id)->get();
+                for ($j = 0; $j <count($data); $j++) {                    
+                    array_push($courses, $data[$j]);
                 }
             }
         }
-        return response()->json([
-            'courses'=>$courses
-        ], 200);
+        return Response()->json(array("Successfully"=> 1,"data"=>$courses));
     }
+
+
     public function getOneCourse(Request $request){
         $validator = Validator::make($request->all(), [
             'id' => 'required|exists:course,id',
@@ -49,13 +133,13 @@ class CourseController extends Controller
             $course = Course::find($request->id);
         }
         else{
-            $course = Course::where('status','Active')->where('id',$request->id)->get();
-            foreach($course as $i=>$c){
-                $category_course = CategoryCourse::find($c->category_course);
-                if($category_course && $category_course->status == 'Block'){
-                    unset($course[$i]);
-                }
-            }
+            $course = Course::where('status','Active')->where('id',$request->id)->first();
+            // foreach($course as $i=>$c){
+            //     $category_course = CategoryCourse::find($c->category_course);
+            //     if($category_course && $category_course->status == 'Block'){
+            //         unset($course[$i]);
+            //     }
+            // }
         }
         return response()->json([
             'course'=>$course
@@ -71,7 +155,9 @@ class CourseController extends Controller
                 'image'=>'required|image|mimes:png,jpeg,jpg,webp',
                 'category_course'=>'required|exists:category_course,id',
                 'status'=>'required|in:Active,Block',
-                'description'=>'required'
+                'description'=>'required',
+                'benefit'=>'required',
+                'target'=>'required'
             ]);
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      
@@ -106,6 +192,8 @@ class CourseController extends Controller
             $course->category_course = $request->category_course;
             $course->status = $request->status;
             $course->description = $request->description;
+            $course->target = $request->target;
+            $course->benefit = $request->benefit;
             $course->created_at =  Carbon::now('Asia/Ho_Chi_Minh');
             $course->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
             $course->save();
@@ -132,7 +220,9 @@ class CourseController extends Controller
                 'image'=>'image|mimes:png,jpeg,jpg',
                 'category_course'=>'exists:category_course,id',
                 'status'=>'in:Active,Block',
-                'description'=>''
+                'description'=>'',
+                'target'=>'',
+                'benefit'=>''
             ]);
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      
@@ -192,6 +282,14 @@ class CourseController extends Controller
             $request->description == null || $request->description == 'undefined'
             ? $course->description = $course->description 
             : $course->description = $request->description;
+
+            $request->target == null || $request->target == 'undefined'
+            ? $course->target = $course->target 
+            : $course->target = $request->target;
+
+            $request->benefit == null || $request->benefit == 'undefined'
+            ? $course->benefit = $course->benefit 
+            : $course->benefit = $request->benefit;
 
             $course->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
             $course->save();

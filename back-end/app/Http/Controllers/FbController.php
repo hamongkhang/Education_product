@@ -141,13 +141,13 @@ class FbController extends Controller
              $user = User::create([
                 'fullName'  => $getInfo->name,
                 'nameAccount'  =>  $getInfo->name,
-                'linkFB'  => "account google",
-                'phone'  =>  "account google",
+                'linkFB'  => "account facebook",
+                'phone'  =>  "account facebook",
                 'birthday'  => Carbon::now('Asia/Ho_Chi_Minh'),
-                'address'  => "account google",
-                'sex'  =>"account google",
+                'address'  => "account facebook",
+                'sex'  =>"account facebook",
                 'password'  => Hash::make('password_google'),
-                'remember_token' => "account google",
+                'remember_token' => "account facebook",
                 'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
                 'updated_at'=>Carbon::now('Asia/Ho_Chi_Minh'),
                 'avatar'=> $getInfo->avatar,
@@ -190,16 +190,31 @@ class FbController extends Controller
           if (auth()->user()->status==="Block") {
               return ['error' => 'Blocked'];
           }
+          $str = $user->avatar;
+          $pos = strpos($str, 'ttps://graph.facebook.com');
+          if($pos){
               return [
               'error' =>null,    
               'access_token' => $token,
               'token_type' => 'bearer',
               'expires_in' => auth()->factory()->getTTL() * 60,
-              'avatar_google'=>null,
-              'avatar'=>$user->avatar,
+              'avatar_google'=>$user->avatar,
+              'avatar'=>null,
               'email'    => $user->email,
               'nameAccount'  =>  $user->nameAccount,
           ];
+        }else{
+            return [
+                'error' =>null,    
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => auth()->factory()->getTTL() * 60,
+                'avatar_google'=>null,
+                'avatar'=>$user->avatar,
+                'email'    => $user->email,
+                'nameAccount'  =>  $user->nameAccount,
+            ];
+        }
         }
 
 

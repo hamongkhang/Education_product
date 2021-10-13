@@ -75,7 +75,7 @@ if (auth()->user()->status==="Block") {
     return ['error' => 'Blocked'];
 }
     return [
-        'error' =>null,    
+    'error' =>null,    
     'access_token' => $token,
     'token_type' => 'bearer',
     'expires_in' => auth()->factory()->getTTL() * 60,
@@ -97,16 +97,31 @@ else{
   if (auth()->user()->status==="Block") {
       return ['error' => 'Blocked'];
   }
+  $str = $user->avatar;
+  $pos = strpos($str, 'ttps://lh3.googleusercontent.com');
+  if($pos){
       return [
       'error' =>null,    
       'access_token' => $token,
       'token_type' => 'bearer',
       'expires_in' => auth()->factory()->getTTL() * 60,
-      'avatar_google'=>null,
-      'avatar'=>$user->avatar,
+      'avatar_google'=>$user->avatar,
+      'avatar'=>null,
       'email'    => $user->email,
       'nameAccount'  =>  $user->nameAccount,
   ];
+}else{
+    return [
+        'error' =>null,    
+        'access_token' => $token,
+        'token_type' => 'bearer',
+        'expires_in' => auth()->factory()->getTTL() * 60,
+        'avatar_google'=>null,
+        'avatar'=>$user->avatar,
+        'email'    => $user->email,
+        'nameAccount'  =>  $user->nameAccount,
+    ];
+}
 }
 }
 }

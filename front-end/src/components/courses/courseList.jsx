@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import CourseItem from './courseItem'
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css"
@@ -21,6 +21,51 @@ const arr = [
 ]
 
 const CourseList = (props) => {
+    const [course, setCourse] = useState([]);
+    const [count, setCount] = useState([]);
+    const [admin, setAdmin] = useState([]);
+    const $token=localStorage.getItem('access_token');
+    
+
+    const getAdmin=()=>{
+        fetch("http://localhost:8000/api/users/getAdmin")
+        .then(response => response.json())
+        .then(data =>  setAdmin(data.data));
+        return () => {
+        }
+    }
+
+    const getApiSecond=()=>{
+        fetch("http://localhost:8000/api/getCourses", {
+            method: "GET"
+          })
+        .then(response => response.json())
+        .then(data =>  setCourse(data.data));
+        return () => {
+    }
+    }
+
+    const tinhTong=()=>{
+        fetch("http://localhost:8000/api/getCourseHome", {
+            method: "GET"
+                  })
+        .then(response => response.json())
+        .then(data =>  setCount(data.data));
+        return () => {
+            for (var i=0; i < count.length; i++) {
+                  if(count[i]==null){
+                      count[i]=0;
+                  }
+            } 
+        }
+        
+    }
+   
+    useEffect(() => { 
+        getApiSecond();
+        tinhTong();
+        getAdmin();
+    }, []);    
     const settings = {
         infinite: false,
         autoplay: true,
@@ -62,9 +107,13 @@ const CourseList = (props) => {
 
             <div className="relative custom-btn-arrow">
                 <Slider {...settings}>
-                    {
-                        arr.map((item, index) => (<CourseItem key={index} {...item}/>))
+                {
+                course.map((item,i) => {
+                      return(
+                          <CourseItem admin={admin} data={item} count={count[i]}/>
+                      );
                     }
+                    )}
                 </Slider>
             </div>
         </div>
