@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../css/Other_document.css";
 
-
 export const ListDocument = (props) => {
   const { list } = props;
   const [show, setShow] = useState(5);
