@@ -21,7 +21,7 @@ const arr = {
       list: "VL10 - Đáp án đề số 6 - Ngày thi 8/10/2021",
     },
     {
-      list: "VL10 - Đáp án đề số 6 - Ngày thi 8/10/2021",
+      list: "VL10 - Đáp án đề số 7 - Ngày thi 8/10/2022",
     },
   ],
 };
