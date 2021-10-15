@@ -12,7 +12,10 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
+<<<<<<< HEAD
         "tymon/jwt-auth": "^1.0",
+=======
+>>>>>>> Other_document
         "zircote/swagger-php": "2.0.13"
     },
     "require-dev": {

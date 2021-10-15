@@ -3,7 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use app\Http\Controller\Api\UsersController;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,8 +32,8 @@ Route::get('token', function (Request $request) {
     return Response()->json(array("token"=>$token));
 });
 Route::post('/users/login', [App\Http\Controllers\UsersController::class, 'onLogin'])->name('user.login');
-Route::post('/users/getCode', [App\Http\Controllers\UsersController::class, 'getCode'])->name('user.getCode');
 Route::post('/users/register', [App\Http\Controllers\UsersController::class, 'onRegister'])->name('user.register');
+<<<<<<< HEAD
 Route::post('/users/logout', [App\Http\Controllers\UsersController::class, 'logout'])->name('user.logout');
 Route::post('/users/refresh', [App\Http\Controllers\UsersController::class, 'refresh'])->name('user.refresh');
 Route::post('/users/userProfile', [App\Http\Controllers\UsersController::class, 'userProfile'])->name('user.userProfile');
@@ -77,3 +76,5 @@ Route::post('/freeDocument/updateFreeDocument/{id}', [App\Http\Controllers\FreeD
 Route::post('/freeDocument/destroyFreeDocument/{id}', [App\Http\Controllers\FreeDocumentController::class, 'destroyFreeDocument'])->name('freeDocument.destroyFreeDocument');
 Route::post('/freeDocument/blockActiveFreeDocument/{id}', [App\Http\Controllers\FreeDocumentController::class, 'blockActiveFreeDocument'])->name('freeDocument.blockActiveFreeDocument');
 >>>>>>> e7df56f8ee4d0cd78a981001a938b3366ba03f7c
+=======
+>>>>>>> Other_document

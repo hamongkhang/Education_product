@@ -5,20 +5,20 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\UsersResource;
-use App\Jobs\SendEmail;
 use App\Models\User;
+<<<<<<< HEAD
 use App\Models\UserCode;
 use App\Models\ForgotCode;
 use App\Models\AdminAccount;
+=======
+>>>>>>> Other_document
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-
 class UsersController extends Controller
 {
      /**
+<<<<<<< HEAD
      * Create a new AuthController instance.
      *
      * @return void
@@ -27,8 +27,10 @@ class UsersController extends Controller
         $this->middleware('auth:api', ['except' => ['onLogin','loginAdmin', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
      /**
+=======
+>>>>>>> Other_document
      * @SWG\POST(
-     *     path="api/users/login/",
+     *     path="api/user/login/",
      *     description="Return a user's information",
      *     @SWG\Parameter(
      *         name="email",
@@ -41,36 +43,25 @@ class UsersController extends Controller
      *         name="password",
      *         in="query",
      *         type="string",
-     *         description="Your password(length>8)",
+     *         description="Your password",
      *         required=true,
      *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Successfully",
      *         @SWG\Schema(
-     *             @SWG\Property(property="access_token", type="string"),
-     *             @SWG\Property(property="token_type", type="string"),
-     *             @SWG\Property(property="expires_in", type="integer"),
-     *             @SWG\Property(property="user", type="object"),
-     *             @SWG\Property(property="id", type="integer"),
-     *             @SWG\Property(property="fullName", type="string"),
+     *             @SWG\Property(property="id", type="string", description="UUID"),
+     *             @SWG\Property(property="name", type="string"),
      *             @SWG\Property(property="email", type="string"),
-     *             @SWG\Property(property="email_verified_at", type="datetime"),
+     *             @SWG\Property(property="email_verified_at", type="string"),
      *             @SWG\Property(property="created_at", type="timestamp"),
      *             @SWG\Property(property="updated_at", type="timestamp"),
-     *             @SWG\Property(property="avatar", type="string"),
-     *             @SWG\Property(property="nameAccount", type="string"),
-     *             @SWG\Property(property="linkFB", type="string"),
-     *             @SWG\Property(property="phone", type="string"),
-     *             @SWG\Property(property="address", type="string"),
-     *             @SWG\Property(property="birthday", type="datetime"),
-     *             @SWG\Property(property="sex", type="string"),
-     *             @SWG\Property(property="status", type="string"),
+     *             @SWG\Property(property="avatar", type="timestamp"),
      *            )
      *     ),
      *     @SWG\Response(
      *         response=401,
-     *         description="Unauthorized!"
+     *         description="Login không thành công!"
      *     )
      * )
      */
@@ -78,11 +69,12 @@ class UsersController extends Controller
      {
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string',
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);      
+            return response()->json(['error'=>"Login không thành công!"], 401);      
         }
+<<<<<<< HEAD
 
         if (! $token = auth()->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
@@ -107,102 +99,59 @@ class UsersController extends Controller
             'user' => auth()->user()
         ]);
     }
+=======
+>>>>>>> Other_document
  
-    /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    /**
-     * @SWG\POST(
-     *     path="api/users/logout/",
-     *     description="Return a user's information",
-     *     @SWG\Response(
-     *         response=200,
-     *         description="User successfully signed out",
-     *     ),
-     *     @SWG\Response(
-     *         response=401,
-     *         description="No one login!"
-     *     ),
-     *  security={
-     *           {"api_key_security_example": {}}
-     *       }
-     * )
-     */
-    public function logout() {
-        auth()->logout();
-        return response()->json(['message' => 'User successfully signed out']);
+        $user = User::where("email",$request->email)->get();
+        if($user->count()>0){
+            return Response()->json(array("success"=>1,"data"=>$user[0]));
+        }
+        return response()->json(['error'=>"Login không thành công!"], 401);  
     }
+ 
 
      /**
      * @SWG\POST(
-     *     path="api/users/refresh/",
-     *     description="Return a user's information",
-     *     @SWG\Response(
-     *         response=200,
-     *         description="Successfully",
-     *         @SWG\Schema(
-     *             @SWG\Property(property="access_token", type="string"),
-     *             @SWG\Property(property="token_type", type="string"),
-     *             @SWG\Property(property="expires_in", type="integer"),
-     *             @SWG\Property(property="user", type="object"),
-     *             @SWG\Property(property="id", type="integer"),
-     *             @SWG\Property(property="fullName", type="string"),
-     *             @SWG\Property(property="email", type="string"),
-     *             @SWG\Property(property="email_verified_at", type="datetime"),
-     *             @SWG\Property(property="created_at", type="timestamp"),
-     *             @SWG\Property(property="updated_at", type="timestamp"),
-     *             @SWG\Property(property="avatar", type="string"),
-     *             @SWG\Property(property="nameAccount", type="string"),
-     *             @SWG\Property(property="linkFB", type="string"),
-     *             @SWG\Property(property="phone", type="string"),
-     *             @SWG\Property(property="address", type="string"),
-     *             @SWG\Property(property="birthday", type="datetime"),
-     *             @SWG\Property(property="sex", type="string"),
-     *             @SWG\Property(property="status", type="string"),
-     *            )
-     *     ),
-     *     @SWG\Response(
-     *         response=401,
-     *         description="Unauthorized!"
-     *     ),
-     * security={
-     *           {"api_key_security_example": {}}
-     *       }
-     * )
-     */
-    public function refresh() {
-        return $this->createNewToken(auth()->refresh());
-    }
-     /**
-     * @SWG\POST(
-     *     path="api/users/register/",
+     *     path="api/user/register/",
      *     description="Return a user's information",
      *     @SWG\Parameter(
-     *         name="code",
+     *         name="email",
      *         in="query",
      *         type="string",
-     *         description="Your code(length=6)",
+     *         description="Your email",
+     *         required=true,
+     *     ),
+     *     @SWG\Parameter(
+     *         name="name",
+     *         in="query",
+     *         type="string",
+     *         description="Your name",
+     *         required=true,
+     *     ),
+     *  @SWG\Parameter(
+     *         name="password",
+     *         in="query",
+     *         type="string",
+     *         description="Your password",
+     *         required=true,
+     *     ),
+     *  @SWG\Parameter(
+     *         name="confirm_password",
+     *         in="query",
+     *         type="string",
+     *         description="Your confirm_password",
      *         required=true,
      *     ),
      *     @SWG\Response(
      *         response=200,
      *         description="Successfully",
      *         @SWG\Schema(
-     *             @SWG\Property(property="fullName", type="string"),
-     *             @SWG\Property(property="nameAccount", type="string"),
-     *             @SWG\Property(property="linkFB", type="string"),
-     *             @SWG\Property(property="phone", type="string"),
-     *             @SWG\Property(property="birthday", type="string"),
-     *             @SWG\Property(property="address", type="string"),
-     *             @SWG\Property(property="sex", type="string"),
+     *             @SWG\Property(property="name", type="string"),
      *             @SWG\Property(property="email", type="string"),
      *             @SWG\Property(property="password", type="string"),
      *             @SWG\Property(property="remember_token", type="string"),
      *             @SWG\Property(property="created_at", type="timestamp"),
      *             @SWG\Property(property="updated_at", type="timestamp"),
-     *             @SWG\Property(property="avatar", type="string"),
      *            )
      *     ),
      *     @SWG\Response(
@@ -213,280 +162,36 @@ class UsersController extends Controller
      */
     public function onRegister(Request $request){
         $validator = Validator::make($request->all(), [
-            'code' => 'required|size:6',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['error'=>$validator->errors()], 401);     
-        }
-        $data = DB::table('user_code')->where('code', $request->code)->first();
-        if($data){
-            if ($data->sex==="female"){
-                $sex="female_avatar.jpg";
-            }
-            else{
-                $sex="male_avatar.jpg";
-            }
-            $postArray = [
-                'fullName'  => $data->fullName,
-                'nameAccount'  => $data->nameAccount,
-                'linkFB'  => $data->linkFB,
-                'phone'  => $data->phone,
-                'birthday'  => $data->birthday,
-                'address'  => $data->address,
-                'sex'  => $data->sex,
-                'email'     => $data->email,
-                'password'  => $data->password,
-                'remember_token' => $request->token,
-                'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
-                'updated_at'=>Carbon::now('Asia/Ho_Chi_Minh'),
-                'avatar'=>$sex,
-                'status'=>"active",
-            ];
-            $user = User::create($postArray);
-            DB::delete('delete from user_code where id = ?',[$data->id]);
-            //Send mail notification Register account success
-            $dataSendMail = [
-                'description'=>'notiRegisterSuccess',
-                'title' => 'Đăng kí tài khoản thành công',
-                'content'=>"Chúc mừng bạn đã đăng kí tài khoản thành công tại VatLy365 của chúng tôi, truy cập trang web để có những bài học bổ ích."
-            ];
-            SendEmail::dispatch($dataSendMail, $data->email)->delay(now());
-            return Response()->json(array("success"=> 1,"data"=>$postArray ));
-        }else{
-            return response()->json(['error'=>"No one have code"], 422);
-        }
-    }
-
-
-     /**
-     * @SWG\POST(
-     *     path="api/users/getCode/",
-     *     description="Return a user's information",
-     *     @SWG\Parameter(
-     *         name="email",
-     *         in="query",
-     *         type="string",
-     *         description="Your email(email)",
-     *         required=true,
-     *     ),
-     *     @SWG\Parameter(
-     *         name="fullName",
-     *         in="query",
-     *         type="string",
-     *         description="Your fullName",
-     *         required=true,
-     *     ),
-     *  @SWG\Parameter(
-     *         name="password",
-     *         in="query",
-     *         type="string",
-     *         description="Your password(length>7)",
-     *         required=true,
-     *     ),
-     *  @SWG\Parameter(
-     *         name="confirm_password",
-     *         in="query",
-     *         type="string",
-     *         description="Your confirm_password(same password)",
-     *         required=true,
-     *     ),
-     * @SWG\Parameter(
-     *         name="nameAccount",
-     *         in="query",
-     *         type="string",
-     *         description="Your nameAccount",
-     *         required=true,
-     *     ),
-     * * @SWG\Parameter(
-     *         name="linkFB",
-     *         in="query",
-     *         type="string",
-     *         description="Your linkFB",
-     *         required=true,
-     *     ),
-     * * @SWG\Parameter(
-     *         name="phone",
-     *         in="query",
-     *         type="string",
-     *         description="Your phone(only number,start:0 and 9<length<12)",
-     *         required=true,
-     *     ),
-     * * @SWG\Parameter(
-     *         name="birthday",
-     *         in="query",
-     *         type="datetime",
-     *         description="Your birthday(start before today)",
-     *         required=true,
-     *     ),
-     * * @SWG\Parameter(
-     *         name="address",
-     *         in="query",
-     *         type="string",
-     *         description="Your address",
-     *         required=true,
-     *     ),
-     * * @SWG\Parameter(
-     *         name="sex",
-     *         in="query",
-     *         type="string",
-     *         description="Your sex(male or female)",
-     *         required=true,
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="Successfully. Please check code your email!",
-     *         @SWG\Schema(
-     *             @SWG\Property(property="fullName", type="string"),
-     *             @SWG\Property(property="nameAccount", type="string"),
-     *             @SWG\Property(property="linkFB", type="string"),
-     *             @SWG\Property(property="phone", type="string"),
-     *             @SWG\Property(property="birthday", type="string"),
-     *             @SWG\Property(property="address", type="string"),
-     *             @SWG\Property(property="sex", type="string"),
-     *             @SWG\Property(property="email", type="string"),
-     *             @SWG\Property(property="password", type="string"),
-     *             @SWG\Property(property="created_at", type="timestamp"),
-     *             @SWG\Property(property="updated_at", type="timestamp"),
-     *            )
-     *     ),
-     *     @SWG\Response(
-     *         response=422,
-     *         description="Missing Data"
-     *     )
-     * )
-     */
-    public function getCode(Request $request){
-        $validator = Validator::make($request->all(), [
-            'fullName' => 'required|max:255',
-            'nameAccount' => 'required|max:255',
-            'linkFB'=>'required',
-            'phone' => 'required|numeric|starts_with:0|digits_between:10,12',
+            'name' => 'required',
             'email' => 'required|email|unique:users',
-            'birthday' => 'required|before:today',
-            'password' => 'required|max:255|min:8',
+            'password' => 'required',
             'confirm_password' => 'required|same:password',
-            'address' => 'required',
-            'sex' => 'required|in:male,female',
         ]);
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 401);     
         }
-        $code=$random = Str::random(6);
-        $data = DB::table('user_code')->where('email', $request->email)->first();
-        if($data){
-        $user = UserCode::find($data->id);
-        $user->fullName = $request->fullName;
-        $user->nameAccount = $request->nameAccount;
-        $user->linkFB = $request->linkFB;
-        $user->phone = $request->phone;
-        $user->birthday = $request->birthday;
-        $user->address = $request->address;
-        $user->sex = $request->sex;
-        $user->password = Hash::make($request->password);
-        $user->created_at = Carbon::now('Asia/Ho_Chi_Minh');
-        $user->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
-        $user->code = $code;
-        $user->save();
-        $postArrayRes = [
-            'fullName'  => $request->fullName,
-            'nameAccount'  => $request->nameAccount,
-            'linkFB'  => $request->linkFB,
-            'phone'  => $request->phone,
-            'birthday'  => $request->birthday,
-            'address'  => $request->address,
-            'sex'  => $request->sex,
-            'email'     => $request->email,
-            'password'  => Hash::make($request->password),
-            'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
-            'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
-        ];
-        // Mail send new code for new account register
-        $dataSendMail = [
-            'description'=>'getNewCode',
-            'title' => 'Mã xác nhận đăng kí',
-            'content'=>'Để xác nhận đăng kí, vui lòng nhập mã xác nhận ở bên dưới',
-            'note'=>'Chú ý: Mã có sự phân biệt kí tự hoa và kí tự thường.',
-            'code'=>$code
-        ];
-        SendEmail::dispatch($dataSendMail, $request->email)->delay(now());
-        return Response()->json(array("Successfully. Please check code your email!"=> 1,"data"=>$postArrayRes ));    }
-    else{
+          
         $postArray = [
-            'fullName'  => $request->fullName,
-            'nameAccount'  => $request->nameAccount,
-            'linkFB'  => $request->linkFB,
-            'phone'  => $request->phone,
-            'birthday'  => $request->birthday,
-            'address'  => $request->address,
-            'sex'  => $request->sex,
+            'name'      => $request->name,
             'email'     => $request->email,
             'password'  => Hash::make($request->password),
+            'remember_token' => $request->token,
             'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
-            'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
-            'code'=>$code,
+            'updated_at'=>Carbon::now('Asia/Ho_Chi_Minh'),
+            //'avatar'=> $request->file('UrlImage')->getClientOriginalName()
         ];
-        $postArrayRes = [
-            'fullName'  => $request->fullName,
-            'nameAccount'  => $request->nameAccount,
-            'linkFB'  => $request->linkFB,
-            'phone'  => $request->phone,
-            'birthday'  => $request->birthday,
-            'address'  => $request->address,
-            'sex'  => $request->sex,
-            'email'     => $request->email,
-            'password'  => Hash::make($request->password),
-            'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
-            'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
-        ];
-         $user = UserCode::create($postArray);
-          // Mail send new code for new account register
-         $dataSendMail = [
-            'description'=>'getNewCode',
-            'title' => 'Xác nhận email đăng kí',
-            'note'=>'Chú ý: Mã có sự phân biệt kí tự hoa và kí tự thường.',
-            'content'=>'Để xác nhận đăng kí, vui lòng nhập mã xác nhận ở bên dưới',
-            'code'=>$code
-        ];
-         SendEmail::dispatch($dataSendMail, $request->email)->delay(now());
-       return Response()->json(array("Successfully. Please check code your email!"=> 1,"data"=>$postArrayRes ));
+ 
+        if ($request->hasFile('UrlImage')) {
+            $image = $request->file('UrlImage');
+            $name = $image->getClientOriginalName();
+            $destinationPath = public_path('/upload/images');
+            $imagePath = $destinationPath . "/" . $name;
+            $image->move($destinationPath, $name);
+         }
+         $user = User::create($postArray);
+        return Response()->json(array("success"=> 1,"data"=>$postArray ));
     }
-    }
-
-/**
-     * @SWG\POST(
-     *     path="api/users/userProfile/",
-     *     description="Return a user's information",
-     *     @SWG\Response(
-     *         response=200,
-     *         description="Successfully",
-     *         @SWG\Schema(
-     *             @SWG\Property(property="id", type="integer"),
-     *             @SWG\Property(property="fullName", type="string"),
-     *             @SWG\Property(property="email", type="string"),
-     *             @SWG\Property(property="email_verified_at", type="datetime"),
-     *             @SWG\Property(property="created_at", type="timestamp"),
-     *             @SWG\Property(property="updated_at", type="timestamp"),
-     *             @SWG\Property(property="avatar", type="string"),
-     *             @SWG\Property(property="nameAccount", type="string"),
-     *             @SWG\Property(property="linkFB", type="string"),
-     *             @SWG\Property(property="phone", type="string"),
-     *             @SWG\Property(property="address", type="string"),
-     *             @SWG\Property(property="birthday", type="string"),
-     *             @SWG\Property(property="sex", type="string"),
-     *            )
-     *     ),
-     *     @SWG\Response(
-     *         response=422,
-     *         description="Missing Data"
-     *     ),
-     *  security={
-     *           {"api_key_security_example": {}}
-     *       }
-     * )
-     */
-    public function userProfile() {
-        return response()->json(auth()->user());
-    }
+<<<<<<< HEAD
 
      /**
      * @SWG\POST(
@@ -724,6 +429,9 @@ class UsersController extends Controller
         }
     }       
 
+=======
+}
+>>>>>>> Other_document
 
      /**
      * @SWG\POST(
