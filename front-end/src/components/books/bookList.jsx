@@ -10,18 +10,19 @@ import { NextArrow, PrevArrow } from '../customArrowsSlider'
 const BookList = (props) => {
     const $token=localStorage.getItem('access_token');
     const [book, setBook] = useState([]);
+    const { changeRender } = props;
     
-        useEffect(() => {
-            if($token){
-            fetch("http://localhost:8000/api/getBooks", {
-                method: "GET",
-                headers: {"Authorization": `Bearer `+$token}
-              })
-            .then(response => response.json())
-            .then(data => setBook(data.books));
-            return () => {
-            }
+    useEffect(() => {
+        if($token){
+        fetch("http://localhost:8000/api/getBooks", {
+            method: "GET",
+            headers: {"Authorization": `Bearer `+$token}
+            })
+        .then(response => response.json())
+        .then(data => setBook(data.books));
+        return () => {
         }
+    }
     else{
          fetch("http://localhost:8000/api/getBooks")
          .then(response => response.json())
@@ -74,7 +75,7 @@ const BookList = (props) => {
             <div className="relative custom-btn-arrow">
                 <Slider {...settings}>
                 {book.map(
-                         (item, index) => (<BookItem key={index} {...item}/>)
+                         (item, index) => (<BookItem key={index} {...item} changeRender={changeRender}/>)
                 )}
                 </Slider>
             </div>

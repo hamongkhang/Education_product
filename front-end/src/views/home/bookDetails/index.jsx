@@ -2,12 +2,40 @@ import React,{useState,useEffect} from "react";
 import { useRouteMatch } from 'react-router';
 import { BannerBook } from '../../../components/banner';
 
-const BookDetails = () => {
+const BookDetails = (props) => {
   const match = useRouteMatch();
   const $link="http://localhost:8000/upload/images/book/";
   const $token=localStorage.getItem('access_token');
   const [bookk, setBookk] = useState([]);
-  
+  const { changeRender } = props;
+  const addToCart = (product_id) =>{
+    if($token){
+      const _formData = new FormData();
+      _formData.append("product_id",product_id)
+      _formData.append("type",'book')
+      const requestOptions = {
+          method: 'POST',
+          headers: {"Authorization": `Bearer `+$token},
+          body: _formData
+      };
+      fetch('http://127.0.0.1:8000/api/cart/addCart', requestOptions)
+      .then(res => res.json())
+      .then(json => {   
+          changeRender();
+          if(json.success){
+              alert('thêm sách vào giỏ hàng thành công')
+          }
+          else{
+              alert('thêm KHÔNG thành công')
+          }
+          
+      });
+  }
+  else{
+      alert('hay đăng nhập trước khi bỏ vào giỏ hàng')
+  }
+    
+}
       useEffect(() => {
           if($token){
             const _formData = new FormData();
@@ -99,7 +127,7 @@ const BookDetails = () => {
             </button>
           </a>
           <br />
-          <button type="submit" className="book__btn book__btn--cart">
+          <button type="submit" className="book__btn book__btn--cart" onClick ={()=>addToCart(bookk.id)}>
             <i className="fas fa-shopping-cart">&nbsp; thêm vào giỏ hàng</i>
           </button>
           <h4>Dịch vụ và khuyến mãi</h4>

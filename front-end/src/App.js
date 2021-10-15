@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect,useState} from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import HomePages from './views/home'
 import "slick-carousel/slick/slick.css"
@@ -12,6 +12,13 @@ import UserProfile from './views/home/userProfile';
 import PlayCourse from './views/home/playCourse';
 
 function App() {
+  const [render, setRender] = useState(false);
+  const changeRender =()=>{
+    console.log('đã được render lại');
+    setRender(!render);
+  }
+//   useEffect(() => {
+// }, [render]);
   return (
     <div className="max-w-screen-2xl my-0 mx-auto">
       <div className="my-0 mx-auto relative">
@@ -19,7 +26,7 @@ function App() {
           <Switch>
             <Route path="/tai-khoan" component={UserProfile} />
             <Route path="/bai-hoc" exact component={PlayCourse} />
-            <Route path="/" component={HomePages} />
+            <Route path="/" component={() => <HomePages changeRender={changeRender} />} />
           </Switch>
           <Call/>
           <Chat/>
