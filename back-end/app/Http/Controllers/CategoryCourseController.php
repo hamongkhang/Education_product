@@ -26,7 +26,7 @@ class CategoryCourseController extends Controller
             $category_courses = CategoryCourse::where('status','Active')->get();
         }
         return response()->json([
-            'category_courses'=>$category_courses
+            'data'=>$category_courses
         ], 200);
     }
     

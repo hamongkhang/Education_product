@@ -38,7 +38,7 @@ const CourseItem = (props) => {
                     <label htmlFor="" className="text-indigo-600 font-semibold">{props.data.promotion_price}<sup> đ</sup></label>
                     <label htmlFor="" className="line-through text-xs ml-1">{props.data.Initial_price}<sup> đ</sup></label>
                 </div>
-                <Link to={"/khoa-hoc/"+props.data.id+"/"+props.count} className="space-x-2 group">
+                <Link to={"/khoa-hoc/"+props.data.id} className="space-x-2 group">
                     <span className="font-semibold group-hover:text-indigo-600">Chi tiết</span>
                     <i className="far fa-arrow-right transform duration-300 group-hover:translate-x-1.5 group-hover:text-indigo-600"></i>
                 </Link>

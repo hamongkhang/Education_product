@@ -55,6 +55,40 @@ const Articles = (props) => {
     const [arr1, setArr1] = useState([]);
     const [pageItem, setPageItem] = useState(1);
     const [page, setPage] = useState(0);
+
+    const [featuredPost, setFeaturedPost] = useState([]);
+    const $user=window.localStorage.getItem('nameAccount');
+    const $token=localStorage.getItem('access_token');
+
+    useEffect(() => {
+        setPage(parseInt(arr.length/show + 1));
+        renderArticles();
+        if($token){
+            fetch("http://localhost:8000/api/featuredPost/getFeaturedPost",{
+                method: "GET",
+                headers: {"Authorization": `Bearer `+$token}
+          }  )
+        .then(response => response.json())
+        .then(data => setFeaturedPost(data.data)
+        );
+        return () => {
+        }
+        }
+    else{
+        fetch("http://localhost:8000/api/featuredPost/getFeaturedPost",{
+            method: "GET",
+      }  )
+    .then(response => response.json())
+    .then(data => setFeaturedPost(data.data)
+    );
+    return () => {
+    }
+        }
+    }, []);
+
+
+
+
     const handleChange = (event, value) => {
         setPageItem(value);
         renderArticles(value);
@@ -65,19 +99,25 @@ const Articles = (props) => {
         start = end - show;
         setArr1(arr.slice(start, end));
     }
-    useEffect(() => {
-        setPage(parseInt(arr.length/show + 1));
-        renderArticles();
-    }, [])
+    // useEffect(() => {
+    //     setPage(parseInt(arr.length/show + 1));
+    //     renderArticles();
+    // }, [])
     return (
         <>
             <BannerBook/>
             <div className="xl:w-4/5 xl:px-0 px-4 w-full mx-auto mt-10 flex flex-col lg:flex-row lg:space-x-6">
                 <div className="w-full lg:w-4/6">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-                        {
+                        {/* {
                             arr1.map((item, index) => ( <ArticleItem key={index} {...item} /> ))
-                        }
+                        } */}
+                          {featuredPost.map((item) => {
+                      return(
+                        <ArticleItem data={item} user={$user}/>
+                      );
+                    }
+                    )}
                     </div>
                     <div className="flex justify-center mb-10">
                         <Stack spacing={2}>
@@ -102,19 +142,19 @@ const Articles = (props) => {
                         </div>
                         <div className="px-5 flex flex-col space-y-2">
                             <label htmlFor="education" className="cursor-pointer space-x-3">
-                                <input type="checkbox" name="" id="education" />
+                                <input type="checkbox" name="" id="education" checked />
                                 <span>Education</span>
                             </label>
                             <label htmlFor="itinteaching" className="cursor-pointer space-x-3">
-                                <input type="checkbox" name="" id="itinteaching" />
+                                <input type="checkbox" name="" id="itinteaching" checked />
                                 <span>IT trong dạy học</span>
                             </label>
                             <label htmlFor="book" className="cursor-pointer space-x-3">
-                                <input type="checkbox" name="" id="book" />
+                                <input type="checkbox" name="" id="book" checked />
                                 <span>Sách</span>
                             </label>
                             <label htmlFor="course" className="cursor-pointer space-x-3">
-                                <input type="checkbox" name="" id="course" />
+                                <input type="checkbox" name="" id="course"  checked/>
                                 <span>Khóa học</span>
                             </label>
                         </div>

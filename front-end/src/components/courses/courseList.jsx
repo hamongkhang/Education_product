@@ -101,7 +101,7 @@ const CourseList = (props) => {
                     Khóa học nổi bậc
                 </div>
                 <div className="z-10">
-                    <a href="#" className="p-3 text-17 font-semibold hover:underline duration-300 ">Xem tất cả</a>
+                    <a href="/khoa-hoc" className="p-3 text-17 font-semibold hover:underline duration-300 ">Xem tất cả</a>
                 </div>
             </div>
 
