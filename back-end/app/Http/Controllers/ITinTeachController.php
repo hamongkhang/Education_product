@@ -55,8 +55,15 @@ class ITinTeachController extends Controller
      */
     public function getITinTeach(Request $request)
     {
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
             $data = DB::table('ITinTeach')->get();
             return response()->json(['data' => $data]);
+        }
+        else{
+            $data = DB::table('ITinTeach')->where('status','Active')->get();
+            return response()->json(['data' => $data]);
+        }
     }
 
     /**
