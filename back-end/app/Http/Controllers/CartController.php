@@ -229,6 +229,29 @@ class CartController extends Controller
                 }
                 $findCart->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
                 $findCart -> save();
+                if($findCart->type == "book"){
+                    $promotion = DB::table('book')->where('id',$findCart->product_id)->value('promotion');
+                    if($promotion > 0){
+                        $book = DB::table('book')->where('id',$findCart->product_id)->value('promotion_price');
+                        $findCart->total = $book * $findCart->quantity;
+                    }
+                    else{
+                        $book = DB::table('book')->where('id',$findCart->product_id)->value('Initial_price');
+                        $findCart->total = $book * $findCart->quantity;
+                    }
+                }
+                else{
+                    $promotion = DB::table('course')->where('id',$findCart->product_id)->value('promotion');
+                    if($promotion > 0){
+                        $course = DB::table('course')->where('id',$findCart->product_id)->value('promotion_price');
+                        $findCart->total = $course;
+                    }
+                    else{
+                        $course = DB::table('course')->where('id',$findCart->product_id)->value('Initial_price');
+                        $findCart->total = $course;
+                    }
+                    
+                }
                 return response()->json(
                     [
                         'success'=>1,

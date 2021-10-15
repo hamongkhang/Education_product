@@ -10,6 +10,7 @@ import { Login, Register, ForgotPassword, CodeVerification, ResetPassword, CodeV
 import Home from './home';
 import ITinTeaching from './ITinTeaching';
 const HomePages = (props) => {
+    const { changeRender } = props;
     return (
         <>
             <Header/>
@@ -22,12 +23,12 @@ const HomePages = (props) => {
                 <Route path="/xac-nhan-ma-quen-mat-khau" exact component={CodeVerificationForgot} />
                 <Route path="/dat-lai-mat-khau" exact component={ResetPassword} />
                 <Route path="/sach" exact component={Books} />
-                <Route path="/sach/:id" exact component={BookDetails} />
-                <Route path="/khoa-hoc/:id" exact component={CourseDetails} />
+                <Route path="/sach/:id" exact component={()=><BookDetails changeRender={changeRender}/>} />
+                <Route path="/khoa-hoc/:id/" exact component={()=><CourseDetails changeRender={changeRender}/>} />
                 <Route path="/khoa-hoc" exact component={Courses} />
                 <Route path="/tin-tuc" exact component={Articles} />
                 <Route path="/it-trong-day-hoc" exact component={ITinTeaching} />
-                <Route path="/" exact component={Home} />
+                <Route path="/" exact component={()=><Home changeRender={changeRender}/>} />
             </div>
         </>
     )

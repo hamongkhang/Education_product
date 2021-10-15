@@ -5,14 +5,41 @@ import { BannerBook } from '../../../components/banner'
 import CourseDesc from './courseDesc'
 import moment from 'moment';
 
-const CourseDetails = () => {
+const CourseDetails = (props) => {
     const $link="http://localhost:8000/upload/images/course/";
     const [classes, setClasses] = useState("right-0 translate-x-full");
     const match = useRouteMatch();
     const [course, setCourse] = useState([]);
     const [count, setCount] = useState([]);
     const $token=localStorage.getItem('access_token');
-
+    const { changeRender } = props;
+    const addToCart = (product_id) =>{
+        if($token){
+            const _formData = new FormData();
+            _formData.append("product_id",product_id)
+            _formData.append("type",'course')
+            const requestOptions = {
+                method: 'POST',
+                headers: {"Authorization": `Bearer `+$token},
+                body: _formData
+            };
+            fetch('http://127.0.0.1:8000/api/cart/addCart', requestOptions)
+            .then(res => res.json())
+            .then(json => {   
+                changeRender();
+                if(json.success){
+                    alert('thêm vào giỏ hàng thành công')
+                }
+                else{
+                    alert('thêm KHÔNG thành công')
+                }
+                
+            });
+        }
+        else{
+            alert('hay đăng nhập trước khi bỏ vào giỏ hàng')
+        }
+    }
     const notification = () => {
         setClasses("right-5 translate-x-0");
         setTimeout(() => {
@@ -104,7 +131,7 @@ return () => {
                                 </div>
                                 
                             </div>
-                            <div className="flex items-center justify-center space-x-4 text-white">
+                            <div className="flex items-center justify-center space-x-4 text-white" onClick={()=>addToCart(course.id)}>
                                 <button className="w-full py-2 rounded-sm bg-green-700 hover:bg-green-800 space-x-2 hover:shadow-lg" onClick={notification}>
                                     <i className="far fa-cart-plus" />
                                     <span>Đăng ký</span>

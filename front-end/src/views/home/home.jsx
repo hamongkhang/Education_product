@@ -10,6 +10,7 @@ import { BookList } from '../../components/books'
 import { RegisterHome } from '../../components/account'
 
 const Home = (props) => {
+    const { changeRender } = props;
     return (
         <>
             <BannerHome/>
@@ -25,7 +26,7 @@ const Home = (props) => {
                 </div>
                 <About/>
                 <ITinTeachingList/>
-                <BookList/>
+                <BookList changeRender={changeRender}/>
                 <RegisterHome/>
                 <Teachers/>
             </div>
