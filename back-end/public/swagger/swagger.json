@@ -15,7 +15,6 @@
         "http"
     ],
     "paths": {
-<<<<<<< HEAD
         "api/admin/blockAccount/": {
             "post": {
                 "description": "Return a user's information",
@@ -1156,9 +1155,6 @@
             }
         },
         "api/users/login/": {
-=======
-        "api/user/login/": {
->>>>>>> Other_document
             "post": {
                 "description": "Return a user's information",
                 "parameters": [
