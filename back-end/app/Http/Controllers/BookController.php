@@ -51,7 +51,7 @@ class BookController extends Controller
     public function getBookTypeSearch(Request $request){
         if($request->id!=="allBook"){
         $validator = Validator::make($request->all(), [
-            'id' => 'required|exists:book,type',
+            'id' => 'required|exists:book_type,id',
         ]);
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 400);      
@@ -64,7 +64,6 @@ class BookController extends Controller
         else{
             $book = Book::where('status','Active')->where('type',$request->id)->get();
         }
-
         return response()->json([
             'bookTypeSearch'=>$book
         ], 200);

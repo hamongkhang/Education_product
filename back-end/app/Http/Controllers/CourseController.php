@@ -26,7 +26,7 @@ class CourseController extends Controller
     public function getCourseSearch(Request $request){
         if($request->id!=="allCourse"){
         $validator = Validator::make($request->all(), [
-            'id' => 'required|exists:course,category_course',
+            'id' => 'required|exists:category_course,id',
         ]);
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 400);      

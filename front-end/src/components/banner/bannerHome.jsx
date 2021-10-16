@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import BannerItem from './bannerItem'
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css"
@@ -16,6 +16,17 @@ const PrevArrow = (props) => (
 )
 
 const BannerHome = (props) => {
+    const [banner, setBanner] = useState([]);
+
+    useEffect(() => { 
+            fetch("http://localhost:8000/api/banner/getBanner", {
+                method: "GET"
+              })
+            .then(response => response.json())
+            .then(data =>  setBanner(data.data));
+            return () => {
+        }
+    }, []);  
     const settings = {
         infinite: true,
         autoplay: true,
@@ -30,9 +41,16 @@ const BannerHome = (props) => {
     return (
         <div className="group">
             <Slider {...settings}>
+            {
+                banner.map((item,i) => {
+                      return(
+                          <BannerItem data={item}/>
+                      );
+                    }
+                    )}
+                {/* <BannerItem/>
                 <BannerItem/>
-                <BannerItem/>
-                <BannerItem/>
+                <BannerItem/> */}
             </Slider>
         </div>
     )

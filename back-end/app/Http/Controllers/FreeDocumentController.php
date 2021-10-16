@@ -49,9 +49,32 @@ class FreeDocumentController extends Controller
      */
     public function getFreeDocument()
     {
-        $documentFind = DB::table('free_document')->get();
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $documentFind = DB::table('free_document')->get();
+            $dataRespon=[];
+            $dataRespon[0]=DB::table('free_document_category')->get();
+            $array=[];
+            for ($i = 0; $i <count($documentFind); $i++) {
+                $data = DB::table('free_document_category')->where('id', $documentFind[$i]->category_id)->first();
+                $array[$i]=array(
+                    'id' => $documentFind[$i]->id,
+                    'category_name' => $data->name,
+                    'name' => $documentFind[$i]->name,
+                    'file' => $documentFind[$i]->file,
+                    'path' => $documentFind[$i]->path,
+                    'status' => $documentFind[$i]->status,
+                    'created_at'=> $documentFind[$i]->created_at,
+                    'updated_at'=> $documentFind[$i]->updated_at,
+                );
+            }
+            $dataRespon[1]=$array;
+            return Response()->json(array("Successfully"=> 1,"data"=>$dataRespon ));
+        }
+        else{
+            $documentFind = DB::table('free_document')->where('status','Active')->get();
         $dataRespon=[];
-        $dataRespon[0]=DB::table('free_document_category')->get();
+        $dataRespon[0]=DB::table('free_document_category')->where('status','Active')->get();
         $array=[];
         for ($i = 0; $i <count($documentFind); $i++) {
             $data = DB::table('free_document_category')->where('id', $documentFind[$i]->category_id)->first();
@@ -68,6 +91,9 @@ class FreeDocumentController extends Controller
         }
         $dataRespon[1]=$array;
         return Response()->json(array("Successfully"=> 1,"data"=>$dataRespon ));
+        }
+
+        
     }
     
     /**
