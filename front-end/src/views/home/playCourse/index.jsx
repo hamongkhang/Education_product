@@ -66,9 +66,9 @@ const PlayCourse = (props) => {
             </header>
             <div className="w-full mt-16 mx-auto">
                 <div className="block lg:flex max-w-screen-2xl">
-                    <div className="w-full lg:w-3/4">
-                        <div className="px-0 md:px-16 bg-black">
-                            <ReactPlayer url={url} controls={true} width="100%"/>
+                    <div className="w-full lg:w-3/4 mb-20">
+                        <div className="px-0 md:px-16 bg-black lg:h-508">
+                            <ReactPlayer url={url} controls={true} width="100%" height="100%"/>
                         </div>
                         <div className="w-11/12 mx-auto">
                             <div className="py-3 mt-2 border-b-2 uppercase font-semibold border-blue-600 mb-4 ">Bình luận</div>
@@ -107,7 +107,9 @@ const PlayCourse = (props) => {
                     <div className="w-full lg:w-1/4">
                         <div className={`lg:sticky lg:top-16 bottom-0 mt-1 absolute top-0 right-0 w-full h-full duration-500 transform bg-white lg:translate-x-0 ${classContent}`}>
                             <CourseName/>
-                            <div className="overflow-y-scroll scroll-none h-screen">
+                            <div className="overflow-y-scroll scroll-none shadow-inner" style={{ height: "1450px" }}>
+                                <CourseChapter handleUrl={handleUrl} content={content}/>
+                                <CourseChapter handleUrl={handleUrl} content={content}/>
                                 <CourseChapter handleUrl={handleUrl} content={content}/>
                                 <CourseChapter handleUrl={handleUrl} content={content}/>
                                 <CourseChapter handleUrl={handleUrl} content={content}/>

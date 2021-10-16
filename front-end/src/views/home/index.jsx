@@ -9,6 +9,7 @@ import Books from './books';
 import { Login, Register, ForgotPassword, CodeVerification, ResetPassword } from '../../components/account';
 import Home from './home';
 import ITinTeaching from './ITinTeaching';
+import OtherMaterials from './otherMaterials';
 const HomePages = (props) => {
     return (
         <>
@@ -26,6 +27,7 @@ const HomePages = (props) => {
                 <Route path="/khoa-hoc" exact component={Courses} />
                 <Route path="/tin-tuc" exact component={Articles} />
                 <Route path="/it-trong-day-hoc" exact component={ITinTeaching} />
+                <Route path="/tai-lieu-khac" exact component={OtherMaterials} />
                 <Route path="/" exact component={Home} />
             </div>
         </>

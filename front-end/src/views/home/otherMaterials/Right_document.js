@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "../css/Other_document.css";
 import { ListDocument } from "./List_document";
 
 const arr = {

@@ -5,6 +5,7 @@ const BookDetails = () => {
   return (
     <div>
       <BannerBook />
+      <div className="xl:w-4/5 xl:px-0 px-4 w-full relative left-1/2 transform -translate-x-1/2 md:mt-5 mt-2">
       <div className="book">
         <div className="book-left">
           <div className="book-left__image">
@@ -116,6 +117,7 @@ const BookDetails = () => {
           </p>
         </div>
       </div>
+    </div>
     </div>
   );
 };

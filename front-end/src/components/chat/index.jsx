@@ -7,7 +7,34 @@ const Chat = (props) => {
         type: "incoming",
         image: "./assets/images/slider/city.jpg",
         message: "Lorem ipsum, dolor sit amet elit."
-    }]);
+    },
+    {
+        type: "incoming",
+        image: "./assets/images/slider/city.jpg",
+        message: "Admin gửi user"
+    },
+    {
+        type: "outgoing",
+        image: "./assets/images/slider/city.jpg",
+        message: "Lorem ipsum, dolor sit amet elit."
+    },
+    {
+        type: "outgoing",
+        image: "./assets/images/slider/city.jpg",
+        message: "Admin gửi user"
+    },
+    {
+        type: "incoming",
+        image: "./assets/images/slider/city.jpg",
+        message: "Lorem ipsum, dolor sit amet elit."
+    },
+    {
+        type: "incoming",
+        image: "./assets/images/slider/city.jpg",
+        message: "Admin gửi user lần 2"
+    },
+    
+]);
     const messageEl = useRef(null);
     const [message, setMessage] = useState("");
     
@@ -33,8 +60,15 @@ const Chat = (props) => {
             setMessage("");
         }
     }
+
+    const fetchMessages = () => {
+        setInterval(() => {
+            // api
+        }, 500);
+    }
     
     useEffect(() => {
+        // fetchMessages();
         if (messageEl) {
         messageEl.current.addEventListener('DOMNodeInserted', event => {
             const { currentTarget: target } = event;

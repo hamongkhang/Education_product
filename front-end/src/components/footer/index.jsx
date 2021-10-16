@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Footer = (props) => {
     return (
@@ -12,95 +13,71 @@ const Footer = (props) => {
                             </svg>
                             <span className="ml-3 text-xl text-white">Vật Lý 365</span>
                         </a>
-                        <p className="mt-2 text-sm text-white">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime, similique recusandae sit blanditiis error veniam dolorum ducimus amet, repudiandae ut earum at. Obcaecati dolore facilis deleniti exercitationem expedita. Dolore, voluptatem!</p>
+                        <div>
+                            <img src="" alt="" srcset="./assets/images/logo/logo.jpg 2x" className="h-20 w-40 object-cover mt-4" />
+                        </div>
+                        {/* <p className="mt-2 text-sm text-white">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime, similique recusandae sit blanditiis error veniam dolorum ducimus amet, repudiandae ut earum at. Obcaecati dolore facilis deleniti exercitationem expedita. Dolore, voluptatem!</p> */}
                     </div>
                     <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
                         <div className="lg:w-1/3 md:w-1/2 w-full px-4">
-                            <h2 className="title-font font-bold text-white tracking-widest text-md mb-3">CATEGORIES</h2>
                             <nav className="list-none mb-10">
-                            <li>
-                                <a className="text-white hover:text-red-300" href="#">First Link</a>
-                            </li>
-                            <li>
-                                <a className="text-white hover:text-red-300" href="#">Second Link</a>
-                            </li>
-                            <li>
-                                <a className="text-white hover:text-red-300" href="#">Third Link</a>
-                            </li>
-                            <li>
-                                <a className="text-white hover:text-red-300" href="#">Fourth Link</a>
-                            </li>
+                                <li>
+                                    <Link to="/" className="text-white hover:text-red-300" href="#">THPT Tây Sơn - Mỹ An - Tây Bình - Tây Sơn - Bình Định</Link>
+                                </li>
+                                <li>
+                                    <Link to="/" className="text-white hover:text-red-300" href="#">Chịu trách nhiệm nội dung</Link>
+                                </li>
+                                <li>
+                                    <Link to="/" className="text-white hover:text-red-300" href="#">Hỗ trợ</Link>
+                                </li>
                             </nav>
                         </div>
                         <div className="lg:w-1/3 md:w-1/2 w-full px-4">
-                            <h2 className="title-font font-bold text-white tracking-widest text-md mb-3">CATEGORIES</h2>
                             <nav className="list-none mb-10">
-                            <li>
-                                <a className="text-white hover:text-red-300" href="#">First Link</a>
-                            </li>
-                            <li>
-                                <a className="text-white hover:text-red-300" href="#">Second Link</a>
-                            </li>
-                            <li>
-                                <a className="text-white hover:text-red-300" href="#">Third Link</a>
-                            </li>
-                            <li>
-                                <a className="text-white hover:text-red-300" href="#">Fourth Link</a>
-                            </li>
+                                <li>
+                                    <Link to="/" className="text-white hover:text-red-300" href="#">Giới thiệu</Link>
+                                </li>
+                                <li>
+                                    <Link to="/" className="text-white hover:text-red-300" href="#">Điều khoản dịch vụ</Link>
+                                </li>
+                                <li>
+                                    <Link to="/" className="text-white hover:text-red-300" href="#">Chính sách bảo mật</Link>
+                                </li>
                             </nav>
                         </div>
                         <div className="lg:w-1/3 md:w-1/2 w-full px-4">
-                            <h2 className="title-font font-bold text-white tracking-widest text-md mb-3">CATEGORIES</h2>
                             <nav className="list-none mb-10">
-                            <li>
-                                <a className="text-white hover:text-red-300" href="#">First Link</a>
-                            </li>
-                            <li>
-                                <a className="text-white hover:text-red-300" href="#">Second Link</a>
-                            </li>
-                            <li>
-                                <a className="text-white hover:text-red-300" href="#">Third Link</a>
-                            </li>
-                            <li>
-                                <a className="text-white hover:text-red-300" href="#">Fourth Link</a>
-                            </li>
+                                <li>
+                                    <Link to="/" className="text-white hover:text-red-300" href="#">Hướng dẫn thanh toán</Link>
+                                </li>
+                                <li>
+                                    <Link to="/" className="text-white hover:text-red-300" href="#">Cộng tác viên</Link>
+                                </li>
+                                <li>
+                                    <Link to="/" className="text-white hover:text-red-300" href="#">Kích hoạt khóa học</Link>
+                                </li>
                             </nav>
                         </div>
-                        {/* <div className="lg:w-1/3 md:w-1/2 w-full px-4">
-                            <h2 className="title-font font-bold text-white tracking-widest text-md mb-3">CATEGORIES</h2>
-                            <nav className="list-none mb-10">
-                            <li>
-                                <a className="text-white hover:text-red-300" href="#">First Link</a>
-                            </li>
-                            <li>
-                                <a className="text-white hover:text-red-300" href="#">Second Link</a>
-                            </li>
-                            <li>
-                                <a className="text-white hover:text-red-300" href="#">Third Link</a>
-                            </li>
-                            <li>
-                                <a className="text-white hover:text-red-300" href="#">Fourth Link</a>
-                            </li>
-                            </nav>
-                        </div> */}
                     </div>
                 </div>
                 <div className="" style={{ backgroundColor: "#2f5596" }}>
-                    <div className="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
-                    <p className="text-white text-sm text-center sm:text-left">© 2021 -
-                        <a href="https://twitter.com/knyttneve" rel="noopener noreferrer" className="text-gray-400 ml-1" target="_blank">Vật Lý 365</a>
-                    </p>
-                    <span className="inline-flex items-center sm:ml-auto sm:mt-0 mt-2 justify-center sm:justify-start space-x-3">
-                        <a className="text-gray-200 text-xl">
-                            <i className="fab fa-facebook-f"></i>
-                        </a>
-                        <a className="text-gray-200 text-xl">
-                            <i className="fab fa-youtube"></i>
-                        </a>
-                        <a className="text-gray-200 overflow-hidden rounded-full">
-                            <img src="./assets/images/logo/zalo.png" width="20" height="20" alt="" />
-                        </a>
-                    </span>
+                    <div className="border-t-2 border-white">
+                        <div className="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
+                        <p className="text-white text-sm text-center sm:text-left">© 2021 -
+                            <a href="https://twitter.com/knyttneve" rel="noopener noreferrer" className="text-gray-400 ml-1" target="_blank">Vật Lý 365</a>
+                        </p>
+                        <span className="inline-flex items-center sm:ml-auto sm:mt-0 mt-2 justify-center sm:justify-start space-x-3">
+                            <a className="text-gray-200 text-xl">
+                                <i className="fab fa-facebook-f"></i>
+                            </a>
+                            <a className="text-gray-200 text-xl">
+                                <i className="fab fa-youtube"></i>
+                            </a>
+                            <a className="text-gray-200 overflow-hidden rounded-full">
+                                <img src="./assets/images/logo/zalo.png" width="20" height="20" alt="" />
+                            </a>
+                        </span>
+                        </div>
                     </div>
                 </div>
             </footer>

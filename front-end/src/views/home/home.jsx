@@ -13,11 +13,9 @@ const Home = (props) => {
     return (
         <>
             <BannerHome/>
-            <div className="xl:w-4/5 xl:px-0 px-4 w-full relative left-1/2 transform -translate-x-1/2 mt-10">
+            <div className="xl:w-4/5 xl:px-0 px-4 w-full relative mx-auto mt-10">
                 <div className="flex">
-                    <div className="w-3/12 hidden lg:block relative">
-                        <Sidebar/>
-                    </div>
+                    <Sidebar/>
                     <div className="lg:w-9/12 w-full lg:ml-10">
                         <CourseList/>
                         <ArticleList/>
