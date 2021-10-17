@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom';
 import Articles from './articles';
 import Courses from './courses';
 import CourseDetails from './courseDetails';
+import CheckResult from '../../components/cart/checkResult';
 import BookDetails from './bookDetails';
 import Books from './books';
 import { Login, Register, ForgotPassword, CodeVerification, ResetPassword, CodeVerificationForgot } from '../../components/account';
@@ -28,6 +29,7 @@ const HomePages = (props) => {
                 <Route path="/khoa-hoc" exact component={Courses} />
                 <Route path="/tin-tuc" exact component={Articles} />
                 <Route path="/it-trong-day-hoc" exact component={ITinTeaching} />
+                <Route path="/check-result-payment" exact component={CheckResult} />
                 <Route path="/" exact component={()=><Home changeRender={changeRender}/>} />
             </div>
         </>

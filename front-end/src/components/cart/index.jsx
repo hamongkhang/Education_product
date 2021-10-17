@@ -5,7 +5,39 @@ const Cart = (props) => {
     const [total, setTotal] = useState("");
     const [cart, setCart] = useState([]);
     const [render, setRender] = useState(false);
+    const [payment, setPayment] = useState(false);
     const $token=localStorage.getItem('access_token');
+
+    const payMent=()=>{
+        if($token){
+            if(total!=0){
+        const _formData = new FormData();
+         _formData.append("amount",total)
+        // _formData.append("type",type)
+        // _formData.append("quantity",amount)
+        fetch("http://localhost:8000/api/payment/atmPayment", {
+            method: 'POST',
+            headers: {"Authorization": `Bearer `+$token},
+            body: _formData
+          })
+        .then(response => response.json())
+        .then(data =>  { 
+            window.location.href = data.url;
+        });
+        return () => {
+    }}
+    else{
+        alert("Không cần thanh toán")
+    }
+}else{
+    alert("Chưa đăng nhập!!!")
+}
+    }
+
+
+
+
+
     const updateCart = (id,type,amount)=>{
         const _formData = new FormData();
         _formData.append("product_id",id)
@@ -85,7 +117,7 @@ const Cart = (props) => {
                         <span className="text-indigo-500">{total}<sup>đ</sup></span>
                     </div>
                     <div>
-                        <button className="w-full h-12 bg-indigo-700 rounded-md mt-3 font-semibold text-white hover:bg-indigo-600 duration-200">Thanh toán</button>
+                        <button onClick={(event) => payMent(event)} className="w-full h-12 bg-indigo-700 rounded-md mt-3 font-semibold text-white hover:bg-indigo-600 duration-200">Thanh toán</button>
                     </div>
                 </div>
             </div>
