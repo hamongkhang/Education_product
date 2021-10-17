@@ -107,6 +107,11 @@ Route::post('/featuredPost/blockActiveFeaturedPost/{id}', [App\Http\Controllers\
 /* Api Admin */
 Route::post('/admin/loginAdmin', [App\Http\Controllers\UsersController::class, 'loginAdmin'])->name('admin.loginAdmin');
 Route::post('/admin/blockAccount/{id}', [App\Http\Controllers\AdminController::class, 'blockAccount'])->name('admin.loginAdmin');
+/* Api History */
+Route::get('/getCountHistory', [App\Http\Controllers\HistoryController::class, 'getCountHistory'])->name('history.getCountHistory');
+Route::get('/history/getHistoryCourse', [App\Http\Controllers\HistoryController::class, 'getHistoryCourse'])->name('history.getHistoryCourse');
+Route::get('/history/getHistoryBook', [App\Http\Controllers\HistoryController::class, 'getHistoryBook'])->name('history.getHistoryBook');
+Route::post('/history/destroyHistory/{id}', [App\Http\Controllers\HistoryController::class, 'destroyHistory'])->name('history.destroyHistory');
 /* Api Free Document */
 
 Route::post('/freeDocument/getFreeDocument', [App\Http\Controllers\FreeDocumentController::class, 'getFreeDocument'])->name('freeDocument.getFreeDocument');
@@ -137,6 +142,7 @@ Route::post('/updateTableOfContent', [App\Http\Controllers\TableOfContentControl
 Route::post('/deleteTableOfContent', [App\Http\Controllers\TableOfContentController::class, 'deleteTableOfContent'])->name('tableOfContent.delete');
 Route::post('/changeTableOfContentStatus', [App\Http\Controllers\TableOfContentController::class, 'changeStatusTableOfContent'])->name('tableOfContent.status');
 /*Api Course*/
+Route::POST('/getCountSearch', [App\Http\Controllers\CourseController::class, 'getCountSearch'])->name('course.getCountSearch');
 Route::POST('/getCourseSearch', [App\Http\Controllers\CourseController::class, 'getCourseSearch'])->name('course.getCourseSearch');
 Route::POST('/getCountLesson', [App\Http\Controllers\CourseController::class, 'getCountLesson'])->name('course.getCountLesson');
 Route::get('/getCourseHome', [App\Http\Controllers\CourseController::class, 'getCourseHome'])->name('course.getCourseHome');

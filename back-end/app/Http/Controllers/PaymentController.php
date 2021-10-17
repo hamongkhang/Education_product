@@ -247,7 +247,7 @@ class PaymentController extends Controller
         $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
         $signature = hash_hmac("sha256", $rawHash, $secretKey);
         $data = array('partnerCode' => $partnerCode,
-            'partnerName' => "Test",
+            'partnerName' => $dataUser->fullName,
             "storeId" => "MomoTestStore",
             'requestId' => $requestId,
             'amount' => $amount,
@@ -292,8 +292,7 @@ class PaymentController extends Controller
         'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
         'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
     );
-    $user = momoOrderDetail::create($dataMomo);
-      
+       $user = momoOrderDetail::create($dataMomo);
         DB::table('cart')->where('userId', $dataUser->id)->update(['id_payment'	=>	$orderId,'updated_at'	=>	Carbon::now('Asia/Ho_Chi_Minh')]);
         return response()->json(['url' => $jsonResult['payUrl']]);
     }

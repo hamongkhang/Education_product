@@ -67,6 +67,7 @@ const Books = (props) => {
         const target=event.target;
         const field =target.name;
         const value=target.value;
+        tinhTongSecond(target.value);
         const _formData = new FormData();
         _formData.append("id",target.value)
         if($token){
@@ -89,7 +90,7 @@ const Books = (props) => {
         .then(data =>  setCourse(data.data));
         return () => {
         }
-     }
+    }
       };
 
 
@@ -128,8 +129,25 @@ const Books = (props) => {
                   }
             } 
         }
-        
     }
+    const tinhTongSecond=(id)=>{
+        const _formData = new FormData();
+        _formData.append("id",id)
+        fetch("http://localhost:8000/api/getCountSearch", {
+            method: "POST",
+            body: _formData,
+                  })
+        .then(response => response.json())
+        .then(data =>  setCount(data.data));
+        return () => {
+            for (var i=0; i < count.length; i++) {
+                  if(count[i]==null){
+                      count[i]=0;
+                  }
+            } 
+        }
+    }
+    
     
     const getCategoryCourses=()=>{
         fetch("http://localhost:8000/api/getCategoryCourses", {
@@ -159,7 +177,6 @@ const Books = (props) => {
         setPage(parseInt(arr.length/show + 1));
         renderBooks();
     }, [])
-
     return (
         <>
             <BannerBook/>

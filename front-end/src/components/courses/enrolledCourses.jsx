@@ -51,32 +51,26 @@ const EnrolledCourses = (props) => {
     const [pageItem, setPageItem] = useState(1);
     const [page, setPage] = useState(0);
     const [course, setCourse] = useState([]);
+    const [history, setHistory] = useState([]);
     const [count, setCount] = useState([]);
-    const [admin, setAdmin] = useState([]);
     const $token=localStorage.getItem('access_token');
     
 
-    const getAdmin=()=>{
-        fetch("http://localhost:8000/api/users/getAdmin")
-        .then(response => response.json())
-        .then(data =>  setAdmin(data.data));
-        return () => {
-        }
-    }
-
     const getApiSecond=()=>{
-        fetch("http://localhost:8000/api/getCourses", {
-            method: "GET"
+        fetch("http://localhost:8000/api/history/getHistoryCourse", {
+            method: "GET",
+            headers: {"Authorization": `Bearer `+$token}
           })
         .then(response => response.json())
-        .then(data =>  setCourse(data.data));
+        .then(data =>  setHistory(data.data));
         return () => {
     }
     }
 
     const tinhTong=()=>{
-        fetch("http://localhost:8000/api/getCourseHome", {
-            method: "GET"
+        fetch("http://localhost:8000/api/getCountHistory", {
+            method: "GET",
+            headers: {"Authorization": `Bearer `+$token}
                   })
         .then(response => response.json())
         .then(data =>  setCount(data.data));
@@ -93,9 +87,7 @@ const EnrolledCourses = (props) => {
     useEffect(() => { 
         getApiSecond();
         tinhTong();
-        getAdmin();
     }, []);    
-
 
 
 
@@ -124,19 +116,12 @@ const EnrolledCourses = (props) => {
             </div>
             <div className="grid grid-cols-1 xs:grid-cols-2 sm1:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-6 my-4">
             {
-                course.map((item,i) => {
+                history.map((item,i) => {
                       return(
-                          <RigisterCourseItem admin={admin} data={item} count={count[i]}/>
+                          <RigisterCourseItem data={item} count={count[i]}/>
                       );
                     }
                     )}
-                
-                
-                {/* {
-                    arr1.map((item, index) => ( 
-                    <RigisterCourseItem key={index} {...item} /> 
-                    ))
-                } */}
             </div>
             <div className="flex justify-center mb-10">
                 <Stack spacing={2}>

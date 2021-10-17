@@ -15,7 +15,7 @@ const Cart = (props) => {
          _formData.append("amount",total)
         // _formData.append("type",type)
         // _formData.append("quantity",amount)
-        fetch("http://localhost:8000/api/payment/atmPayment", {
+        fetch("http://localhost:8000/api/payment/momoPayment", {
             method: 'POST',
             headers: {"Authorization": `Bearer `+$token},
             body: _formData
