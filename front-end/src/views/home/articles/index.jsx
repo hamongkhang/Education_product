@@ -55,10 +55,27 @@ const Articles = (props) => {
     const [arr1, setArr1] = useState([]);
     const [pageItem, setPageItem] = useState(1);
     const [page, setPage] = useState(0);
+    const [search, setSearch] = useState([]);
 
     const [featuredPost, setFeaturedPost] = useState([]);
     const $user=window.localStorage.getItem('nameAccount');
     const $token=localStorage.getItem('access_token');
+
+    const addSearch = (event) => {
+        setFeaturedPost(search);
+        const target=event.target;
+        var a=[];
+        if(target.value){
+            for (var i=0; i < search.length; i++) {
+                if(search[i].name.indexOf(target.value)!=-1){
+                   a.push(search[i]);
+                }
+          }
+          setFeaturedPost(a);
+        }
+       
+      };
+
 
     useEffect(() => {
         setPage(parseInt(arr.length/show + 1));
@@ -69,7 +86,10 @@ const Articles = (props) => {
                 headers: {"Authorization": `Bearer `+$token}
           }  )
         .then(response => response.json())
-        .then(data => setFeaturedPost(data.data)
+        .then(data => {
+            setFeaturedPost(data.data);
+            setSearch(data.data);
+        }
         );
         return () => {
         }
@@ -79,8 +99,10 @@ const Articles = (props) => {
             method: "GET",
       }  )
     .then(response => response.json())
-    .then(data => setFeaturedPost(data.data)
-    );
+    .then(data => {
+        setFeaturedPost(data.data);
+        setSearch(data.data);
+    });
     return () => {
     }
         }
@@ -128,7 +150,7 @@ const Articles = (props) => {
                 <div className="w-full lg:w-2/6 mb-10 lg:mb-0">
                     <div>
                         <form action="#" className="relative">
-                            <input type="text" placeholder="Tìm kiếm" className="block px-6 py-3 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded-sm outline-none border-2" required/>
+                            <input type="text" onChange={(event) => addSearch(event)} placeholder="Tìm kiếm" className="block px-6 py-3 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded-sm outline-none border-2" required/>
                             <button type="submit" className="leading-5 absolute top-0 right-0 text-indigo-500 p-2 h-full px-4 rounded-sm">
                                 <i className="far fa-search text-xl font-medium"/>
                             </button>
