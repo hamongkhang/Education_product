@@ -108,6 +108,9 @@ Route::post('/featuredPost/blockActiveFeaturedPost/{id}', [App\Http\Controllers\
 Route::post('/admin/loginAdmin', [App\Http\Controllers\UsersController::class, 'loginAdmin'])->name('admin.loginAdmin');
 Route::post('/admin/blockAccount/{id}', [App\Http\Controllers\AdminController::class, 'blockAccount'])->name('admin.loginAdmin');
 /* Api History */
+Route::get('/history/getHistory', [App\Http\Controllers\HistoryController::class, 'getHistory'])->name('history.getHistory');
+Route::post('/history/getHistoryProduct', [App\Http\Controllers\HistoryController::class, 'getHistoryProduct'])->name('history.getHistoryProduct');
+Route::post('/history/getHistoryType', [App\Http\Controllers\HistoryController::class, 'getHistoryType'])->name('history.getHistoryType');
 Route::get('/getCountHistory', [App\Http\Controllers\HistoryController::class, 'getCountHistory'])->name('history.getCountHistory');
 Route::get('/history/getHistoryCourse', [App\Http\Controllers\HistoryController::class, 'getHistoryCourse'])->name('history.getHistoryCourse');
 Route::get('/history/getHistoryBook', [App\Http\Controllers\HistoryController::class, 'getHistoryBook'])->name('history.getHistoryBook');

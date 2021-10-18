@@ -152,4 +152,80 @@ else{
     ], 401); 
 }
     }
+    public function getHistory()
+    {
+        $userFind = auth()->user();
+        $data=[];
+        $data2=[];
+        $book=[];
+        $course=[];
+        $response=[];
+        $historyFind = DB::table('history')->where('userId',$userFind->id)->get();
+        $dataFirst=$historyFind[0]->id_payment;
+        array_push($data, $dataFirst);
+
+        for ($i = 0; $i <count($historyFind); $i++) {   
+            if($dataFirst!==$historyFind[$i]->id_payment){
+                array_push($data, $historyFind[$i]->id_payment);
+                $dataFirst=$historyFind[$i]->id_payment;
+            }         
+        }
+
+        for ($i = 0; $i <count($data); $i++) {   
+            $billFind = DB::table('momoorderdetails')->where('orderId',$data[$i])->first();
+            array_push($data2, $billFind);      
+        }
+
+        for ($i = 0; $i <count($data); $i++) {   
+            $bookProductFind = DB::table('history')->where('id_payment',$data[$i])->where('type',"book")->get();
+            $book2=[];  
+            for ($j = 0; $j <count($bookProductFind); $j++) { 
+                $bookInfor = DB::table('book')->where('id',$bookProductFind[$j]->product_id)->first();
+                array_push($book2, $bookInfor);      
+            }
+            array_push($book, $book2); 
+        }
+
+        for ($i = 0; $i <count($data); $i++) {   
+            $courseProductFind = DB::table('history')->where('id_payment',$data[$i])->where('type',"course")->get();
+            $course2=[];  
+            for ($j = 0; $j <count($courseProductFind); $j++) { 
+                $courseInfor = DB::table('course')->where('id',$courseProductFind[$j]->product_id)->first();
+                array_push($course2, $courseInfor);      
+            }
+            array_push($course, $course2); 
+        }
+        $response=[$data,$data2];
+
+        return Response()->json(array("Successfully"=> 1,"data"=>$response ));
+    }
+
+
+    public function getHistoryProduct(Request $request)
+    {
+            $product=[];
+            $productFind = DB::table('history')->where('id_payment',$request->id_payment)->get();
+            for ($j = 0; $j <count($productFind); $j++) { 
+                if($productFind[$j]->type==="book"){
+                $courseInfor = DB::table('book')->where('id',$productFind[$j]->product_id)->first();
+                }else{
+                $courseInfor = DB::table('course')->where('id',$productFind[$j]->product_id)->first(); 
+                }
+                array_push($product, $courseInfor); 
+            }
+        return Response()->json(array("Successfully"=> 1,"data"=>$product ));
+    }
+    public function getHistorytype(Request $request)
+    {
+            $product=[];
+            $productFind = DB::table('history')->where('id_payment',$request->id_payment)->get();
+            for ($j = 0; $j <count($productFind); $j++) { 
+                if($productFind[$j]->type==="book"){
+                    array_push($product, "book"); 
+                }else{
+                    array_push($product, "course"); 
+                }
+            }
+        return Response()->json(array("Successfully"=> 1,"data"=>$product ));
+    }
 }

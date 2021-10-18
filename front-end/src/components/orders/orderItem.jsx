@@ -1,9 +1,43 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect }  from 'react'
 import OrderDetailsItem from './orderDetailsItem';
 
 const OrderItem = (props) => {
     const [classIcon, setClassIcon] = useState("down");
     const [classOrder, setClassOrder] = useState("hidden");
+    const [history, setHistory] = useState([]);
+    const [type, setType] = useState([]);
+    const $token=localStorage.getItem('access_token');
+
+    const getApiFirst=()=>{
+        const _formData = new FormData();
+        _formData.append("id_payment",props.paymentId.orderId);
+        fetch("http://localhost:8000/api/history/getHistoryProduct", {
+            method: "POST",
+            headers: {"Authorization": `Bearer `+$token},
+            body: _formData,
+          })
+        .then(response => response.json())
+        .then(data => {
+            setHistory(data.data.reverse());
+                });
+        return () => {
+    }
+    }
+    const getApiSecond=()=>{
+        const _formData = new FormData();
+        _formData.append("id_payment",props.paymentId.orderId);
+        fetch("http://localhost:8000/api/history/getHistoryType", {
+            method: "POST",
+            headers: {"Authorization": `Bearer `+$token},
+            body: _formData,
+          })
+        .then(response => response.json())
+        .then(data => {
+            setType(data.data.reverse());
+                });
+        return () => {
+    }
+    }
     const handleClick = () => {
         if(classIcon === "down") {
             setClassIcon("right");
@@ -13,6 +47,10 @@ const OrderItem = (props) => {
             setClassOrder("hidden");
         }
     }
+    useEffect(() => { 
+        getApiFirst();
+        getApiSecond();
+    }, []);    
 
     return (
         <div className="shadow-md rounded-sm p-5">
@@ -21,15 +59,20 @@ const OrderItem = (props) => {
                     <div className="w-5" >
                         <i className={`fad fa-chevron-${classIcon} duration-300`} />
                     </div>
-                    <span>#1101</span>
+                    <span>{props.paymentId.orderId}</span>
                 </div>
-                <div>11/04/2021 16:11:53</div>
+                <div>{props.paymentId.created_at}</div>
                 <div className="inline bg-green-500 text-white px-3 py-1 rounded-md">Đã xác nhận</div>
-                <div>390.000<sup>đ</sup></div>
+                <div>{props.paymentId.amount}<sup> đ</sup></div>
             </div>
             <div className={`overflow-hidden sm1:ml-5 ${classOrder} mt-3`}>
-                <OrderDetailsItem/>
-                <OrderDetailsItem/>
+                {
+                history.map((item,i) => {
+                      return(
+                          <OrderDetailsItem product={item} type={type[i]}  />
+                      );
+                    }
+                    )}
             </div>
         </div>
     )
