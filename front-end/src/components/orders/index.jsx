@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react'
 import OrderItem from './orderItem'
 
 const Orders = (props) => {
-    const [course, setCourse] = useState([]);
-    const [book, setBook] = useState([]);
     const [paymentInfor, setPaymentInfor] = useState([]);
-    const [paymentId, setPaymentId] = useState([]);
     const $token=localStorage.getItem('access_token');
 
     const getApiSecond=()=>{

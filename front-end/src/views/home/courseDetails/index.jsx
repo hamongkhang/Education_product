@@ -31,7 +31,7 @@ const CourseDetails = (props) => {
                     alert('thêm vào giỏ hàng thành công')
                 }
                 else{
-                    alert('thêm KHÔNG thành công')
+                    alert(json.description)
                 }
                 
             });
