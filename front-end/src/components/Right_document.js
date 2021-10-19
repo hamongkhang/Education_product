@@ -36,8 +36,10 @@ const RightDocument = () => {
   if (list != "") {
     return (
       <>
-        <ListDocument list={list} />
-        <ListDocument list={list} />
+        <div className="other-doc-right">
+          <ListDocument list={list} />
+          <ListDocument list={list} />
+        </div>
       </>
     );
   } else {

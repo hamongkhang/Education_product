@@ -10,16 +10,20 @@ import SearchBox from './components/searchBox';
 import Cart from './components/cart';
 import UserProfile from './views/home/userProfile';
 import PlayCourse from './views/home/playCourse';
+import { Other_document } from './components/Other_document';
+
 
 function App() {
   return (
+    <>
     <div className="max-w-screen-2xl my-0 mx-auto">
       <div className="my-0 mx-auto relative">
         <Router>
           <Switch>
             <Route path="/tai-khoan" component={UserProfile} />
             <Route path="/bai-hoc" exact component={PlayCourse} />
-            <Route path="/" component={HomePages} />
+            {/* <Route path="/" component={HomePages} /> */}
+            <Route path="/" component={Other_document} />
           </Switch>
           <Call/>
           <Chat/>
@@ -29,6 +33,7 @@ function App() {
         </Router>
       </div>
     </div>
+    </>
   );
 }
  

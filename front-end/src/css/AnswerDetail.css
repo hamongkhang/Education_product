@@ -1,0 +1,122 @@
+.answer-detail{
+    margin-top: 0;
+    width: 78%;
+    min-height: 100px;
+}
+.other-doc-left + .answer-detail{
+    margin-left: 2%;
+}
+.answer-detail__block{
+    border-radius: 5px;
+    border: 1px solid rgba(165, 158, 158, 0.4);
+    margin-bottom: 30px;
+}
+.answer-detail-content{
+    display: flex;
+    width: 100%;
+    margin: 15px auto;
+}
+.answer-left{
+ width: 25%;
+ min-height: 50px;
+ padding-left: 15px;
+}
+.answer-left + .answer-right{
+    margin-left: 2%;
+}
+.answer-right{
+    width: 73%;
+    min-height: 50px;
+}
+.answer-right__text{
+    font-size: 30px;
+    font-style: normal;
+}
+.answer-right__content{
+    font-family: "Font Awesome 5 Free";
+}
+
+.answer-right__script::before{
+    content: '\f02b';
+    font-style: normal;
+    font-weight: 900;
+}
+.answer-right__script{
+    font-style: italic;
+    font-weight: normal;
+}
+
+.answer-right__question::before{
+    content: '\f059';
+    font-style: normal;
+    font-weight: 900;
+}
+.answer-right__question{
+    font-style: italic;
+    font-weight: normal;
+}
+
+.answer-right__price::before{
+    content: '\f155';
+    font-style: normal;
+    font-weight: 900;
+}
+.answer-right__price{
+    font-style: italic;
+    font-weight: normal;
+}
+
+.answer-right__time::before{
+    content: '\f017';
+    font-style: normal;
+    font-weight: 900;
+}
+.answer-right__time{
+    font-style: italic;
+    font-weight: normal;
+}
+.answer-right__button{
+    border: 2px solid #337ab7;
+    border-radius: 8px;
+    padding: 5px;
+    min-width:10%;
+    margin-top: 15px;
+    color: #fff;
+}
+.answer-right__button--succ{
+    background-color: #337ab7;
+}
+.answer-note{
+    margin-left: 15px;
+}
+
+.answer-note >p{
+    color: red;
+    font-weight: bold;
+    
+}
+.answer-note__list{
+    padding-left: 40px;
+    padding-bottom: 30px;
+}
+.answer-note__list >li{
+    list-style-type: circle;
+}
+
+/* responsive */
+/* Mobile Width <740px */
+@media only screen and (max-width: 46.1875em) {
+    .answer-left{
+        display: none;
+       }
+    .answer-detail-content{
+        display: inline;
+    }
+    .answer-detail{
+        width: 95%;
+        margin: 15px auto;
+    }
+    .answer-note__list{
+        padding-left: 20px;
+    }
+}
