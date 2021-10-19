@@ -9,10 +9,20 @@ const CourseDetails = (props) => {
     const $link="http://localhost:8000/upload/images/course/";
     const [classes, setClasses] = useState("right-0 translate-x-full");
     const match = useRouteMatch();
+    const [post, setPost] = useState([]);
     const [course, setCourse] = useState([]);
     const [count, setCount] = useState([]);
     const $token=localStorage.getItem('access_token');
     const { changeRender } = props;
+    const getApiFist=()=>{
+        fetch("http://localhost:8000/api/getCourses", {
+            method: "GET"
+          })
+        .then(response => response.json())
+        .then(data =>  setPost(data.data));
+        return () => {
+    }
+    }
     const addToCart = (product_id) =>{
         if($token){
             const _formData = new FormData();
@@ -60,6 +70,7 @@ const CourseDetails = (props) => {
     }
 }
     useEffect(() => {
+        getApiFist();
         getCountLesson();
         if($token){
           const _formData = new FormData();
@@ -144,24 +155,19 @@ return () => {
                                 <hr className="border-b border-gray-300 mt-2"/>
                             </div>
                             <div className="px-3">
-                                <Link to="/" className="flex space-x-2 items-center hover:bg-blue-100 p-2 rounded-md">
-                                    <img src={`${window.location.origin}/assets/images/slider/city.jpg`} className="h-14 w-14 rounded-md " alt="" />
-                                    <div>
-                                        <p className="break-words line-2 uppercase font-medium">LUYỆN THI THPT QUỐC GIA 2022</p>
-                                    </div>
-                                </Link>
-                                <Link to="/" className="flex space-x-2 items-center hover:bg-blue-100 p-2 rounded-md">
-                                    <img src={`${window.location.origin}/assets/images/slider/city.jpg`} className="h-14 w-14 rounded-md " alt="" />
-                                    <div>
-                                        <p className="break-words line-2 uppercase font-medium">LUYỆN THI THPT QUỐC GIA 2022</p>
-                                    </div>
-                                </Link>
-                                <Link to="/" className="flex space-x-2 items-center hover:bg-blue-100 p-2 rounded-md">
-                                    <img src={`${window.location.origin}/assets/images/slider/city.jpg`} className="h-14 w-14 rounded-md " alt="" />
-                                    <div>
-                                        <p className="break-words line-2 uppercase font-medium">LUYỆN THI THPT QUỐC GIA 2022</p>
-                                    </div>
-                                </Link>
+                            {
+                post.map((item,i) => {
+                    if(i<3){
+                      return(
+                        <Link to={"/khoa-hoc/"+item.id} className="flex space-x-2 items-center hover:bg-blue-100 p-2 rounded-md">        
+                        <img src={$link+item.image} className="h-14 w-14 rounded-md " alt="" />
+                        <div>
+                            <p className="break-words line-2 uppercase font-medium">{item.name}</p>
+                        </div>
+                    </Link>
+                      );}
+                    }
+                    )}
                             </div>
                         </div>
                     </div>

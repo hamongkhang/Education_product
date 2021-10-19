@@ -56,7 +56,7 @@ const Articles = (props) => {
     const [pageItem, setPageItem] = useState(1);
     const [page, setPage] = useState(0);
     const [search, setSearch] = useState([]);
-
+    const $link="http://localhost:8000/upload/images/featured_post/";
     const [featuredPost, setFeaturedPost] = useState([]);
     const $user=window.localStorage.getItem('nameAccount');
     const $token=localStorage.getItem('access_token');
@@ -131,9 +131,6 @@ const Articles = (props) => {
             <div className="xl:w-4/5 xl:px-0 px-4 w-full mx-auto mt-10 flex flex-col lg:flex-row lg:space-x-6">
                 <div className="w-full lg:w-4/6">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-                        {/* {
-                            arr1.map((item, index) => ( <ArticleItem key={index} {...item} /> ))
-                        } */}
                           {featuredPost.map((item) => {
                       return(
                         <ArticleItem data={item} user={$user}/>
@@ -187,37 +184,18 @@ const Articles = (props) => {
                             <hr className="border-b border-gray-300 mt-2"/>
                         </div>
                         <div className="px-3">
-                            <Link to="/" className="flex space-x-2 items-center hover:bg-blue-100 p-2 rounded-md">
-                                <img src={`${window.location.origin}/assets/images/slider/city.jpg`} className="h-16 w-16 rounded-md " alt="" />
-                                <div>
-                                    <p className="break-words line-2 uppercase font-medium">LUYỆN THI THPT QUỐC GIA 2022</p>
-                                </div>
-                            </Link>
-                            <Link to="/" className="flex space-x-2 items-center hover:bg-blue-100 p-2 rounded-md">
-                                <img src={`${window.location.origin}/assets/images/slider/city.jpg`} className="h-16 w-16 rounded-md " alt="" />
-                                <div>
-                                    <p className="break-words line-2 uppercase font-medium">LUYỆN THI THPT QUỐC GIA 2022</p>
-                                </div>
-                            </Link>
-                            <Link to="/" className="flex space-x-2 items-center hover:bg-blue-100 p-2 rounded-md">
-                                <img src={`${window.location.origin}/assets/images/slider/city.jpg`} className="h-16 w-16 rounded-md " alt="" />
-                                <div>
-                                    <span className="text-sm">22/09/2021</span>
-                                    <p className="break-words line-2 uppercase font-medium">LUYỆN THI THPT QUỐC GIA 2022</p>
-                                </div>
-                            </Link>
-                            <Link to="/" className="flex space-x-2 items-center hover:bg-blue-100 p-2 rounded-md">
-                                <img src={`${window.location.origin}/assets/images/slider/city.jpg`} className="h-16 w-16 rounded-md " alt="" />
-                                <div>
-                                    <p className="break-words line-2 uppercase font-medium">LUYỆN THI THPT QUỐC GIA 2022</p>
-                                </div>
-                            </Link>
-                            <Link to="/" className="flex space-x-2 items-center hover:bg-blue-100 p-2 rounded-md">
-                                <img src={`${window.location.origin}/assets/images/slider/city.jpg`} className="h-16 w-16 rounded-md " alt="" />
-                                <div>
-                                    <p className="break-words line-2 uppercase font-medium">LUYỆN THI THPT QUỐC GIA 2022</p>
-                                </div>
-                            </Link>
+                        {featuredPost.map((item,i) => {
+                            if(i<5){
+                      return(
+                        <Link to="/" className="flex space-x-2 items-center hover:bg-blue-100 p-2 rounded-md">
+                        <img src={$link+item.image} className="h-16 w-16 rounded-md " alt="" />
+                        <div>
+                            <p className="break-words line-2 uppercase font-medium">{item.name}</p>
+                        </div>
+                    </Link>
+                      );}
+                    }
+                    )}
                         </div>
                     </div>                    
                 </div>
