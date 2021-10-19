@@ -70,6 +70,9 @@ class CartController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);      
         }
+        $userFind = auth()->user();
+        $historyFind = DB::table('history')->where('userId',$userFind->id)->where('product_id',$request->product_id)->first();
+        if(!$historyFind){
         if($request->type == 'course'){
             $validator = Validator::make($request->all(), [
                 'product_id' => 'exists:course,id',
@@ -156,6 +159,13 @@ class CartController extends Controller
                     'cart'=> $cart
                 ], 200);
         }
+    }else{
+        return response()->json(
+            [
+                'error' => 1,
+                'description'=> "Mày đã mua một lần rồi thằng ngu à",
+            ], 401);
+    }
 
     }
     public function updateCart(Request $request) {

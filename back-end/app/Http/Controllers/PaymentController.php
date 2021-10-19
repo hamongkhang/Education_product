@@ -50,6 +50,12 @@ class PaymentController extends Controller
     public function momoPayment(Request $request)
     {
             $dataUser=auth()->user();
+            $validator = Validator::make($request->all(), [
+                'amount' => 'required',
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['error'=>$validator->errors()], 400);      
+            }
             $data = DB::table('cart')->where('userId', $dataUser->id)->get();
             $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
             $partnerCode = 'MOMO282120210723';
@@ -57,16 +63,16 @@ class PaymentController extends Controller
             $serectkey = 'w3SOos2fvPln43ksfcJFAEMvhB9joTTZ';
             $orderId = time() ."";
             $orderInfo = "Thanh toán qua MoMo";
-            $amount = "5000";
-            $ipnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
-            $redirectUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
+            $amount = $request->amount;
+            $ipnUrl = "http://localhost:3000/check-result-payment";
+            $redirectUrl = "http://localhost:3000/check-result-payment";
             $extraData = "merchantName=MoMo Partner";
             $requestId = time() . "";
             $requestType = "captureWallet";
             $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
             $signature = hash_hmac("sha256", $rawHash, $serectkey);
             $data = array('partnerCode' => $partnerCode,
-                'partnerName' => "Test",
+                'partnerName' => $dataUser->fullName,
                 "storeId" => "MomoTestStore",
                 'requestId' => $requestId,
                 'amount' => $amount,
@@ -82,7 +88,7 @@ class PaymentController extends Controller
             $dataMomo=array(
             'userId' => $dataUser->id,
             'partnerCode' => $partnerCode,
-            'partnerName' => "Test",
+            'partnerName' => $dataUser->fullName,
             "storeId" => "MomoTestStore",
             'requestId' => $requestId,
             'amount' => $amount,
@@ -181,6 +187,7 @@ class PaymentController extends Controller
             'userId' => $getCart[$i]->userId,
             'product_id' => $getCart[$i]->product_id,
             'type' => $getCart[$i]->type,
+            'quantity' => $getCart[$i]->quantity,
             'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
             'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
         );
@@ -218,6 +225,12 @@ class PaymentController extends Controller
     public function atmPayment(Request $request)
     {
         $dataUser=auth()->user();
+        $validator = Validator::make($request->all(), [
+            'amount' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 400);      
+        }
         $data = DB::table('cart')->where('userId', $dataUser->id)->get();
         $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
         $partnerCode = 'MOMOBKUN20180529';
@@ -225,16 +238,16 @@ class PaymentController extends Controller
         $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
         $orderId = time() ."";
         $orderInfo = "Thanh toán qua MoMo";
-        $amount = "10000";
-        $ipnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
-        $redirectUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
+        $amount = $request->amount;
+        $ipnUrl = "http://localhost:3000/check-result-payment";
+        $redirectUrl = "http://localhost:3000/check-result-payment";
         $extraData = "";
         $requestId = time() . "";
         $requestType = "payWithATM";
         $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
         $signature = hash_hmac("sha256", $rawHash, $secretKey);
         $data = array('partnerCode' => $partnerCode,
-            'partnerName' => "Test",
+            'partnerName' => $dataUser->fullName,
             "storeId" => "MomoTestStore",
             'requestId' => $requestId,
             'amount' => $amount,
@@ -279,7 +292,7 @@ class PaymentController extends Controller
         'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
         'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
     );
-      
+       $user = momoOrderDetail::create($dataMomo);
         DB::table('cart')->where('userId', $dataUser->id)->update(['id_payment'	=>	$orderId,'updated_at'	=>	Carbon::now('Asia/Ho_Chi_Minh')]);
         return response()->json(['url' => $jsonResult['payUrl']]);
     }
