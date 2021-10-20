@@ -29,7 +29,7 @@ const EnrolledCourseItem = (props) => (
                 </div>
             </div>
             <div className="">
-                <Link to="/bai-hoc" className="w-full block font-medium tracking-widest bg-yellow-400 hover:bg-yellow-500 text-center py-2 text-white uppercase duration-200 rounded">Học</Link>
+                <Link to={"/bai-hoc/"+props.data.id} className="w-full block font-medium tracking-widest bg-yellow-400 hover:bg-yellow-500 text-center py-2 text-white uppercase duration-200 rounded">Học</Link>
             </div>
             <div className="text-13 text-gray-500 text-center">
                 <span>Đăng ký ngày: {moment(props.data.created_at).format('DD/MM/YYYY')}</span>

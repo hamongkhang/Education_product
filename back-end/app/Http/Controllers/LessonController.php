@@ -21,6 +21,44 @@ class LessonController extends Controller
         $this->middleware('auth:api',['except' => ['getLessonHome','getAllLessons','getOneLesson','addNewLesson','updateLesson','deleteLesson','changeStatusLesson']]);
     }
 
+    public function getLessonAlpha(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:course,id',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 400);      
+        }
+        $lesson=[];
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $table_of_content = TableOfContent::where('course_id',$request->id)->get();
+            for ($i = 0; $i <count($table_of_content); $i++) {        
+                $contentFind = Content::where('table_of_content_id',$table_of_content[$i]->id)->get();
+                for ($j = 0; $j <count($contentFind); $j++) {        
+                    $lessonFind = Lesson::where('lesson',$contentFind[$i]->id)->get();
+                    for ($k = 0; $k <count($lessonFind); $k++) {        
+                        array_push($lesson, $lessonFind[$k]);
+                    }
+                }
+       }
+        }
+        else{
+            $table_of_content = TableOfContent::where('course_id',$request->id)->where('status','Active')->get();
+            for ($i = 0; $i <count($table_of_content); $i++) {        
+                $contentFind = Content::where('table_of_content_id',$table_of_content[$i]->id)->where('status','Active')->get();
+                for ($j = 0; $j <count($contentFind); $j++) {        
+                    $lessonFind = Lesson::where('content_id',$contentFind[$i]->id)->where('status','Active')->get();
+                    for ($k = 0; $k <count($lessonFind); $k++) {        
+                        array_push($lesson, $lessonFind[$k]);
+                    }
+                }
+       }
+        }
+        return response()->json([
+            'data'=>$lesson
+        ], 200);
+    }
+
 
     public function getLessonHome(Request $request){
         $login = auth()->user();

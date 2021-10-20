@@ -18,7 +18,24 @@ class TableOfContentController extends Controller
         $this->middleware('auth:api',['except' => ['getTableHome','getAllTableOfContents','getOneTableOfContent','addNewTableOfContent','updateTableOfContent','deleteTableOfContent','changeStatusTableOfContent']]);
     }
 
-
+    public function getTableOfContentAlpha(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:course,id',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 400);      
+        }
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $table_of_content = TableOfContent::where('course_id',$request->id)->get();
+        }
+        else{
+            $table_of_content = TableOfContent::where('status','Active')->where('course_id',$request->id)->get();
+        }
+        return response()->json([
+            'data'=>$table_of_content
+        ], 200);
+    }
 
     public function getTableHome(Request $request){
         $login = auth()->user();
@@ -69,6 +86,7 @@ class TableOfContentController extends Controller
             'table_of_contents'=>$table_of_contents
         ], 200);
     }
+
     public function getOneTableOfContent(Request $request){
         $validator = Validator::make($request->all(), [
             'id' => 'required|exists:table_of_content,id',
@@ -99,6 +117,7 @@ class TableOfContentController extends Controller
             'table_of_content'=>$table_of_content
         ], 200);
     }
+
     public function addNewTableOfContent(Request $request){
         $login = auth()->user();
         if($login && $login->is_admin == true){
