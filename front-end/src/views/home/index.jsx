@@ -18,7 +18,7 @@ const HomePages = (props) => {
             <div>
                 {/*  Route home page */}
                 <Route path="/dang-ky" exact component={Register} />
-                <Route path="/dang-nhap" exact component={Login} />
+                <Route path="/dang-nhap" exact render={props => <Login changeRender={changeRender} {...props}/>} />
                 <Route path="/quen-mat-khau" exact component={ForgotPassword} />
                 <Route path="/xac-nhan-ma" exact component={CodeVerification} />
                 <Route path="/xac-nhan-ma-quen-mat-khau" exact component={CodeVerificationForgot} />
