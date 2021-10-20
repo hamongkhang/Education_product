@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReplyComment from './replyComment'
 import InputReply from './inputReply'
 
-const Comment = (props) => {
+const Comment = ({item, replyComment, amountReply, setCommentReply}) => {
     const [reply, setReply] = useState("hidden");
     const [icon, setIcon] = useState("down");
-    const [txt, setTxt] = useState("Xem 2 câu trả lời");
+    const [txt, setTxt] = useState(`Xem ${amountReply ? amountReply : "thêm"} câu trả lời`);
     const [inputReply, setInputRepply] = useState("hidden");
-    const [comment, setComment] = useState("");
+    const [inputComment, setInputComment] = useState("");
+    const $token = localStorage.getItem('access_token');
 
     const handleReplyArea = () => {
         if(reply === "hidden") {
@@ -18,7 +19,7 @@ const Comment = (props) => {
         else {
             setReply("hidden");
             setIcon("down");
-            setTxt("Xem 2 câu trả lời");
+            setTxt(`Xem ${amountReply} câu trả lời`);
         }
     }
 
@@ -29,13 +30,46 @@ const Comment = (props) => {
     }
 
     const onChange = (e) => {
-        setComment(e.target.value);
+        setInputComment(e.target.value);
     }
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(comment);
+        if($token){
+            const _formData = new FormData();
+            _formData.append("message", inputComment)
+            _formData.append("lessonId", item.lessonId)
+            _formData.append("id_reply", item.id)
+            const requestOptions = {
+                method: 'POST',
+                body: _formData,
+                headers: {"Authorization": `Bearer ` + $token}
+            };
+            fetch('http://127.0.0.1:8000/api/comment/replyComment', requestOptions)
+            .then(res => res.json())
+            .then(json => {
+                if(json.message){
+                    alert(json.message);
+                }
+                else{
+                    setCommentReply(json.data);
+                    handleInputReply();
+                    setInputComment("");
+                }
+            });
+        }
+        else{
+            alert("Chưa đăng nhập kìa")
+        } 
+        e.target.reset();
     }
+
+    useEffect(() => {
+        return () => {
+            setTxt(`Xem ${amountReply} câu trả lời`);
+        }
+    }, [])
+
 
     return (
         <div>
@@ -45,7 +79,7 @@ const Comment = (props) => {
                         <img src={`${window.location.origin}/assets/images/slider/city.jpg`} className="rounded-full w-10 h-10 object-cover" alt="" />
                     </div>
                     <div className="block bg-gray-200 mr-1 rounded-xl py-2 px-3 w-10/12 max-w-lg">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas, inventore, repellat sequi iusto odit nihil modi consequatur porro eaque ipsam illo nulla cupiditate reiciendis doloribus voluptatum. Minima quidem maiores sunt!</p>
+                        <p>{item.message}</p>    
                     </div>
                 </div>
                 <div className="text-sm font-bold text-gray-600 ml-14 pt-2">
@@ -60,13 +94,24 @@ const Comment = (props) => {
                     />
                 </div>
             </div>
-            <div className="space-x-2 ml-14 md:ml-16 hover:text-gray-600 cursor-pointer" onClick={handleReplyArea}>
-                <span>{txt}</span>
-                <i className={`fa fa-angle-${icon}`}></i>
-            </div>
+            {
+                replyComment && replyComment.length ?
+                <div className="space-x-2 ml-14 md:ml-16 hover:text-gray-600 cursor-pointer" onClick={handleReplyArea}>
+                    <span>{txt}</span>
+                    <i className={`fa fa-angle-${icon}`}></i>
+                </div>
+                : ""
+            }
             {/* Reply comment */}
                 <div className={`border-l-2 border-yellow-400 ml-0 xs:ml-16 ${reply}`}>
-                    <ReplyComment />
+                    {
+                        replyComment ? 
+                            replyComment.map((itemReply, index) => (
+                                <ReplyComment key={index} replyComment={itemReply}/>
+                            ))
+                        
+                        : ""
+                    }
                 </div>
         </div>
     )

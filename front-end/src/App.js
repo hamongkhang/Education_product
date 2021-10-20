@@ -25,7 +25,7 @@ function App() {
         <Router>
           <Switch>
             <Route path="/tai-khoan" component={UserProfile} />
-            <Route path="/bai-hoc" exact component={PlayCourse} />
+            <Route path="/bai-hoc/:id" exact component={PlayCourse} />
             <Route path="/" component={() => <HomePages changeRender={changeRender} />} />
           </Switch>
           <Call/>

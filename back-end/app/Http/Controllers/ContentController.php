@@ -18,6 +18,43 @@ class ContentController extends Controller
         $this->middleware('auth:api',['except' => ['getContentHome','getAllContents','getOneContent','addNewContent','updateContent','deleteContent','changeStatusContent']]);
     }
 
+
+    public function getContentAlpha(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:course,id',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 400);      
+        }
+        $content=[];
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $table_of_content = TableOfContent::where('course_id',$request->id)->get();
+            for ($i = 0; $i <count($table_of_content); $i++) {        
+                $contentFind = Content::where('table_of_content_id',$table_of_content[$i]->id)->get();
+                for ($j = 0; $j <count($contentFind); $j++) {        
+                    array_push($content, $contentFind[$j]);
+                }
+       }
+        }
+        else{
+            $table_of_content = TableOfContent::where('course_id',$request->id)->where('status','Active')->get();
+            for ($i = 0; $i <count($table_of_content); $i++) {        
+                $contentFind = Content::where('table_of_content_id',$table_of_content[$i]->id)->where('status','Active')->get();
+                for ($j = 0; $j <count($contentFind); $j++) {        
+                    array_push($content, $contentFind[$j]);
+                }
+       }
+        }
+        return response()->json([
+            'data'=>$content
+        ], 200);
+    }
+
+
+
+
+
 public function getContentHome(Request $request){
     $login = auth()->user();
     $content=[];

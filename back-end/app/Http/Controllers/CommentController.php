@@ -84,7 +84,9 @@ class CommentController extends Controller
                 'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
             ];
             $comment = Comment::create($postArray);
-            return Response()->json(array("Successfully"=> 1,"data"=>$postArray ));
+            $comments = Comment::where('lessonId', $request->lessonId)->get();
+
+            return Response()->json(array("Successfully"=> 1,"data"=>$comments ));
         }
         else{
             return Response()->json(array("error"=> 401,"message"=>"lessonId Not Found" ));
@@ -204,7 +206,7 @@ class CommentController extends Controller
             return response()->json($validator->errors(), 422);      
         }
         $commentFind = DB::table('comment')->where('id', $request->id_reply)->first();
-        if(($commentFind)&&($commentFind->lessonId===$request->lessonId)){
+        if(($commentFind)&&($commentFind->lessonId==$request->lessonId)){
             $user=auth()->user();
             $postArray = [
                 'userId'     => $user->id,
@@ -215,7 +217,10 @@ class CommentController extends Controller
                 'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
             ];
             $commentReply = CommentReply::create($postArray);
-            return Response()->json(array("Successfully"=> 1,"data"=>$postArray ));
+            if($commentReply) {
+                $commentReplies = CommentReply::all();
+            }
+            return Response()->json(array("Successfully"=> 1,"data"=>$commentReplies ));
         }
         else{
             return Response()->json(array("error"=> 401,"message"=>"Comment Not Found" ));

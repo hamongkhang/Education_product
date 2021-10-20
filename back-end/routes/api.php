@@ -79,7 +79,7 @@ Route::post('/ITinTeach/updateITinTeach/{id}', [App\Http\Controllers\ITinTeachCo
 Route::post('/ITinTeach/blockActiveITinTeach/{id}', [App\Http\Controllers\ITinTeachController::class, 'blockActiveITinTeach'])->name('ITinTeach.blockActiveITinTeach');
 /* Api Comment */
 Route::post('/comment/addComment', [App\Http\Controllers\CommentController::class, 'addComment'])->name('comment.addComment');
-Route::get('/comment/getComment', [App\Http\Controllers\CommentController::class, 'getComment'])->name('comment.getComment');
+Route::post('/comment/getComment', [App\Http\Controllers\CommentController::class, 'getComment'])->name('comment.getComment');
 Route::post('/comment/replyComment', [App\Http\Controllers\CommentController::class, 'replyComment'])->name('comment.replyComment');
 /* Api News */
 Route::get('/news/getNews', [App\Http\Controllers\NewsController::class, 'getNews'])->name('news.getNews');
@@ -121,6 +121,7 @@ Route::post('/freeDocument/getFreeDocument', [App\Http\Controllers\FreeDocumentC
 //Route::post('/freeDocument/blockAccount', [App\Http\Controllers\FreeDocumentController::class, 'blockAccount'])->name('freeDocument.loginAdmin');
 
 /*Api Lesson*/
+Route::post('/getLessonAlpha', [App\Http\Controllers\LessonController::class, 'getLessonAlpha'])->name('lesson.getLessonAlpha');
 Route::get('/getLessonHome', [App\Http\Controllers\LessonController::class, 'getLessonHome'])->name('lesson.getLessonHome');
 Route::get('/getLessons', [App\Http\Controllers\LessonController::class, 'getAllLessons'])->name('lesson.get');
 Route::post('/getOneLesson', [App\Http\Controllers\LessonController::class, 'getOneLesson'])->name('lesson.getOne');
@@ -129,6 +130,7 @@ Route::post('/updateLesson', [App\Http\Controllers\LessonController::class, 'upd
 Route::post('/deleteLesson', [App\Http\Controllers\LessonController::class, 'deleteLesson'])->name('lesson.delete');
 Route::post('/changeLessonStatus', [App\Http\Controllers\LessonController::class, 'changeStatusLesson'])->name('lesson.status');
 /*Api Content*/
+Route::post('/getContentAlpha', [App\Http\Controllers\ContentController::class, 'getContentAlpha'])->name('lesson.getContentAlpha');
 Route::get('/getContentHome', [App\Http\Controllers\ContentController::class, 'getContentHome'])->name('content.getContentHome');
 Route::get('/getContents', [App\Http\Controllers\ContentController::class, 'getAllContents'])->name('content.get');
 Route::post('/getOneContent', [App\Http\Controllers\ContentController::class, 'getOneContent'])->name('content.getOne');
@@ -137,6 +139,7 @@ Route::post('/updateContent', [App\Http\Controllers\ContentController::class, 'u
 Route::post('/deleteContent', [App\Http\Controllers\ContentController::class, 'deleteContent'])->name('content.delete');
 Route::post('/changeContentStatus', [App\Http\Controllers\ContentController::class, 'changeStatusContent'])->name('content.status');
 /*Api TableOfContent*/
+Route::post('/getTableOfContentAlpha', [App\Http\Controllers\TableOfContentController::class, 'getTableOfContentAlpha'])->name('lesson.getTableOfContentAlpha');
 Route::get('/getTableHome', [App\Http\Controllers\TableOfContentController::class, 'getTableHome'])->name('lesson.getTableHome');
 Route::get('/getTableOfContents', [App\Http\Controllers\TableOfContentController::class, 'getAllTableOfContents'])->name('tableOfContent.get');
 Route::post('/getOneTableOfContent', [App\Http\Controllers\TableOfContentController::class, 'getOneTableOfContent'])->name('tableOfContent.getOne');
