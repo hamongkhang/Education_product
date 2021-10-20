@@ -17,8 +17,6 @@ function App() {
     console.log('đã được render lại');
     setRender(!render);
   }
-//   useEffect(() => {
-// }, [render]);
   return (
     <div className="max-w-screen-2xl my-0 mx-auto">
       <div className="my-0 mx-auto relative">

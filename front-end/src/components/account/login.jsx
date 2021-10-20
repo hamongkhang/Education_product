@@ -7,6 +7,7 @@ import queryString from 'query-string'
 
 
 const Login = (props) => {
+    const { changeRender } = props;
     const [user, setUser] = useState({});
     const match = useRouteMatch();
     const history = useHistory();
@@ -26,7 +27,7 @@ const Login = (props) => {
       const access_token=value.access_token;
       const error=value.error;
             useEffect(() => {
-                   if(access_token){
+                if(access_token){
                     localStorage.setItem('access_token',access_token);
                     localStorage.setItem('nameAccount',nameAccount);
                     if(avatar_google){
@@ -35,6 +36,7 @@ const Login = (props) => {
                         localStorage.setItem('avatar',avatar);
                     }
                         alert("dung r!!!");
+                        changeRender();
                         history.push("/tai-khoan")
                 }
                 else if(error){

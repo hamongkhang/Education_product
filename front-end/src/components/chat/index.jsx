@@ -3,38 +3,130 @@ import Outgoing from './outgoing';
 import Incoming from './incoming';
 
 const Chat = (props) => {
-    const [messages, setMessages] = useState([{
-        type: "incoming",
-        image: "./assets/images/slider/city.jpg",
-        message: "Lorem ipsum, dolor sit amet elit."
-    }]);
+    const [messages, setMessages] = useState([]);
     const messageEl = useRef(null);
     const [message, setMessage] = useState("");
-    
+    const [userID, setUserId] = useState("");
+    var $token = localStorage.getItem('access_token_chat');
+    var $login_token=localStorage.getItem('access_token');
+
     const handleOnchange = (e) => {
         setMessage(e.target.value);
     }
-
     const handleKeyPress = (e) => {
         if(e.key === 'Enter'){
-            handleMessage(e);
+            sendMessageAPI(e);
         }
     }
-
-    const handleMessage = (e) => {
-        e.preventDefault();
-        if(message.trim()) {
-            let messTerm = {
-                type: "outgoing",
-                image: "",
-                message: message,
-            }
-            messages.push(messTerm);
-            setMessage("");
+    const checkToken = () =>{
+        $token = localStorage.getItem('access_token_chat');
+        $login_token=localStorage.getItem('access_token');
+       
+        if($token != null && $login_token == null){
+            return $token;
         }
+        else{
+            return $login_token;
+        }
+    }
+    const getUserID = ()=>{
+        var token = "";
+        token = checkToken();
+        if(token){
+            const requestOptions = {
+                method: 'POST',
+                headers: {"Authorization": `Bearer `+token}
+            };
+            fetch('http://127.0.0.1:8000/api/users/userProfile', requestOptions)
+            .then(res => res.json())
+            .then(json => {
+                if(json.id){
+                    setUserId(json.id);
+                }
+               else{
+                    setUserId(null);
+               }
+            });
+        }
+    } 
+    const getMessagesAPI = (token)=>{
+        if(token==null){
+            token = checkToken();
+        }
+        const requestOptions = {
+            method: 'POST',
+            headers: {"Authorization": `Bearer `+token}
+        };
+        fetch('http://127.0.0.1:8000/api/inbox', requestOptions)
+        .then(res => res.json())
+        .then(json => {
+            let data_messages = json.messages;
+            data_messages.reverse();
+            let data = data_messages.map(m=>{
+                return {
+                    ...m,
+                    image: "./assets/images/slider/city.jpg"
+                }
+            });
+            getUserID();
+            setMessages(data);
+        });
+    } 
+    const sendMessageAPI = (e)=>{
+        e.preventDefault();
+        var token = "";
+        token = checkToken();
+        if(token){
+            const _formData = new FormData();
+            _formData.append("message",message);
+            _formData.append("sender_id",0);
+            const requestOptions = {
+                method: 'POST',
+                headers: {"Authorization": `Bearer `+token},
+                body:_formData
+            }
+            fetch('http://127.0.0.1:8000/api/sendmess', requestOptions)
+            .then(res => res.json())
+            .then(json => {
+                if(json.access_token){
+                    localStorage.setItem('access_token_chat',json.access_token);
+                }
+                getUserID();
+                getMessagesAPI(null)
+                setMessage("");
+            });
+        }
+        else{
+            const _formData = new FormData();
+            _formData.append("message",message);
+            _formData.append("sender_id",-1);
+            const requestOptions = {
+                method: 'POST',
+                body:_formData
+            }
+            fetch('http://127.0.0.1:8000/api/sendmess', requestOptions)
+            .then(res => res.json())
+            .then(json => {
+                if(json.access_token){
+                    localStorage.setItem('access_token_chat',json.access_token);
+                }
+                getMessagesAPI(json.access_token);
+                getUserID();
+                setMessage("");
+            });
+        }
+       
+    } 
+    const fetchMessages = () => {
+        
+       setInterval(()=>{
+            getMessagesAPI(null);
+        },20000);
     }
     
     useEffect(() => {
+        fetchMessages();
+        getUserID();
         if (messageEl) {
         messageEl.current.addEventListener('DOMNodeInserted', event => {
             const { currentTarget: target } = event;
@@ -49,7 +141,7 @@ const Chat = (props) => {
                 <div className="flex justify-between items-center p-4">
                     <div className="flex items-center space-x-2">
                         <img src="./assets/images/slider/city.jpg" className="w-10 h-10 rounded-full object-cover" alt="" />
-                        <span className="font-medium line-2 leading-5">Lorem ipsum, dolor sit amet elit. Voluptatibus beatae a numquam! Ex recusandae deleniti porro, a nihil, officiis repudiandae doloribus neque aut maxime non cupiditate, iste cum saepe eos.</span>
+                        <span className="font-medium line-2 leading-5">Tư vấn VatLy365</span>
                     </div>
                     <div>
                         <i className="far fa-times chat-close text-xl mr-2 hover:text-yellow-700 duration-200 cursor-pointer"></i>
@@ -58,11 +150,11 @@ const Chat = (props) => {
                 <div className="bg-indigo-100 p-4 custom-scroll h-96 overflow-y-scroll shadow-inner" ref={messageEl}>
                     {
                         messages.map((item, index) => (
-                            item.type === "incoming" ? <Incoming key={index} {...item}/> : <Outgoing key={index} {...item}/>
+                            item.receiver === userID ? <Incoming key={index} {...item}/> : <Outgoing key={index} {...item}/>
                         ))
                     }
                 </div>
-                <form action="#" className="h-14 relative" onSubmit={handleMessage}>
+                <form action="#" className="h-14 relative" onSubmit={sendMessageAPI}>
                     <textarea type="text" className="block my-auto h-full px-4 py-3.5 custom-scroll outline-none resize-none" placeholder="Tin nhắn" style={{ width: "calc(100% - 64px)"}} onChange={handleOnchange} onKeyPress={handleKeyPress} value={message}/>
                     <button type="submit" className="absolute right-0 bottom-0 flex items-center justify-center w-16 h-full hover:bg-indigo-50">
                         <i className="fad fa-paper-plane text-indigo-500"></i>
