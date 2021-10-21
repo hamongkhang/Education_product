@@ -9,9 +9,7 @@ import { BannerBook } from '../../../components/banner';
         <BannerBook/>
         <div className="other-doc mt-10">
             <LeftDocument></LeftDocument>
-        <div className="other-doc-right">
-            <RightDocument></RightDocument>
-        </div>
+              <RightDocument></RightDocument>
         </div>
     </>
   );
