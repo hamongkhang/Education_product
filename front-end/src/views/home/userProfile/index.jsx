@@ -8,7 +8,7 @@ import Orders from '../../../components/orders';
 const UserProfile = (props) => (
     <div>
         <UserProfileHeader/>
-        <div className="mt-28 mb-10 w-11/12 mx-auto">
+        <div className="pt-24 mb-10 w-11/12 mx-auto bg-gray-100">
             <Route path="/tai-khoan/khoa-hoc" exact component={EnrolledCourses} />
             <Route path="/tai-khoan/thong-tin" exact component={UserInfoProfile} />
             <Route path="/tai-khoan/don-hang" exact component={Orders} />

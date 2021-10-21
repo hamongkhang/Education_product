@@ -84,6 +84,7 @@ module.exports = {
             borderRadius: ['focus'],
             divideColor: ['group-hover'],
             translate: ['group-hover'],
+            display: ['group-hover'],
             backgroundColor: ['checked'],
             borderColor: ['checked'],
             height: ['focus-within'],

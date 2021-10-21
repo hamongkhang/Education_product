@@ -10,6 +10,7 @@ import Books from './books';
 import { Login, Register, ForgotPassword, CodeVerification, ResetPassword, CodeVerificationForgot } from '../../components/account';
 import Home from './home';
 import ITinTeaching from './ITinTeaching';
+import OtherMaterials from './otherMaterials';
 const HomePages = (props) => {
     const { changeRender } = props;
     return (
@@ -31,6 +32,7 @@ const HomePages = (props) => {
                 <Route path="/it-trong-day-hoc" exact component={ITinTeaching} />
                 <Route path="/check-result-payment" exact component={CheckResult} />
                 <Route path="/" exact component={()=><Home changeRender={changeRender}/>} />
+                <Route path="/tai-lieu-khac" exact component={OtherMaterials} />
             </div>
         </>
     )

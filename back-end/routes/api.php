@@ -187,4 +187,3 @@ Route::post('/cart/getCart', [App\Http\Controllers\CartController::class, 'getCa
 Route::post('/cart/addCart', [App\Http\Controllers\CartController::class, 'addNewCart'])->name('cart.add');
 Route::post('/cart/updateCart', [App\Http\Controllers\CartController::class, 'updateCart'])->name('cart.update');
 Route::post('/cart/removeCart', [App\Http\Controllers\CartController::class, 'removeCart'])->name('cart.remove');
-

@@ -11,6 +11,7 @@ import Cart from './components/cart';
 import UserProfile from './views/home/userProfile';
 import PlayCourse from './views/home/playCourse';
 
+
 function App() {
   const [render, setRender] = useState(false);
   const changeRender =()=>{
@@ -18,7 +19,8 @@ function App() {
     setRender(!render);
   }
   return (
-    <div className="max-w-screen-2xl my-0 mx-auto">
+    <>
+    <div className="max-w-screen-2xl my-0 mx-auto bg-gray-100">
       <div className="my-0 mx-auto relative">
         <Router>
           <Switch>
@@ -34,6 +36,7 @@ function App() {
         </Router>
       </div>
     </div>
+    </>
   );
 }
  

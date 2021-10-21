@@ -5,7 +5,7 @@ const CourseItem = (props) => {
     const $link="http://localhost:8000/upload/images/avatar/";
     const $linkImage="http://localhost:8000/upload/images/course/";
     return (
-        <div className="bg-gray-50 shadow-md mr-2 rounded-md overflow-hidden mb-10">
+        <div className="shadow-md mr-2 rounded-md overflow-hidden mb-10 bg-white">
             <div>
                 <img src={$linkImage+props.data.image} className="w-full h-36 object-cover" alt="" />
                 <span></span>

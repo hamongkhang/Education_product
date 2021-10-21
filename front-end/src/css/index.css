@@ -104,6 +104,14 @@ body::-webkit-scrollbar-thumb {
     -webkit-box-orient: vertical;
 }
 
+.line-7 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+}
+
 .line-10 {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -277,6 +285,22 @@ body::-webkit-scrollbar-thumb {
 
 .scroll-none::-webkit-scrollbar {
     width: 0;
+}
+
+.catalog .catalog-item {
+    display: none;
+}
+
+.catalog:hover .catalog-item {
+    display: block;
+}
+
+.img {
+    transform: scale(100%);
+}
+
+.img:hover .img-scale {
+    transform: scale(105%);
 }
 
 @media only screen and (max-width: 1023px) {
