@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const TeacherItem = (props) => {
     return (
-        <div className="bg-gray-100 mr-5 lg:p-8 p-4 mb-20 rounded-md shadow-lg group">
+        <div className="mr-5 lg:p-8 p-4 mb-20 rounded-md shadow-lg group bg-white">
             <div className="overflow-hidden w-full h-72 md:h-80">
                 <img src="./assets/images/slider/city.jpg" className="w-full h-72 md:h-80 object-cover transform transition scale-95 group-hover:scale-105" alt="" />
             </div>

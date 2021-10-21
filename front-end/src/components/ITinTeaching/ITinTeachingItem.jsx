@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const ITinTeachingItem = (props) => (
-    <article className="rounded-lg overflow-hidden shadow-md hover:shadow-2xl img mb-5 sm1:mb-10">
+    <article className="rounded-lg overflow-hidden shadow-md hover:shadow-2xl img mb-5 sm1:mb-10 bg-white">
         <div>
             <div className="h-60 w-full overflow-hidden">
                 <Link to="/">

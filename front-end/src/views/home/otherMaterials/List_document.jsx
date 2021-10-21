@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { BrowserRouter as Router, Link, Route,Switch } from 'react-router-dom';
 
 export const ListDocument = (props) => {
   const { list } = props;
@@ -34,28 +34,29 @@ export const ListDocument = (props) => {
 
   return (
         <>
-      <div className="other-doc-right__block">
+      <div className="other-doc-right__block bg-white">
         <div className="other-doc-right__header">
           <div className="other-doc-right__title">
-            <h4>{list.name}</h4>
-            
+            <h4>{list.name}</h4> 
           </div>
         </div>
         {arr1 && arr1.length
           ? arr1.map((items) => {
               return (
                 <>
+                {/* <Router> */}
                   <div className="other-doc-right-content">
                     <div className="other-doc-right-content__icon">
                       <i className="far fa-file-alt fa-4x"></i>
                     </div>
                     <div className="other-doc-right-content__text">
                       <p className="other-doc-right-content__text--color">
-                        <a href="#">{items.list}</a>
+                        <Link to="/tai-lieu-khac/dap-an">{items.list}</Link>
                       </p>
                     </div>
                   </div>
                   <hr />
+                  {/* </Router> */}
                 </>
               );
             })
@@ -64,6 +65,7 @@ export const ListDocument = (props) => {
           <p>{txt}</p>
         </div>
       </div>
+     
     </>
   );
 };

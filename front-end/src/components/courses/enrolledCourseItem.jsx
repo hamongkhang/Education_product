@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const EnrolledCourseItem = (props) => (
-    <div className="shadow-md rounded overflow-hidden box-content">
+    <div className="shadow-md rounded overflow-hidden box-content bg-white">
         <div>
             <img src={`${window.location.origin}/assets/images/slider/city.jpg`} className="w-full h-44 object-cover" alt="" />
         </div>

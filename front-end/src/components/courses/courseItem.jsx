@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const CourseItem = (props) => {
     return (
-        <div className="bg-gray-50 shadow-md mr-2 rounded-md overflow-hidden mb-10">
+        <div className="shadow-md mr-2 rounded-md overflow-hidden mb-10 bg-white">
             <div>
                 <img src="./assets/images/slider/city.jpg" className="w-full h-36 object-cover" alt="" />
                 <span></span>

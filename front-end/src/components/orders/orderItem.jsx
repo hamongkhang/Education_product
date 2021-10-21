@@ -15,7 +15,7 @@ const OrderItem = (props) => {
     }
 
     return (
-        <div className="shadow-md rounded-sm p-5">
+        <div className="shadow-md rounded-sm p-5 bg-white">
             <div className="block xs:flex justify-between items-center leading-7 cursor-pointer" onClick={handleClick}>
                 <div className="flex text-indigo-500">
                     <div className="w-5" >

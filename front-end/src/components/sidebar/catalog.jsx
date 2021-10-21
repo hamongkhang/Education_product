@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const Catalog = (props) => {
     return (
-        <div className="shadow-lg rounded-md py-4 uppercase">
+        <div className="shadow-lg rounded-md py-4 uppercase bg-white">
             <div className="flex items-center px-4 space-x-2">
                 <i class="fad fa-books text-xl text-indigo-500"></i>
                 <h3 className="font-medium text-xl tracking-tighter">Danh mục</h3>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const AboutItem = (props) => {
     return (
-        <div className="rounded-lg overflow-hidden shadow-lg mb-5 sm1:mb-10">
+        <div className="rounded-lg overflow-hidden shadow-lg mb-5 sm1:mb-10 bg-white">
             <div className="bg-yellow-400 h-16 w-full mb-4 flex items-center justify-center">
                 <h4 className="text-white uppercase font-semibold tracking-wider text-lg">{props.title}</h4>
             </div>

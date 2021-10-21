@@ -24,7 +24,7 @@ const CourseDetails = () => {
                         <CourseDesc />
                     </div>
                     <div className="w-full lg:w-2/6 py-4">
-                        <div className="p-5 border-b-2 border-gray-400 space-y-4 rounded-md shadow-lg">
+                        <div className="p-5 border-b-2 border-gray-400 space-y-4 rounded-md shadow-lg bg-white">
                             <div className="flex justify-center items-end space-x-3">
                                 <span className="text-xl text-green-700">300.000<sup>đ</sup></span>
                                 <span className="text-base line-through font-light text-gray-500">500.000<sup>đ</sup></span>
@@ -59,7 +59,7 @@ const CourseDetails = () => {
                                 </button>
                             </div>
                         </div>
-                        <div className="space-y-3 py-5 mt-8 border-b-2 border-gray-400 space-y-4 rounded-md shadow-lg">
+                        <div className="space-y-3 py-5 mt-8 border-b-2 border-gray-400 space-y-4 rounded-md shadow-lg bg-white">
                             <div className="uppercase font-medium px-5">
                                 Khóa học đề xuất
                                 <hr className="border-b border-gray-300 mt-2"/>

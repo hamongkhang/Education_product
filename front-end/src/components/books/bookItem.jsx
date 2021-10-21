@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const BookItem = (props) => {
     return (
-        <div className="shadow-md bg-indigo-100 overflow-hidden h-96 mr-2 rounded-md mb-10">
+        <div className="shadow-md bg-white overflow-hidden h-96 mr-2 rounded-md mb-10">
             <div className="w-full h-64 flex items-center justify-center">
                 <img src="./assets/images/slider/city.jpg" className="w-40 h-52 object-cover transform hover:translate-x-3 duration-300" alt="" />
             </div>

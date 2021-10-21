@@ -95,7 +95,7 @@ const Articles = (props) => {
                         </form>
                     </div>
 
-                    <div className="space-y-3 py-5 mt-8 border-b-2 border-gray-400 space-y-4 rounded-md shadow-lg">
+                    <div className="space-y-3 py-5 mt-8 border-b-2 border-gray-400 space-y-4 rounded-md shadow-lg bg-white">
                         <div className="uppercase font-medium px-5">
                             Thể Loại bài viết
                             <hr className="border-b border-gray-300 mt-2"/>
@@ -119,7 +119,7 @@ const Articles = (props) => {
                             </label>
                         </div>
                     </div>
-                    <div className="space-y-3 py-5 mt-8 border-b-2 border-gray-400 space-y-4 rounded-md shadow-lg">
+                    <div className="space-y-3 py-5 mt-8 border-b-2 border-gray-400 space-y-4 rounded-md shadow-lg bg-white">
                         <div className="uppercase font-medium px-5">
                             Bài viết đề xuất
                             <hr className="border-b border-gray-300 mt-2"/>
