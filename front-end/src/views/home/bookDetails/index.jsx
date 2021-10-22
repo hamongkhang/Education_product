@@ -103,7 +103,7 @@ const BookDetails = (props) => {
                     
                     </div>
                     <div className="flex items-center justify-center space-x-4 text-white">
-                        <button className="w-full py-2 rounded-sm bg-green-700 hover:bg-green-800 space-x-2 hover:shadow-lg" >
+                        <button className="w-full py-2 rounded-sm bg-green-700 hover:bg-green-800 space-x-2 hover:shadow-lg" onClick ={()=>addToCart(bookk.id)}>
                             <i className="far fa-cart-plus" />
                             <span>Đặt mua</span>
                         </button>
@@ -129,80 +129,7 @@ const BookDetails = (props) => {
                 </div>
             </div>
           </div>
-      {/* <div className="book">
-        <div className="book-left">
-          <div className="book-left__image">
-            <img
-              src={$link+bookk.image}/>
-            <br />
-          </div>
-          <figure className="book-intr__image">
-            <img src={$link+bookk.image}/>
-          </figure>
-        </div>
-
-        <div className="book-right">
-          <div className="book-right__discript">
-            <h2>{bookk.name}</h2>
-            <div className="book-right__content">
-              <p>
-                Hiện nay, Tiếng Anh đã trở nên vô cùng quan trọng và được nhiều
-                các bạn học sinh lựa chọn để thi trong kì thi THPT Quốc Gia. Với
-                mong muốn giúp các em học sinh tự tin đạt điểm 8+ môn Tiếng Anh
-                của mình, cô Phạm Liễu và Bschool cho ra mắt cuốn sách 2000 C
-                ...
-              </p>
-            </div>
-          </div>
-          <a
-            href="https://bschool.vn/sach/16/2000-cau-trac-nghiem-tong-on-tieng-anh-8#"
-            target="_blank"
-          >
-            <button type="submit" className="book__btn">
-              <i className="fab fa-facebook-f">&nbsp; đặt hàng qua facebook</i>
-            </button>
-          </a>
-          <br />
-          <button type="submit" className="book__btn book__btn--cart" onClick ={()=>addToCart(bookk.id)}>
-            <i className="fas fa-shopping-cart">&nbsp; thêm vào giỏ hàng</i>
-          </button>
-          <h4>Dịch vụ và khuyến mãi</h4>
-          <div className="book-right__promotion">
-            <p>
-              <i className="fas fa-check book-right__promotion--fa-check"></i>
-              &nbsp;&nbsp; Khuyến mãi HOT &nbsp;{" "}
-              <a style={{ textDecoration: "none" }} href="#">
-                <span className="book-right__available">Chi tiết</span>
-              </a>
-            </p>
-            <p>
-              <i className="fas fa-check book-right__promotion--fa-check"></i>
-              &nbsp;&nbsp; Top 100 cuốn sách Luyện Thi hay nhất &nbsp;{" "}
-              <a style={{ textDecoration: "none" }} href="#">
-                <span className="book-right__available">Chi tiết</span>
-              </a>
-            </p>
-          </div>
-          <h3 className="book-right__title book-right__title--payment">
-            Hướng dẫn thanh toán
-          </h3>
-          <div className="book-right__payment">
-            <img src={`${window.location.origin}/assets/images/payment.png`} />
-          </div>
-        </div>
       </div>
-      <div className="book-intr">
-        <div className="book-right__title">
-          <h3>Giới thiệu sách</h3>
-        </div>
-        <div className='book-right__title--underline'>
-
-        </div>
-        <div className="book-intr__content">
-          {bookk.description}
-        </div>
-      </div> */}
-    </div>
     </div>
   );
 };
