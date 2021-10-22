@@ -105,7 +105,7 @@ return () => {
         <>
             <BannerBook/>
             <div className="xl:w-4/5 xl:px-0 px-4 w-full relative left-1/2 transform -translate-x-1/2 md:mt-5 mt-2">
-                <div className="flex flex-col lg:flex-row lg:space-x-6">
+                <div className="flex flex-col-reverse lg:flex-row lg:space-x-6">
                     <div className="w-full lg:w-4/6">
                         <div className="space-y-3 mt-1">
                             <h2 className="font-semibold uppercase text-xl md:text-3xl">{course.name}</h2>
@@ -160,7 +160,7 @@ return () => {
                     if(i<3){
                       return(
                         <Link to={"/khoa-hoc/"+item.id} className="flex space-x-2 items-center hover:bg-blue-100 p-2 rounded-md">        
-                        <img src={$link+item.image} className="h-14 w-14 rounded-md " alt="" />
+                        <img src={$link+item.image} className="h-14 w-14 rounded-md object-scale-down" alt="" />
                         <div>
                             <p className="break-words line-2 uppercase font-medium">{item.name}</p>
                         </div>

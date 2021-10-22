@@ -96,10 +96,12 @@ const PlayCourse = (props) => {
         fetch("http://localhost:8000/api/getLessonAlpha", requestOptions)
         .then(response => response.json())
         .then(data => {
-            setLessonAlpha(data.data)
-            setUrl(data.data[0].file_name)
-            setId(data.data[0].id)
-            getComment(data.data[0].id)
+            setLessonAlpha(data.data);
+            if(data.data[0]) {
+                setUrl(data.data[0].file_name)
+                setId(data.data[0].id)
+                getComment(data.data[0].id)
+            }
         });
         return () => {
         }

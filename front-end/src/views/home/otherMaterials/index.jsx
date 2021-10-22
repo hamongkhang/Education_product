@@ -11,9 +11,9 @@ const OtherMaterials = () => {
         <BannerBook/>
         <div className="other-doc mt-10">
           <LeftDocument />
-          <RightDocument/>
+          {/* <RightDocument/> */}
             <Route path="/tai-lieu-khac/dap-an" exact component={AnswerDetail} />
-            {/* <Route path="/tai-lieu-khac" exact component={RightDocument} /> */}
+            <Route path="/tai-lieu-khac" exact component={RightDocument} />
         </div>
     </>
   );

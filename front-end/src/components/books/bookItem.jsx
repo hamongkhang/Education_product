@@ -35,7 +35,7 @@ const BookItem = (props) => {
     return (
         <div className="shadow-md bg-white overflow-hidden h-96 mr-2 rounded-md mb-10">
             <div className="w-full h-64 flex items-center justify-center">
-                <img src={$link+props.image} className="w-40 h-52 object-cover transform hover:translate-x-3 duration-300" alt="" />
+                <img src={$link+props.image} className="w-40 h-52 object-scale-down transform hover:translate-x-3 duration-300" alt="" />
             </div>
             <div className="px-6 text-center h-10">
                 <label htmlFor="" className="text-indigo-600 font-semibold">{props.promotion_price}<sup>đ</sup></label>

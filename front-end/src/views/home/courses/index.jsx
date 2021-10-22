@@ -188,7 +188,7 @@ const Books = (props) => {
 
                     <div>
                         <select name="" id=""  onChange={(event) => addCourse(event)} className="px-3 py-2 rounded-sm outline-none cursor-pointer">
-                        <option name="courseSearch" value="allCourse">Toàn bộ các khó học</option>
+                        <option name="courseSearch" value="allCourse">Toàn bộ các khóa học</option>
                         {categoryCourse.map(
                          (item, index) => (
                             <option name="courseSearch" value={item.id}>{item.name}</option>

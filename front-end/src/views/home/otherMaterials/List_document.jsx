@@ -11,6 +11,7 @@ export const ListDocument = (props) => {
   useEffect(() => {
     let arrTemp = arr;
     let arr1Temp = arrTemp.content;
+    console.log(arr1Temp);
     arrTemp = arr1Temp.slice(0, show - 1);
     setArr1(arrTemp);
     setTxt("Xem thêm");
