@@ -135,7 +135,7 @@ class ITinTeachController extends Controller
         if (($adminFind->email==="web.vatly365@gmail.com")){
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
-            'file'=>'required|max:2048',
+            'file'=>'required',
             'author' => 'required|max:255',
             'image'=>'required|max:2048',
             'description'=>'required',
@@ -253,7 +253,7 @@ class ITinTeachController extends Controller
         if (($adminFind->email==="web.vatly365@gmail.com")){
         $validator = Validator::make($request->all(), [
             'name' => 'max:255',
-            'file'=>'max:2048',
+            'file'=>'',
             'author' => 'max:255',
             'image'=>'max:2048',
             'description'=>'',
