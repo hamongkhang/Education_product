@@ -33,9 +33,9 @@ const HomePages = (props) => {
                 <Route path="/tin-tuc" exact component={Articles} />
                 <Route path="/it-trong-day-hoc" exact component={ITinTeaching} />
                 <Route path="/check-result-payment" exact component={CheckResult} />
+                <Route path="/chi-tiet-bai-viet/:id" exact component={ArticleDetails} />
                 <Route path="/tai-lieu-khac/:id" exact component={OtherMaterials} />
                 <Route path="/tai-lieu-mien-phi" exact component={OtherMaterials} />
-                <Route path="/chi-tiet-bai-viet" exact component={ArticleDetails} />
                 <Route path="/" exact component={()=><Home changeRender={changeRender}/>} />
             </div>
         </>
