@@ -96,12 +96,10 @@ const PlayCourse = (props) => {
         fetch("http://localhost:8000/api/getLessonAlpha", requestOptions)
         .then(response => response.json())
         .then(data => {
-            setLessonAlpha(data.data);
-            if(data.data[0]) {
-                setUrl(data.data[0].file_name)
-                setId(data.data[0].id)
-                getComment(data.data[0].id)
-            }
+            setLessonAlpha(data.data)
+            setUrl(data.data[0].file_name)
+            setId(data.data[0].id)
+            getComment(data.data[0].id)
         });
         return () => {
         }
@@ -185,12 +183,12 @@ const PlayCourse = (props) => {
             </header>
             <div className="w-full mt-16 mx-auto">
                 <div className="block lg:flex max-w-screen-2xl">
-                    <div className="w-full lg:w-3/4 mb-20">
-                        <div className="px-0 md:px-16 bg-black lg:h-508">
-                            <ReactPlayer url={url} controls={true} width="100%" height="100%"/>
+                    <div className="w-full lg:w-3/4">
+                        <div className="px-0 md:px-16 bg-black">
+                            <ReactPlayer url={url} controls={true} width="100%"/>
                         </div>
                         <div className="w-11/12 mx-auto">
-                            <div className="py-3 mt-2 border-b-2 uppercase font-semibold border-blue-600 mb-4 ">Bình luận</div>
+                            <div className="py-3 mt-2 border-b-2 uppercase font-semibold border-blue-600 mb-4 "> Bình luận</div>
                             <div>
                                 <div className="flex space-x-3 mx-0 md:mx-3 mt-5 mb-3">
                                     <img src={`${window.location.origin}/assets/images/slider/city.jpg`} className="rounded-full w-10 h-10 object-cover" alt="" />

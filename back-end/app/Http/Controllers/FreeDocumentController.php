@@ -21,7 +21,7 @@ use Illuminate\Support\Str;
 class FreeDocumentController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['onLogin','getFreeDocument','getTeacher', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
+        $this->middleware('auth:api', ['except' => ['getFreeDocumentAlpha','onLogin','getFreeDocument','getTeacher', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
     
     /**
@@ -47,6 +47,32 @@ class FreeDocumentController extends Controller
      *     ),
      * )
      */
+
+    public function getFreeDocumentAlpha()
+    {
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $documentFind = DB::table('free_document')->get();
+            return Response()->json(array("Successfully"=> 1,"data"=>$documentFind ));
+        }
+        else{
+            $document=[];
+            $category=DB::table('free_document_category')->where('status','Active')->get();
+            for ($i=0;$i<count($category);$i++){
+                $documentFind = DB::table('free_document')->where('category_id',$category[$i]->id)->where('status','Active')->get();
+                for ($j=0;$j<count($documentFind);$j++){
+                    array_push($document,$documentFind[$j]);
+                }
+            }
+        return Response()->json(array("Successfully"=> 1,"data"=>$document ));
+        }
+
+        
+    }
+
+
+
+
     public function getFreeDocument()
     {
         $login = auth()->user();
@@ -91,9 +117,7 @@ class FreeDocumentController extends Controller
         }
         $dataRespon[1]=$array;
         return Response()->json(array("Successfully"=> 1,"data"=>$dataRespon ));
-        }
-
-        
+        } 
     }
     
     /**
