@@ -38,6 +38,9 @@ const Navbar = (props) => {
                             <Link to="/khoa-hoc" className="whitespace-nowrap">Khóa học</Link>
                         </li>
                         <li className={ pathname === "/sach" ? 'nav-link relative active' : 'nav-link relative' }>
+                            <Link to="/tai-lieu-mien-phi" className="hover whitespace-nowrap">Tài liệu</Link>
+                        </li>
+                        <li className={ pathname === "/sach" ? 'nav-link relative active' : 'nav-link relative' }>
                             <Link to="/sach" className="hover whitespace-nowrap">Sách</Link>
                         </li>
                         <li className={ pathname === "/thi-online" ? 'nav-link relative active' : 'nav-link relative' }>
@@ -47,7 +50,7 @@ const Navbar = (props) => {
                             <Link to="/tin-tuc" className="hover whitespace-nowrap">Tin tức</Link>
                         </li>
                         <li className='nav-link relative'>
-                            <a href="http://" target="_blank" className="hover whitespace-nowrap">Diễn đàn</a>
+                            <a href="https://www.facebook.com/groups/867025087270480" target="_blank" className="hover whitespace-nowrap">Diễn đàn</a>
                         </li>
                         {/*  */}
                         <li className={ pathname === "/luyen-thi" ? 'nav-link relative nav-link-mobile lg:hidden active' : 'nav-link nav-link-mobile lg:hidden relative' }>

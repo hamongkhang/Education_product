@@ -14,7 +14,7 @@ const Footer = (props) => {
                             <span className="ml-3 text-xl text-white">Vật Lý 365</span>
                         </a>
                         <div>
-                            <img src="" alt="" srcset="./assets/images/logo/logo.jpg 2x" className="h-20 w-40 object-cover mt-4" />
+                            <img src="" alt="" srcset="http://localhost:8000/upload/images/logo-vl-365.png 2x" className="h-20 w-40 object-cover mt-4" />
                         </div>
                         {/* <p className="mt-2 text-sm text-white">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime, similique recusandae sit blanditiis error veniam dolorum ducimus amet, repudiandae ut earum at. Obcaecati dolore facilis deleniti exercitationem expedita. Dolore, voluptatem!</p> */}
                     </div>
@@ -51,10 +51,10 @@ const Footer = (props) => {
                                     <Link to="/" className="text-white hover:text-red-300" href="#">Hướng dẫn thanh toán</Link>
                                 </li>
                                 <li>
-                                    <Link to="/" className="text-white hover:text-red-300" href="#">Cộng tác viên</Link>
+                                    <a  className="text-white hover:text-red-300" href="https://www.facebook.com/groups/867025087270480/user/100003241838165/">Cộng tác viên</a>
                                 </li>
                                 <li>
-                                    <Link to="/" className="text-white hover:text-red-300" href="#">Kích hoạt khóa học</Link>
+                                    <Link to="/khoa-hoc" className="text-white hover:text-red-300" href="#">Kích hoạt khóa học</Link>
                                 </li>
                             </nav>
                         </div>
@@ -67,10 +67,10 @@ const Footer = (props) => {
                             <a href="https://twitter.com/knyttneve" rel="noopener noreferrer" className="text-gray-400 ml-1" target="_blank">Vật Lý 365</a>
                         </p>
                         <span className="inline-flex items-center sm:ml-auto sm:mt-0 mt-2 justify-center sm:justify-start space-x-3">
-                            <a className="text-gray-200 text-xl">
+                            <a href="https://www.facebook.com/groups/867025087270480/user/100003241838165/" className="text-gray-200 text-xl">
                                 <i className="fab fa-facebook-f"></i>
                             </a>
-                            <a className="text-gray-200 text-xl">
+                            <a href="https://www.youtube.com/channel/UCOtbYT8Sm3i5G8UAAO584rw" className="text-gray-200 text-xl">
                                 <i className="fab fa-youtube"></i>
                             </a>
                             <a className="text-gray-200 overflow-hidden rounded-full">

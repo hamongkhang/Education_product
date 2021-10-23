@@ -175,7 +175,7 @@ Route::post('/freeDocumentCategory/destroyFreeDocumentCategory/{id}', [App\Http\
 Route::post('/newsType/createNewsType', [App\Http\Controllers\NewsTypeController::class, 'createNewsType'])->name('newsType.createNewsType');
 Route::post('/newsType/updateNewsType/{id}', [App\Http\Controllers\NewsTypeController::class, 'updateNewsType'])->name('newsType.updateNewsType');
 Route::post('/newsType/destroyNewsType/{id}', [App\Http\Controllers\NewsTypeController::class, 'destroyNewsType'])->name('newsType.destroyNewsType');
-
+Route::get('/freeDocument/getFreeDocumentAlpha', [App\Http\Controllers\FreeDocumentController::class, 'getFreeDocumentAlpha'])->name('freeDocument.getFreeDocumentAlpha');
 Route::get('/freeDocument/getFreeDocument', [App\Http\Controllers\FreeDocumentController::class, 'getFreeDocument'])->name('freeDocument.getFreeDocument');
 Route::post('/freeDocument/createFreeDocument', [App\Http\Controllers\FreeDocumentController::class, 'createFreeDocument'])->name('freeDocument.createFreeDocument');
 Route::post('/freeDocument/updateFreeDocument/{id}', [App\Http\Controllers\FreeDocumentController::class, 'updateFreeDocument'])->name('freeDocument.updateFreeDocument');

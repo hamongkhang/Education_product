@@ -25,17 +25,17 @@ const arr = {
   ],
 };
 
-const RightDocument = () => {
-  const [list, setList] = useState([]);
-
-  useEffect(() => {
-    setList(arr);
-  }, []);
-
+const RightDocument = (props) => {
     return (
-        list ? <div className="other-doc-right">
-          <ListDocument list={list} />
-          <ListDocument list={list} />
+      props.documentRight ? <div className="other-doc-right">
+          {
+            props.categoryRight.map((item, index) => {
+              let document = props.documentRight.filter(item2 => item.name === item2.category_name);
+              if(document) {
+                return <ListDocument documentRight={document}/>
+              }
+            })
+          }
         </div> : ""
     )
 };

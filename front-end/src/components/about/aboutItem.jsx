@@ -9,11 +9,11 @@ const AboutItem = (props) => {
             </div>
             <div className="px-5">
                 <div className="mb-4">
-                    <img src="" alt="" srcset="./assets/images/slider/city.jpg 2x" className="h-20 w-20 object-cover mx-auto block"/>
+                    <img src="" alt="" srcset={props.image} className="h-20 w-20 object-cover mx-auto block"/>
                 </div>
                 <div className="mb-5">
                     <p className="line-7 text-center">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam itaque atque, incidunt optio repellendus eos sapiente deleniti sed minima dolore dignissimos dolorem fugit, accusamus inventore doloremque? Reiciendis animi perferendis sed.
+                        {props.data}
                     </p>
                 </div>
             </div>
