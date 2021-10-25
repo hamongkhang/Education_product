@@ -1,11 +1,13 @@
-.answer-detail{
+/* .answer-detail{
     margin-top: 0;
-    width: 78%;
+    width: 100%;
     min-height: 100px;
-}
+} */
 .other-doc-left + .answer-detail{
     margin-left: 2%;
 }
+
+
 .answer-detail__block{
     border-radius: 5px;
     border: 1px solid rgba(165, 158, 158, 0.4);
@@ -24,6 +26,7 @@
 .answer-left + .answer-right{
     margin-left: 2%;
 }
+
 .answer-right{
     width: 73%;
     min-height: 50px;

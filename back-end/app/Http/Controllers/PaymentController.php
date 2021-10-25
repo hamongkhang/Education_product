@@ -9,6 +9,7 @@ use App\Models\Cart;
 use App\Models\History;
 use App\Models\UserCode;
 use App\Models\UserCourse;
+use App\Models\UserExam;
 use App\Models\ForgotCode;
 use App\Models\momoOrderDetail;
 use Illuminate\Support\Facades\Hash;
@@ -200,6 +201,149 @@ class PaymentController extends Controller
          return response()->json(['response' => $jsonResult['message']]);
          }
  }
+
+
+ public function momoPaymentExam(Request $request)
+ {
+         $dataUser=auth()->user();
+         $validator = Validator::make($request->all(), [
+             'amount' => 'required',
+             'id_exam' =>'required'
+         ]);
+         if ($validator->fails()) {
+             return response()->json(['error'=>$validator->errors()], 400);      
+         }
+         $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
+         $partnerCode = 'MOMO282120210723';
+         $accessKey = 'lI611IsPM6PQ3TFC';
+         $serectkey = 'w3SOos2fvPln43ksfcJFAEMvhB9joTTZ';
+         $orderId = time() ."";
+         $orderInfo = "Thanh toán qua MoMo";
+         $amount = $request->amount;
+         $ipnUrl = "http://localhost:3000/check-result-payment-exam";
+         $redirectUrl = "http://localhost:3000/check-result-payment-exam";
+         $extraData = "merchantName=MoMo Partner";
+         $requestId = time() . "";
+         $requestType = "captureWallet";
+         $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
+         $signature = hash_hmac("sha256", $rawHash, $serectkey);
+         $data = array('partnerCode' => $partnerCode,
+             'partnerName' => $dataUser->fullName,
+             "storeId" => "MomoTestStore",
+             'requestId' => $requestId,
+             'amount' => $amount,
+             'orderId' => $orderId,
+             'orderInfo' => $orderInfo,
+             'redirectUrl' => $redirectUrl,
+             'ipnUrl' => $ipnUrl,
+             'lang' => 'vi',
+             'extraData' => $extraData,
+             'requestType' => $requestType,
+             'signature' => $signature
+         );
+         $dataMomo=array(
+         'userId' => $dataUser->id,
+         'partnerCode' => $partnerCode,
+         'partnerName' => $dataUser->fullName,
+         "storeId" => "MomoTestStore",
+         'requestId' => $requestId,
+         'amount' => $amount,
+         'orderId' => $orderId,
+         'payType' => "qr",
+         'orderInfo' => $orderInfo,
+         'redirectUrl' => $redirectUrl,
+         'ipnUrl' => $ipnUrl,
+         'lang' => 'vi',
+         'extraData' => $extraData,
+         'requestType' => $requestType,
+         'signature' => $signature,
+         'status' => "unsuccessful",
+         'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+         'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+     );
+     $dataUserExam=array(
+        'id_payment' => $orderId,
+        'id_user' => $dataUser->id,
+        'id_exam' => $request->id_exam,
+        'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+        'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+    );
+         $user = momoOrderDetail::create($dataMomo);
+         $user2=UserExam::create($dataUserExam);
+         $ch = curl_init($endpoint);
+         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+         curl_setopt($ch, CURLOPT_POSTFIELDS , json_encode($data));
+         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                 'Content-Type: application/json',
+                 'Content-Length: ' . strlen(json_encode($data)))
+         );
+         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+         $result = curl_exec($ch);
+         curl_close($ch);
+         $jsonResult = json_decode($result, true);
+         return response()->json(['url' => $jsonResult['payUrl']]);
+ }
+
+
+ public function checkResultExam(){
+    $dataUser=auth()->user();
+    $dataCheck = DB::table('momoOrderDetails')->where('userId', $dataUser->id)->get();
+    $dataCheck2 = DB::table('user_exam')->where('id_user', $dataUser->id)->get();
+    $endpoint = "https://test-payment.momo.vn/v2/gateway/api/query";
+    $partnerCode = 'MOMO282120210723';
+    $accessKey = 'lI611IsPM6PQ3TFC';
+    $secretKey = 'w3SOos2fvPln43ksfcJFAEMvhB9joTTZ';
+    $requestId = time()."";
+    $orderId =$dataCheck[count($dataCheck)-1]->orderId;
+    $rawHash = "accessKey=".$accessKey."&orderId=".$orderId."&partnerCode=".$partnerCode."&requestId=".$requestId;
+    $signature = hash_hmac("sha256", $rawHash, $secretKey);
+    $data = array('partnerCode' => $partnerCode,
+    'requestId' => $requestId,
+    'orderId' => $orderId,
+    'signature' => $signature,
+    'lang' => 'vi');
+     $ch = curl_init($endpoint);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+       'Content-Type: application/json',
+       'Content-Length: ' . strlen(json_encode($data)))
+    );
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+    $result = curl_exec($ch);
+    curl_close($ch);
+        $jsonResult = json_decode($result, true);
+
+    if (($jsonResult['resultCode']===0)&&($jsonResult['message']==="Giao dịch thành công.")){
+    DB::table('momoOrderDetails')->where('orderId', $dataCheck[count($dataCheck)-1]->orderId)->update(['status'	=>	"successfully"]);
+    $dataFind=DB::table('momoOrderDetails')->where('orderId', $dataCheck[count($dataCheck)-1]->orderId)->first();
+    $getUserExam=DB::table('user_exam')->where('id_payment', $dataCheck2[count($dataCheck2)-1]->id_payment)->first();
+    $dataHistory=array(
+        'id_payment' => $getUserExam->id_payment,
+        'userId' => $getUserExam->id_user,
+        'product_id' => $getUserExam->id_exam,
+        'type' => "exam",
+        'quantity' => 1,
+        'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+        'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+    );
+   $history =  History::create($dataHistory);
+      
+     return response()->json(['response' =>  $jsonResult['message']]);
+     }
+     else{
+     return response()->json(['response' => $jsonResult['message']]);
+     }
+}
+
+
+
+
+
 
 
  /**

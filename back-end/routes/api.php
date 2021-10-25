@@ -51,6 +51,8 @@ Route::get('/auth/facebook/callback', [FbController::class, 'callBackFaceBook'])
 Route::get('/users/getAdmin', [App\Http\Controllers\UsersController::class, 'getAdmin'])->name('user.getAdmin');
 
 /* Api Payment */
+Route::post('/payment/momoPaymentExam', [App\Http\Controllers\PaymentController::class, 'momoPaymentExam'])->name('payment.momoPaymentExam');
+Route::post('/payment/checkResultExam', [App\Http\Controllers\PaymentController::class, 'checkResultExam'])->name('payment.checkResultExam');
 Route::post('/payment/momoPayment', [App\Http\Controllers\PaymentController::class, 'momoPayment'])->name('payment.momoPayment');
 Route::post('/payment/checkResult', [App\Http\Controllers\PaymentController::class, 'checkResult'])->name('payment.checkResult');
 Route::post('/payment/atmPayment', [App\Http\Controllers\PaymentController::class, 'atmPayment'])->name('payment.atmPayment');
@@ -108,6 +110,7 @@ Route::post('/featuredPost/blockActiveFeaturedPost/{id}', [App\Http\Controllers\
 Route::post('/admin/loginAdmin', [App\Http\Controllers\UsersController::class, 'loginAdmin'])->name('admin.loginAdmin');
 Route::post('/admin/blockAccount/{id}', [App\Http\Controllers\AdminController::class, 'blockAccount'])->name('admin.loginAdmin');
 /* Api History */
+Route::get('/history/getHistoryExam', [App\Http\Controllers\HistoryController::class, 'getHistoryExam'])->name('history.getHistoryExam');
 Route::get('/history/getHistory', [App\Http\Controllers\HistoryController::class, 'getHistory'])->name('history.getHistory');
 Route::post('/history/getHistoryProduct', [App\Http\Controllers\HistoryController::class, 'getHistoryProduct'])->name('history.getHistoryProduct');
 Route::post('/history/getHistoryType', [App\Http\Controllers\HistoryController::class, 'getHistoryType'])->name('history.getHistoryType');
@@ -187,3 +190,7 @@ Route::post('/cart/getCart', [App\Http\Controllers\CartController::class, 'getCa
 Route::post('/cart/addCart', [App\Http\Controllers\CartController::class, 'addNewCart'])->name('cart.add');
 Route::post('/cart/updateCart', [App\Http\Controllers\CartController::class, 'updateCart'])->name('cart.update');
 Route::post('/cart/removeCart', [App\Http\Controllers\CartController::class, 'removeCart'])->name('cart.remove');
+/* Api exam */
+Route::get('/exam/getExam', [App\Http\Controllers\ExamController::class, 'getExam'])->name('exam.getExam');
+// Route::post('/freeDocumentCategory/updateFreeDocumentCategory/{id}', [App\Http\Controllers\FreeDocumentCategoryController::class, 'updateFreeDocumentCategory'])->name('freeDocumentCategory.updateFreeDocumentCategory');
+// Route::post('/freeDocumentCategory/destroyFreeDocumentCategory/{id}', [App\Http\Controllers\FreeDocumentCategoryController::class, 'destroyFreeDocumentCategory'])->name('freeDocumentCategory.destroyFreeDocumentCategory');

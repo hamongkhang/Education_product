@@ -44,7 +44,7 @@ const Navbar = (props) => {
                             <Link to="/sach" className="hover whitespace-nowrap">Sách</Link>
                         </li>
                         <li className={ pathname === "/thi-online" ? 'nav-link relative active' : 'nav-link relative' }>
-                            <a href="#" className="hover whitespace-nowrap">Thi Online</a>
+                        <Link to="/thi-on-line" className="hover whitespace-nowrap">THI ONLINE</Link>
                         </li>
                         <li className={ pathname === "/tin-tuc" ? 'nav-link relative active' : 'nav-link relative' }>
                             <Link to="/tin-tuc" className="hover whitespace-nowrap">Tin tức</Link>

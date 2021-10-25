@@ -97,9 +97,11 @@ const PlayCourse = (props) => {
         .then(response => response.json())
         .then(data => {
             setLessonAlpha(data.data)
-            setUrl(data.data[0].file_name)
-            setId(data.data[0].id)
-            getComment(data.data[0].id)
+            if(data.data[0]) {
+                setUrl(data.data[0].file_name)
+                setId(data.data[0].id)
+                getComment(data.data[0].id)
+            }
         });
         return () => {
         }
@@ -131,6 +133,7 @@ const PlayCourse = (props) => {
         setId(id);
         handleContent();
         getComment(id);
+        console.log(url);
     }
 
     const onSubmitComment = (e) => {
@@ -168,7 +171,6 @@ const PlayCourse = (props) => {
             }
         }
     }
-    // if(){
     return (
         <div className="relative overflow-hidden">
             <header className="shadow-md fixed top-0 w-full pt-1 bg-gray-600 z-30 max-w-screen-2xl mx-auto" >
@@ -185,7 +187,10 @@ const PlayCourse = (props) => {
                 <div className="block lg:flex max-w-screen-2xl">
                     <div className="w-full lg:w-3/4">
                         <div className="px-0 md:px-16 bg-black">
-                            <ReactPlayer url={url} controls={true} width="100%"/>
+                            {url.includes("http") ? 
+                                <ReactPlayer url={url} controls={true} width="100%" playing={true}/>
+                                : <ReactPlayer url={`http://localhost:8000/upload/images/course/${url}`} controls={true} width="100%" playing={true}/>
+                            }
                         </div>
                         <div className="w-11/12 mx-auto">
                             <div className="py-3 mt-2 border-b-2 uppercase font-semibold border-blue-600 mb-4 "> Bình luận</div>

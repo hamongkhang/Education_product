@@ -22,10 +22,18 @@ use Illuminate\Support\Str;
 class HistoryController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['onLogin','getTeacher', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
+        $this->middleware('auth:api', ['except' => ['getHistoryExam','onLogin','getTeacher', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
     
     
+    public function getHistoryExam(Request $request){
+        $userFind = auth()->user();
+        $historyExam=DB::table('history')->where('userId',$userFind->id)->where('type','exam')->get();
+        return Response()->json(array("Successfully"=> 1,"data"=>$historyExam ));
+    }
+
+
+
     public function getCountHistory(Request $request){
         $userFind = auth()->user();
         $lesson=[];
