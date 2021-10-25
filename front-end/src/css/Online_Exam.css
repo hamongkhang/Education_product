@@ -1,0 +1,120 @@
+.online-exam{
+    margin-top: 0;
+    width: 78%;
+    min-height: 100px;
+}
+.other-doc-left + .online-exam{
+    margin-left: 2%;
+}
+.online-exam__block{
+    border-radius: 5px;
+    border: 1px solid rgba(165, 158, 158, 0.4);
+    margin-bottom: 30px;
+}
+.online-exam__header{
+    height: 36px;
+    border-radius: 3px;
+    border-bottom: 1px solid #e5e5e5;
+    position: relative;
+    background: #fafafa;
+}
+.online-exam__title{
+    position: absolute;
+    background-color: #0673ba;
+    border-radius: 3px 0 0 3px;
+}
+
+.online-exam__title >h4{
+    position: relative;
+    color: white;
+    padding: 6.5px 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 15px;
+    float: left;
+    margin: 0;
+}
+
+.online-exam__title >h4::after{
+    content:" ";
+    position: absolute;
+    border-bottom: 18px solid transparent;
+    border-right: 0 solid transparent;
+    border-top: 18px solid transparent;
+    border-left: 13px solid #0673BA;
+    top: 0px;
+    right: -13px;
+}
+.online-exam-body{
+    margin: 5px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.online-exam-body-block{
+    border-radius: 5px;
+    border: 1px solid rgba(165, 158, 158, 0.4);
+    margin-bottom: 30px;
+    margin: 10px;
+}
+
+.online-exam-body-content{
+   display: flex;
+   margin: 5px;
+   width: 100%;
+}
+.online-exam-body-left{
+    width: 60%;
+    cursor: pointer;
+}
+.online-exam-body-left + .online-exam-body-right{
+    margin-left: 3%;
+}
+
+.online-exam-body-right{
+    width: 40%;
+}
+.online-exam-right__name{
+    color: red;
+    font-size: 18px;
+}
+.online-exam-right__seemore{
+    text-align: center;
+    color: red;
+    cursor: pointer;
+    margin-bottom: 8px;
+}
+.online-exam-right__seemore:hover{
+    text-decoration: underline;
+}
+
+/* Responsive */
+
+/* Tablet width >= 740px and width < 1024px */
+@media only screen and (min-width: 46.25em) and (max-width: 63.9357em){
+
+}
+
+/* Mobile width <740px */
+@media only screen and (max-width:46.1875em) {
+    .online-exam-body{
+        margin: 5px;
+        display: grid;
+        grid-template-columns: 100%;
+    }
+    .online-exam-body-content{
+        display: block;
+     }
+     .online-exam{
+        margin-top: 0;
+        width: 100%;
+        min-height: 100px;
+    }
+    .online-exam-body-right{
+        width: 95%;
+    }
+    .online-exam-body-left{
+        width: 95%;
+        margin-bottom: 10px;
+    }
+}

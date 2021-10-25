@@ -42,7 +42,7 @@ export const ListDocument = (props) => {
                 </div>
                 <div className="other-doc-right-content__text">
                   <p className="other-doc-right-content__text--color">
-                        <Link to="/tai-lieu-khac/dap-an">{item.name}</Link>  
+                        <Link to="#">{item.name}</Link>  
                   </p>
                 </div>
               </div>

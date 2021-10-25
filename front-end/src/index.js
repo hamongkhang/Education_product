@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './css/Book-detail.css';
 import "./css/Other_document.css";
+import "./css/Online_Exam.css";
 import "./css/AnswerDetail.css";
 import './css/index.css';
 import App from './App';

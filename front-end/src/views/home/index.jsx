@@ -12,6 +12,11 @@ import Home from './home';
 import ITinTeaching from './ITinTeaching';
 import OtherMaterials from './otherMaterials';
 import ArticleDetails from './articleDetails';
+import ExamIndex from './exam';
+import CheckResultExam from '../../components/cart/checkResultExam';
+
+
+
 
 const HomePages = (props) => {
     const { changeRender } = props;
@@ -33,9 +38,11 @@ const HomePages = (props) => {
                 <Route path="/tin-tuc" exact component={Articles} />
                 <Route path="/it-trong-day-hoc" exact component={ITinTeaching} />
                 <Route path="/check-result-payment" exact component={CheckResult} />
+                <Route path="/check-result-payment-exam" exact component={CheckResultExam} />
                 <Route path="/chi-tiet-bai-viet/:id" exact component={ArticleDetails} />
                 <Route path="/tai-lieu-khac/:id" exact component={OtherMaterials} />
                 <Route path="/tai-lieu-mien-phi" exact component={OtherMaterials} />
+                <Route path="/thi-on-line" exact component={ExamIndex} />
                 <Route path="/" exact component={()=><Home changeRender={changeRender}/>} />
             </div>
         </>
