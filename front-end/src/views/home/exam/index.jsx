@@ -11,7 +11,29 @@ const ExamIndex = () => {
   const [listExamCategory,setListExamCategory] =useState([]);
   const [isShow, setIsShow] = useState(false);
   const [examDetails, setExamDetails] = useState({});
+  const [isShow2, setIsShow2] = useState(false);
+  const [examLesson, setExamLesson] = useState({});
+  const [examLesson2, setExamLesson2] = useState({});
+  const [question,setQuestion] =useState([]);
+  const [answer,setAnswer] =useState([]);
   const $token=localStorage.getItem('access_token');
+
+    const getQuestionAnswer=(id)=>{
+    const _formData = new FormData();
+    _formData.append("id",id)
+    fetch("http://localhost:8000/api/exam/getQuestionAnswer/", {
+        body: _formData,
+        method: "POST",
+        headers: {"Authorization": `Bearer `+$token},
+      })
+    .then(response => response.json())
+    .then(data =>  {
+      setQuestion(data.data[0]);
+      setAnswer(data.data[1]);
+  });
+    return () => {
+}
+}
 
   const getListDocument=()=>{
     fetch("http://localhost:8000/api/exam/getExam", {
@@ -25,20 +47,23 @@ const ExamIndex = () => {
       return () => {
     }
   }
-
-  const handleExamDetails = (id = -1, check = 0) => {
-    // if(id !== -1) {
-
-    // }
-    if(id !== -1) {
+  const handleExamLesson = (id=-1) => {  
       let data = listExam.find(item => item.id === id);
-      if(data) {
-        data = {
-          ...data,
-          check: check,
+      setExamLesson2(data);
+      getQuestionAnswer(id);
+      setIsShow2(true);
+    }
+    const handleExamDetails = (id = -1, check = 0) => {
+      if(id !== -1) {
+        let data = listExam.find(item => item.id === id);
+        if(data) {
+          data = {
+            ...data,
+            check: check,
+          }
+          setExamDetails(data);
         }
-        setExamDetails(data);
-      }
+      setIsShow2(false);
       setIsShow(true);
     }
     else {
@@ -65,8 +90,14 @@ const ExamIndex = () => {
               examRight={listExam} 
               categoryRight={listExamCategory} 
               handleExamDetails={handleExamDetails} 
-              isShow={isShow} 
+              isShow={isShow}
+              isShow2={isShow2}
               examDetails={examDetails}
+              handleExamLesson={handleExamLesson}
+              examLesson={examLesson}
+              examLesson2={examLesson2}
+              question={question}
+              answer={answer}
             />
         </div>
     </>

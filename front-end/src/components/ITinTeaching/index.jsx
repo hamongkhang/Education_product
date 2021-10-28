@@ -10,7 +10,6 @@ const ITinTeachingList = (props) => {
         fetch('http://127.0.0.1:8000/api/ITinTeach/getITinTeach', requestOptions)
         .then(res => res.json())
         .then(json => {      
-            console.log(json.data);   
             setITList(json.data)  
         });
     } 

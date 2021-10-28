@@ -192,5 +192,5 @@ Route::post('/cart/updateCart', [App\Http\Controllers\CartController::class, 'up
 Route::post('/cart/removeCart', [App\Http\Controllers\CartController::class, 'removeCart'])->name('cart.remove');
 /* Api exam */
 Route::get('/exam/getExam', [App\Http\Controllers\ExamController::class, 'getExam'])->name('exam.getExam');
-// Route::post('/freeDocumentCategory/updateFreeDocumentCategory/{id}', [App\Http\Controllers\FreeDocumentCategoryController::class, 'updateFreeDocumentCategory'])->name('freeDocumentCategory.updateFreeDocumentCategory');
+Route::post('/exam/getQuestionAnswer', [App\Http\Controllers\ExamController::class, 'getQuestionAnswer'])->name('exam.getQuestionAnswer');
 // Route::post('/freeDocumentCategory/destroyFreeDocumentCategory/{id}', [App\Http\Controllers\FreeDocumentCategoryController::class, 'destroyFreeDocumentCategory'])->name('freeDocumentCategory.destroyFreeDocumentCategory');

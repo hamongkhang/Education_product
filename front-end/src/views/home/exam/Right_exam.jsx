@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, Route } from "react-router-dom";
-// import "../../../css/Online_Exam.css";
-// import "../../../css/AnswerDetail.css";
 import ExamDetail from "./examDetail";
 
 const arr = [
@@ -80,7 +78,6 @@ const RightExamItem = (props) => {
       setTxt("Xem thêm");
     }
   };
-
   return (
     <>
       <div className="online-exam">
@@ -154,7 +151,7 @@ const RightExamItem = (props) => {
         </div>
       )})}
       <div className={props.isShow ? 'block' : 'hidden'}>
-        <ExamDetail examDetails={props.examDetails} handleExamDetails={props.handleExamDetails}/>
+        <ExamDetail examDetails={props.examDetails} question={props.question} answer={props.answer} handleExamDetails={props.handleExamDetails} examLesson2 = {props.examLesson2} examLesson = {props.examLesson} handleExamLesson = {props.handleExamLesson} isShow2={props.isShow2}/>
       </div>
       </div>
     </>

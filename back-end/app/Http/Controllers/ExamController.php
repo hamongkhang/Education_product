@@ -9,6 +9,7 @@ use App\Models\Cart;
 use App\Models\History;
 use App\Models\Teacher;
 use App\Models\UserCourse;
+use App\Models\QuestionAnswer;
 use App\Models\Exam;
 use App\Models\ExamCategory;
 use App\Models\CommentReply;
@@ -72,6 +73,35 @@ class ExamController extends Controller
 
         
     }
+
+
+    public function getQuestionAnswer(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:exam,id',
+                    ]);
+        if ($validator->fails()) {
+                        return response()->json(['error'=>$validator->errors()], 401);     
+                    }
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $questionFind=DB::table('exam_question')->get();
+            $answerFind=DB::table('question_answer')->get();
+            $answerCorrect=DB::table('exam_answer')->get();
+            $respon=[$questionFind,$answerFind,$answerCorrect];
+            return Response()->json(array("Successfully"=> 1,"data"=>$respon ));
+        }
+        else{
+            $questionFind=DB::table('exam_question')->where('exam_id',$request->id)->get();
+            $answerFind=DB::table('question_answer')->where('id_exam',$request->id)->get();
+            $answerCorrect=DB::table('exam_answer')->where('exam_id',$request->id)->get();
+            $respon=[$questionFind,$answerFind,$answerCorrect];
+            return Response()->json(array("Successfully"=> 1,"data"=>$respon ));
+        }
+
+        
+    }
+
 
 
 
