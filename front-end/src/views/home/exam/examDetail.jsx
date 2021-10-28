@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-const arr = [
-  {
-    id:1,
-    name: "Đề số 7",
-    script: "Đã thi",
-    questions: "40 câu",
-    price: "1000",
-    time: "50 phút",
-  },
-];
+import ExamLesson from './examLesson';
 
 const ExamDetail = ({
   examDetails,
-  handleExamDetails
+  handleExamDetails,
+  examLesson,
+  handleExamLesson,
+  examLesson2,
+  question,
+  answer,
+  isShow2
 }) => {
-  const [arr1, setArr1] = useState([]);
   const $token=localStorage.getItem('access_token');
 
   const payMent=(event,total,id)=>{
@@ -43,13 +38,10 @@ else{
 alert("Chưa đăng nhập!!!")
 }
 }
-  useEffect(() => {
-    setArr1(arr);
-  }, []);
   return (
     <>
       <div className="answer-detail ">
-        <div className="answer-detail__block relative">
+        <div className={`answer-detail__block relative ${isShow2 ? 'hidden' : 'block'}`}>
         <div className="absolute right-3 top-2 cursor-pointer hover:text-red-500" onClick={() => handleExamDetails()}>
           <i className="far fa-times"></i>
         </div>
@@ -86,8 +78,11 @@ alert("Chưa đăng nhập!!!")
                           </p>
                         </div>
                       </>
-                <button type="submit" onClick={(event) => payMent(event, examDetails.price, examDetails.id)} className='answer-right__button answer-right__button--succ'>Mua bài kiểm tra</button>
-            </div>
+                      {examDetails.check ?  
+                      <button type="submit"  onClick={() => handleExamLesson(examDetails.id, 1)} className='answer-right__button answer-right__button--succ'>Bắt đầu thi</button>
+                       :  <button type="submit" onClick={(event) => payMent(event, examDetails.price, examDetails.id)} className='answer-right__button answer-right__button--succ'>Mua bài kiểm tra</button>
+                      }
+                </div>
           </div>
           <div className='answer-note'>
             <p>Lưu ý: </p>
@@ -99,6 +94,9 @@ alert("Chưa đăng nhập!!!")
             </ul>
         </div>
         </div>
+        <div className={isShow2 ? 'block' : 'hidden'}>
+        <ExamLesson question={question} answer={answer} name={examDetails.name} time={examDetails.time}  examLesson2={examLesson2} examLesson={examLesson} handleExamLesson={handleExamLesson}/>
+      </div>
       </div>
     </>
   );

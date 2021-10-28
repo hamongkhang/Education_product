@@ -118,3 +118,81 @@
         margin-bottom: 10px;
     }
 }
+.test{
+    margin-top: 0;
+    width: 78%;
+    min-height: 100px;
+}
+.other-doc-left + .test{
+    margin-left: 2%;
+}
+.test__block{
+    border-radius: 5px;
+    border: 1px solid rgba(165, 158, 158, 0.4);
+    margin-bottom: 30px;
+    padding: 15px;
+}
+.test__title{
+    font-weight: 500;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.test-body{
+    width: 100%;
+    margin-bottom: 15px;
+}
+.test-body__left{
+    vertical-align: top;
+    width: 3%;
+    font-weight: 700px;
+    text-align: left;
+    padding-right: 10px;
+}
+
+.test-body__left:first-letter{
+    text-transform: capitalize
+  }
+.test-body__right{
+    padding-bottom: 10px;
+    width: 85%;
+}
+.test-body__right:first-letter{
+    text-transform: capitalize
+}
+
+.test-body__left--list{
+    text-align: left;
+    margin-bottom: 8px;
+}
+
+.test-body__left--list-input{
+    padding-bottom: 5px;
+}
+
+.test-body__left--list-answer >p{
+    margin-bottom: 5px;
+}
+.test-body__right--img {
+    margin:10px 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* responsive */
+/* Tablet with >=740 px with <1024px */
+@media only screen and (min-width:46.25em) and (max-width:64em) {
+    .test-body__left--list-input{
+        vertical-align: top;
+    }
+}
+
+/* Mobile with <740 px */
+@media only screen and (max-width:46.1875em) {
+    .test-body__left--list-input{
+        vertical-align: top;
+    }
+    .test{
+        width: 100%;
+    }
+}
