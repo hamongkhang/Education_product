@@ -3,7 +3,8 @@ import { HashRouter, Route, Switch, Redirect } from 'react-router-dom'
 import Dashboard from '../../../views/admin';
 import DataTable from '../../../views/admin/table';
 import Form from '../../../views/admin/form'
-import TextEditor from '../../../views/admin/editor'
+import TextEditor from '../../../views/admin/editor';
+import Chat from '../../../views/admin/chat'
 
 const AdminContent = (props) => {
     return (
@@ -12,6 +13,7 @@ const AdminContent = (props) => {
                     <Route path="/admin/table" exact component={DataTable} />
                     <Route path="/admin/form" exact component={Form} />
                     <Route path="/admin/text-editor" exact component={TextEditor} />
+                    <Route path="/admin/chat" exact component={Chat} />
                     <Route path="/admin" exact component={Dashboard} />
                     {/* <Redirect from="*" to="/admin" /> */}
                 </Switch>
