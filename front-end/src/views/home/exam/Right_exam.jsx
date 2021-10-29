@@ -119,7 +119,7 @@ const RightExamItem = (props) => {
                           </p>
                           <p className="answer-right__time">
                             &nbsp;Thời gian làm bài:{" "}
-                            <strong>{item.time}</strong>
+                            <strong>{item.time} phút</strong>
                           </p>
                             <p className="answer-right__question">
                               &nbsp;Số câu hỏi:{" "}  
@@ -151,7 +151,7 @@ const RightExamItem = (props) => {
         </div>
       )})}
       <div className={props.isShow ? 'block' : 'hidden'}>
-        <ExamDetail examDetails={props.examDetails} question={props.question} answer={props.answer} handleExamDetails={props.handleExamDetails} examLesson2 = {props.examLesson2} examLesson = {props.examLesson} handleExamLesson = {props.handleExamLesson} isShow2={props.isShow2}/>
+        <ExamDetail correct={props.correct} timer={props.timer} examDetails={props.examDetails} question={props.question} answer={props.answer} handleExamDetails={props.handleExamDetails} examLesson2 = {props.examLesson2} examLesson = {props.examLesson} handleExamLesson = {props.handleExamLesson} isShow2={props.isShow2}/>
       </div>
       </div>
     </>

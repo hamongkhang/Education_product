@@ -24,6 +24,7 @@ class ExamAnswer extends Authenticatable implements JWTSubject
         'id',
         'answer',
         'exam_id',
+        'question_id',
         'created_at',
         'updated_at',
     ];

@@ -10,7 +10,9 @@ const ExamDetail = ({
   examLesson2,
   question,
   answer,
-  isShow2
+  isShow2,
+  timer,
+  correct
 }) => {
   const $token=localStorage.getItem('access_token');
 
@@ -74,12 +76,12 @@ alert("Chưa đăng nhập!!!")
                           </p>
                           <p className="answer-right__time">
                             &nbsp;Thời gian làm bài:{" "}
-                            <strong>{examDetails.time}</strong>
+                            <strong>{examDetails.time} phút</strong>
                           </p>
                         </div>
                       </>
                       {examDetails.check ?  
-                      <button type="submit"  onClick={() => handleExamLesson(examDetails.id, 1)} className='answer-right__button answer-right__button--succ'>Bắt đầu thi</button>
+                      <button type="submit"  onClick={() => handleExamLesson(examDetails.id, 1,examDetails.time)} className='answer-right__button answer-right__button--succ'>Bắt đầu thi</button>
                        :  <button type="submit" onClick={(event) => payMent(event, examDetails.price, examDetails.id)} className='answer-right__button answer-right__button--succ'>Mua bài kiểm tra</button>
                       }
                 </div>
@@ -95,7 +97,7 @@ alert("Chưa đăng nhập!!!")
         </div>
         </div>
         <div className={isShow2 ? 'block' : 'hidden'}>
-        <ExamLesson question={question} answer={answer} name={examDetails.name} time={examDetails.time}  examLesson2={examLesson2} examLesson={examLesson} handleExamLesson={handleExamLesson}/>
+        <ExamLesson correct={correct} timer={timer} question={question} answer={answer} number={examDetails.number_question} name={examDetails.name} time={examDetails.time}  examLesson2={examLesson2} examLesson={examLesson} handleExamLesson={handleExamLesson}/>
       </div>
       </div>
     </>

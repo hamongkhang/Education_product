@@ -16,6 +16,9 @@ const ExamIndex = () => {
   const [examLesson2, setExamLesson2] = useState({});
   const [question,setQuestion] =useState([]);
   const [answer,setAnswer] =useState([]);
+  const [timer, setTimer] = React.useState(0);
+  const [correct, setCorrect] = React.useState(0)
+  const countRef = React.useRef(null)
   const $token=localStorage.getItem('access_token');
 
     const getQuestionAnswer=(id)=>{
@@ -30,6 +33,7 @@ const ExamIndex = () => {
     .then(data =>  {
       setQuestion(data.data[0]);
       setAnswer(data.data[1]);
+      setCorrect(data.data[2]);
   });
     return () => {
 }
@@ -47,11 +51,16 @@ const ExamIndex = () => {
       return () => {
     }
   }
-  const handleExamLesson = (id=-1) => {  
+  const handleExamLesson = (id=-1,i,time) => {  
       let data = listExam.find(item => item.id === id);
       setExamLesson2(data);
       getQuestionAnswer(id);
       setIsShow2(true);
+      clearInterval(countRef.current);
+      setTimer(time*60);
+      countRef.current = setInterval(() => {
+            setTimer((timer) => timer -1);
+    }, 1000)
     }
     const handleExamDetails = (id = -1, check = 0) => {
       if(id !== -1) {
@@ -72,10 +81,10 @@ const ExamIndex = () => {
       }
     }
   }
-
   useEffect(() => {
     getListDocument();
   }, []);
+  if(timer!=-1){
   return (
     <>
         <BannerBook/>
@@ -98,10 +107,16 @@ const ExamIndex = () => {
               examLesson2={examLesson2}
               question={question}
               answer={answer}
+              timer={timer}
+              correct={correct}
             />
         </div>
     </>
-  );
+  );}
+  else{
+            clearInterval(countRef.current);
+            setTimer(0)
+  }
 };
 
 export default ExamIndex;
