@@ -343,7 +343,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .toggle-label input:checked+.toggle-btn {
-    background-color: #777;
+    background-color: rgb(52 211 153);
 }
 
 .toggle-label input:checked+.toggle-btn .spinner {
