@@ -14,7 +14,7 @@ const TextEditor = () => {
     }
 	
 	return (
-        <div>
+        <div className="shadow-lg">
         <JoditEditor
             ref={editor}
             value={content}
