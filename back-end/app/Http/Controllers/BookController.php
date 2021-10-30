@@ -67,23 +67,19 @@ class BookController extends Controller
         return response()->json([
             'bookTypeSearch'=>$book
         ], 200);
-    }else{
-        $login = auth()->user();
-        if($login && $login->is_admin == true){
-            $books = Book::all();
+        }else{
+            $login = auth()->user();
+            if($login && $login->is_admin == true){
+                $books = Book::all();
+            }
+            else{
+                $books = Book::where('status','Active')->get();
+            }
+            return response()->json([
+                'bookTypeSearch'=>$books
+            ], 200);  
         }
-        else{
-            $books = Book::where('status','Active')->get();
-        }
-        return response()->json([
-            'bookTypeSearch'=>$books
-        ], 200);  
     }
-    }
-
-
-
-
     public function addBook(Request $request){
         $login = auth()->user();
         if($login && $login->is_admin == true){
@@ -103,7 +99,7 @@ class BookController extends Controller
                 return response()->json(['error'=>$validator->errors()], 400);      
             }
             if($request->hasfile('image')) {
-                $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'book_images';
+                $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'book';
                 if (!file_exists($destinationPath)) {
                     File::makeDirectory($destinationPath, 0775, true);
                 }       
@@ -112,8 +108,8 @@ class BookController extends Controller
                 $date = $date->format('d-m-Y-H-i-s');
                 $extension = $file->extension();
                 $newImageName = Str::slug('book_img', '_').'_'.$date.'.'.$extension;
-                $file->move(public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'book_images', $newImageName);
-                $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'book_images'.'/'.$newImageName;
+                $file->move(public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'book', $newImageName);
+                $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'images'.'/'.'book'.'/'.$newImageName;
             }
             $book = new Book();
             $book->name = $request->name;
@@ -179,7 +175,7 @@ class BookController extends Controller
                 $book->name = $request->name;
             }
             if($request->hasfile('image')) {
-                $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'book_images';
+                $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'book';
                 if (!file_exists($destinationPath)) {
                     File::makeDirectory($destinationPath, 0775, true);
                 }       
@@ -188,8 +184,8 @@ class BookController extends Controller
                 $date = $date->format('d-m-Y-H-i-s');
                 $extension = $file->extension();
                 $newImageName = Str::slug('book_img', '_').'_'.$date.'.'.$extension;
-                $file->move(public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'book_images', $newImageName);
-                $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'book_images'.'/'.$newImageName;
+                $file->move(public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'book', $newImageName);
+                $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'images'.'/'.'book'.'/'.$newImageName;
             }
             $request->Initial_price == null ? $book->Initial_price = $book->Initial_price : $book->Initial_price = $request->Initial_price;
             $request->promotion == null ? $book->promotion = $book->promotion : $book->promotion = $request->promotion;

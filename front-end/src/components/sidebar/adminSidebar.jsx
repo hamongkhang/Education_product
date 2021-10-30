@@ -24,9 +24,15 @@ const sidebar = [
         link: "/admin/text-editor",
     },
     {
+        name: "Books",
+        icon: "fad fa-book-open",
+        link: "/admin/books",
+    },
+    {
         name: "Chat",
         icon: "fad fa-book-open",
         link: "/admin/chat",
+
     },
 
 ]
