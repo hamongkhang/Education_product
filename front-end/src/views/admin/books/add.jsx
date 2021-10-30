@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from "react"
 import JoditEditor from "jodit-react";
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure();
 const AddBook = () => {
     const [book, setBook] = useState({
         id:"",
         name:"",
         Initial_price:"",
-        promotion:"",
+        promotion:0,
         promotion_price:"",
         type:"",
         description:"",
@@ -15,6 +17,20 @@ const AddBook = () => {
         image:"",
         author:"",
         status:"Active",
+    });
+    const [error, setError] = useState({
+        id:null,
+        name:null,
+        Initial_price:null,
+        promotion:null,
+        promotion_price:null,
+        type:null,
+        description:null,
+        quantity:null,
+        page_number:null,
+        image:null,
+        author:null,
+        status:null,
     });
     const [file, setFile] = useState(null);
     const [booktypes, setBookTypes] = useState([]);
@@ -43,11 +59,27 @@ const AddBook = () => {
         .then(response => response.json())
         .then(data =>  {
             if(data.error){
-                alert('thêm bị lỗi')
-                console.log(data);
+                toast.error('Thêm bị lỗi', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                setError(data.error);
             }
             else{
-                alert('Thêm thành công')
+                toast.success('Thêm thành công', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
             }
         });
     }
@@ -66,7 +98,7 @@ const AddBook = () => {
         if(_type == "number"){
             if(_name == "page_number" || _name =="quantity"){
                 if(_value==""){
-                    _value=0
+                    _value=1
                 }
                 else{
                     _value=parseInt(_value);
@@ -143,6 +175,7 @@ const AddBook = () => {
         if($token){
            getBookTypes()
         }
+        console.log("render");
     }, [])
     return (
         <section className=" py-1">
@@ -170,6 +203,7 @@ const AddBook = () => {
                                     Tên sách
                                 </label>
                                 <input type="text" name="name" required className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} value={book.name}/>
+                                <span className="text-red-500 text-sm">{error.name?error.name[0]:""}</span>
                             </div>
                         </div>
                         <div className="w-full lg:w-6/12 px-4">
@@ -178,6 +212,7 @@ const AddBook = () => {
                                     Tác giả
                                 </label>
                                 <input type="text" name="author" required className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} value={book.author} />
+                                <span className="text-red-500 text-sm">{error.author?error.author[0]:""}</span>
                             </div>
                         </div>
                         <div className="w-full lg:w-6/12 px-4">
@@ -186,6 +221,7 @@ const AddBook = () => {
                                     Số lượng
                                 </label>
                                 <input type="number" name="quantity" required className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} value={book.quantity} />
+                                <span className="text-red-500 text-sm">{error.quantity?error.quantity[0]:""}</span>
                             </div>
                         </div>
                         <div className="w-full lg:w-6/12 px-4">
@@ -194,6 +230,7 @@ const AddBook = () => {
                                     Số trang
                                 </label>
                                 <input type="number" name="page_number" required min="0" className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} value={book.page_number} onBlur ={(event) => onBlurHandle(event)} />
+                                <span className="text-red-500 text-sm">{error.page_number?error.page_number[0]:""}</span>
                             </div>
                         </div>
                         <div className="w-full lg:w-6/12 px-4">
@@ -202,6 +239,7 @@ const AddBook = () => {
                                     Giá gốc
                                 </label>
                                 <input type="number" name="Initial_price" required min="0" className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} value={book.Initial_price} onBlur ={(event) => onBlurHandle(event)} />
+                                <span className="text-red-500 text-sm">{error.Initial_price?error.Initial_price[0]:""}</span>
                             </div>
                         </div>
                         <div className="w-full lg:w-3/12 px-4">
@@ -210,6 +248,7 @@ const AddBook = () => {
                                     Giảm giá (%)
                                 </label>
                                 <input type="number" name="promotion" required min="0" className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} value={book.promotion} onBlur ={(event) => onBlurHandle(event)} />
+                                <span className="text-red-500 text-sm">{error.promotion?error.promotion[0]:""}</span>
                             </div>
                         </div>
                         <div className="w-full lg:w-3/12 px-4">
@@ -219,7 +258,7 @@ const AddBook = () => {
                                 </label>
                                 <label htmlFor={`toggle`} className="toggle-label">
                                     <input type="checkbox" name="status" id={`toggle`} 
-                                        checked = {book.status === 'Active'?true:false}
+                                        defaultChecked = {book.status === 'Active'?true:false}
                                         onChange={(event) => onChangeHandle(event)}
                                         hidden />
                                     <div className="toggle-btn">
@@ -262,7 +301,8 @@ const AddBook = () => {
                                     <i className="fad fa-camera mr-2"></i>
                                     <span> Đổi ảnh</span>
                                 </label>
-                                <input type="file" name="avatar" id="avt" name="image" hidden required onChange={(event) => onChangeHandle(event)}/>
+                                <input type="file" id="avt" name="image" hidden required onChange={(event) => onChangeHandle(event)}/>
+                                <span className="text-red-500 text-sm">{error.image?error.image[0]:""}</span>
 
                                 {/* <input type="file" required min="0" className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" /> */}
                             </div>
@@ -279,6 +319,7 @@ const AddBook = () => {
                                     tabIndex={1}
                                     onBlur={newContent => setBook({...book,["description"]:newContent})} 
                                 />
+                                <span className="text-red-500 text-sm">{error.description?error.description[0]:""}</span>
                             </div>
                         </div>
                     </div>

@@ -11,7 +11,7 @@ const AdminAccount = (props) => {
         <div className="h-full mr-8 relative">
             <div className={`flex items-center space-x-3 cursor-pointer`} onClick={handleLoginDropdown}>
                 <div>
-                    <img className="h-8 w-8 object-cover rounded-full" srcset={`${window.location.origin}/assets/images/slider/city.jpg`} />
+                    <img className="h-8 w-8 object-cover rounded-full" src={`${window.location.origin}/assets/images/slider/city.jpg`} />
                 </div>
                 <div>
                     <span>Ax Nguyễn</span>
