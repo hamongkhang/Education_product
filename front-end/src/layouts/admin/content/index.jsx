@@ -2,8 +2,7 @@ import React from 'react'
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom'
 import Dashboard from '../../../views/admin';
 import DataTable from '../../../views/admin/table';
-import Form from '../../../views/admin/form'
-import TextEditor from '../../../views/admin/editor'
+import Form from '../../../views/admin/form';
 import BooksTable from '../../../views/admin/books';
 import EditBook from '../../../views/admin/books/edit';
 import AddBook from '../../../views/admin/books/add';

@@ -90,10 +90,22 @@ class BookController extends Controller
                 'image'=>'required|image|mimes:png,jpeg,jpg',
                 'type'=>'required|exists:book_type,id',
                 'page_number'=>'required|numeric|min:1',
-                'author'=>'required|min:1',
+                'author'=>'required|min:1|max:255',
                 'status'=>'required|in:Active,Block',
                 'quantity'=>'required|numeric|min:1',
                 'description'=>'required'
+            ],[
+                'name.required' => 'Tên sách không để trống',
+                'name.max' => 'Tên sách không quá 255 kí tự',
+                'name.unique' => 'Tên này đã tồn tại',
+                'Initial_price.required' => 'Giá tiền không để trống',
+                'image.image' => 'Hãy chọn hình ảnh',
+                'image.mimes' => 'Hãy chọn hình ảnh có đuôi là PNG, JPG, JPEG',
+                'type.required' => 'Hãy chọn loại sách',
+                'page_number.required' => 'Số trang sách không để trống',
+                'author.required' => 'Tên tác giả không để trống',
+                'quantity.required' => 'Số lượng sách không để trống',
+                'description.required' => 'Mô tả sách không để trống',
             ]);
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      
@@ -153,9 +165,18 @@ class BookController extends Controller
                 'type'=>'exists:book_type,id',
                 'page_number'=>'numeric|min:1',
                 'status'=>'in:Active,Block',
-                'author'=>'',
+                'author'=>'max:255',
+                'quantity'=>'numeric|min:1',
                 'description'=>''
 
+            ],[
+                'name.max' => 'Tên sách không quá 255 kí tự',
+                'name.unique' => 'Tên này đã tồn tại',
+                'image.image' => 'Hãy chọn hình ảnh',
+                'image.mimes' => 'Hãy chọn hình ảnh có đuôi là PNG, JPG, JPEG',
+                'page_number.min' => 'Số trang sách ít nhất là 1 trang',
+                'author.required' => 'Tên tác giả không để trống',
+                'quantity.min' => 'Số lượng sách ít nhất 1 trang',
             ]);
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      

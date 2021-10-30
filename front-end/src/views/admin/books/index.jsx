@@ -1,6 +1,8 @@
 import React, { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom';
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure();
 const BooksTable = (props) => {
     const $token=localStorage.getItem('access_token');
     const [books, setBooks] = useState([]);
@@ -20,6 +22,44 @@ const BooksTable = (props) => {
         });
         return () => {
         }
+    }
+    const deleteBook = (id) =>{
+        const _formData = new FormData();
+        _formData.append("id",id)
+        fetch("http://localhost:8000/api/deleteBook", {
+            method: "POST",
+            body:_formData,
+            headers: {"Authorization": `Bearer `+$token}
+          })
+        .then(response => response.json())
+        .then(data =>  {
+           if(data.error){
+                toast.error('Xóa bị lỗi', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                });
+           }
+           else{
+                setRender(!render)
+                toast.success('Xóa thành công', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                });
+               
+           }
+        });
     }
     const changeStatus = (id) =>{
         const _formData = new FormData();
@@ -103,7 +143,7 @@ const BooksTable = (props) => {
                     {
                         books.map((item,index)=>{
                             return(
-                            <tr>
+                            <tr key={index}>
                                 <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
                                     {item.id}
                                 </th>
@@ -123,7 +163,7 @@ const BooksTable = (props) => {
                                     {item.promotion}
                                 </td>
                                 <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    <img alt="" srcset={`http://localhost:8000/upload/images/book/${item.image}`} className="w-12 h-16 object-cover" />
+                                    <img alt="" src={`http://localhost:8000/upload/images/book/${item.image}`} className="w-12 h-16 object-cover" />
                                 </td>
                                 <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                     {item.type}
@@ -131,7 +171,7 @@ const BooksTable = (props) => {
                                 <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                     <label htmlFor={`toggle${item.id}`} className="toggle-label">
                                         <input type="checkbox" name="" id={`toggle${item.id}`} 
-                                            checked = {item.status === 'Active'?true:false}
+                                            defaultChecked = {item.status === 'Active'?true:false}
                                             hidden onClick={()=>changeStatus(item.id)}/>
                                         <div className="toggle-btn">
                                             <div className="spinner"></div>
@@ -141,7 +181,7 @@ const BooksTable = (props) => {
                                 <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                     <div className="space-x-2">
                                         <Link to={`books/edit/${item.id}`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-green-400 shadow-lg block md:inline-block">Edit</Link>
-                                        <button className="py-1 px-2 text-white rounded hover:opacity-80 bg-red-500 shadow-lg block md:inline-block">Delete</button>
+                                        <button className="py-1 px-2 text-white rounded hover:opacity-80 bg-red-500 shadow-lg block md:inline-block" onClick={()=>deleteBook(item.id)}>Delete</button>
                                     </div>
                                 </td>
                             </tr>
