@@ -2,8 +2,11 @@ import React, {useState, useEffect} from "react"
 import { useRouteMatch } from 'react-router';
 import JoditEditor from "jodit-react";
 import { toast } from 'react-toastify';
+import {useHistory} from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css';
 toast.configure();
+
+
 const EditBook = () => {
     const $link="http://localhost:8000/upload/images/book/";
     const match = useRouteMatch();
@@ -11,6 +14,7 @@ const EditBook = () => {
     const [file, setFile] = useState(null);
     const [booktypes, setBookTypes] = useState([]);
     const [render, setRender] = useState(false);
+    const history = useHistory();
     const $token=localStorage.getItem('access_token');
     const config = {
 		readonly: false
@@ -72,7 +76,7 @@ const EditBook = () => {
                     draggable: true,
                     progress: undefined,
                 });
-                getOneBook();
+                history.push("/admin/books")
             }
         });
     }
@@ -166,9 +170,28 @@ const EditBook = () => {
         if(_type === "checkbox"){
             if(event.target.checked){
                 setBook({...book,["status"]:"Active"})
+                toast.success('Trạng thái mở ', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+
             }
             else{
                 setBook({...book,["status"]:"Block"})
+                toast.success('Trạng thái khóa', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
             }
         }
         else if(_type === "file"){
