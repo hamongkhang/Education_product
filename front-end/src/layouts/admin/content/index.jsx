@@ -8,6 +8,8 @@ import EditBook from '../../../views/admin/books/edit';
 import AddBook from '../../../views/admin/books/add';
 import TextEditor from '../../../views/admin/editor';
 import Chat from '../../../views/admin/chat'
+import AddBookType from '../../../views/admin/bookTypes/add';
+import EditBookType from '../../../views/admin/bookTypes/edit';
 
 const AdminContent = (props) => {
     return (
@@ -21,6 +23,8 @@ const AdminContent = (props) => {
                     <Route path="/admin/books" exact component={BooksTable} />
                     <Route path="/admin/books/edit/:id" exact component={EditBook} />
                     <Route path="/admin/books/add" exact component={AddBook} />
+                    <Route path="/admin/booktypes/add" exact component={AddBookType} />
+                    <Route path="/admin/booktypes/edit/:id" exact component={EditBookType} />
                     {/* <Redirect from="*" to="/admin" /> */}
                 </Switch>
         </div>

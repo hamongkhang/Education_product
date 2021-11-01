@@ -206,7 +206,7 @@ const AddBook = () => {
                 <div className="rounded-t bg-white mb-0 px-6 py-6">
                     <div className="text-center flex justify-between">
                     <h6 className="text-gray-700 text-xl font-bold">
-                        Chỉnh sửa thông tin sách
+                        Thêm sách
                     </h6>
                     {/* <button className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
                         Settings
@@ -224,7 +224,7 @@ const AddBook = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                     Tên sách
                                 </label>
-                                <input type="text" name="name" required className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} value={book.name}/>
+                                <input type="text" name="name" required className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)}/>
                                 <span className="text-red-500 text-sm">{error.name?error.name[0]:""}</span>
                             </div>
                         </div>
@@ -233,7 +233,7 @@ const AddBook = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                     Tác giả
                                 </label>
-                                <input type="text" name="author" required className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} value={book.author} />
+                                <input type="text" name="author" required className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} />
                                 <span className="text-red-500 text-sm">{error.author?error.author[0]:""}</span>
                             </div>
                         </div>
@@ -242,7 +242,7 @@ const AddBook = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                     Số lượng
                                 </label>
-                                <input type="number" name="quantity" required className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} value={book.quantity} />
+                                <input type="number" name="quantity" required className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} />
                                 <span className="text-red-500 text-sm">{error.quantity?error.quantity[0]:""}</span>
                             </div>
                         </div>
@@ -251,7 +251,7 @@ const AddBook = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                     Số trang
                                 </label>
-                                <input type="number" name="page_number" required min="0" className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} value={book.page_number} onBlur ={(event) => onBlurHandle(event)} />
+                                <input type="number" name="page_number" required min="0" className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} onBlur ={(event) => onBlurHandle(event)} />
                                 <span className="text-red-500 text-sm">{error.page_number?error.page_number[0]:""}</span>
                             </div>
                         </div>
@@ -260,7 +260,7 @@ const AddBook = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                     Giá gốc
                                 </label>
-                                <input type="number" name="Initial_price" required min="0" className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} value={book.Initial_price} onBlur ={(event) => onBlurHandle(event)} />
+                                <input type="number" name="Initial_price" required min="0" className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} onBlur ={(event) => onBlurHandle(event)} />
                                 <span className="text-red-500 text-sm">{error.Initial_price?error.Initial_price[0]:""}</span>
                             </div>
                         </div>
@@ -269,7 +269,7 @@ const AddBook = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                     Giảm giá (%)
                                 </label>
-                                <input type="number" name="promotion" required min="0" className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} value={book.promotion} onBlur ={(event) => onBlurHandle(event)} />
+                                <input type="number" name="promotion" required min="0" className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} onBlur ={(event) => onBlurHandle(event)} />
                                 <span className="text-red-500 text-sm">{error.promotion?error.promotion[0]:""}</span>
                             </div>
                         </div>
@@ -336,7 +336,6 @@ const AddBook = () => {
                                 </label>
                                 <JoditEditor
                                     // ref={editor}
-                                    value={book.description}
                                     config={config}
                                     tabIndex={1}
                                     onBlur={newContent => setBook({...book,["description"]:newContent})} 
