@@ -149,13 +149,26 @@ class TeacherController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
             'position' => 'required',
-            'image'=>'required',
-            'image.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
             'description' => 'required',
             'phone' => 'required|numeric|starts_with:0|digits_between:10,12',
             'facebook' => 'required',
             'skype' => 'required',
             'youtube' => 'required'
+        ],[
+            'name.required' => 'Tên giáo viên không để trống',
+            'name.max' => 'Tên giáo viên không quá 255 kí tự',
+            'image.image' => 'Hãy chọn hình ảnh',
+            'image.mimes' => 'Hãy chọn hình ảnh có đuôi là PNG, JPG, JPEG',
+            'position.required' => 'Không được bỏ trống',
+            'description.required' => 'Không được bỏ trống',
+            'facebook.required' => 'Không được bỏ trống',
+            'skype.required' => 'Không được bỏ trống',
+            'youtube.required' => 'Không được bỏ trống',
+            'phone.required' => 'Không được bỏ trống',
+            'phone.numeric' => 'Số điện thoại chỉ chứa chữ số',
+            'phone.starts_with' => 'Số điện thoại phải bắt đầu từ số 0',
+            'phone.digits_between' => 'Số điện thoại phải từ 10 tới 12 số',
         ]);
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 401);     
@@ -192,6 +205,26 @@ class TeacherController extends Controller
             'error' => 'admin not found'
         ], 401); 
     }
+    }
+
+    public function getOneTeacher(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:teacher,id',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 400);      
+        }
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $book = Teacher::find($request->id);
+        }
+        else{
+            $book = Teacher::where('status','Active')->where('id',$request->id)->first();
+        }
+        return response()->json([
+            'data'=>$book
+        ], 200);
+       
     }
 /**
      * @SWG\POST(
@@ -285,13 +318,18 @@ public function updateTeacher($id,Request $request){
     $validator = Validator::make($request->all(), [
         'name' => 'max:255',
         'position' => '',
-        'image'=>'',
-        'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
         'description' => '',
         'phone' => 'numeric|starts_with:0|digits_between:10,12',
         'facebook' => '',
         'skype' => '',
         'youtube' => ''
+    ],[
+        'name.max' => 'Tên giáo viên không quá 255 kí tự',
+        'image.mimes' => 'Hãy chọn hình ảnh có đuôi là PNG, JPG, JPEG',
+        'phone.numeric' => 'Số điện thoại chỉ chứa chữ số',
+        'phone.starts_with' => 'Số điện thoại phải bắt đầu từ số 0',
+        'phone.digits_between' => 'Số điện thoại phải từ 10 tới 12 số',
     ]);
     if ($validator->fails()) {
         return response()->json(['error'=>$validator->errors()], 401);     

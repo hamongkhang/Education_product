@@ -49,6 +49,11 @@ Route::get('/callback/{provider}',  [App\Http\Controllers\SocialController::clas
 Route::get('/auth/facebook', [FbController::class, 'redirectToFacebook']);
 Route::get('/auth/facebook/callback', [FbController::class, 'callBackFaceBook']);
 Route::get('/users/getAdmin', [App\Http\Controllers\UsersController::class, 'getAdmin'])->name('user.getAdmin');
+Route::get('/users/getAllUser', [App\Http\Controllers\UsersController::class, 'getAllUser'])->name('user.getAllUser');
+Route::post('/users/blockActiveUser', [App\Http\Controllers\UsersController::class, 'blockActiveUser'])->name('user.blockActiveUser');
+Route::post('/users/changeDecentralise', [App\Http\Controllers\UsersController::class, 'changeDecentralise'])->name('user.changeDecentralise');
+
+
 
 /* Api Payment */
 Route::post('/payment/momoPaymentExam', [App\Http\Controllers\PaymentController::class, 'momoPaymentExam'])->name('payment.momoPaymentExam');
@@ -91,15 +96,17 @@ Route::post('/news/destroyNews/{id}', [App\Http\Controllers\NewsController::clas
 Route::post('/news/blockActiveNews/{id}', [App\Http\Controllers\NewsController::class, 'blockActiveNews'])->name('news.blockActiveNews');
 /* Api Teacher */
 Route::get('/teacher/getTeacher', [App\Http\Controllers\TeacherController::class, 'getTeacher'])->name('teacher.getTeacher');
+Route::post('/teacher/getOneTeacher', [App\Http\Controllers\TeacherController::class, 'getOneTeacher'])->name('teacher.getOneTeacher');
 Route::post('/teacher/createTeacher', [App\Http\Controllers\TeacherController::class, 'createTeacher'])->name('teacher.createTeacher');
 Route::post('/teacher/destroyTeacher/{id}', [App\Http\Controllers\TeacherController::class, 'destroyTeacher'])->name('teacher.destroyTeacher');
 Route::post('/teacher/updateTeacher/{id}', [App\Http\Controllers\TeacherController::class, 'updateTeacher'])->name('teacher.updateTeacher');
 /*Api Banner */
 Route::get('/banner/getBanner', [App\Http\Controllers\BannerController::class, 'getBanner'])->name('banner.getBanner');
 Route::post('/banner/createBanner', [App\Http\Controllers\BannerController::class, 'createBanner'])->name('banner.createBanner');
+Route::post('/banner/getOneBanner', [App\Http\Controllers\BannerController::class, 'getOneBanner'])->name('banner.getOneBanner');
 Route::post('/banner/destroyBanner/{id}', [App\Http\Controllers\BannerController::class, 'destroyBanner'])->name('banner.destroyBanner');
 Route::post('/banner/updateBanner/{id}', [App\Http\Controllers\BannerController::class, 'updateBanner'])->name('banner.updateBanner');
-Route::post('/banner/blockActiveBanner/{id}', [App\Http\Controllers\BannerController::class, 'blockActiveBanner'])->name('banner.blockActiveBanner');
+Route::post('/banner/blockActiveBanner', [App\Http\Controllers\BannerController::class, 'blockActiveBanner'])->name('banner.blockActiveBanner');
 /* Api Featured Post */
 Route::get('/featuredPost/getFeaturedPost', [App\Http\Controllers\FeaturedPostController::class, 'getFeaturedPost'])->name('featuredPost.getFeaturedPost');
 Route::post('/featuredPost/createFeaturedPost', [App\Http\Controllers\FeaturedPostController::class, 'createFeaturedPost'])->name('featuredPost.createFeaturedPost');

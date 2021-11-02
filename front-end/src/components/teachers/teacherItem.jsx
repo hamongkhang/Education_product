@@ -14,7 +14,7 @@ const TeacherItem = (props) => {
                         <h4 className="font-semibold text-xl">{props.data.name}</h4> 
                     </Link>
                     <span className="text-gray-600 block line-1">{props.data.position}</span>
-                    <span className="text-gray-600 line-2">{props.data.description}n</span>
+                    <span className="text-gray-600 line-2" dangerouslySetInnerHTML={{ __html:props.data.description}}></span>
                 </div>
                 <div className="space-x-4 text-center mt-5">
                     <a href={props.data.facebook} target="_blank" className="inline-block leading-9 text-xl hover:text-white hover:bg-blue-600 text-blue-700 hover:border-blue-600 duration-300 w-10 h-10 border-2 border-gray-400 rounded-sm">
