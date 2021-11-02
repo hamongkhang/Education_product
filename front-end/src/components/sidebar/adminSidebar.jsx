@@ -29,6 +29,11 @@ const sidebar = [
         link: "/admin/books",
     },
     {
+        name: "Teacher",
+        icon: "fad fa-book-open",
+        link: "/admin/teacher",
+    },
+    {
         name: "Chat",
         icon: "fad fa-book-open",
         link: "/admin/chat",

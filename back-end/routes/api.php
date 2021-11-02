@@ -91,6 +91,7 @@ Route::post('/news/destroyNews/{id}', [App\Http\Controllers\NewsController::clas
 Route::post('/news/blockActiveNews/{id}', [App\Http\Controllers\NewsController::class, 'blockActiveNews'])->name('news.blockActiveNews');
 /* Api Teacher */
 Route::get('/teacher/getTeacher', [App\Http\Controllers\TeacherController::class, 'getTeacher'])->name('teacher.getTeacher');
+Route::post('/teacher/getOneTeacher', [App\Http\Controllers\TeacherController::class, 'getOneTeacher'])->name('teacher.getOneTeacher');
 Route::post('/teacher/createTeacher', [App\Http\Controllers\TeacherController::class, 'createTeacher'])->name('teacher.createTeacher');
 Route::post('/teacher/destroyTeacher/{id}', [App\Http\Controllers\TeacherController::class, 'destroyTeacher'])->name('teacher.destroyTeacher');
 Route::post('/teacher/updateTeacher/{id}', [App\Http\Controllers\TeacherController::class, 'updateTeacher'])->name('teacher.updateTeacher');

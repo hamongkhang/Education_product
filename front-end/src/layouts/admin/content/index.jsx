@@ -8,6 +8,9 @@ import EditBook from '../../../views/admin/books/edit';
 import AddBook from '../../../views/admin/books/add';
 import TextEditor from '../../../views/admin/editor';
 import Chat from '../../../views/admin/chat'
+import TeacherTable from '../../../views/admin/teacher'
+import AddTeacher from '../../../views/admin/teacher/add'
+import EditTeacher from '../../../views/admin/teacher/edit'
 
 const AdminContent = (props) => {
     return (
@@ -21,6 +24,10 @@ const AdminContent = (props) => {
                     <Route path="/admin/books" exact component={BooksTable} />
                     <Route path="/admin/books/edit/:id" exact component={EditBook} />
                     <Route path="/admin/books/add" exact component={AddBook} />
+                    <Route path="/admin/teacher" exact component={TeacherTable} />
+                    <Route path="/admin/teacher/add" exact component={AddTeacher} />
+                    <Route path="/admin/teacher/edit/:id" exact component={EditTeacher} />
+
                     {/* <Redirect from="*" to="/admin" /> */}
                 </Switch>
         </div>
