@@ -41,7 +41,7 @@ class ChatController extends Controller
                 ]);
             }
             else{
-                $users = User::where('is_admin', false)->orderBy('id', 'DESC')->get('id');
+                $users = User::where('is_admin', false)->orderBy('id', 'DESC')->get(['id','fullName','avatar']);
                 return [
                     'success' => 1,
                     'users' => $users,
@@ -126,6 +126,7 @@ class ChatController extends Controller
                 'birthday'=> now(),
                 'sex' => 'male',
                 'status' => 'status',
+                'avatar' => 'male_avatar.jpg',
                 'email'     => 'email'.$count,
                 'password'  =>  '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', //password
                 'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),

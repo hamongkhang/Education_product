@@ -65,6 +65,7 @@ const EditBook = () => {
                     draggable: true,
                     progress: undefined,
                 });
+                setError(data.error);
             }
             else{
                 toast.success('Cập nhật thành công', {
@@ -332,7 +333,7 @@ const EditBook = () => {
                                 </select>
                             </div>
                         </div>
-                        <div className="w-full px-4 ">
+                        <div className="w-full px-4">
                             <div className="relative w-full mb-3 group h-96">
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
                                     Hình ảnh
@@ -342,14 +343,13 @@ const EditBook = () => {
                                     <i className="fad fa-camera mr-2"></i>
                                     <span> Đổi ảnh</span>
                                 </label>
-                                <input type="file" id="avt" name="image" hidden required onChange={(event) => onChangeHandle(event)}/>
+                                <input type="file" name="image" hidden required onChange={(event) => onChangeHandle(event)}/>
                                 <span className="text-red-500 text-sm">{error.image?error.image[0]:""}</span>
-
                             </div>
                         </div>
                         <div className="w-full lg:w-12/12 px-4">
                             <div className="relative w-full mb-3">
-                                <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                                <label className="block uppercase text-gray-600 text-xs font-bold mb-2">
                                     Mô tả
                                 </label>
                                 <JoditEditor
