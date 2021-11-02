@@ -29,8 +29,8 @@ const sidebar = [
         link: "/admin/books",
     },
     {
-        name: "Teacher",
-        icon: "fad fa-book-open",
+        name: "Teachers",
+        icon: "fas fa-chalkboard-teacher",
         link: "/admin/teacher",
     },
     {

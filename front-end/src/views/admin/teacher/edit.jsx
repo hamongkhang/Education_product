@@ -209,7 +209,6 @@ const EditTeacher = () => {
                                     Mô tả
                                 </label>
                                 <JoditEditor
-                                    //ref={editor}
                                     config={config}
                                     value={editTeacher.description}
                                     tabIndex={1}
