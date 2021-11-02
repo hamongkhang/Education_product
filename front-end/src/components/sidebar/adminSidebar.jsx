@@ -8,6 +8,12 @@ const sidebar = [
         icon: "fad fa-book-open",
         link: "/admin",
     },
+    ,
+    {
+        name: "Banners",
+        icon: "fas fa-address-card",
+        link: "/admin/banner",
+    },
     {
         name: "Table",
         icon: "fad fa-book-open",

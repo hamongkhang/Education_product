@@ -98,9 +98,10 @@ Route::post('/teacher/updateTeacher/{id}', [App\Http\Controllers\TeacherControll
 /*Api Banner */
 Route::get('/banner/getBanner', [App\Http\Controllers\BannerController::class, 'getBanner'])->name('banner.getBanner');
 Route::post('/banner/createBanner', [App\Http\Controllers\BannerController::class, 'createBanner'])->name('banner.createBanner');
+Route::post('/banner/getOneBanner', [App\Http\Controllers\BannerController::class, 'getOneBanner'])->name('banner.getOneBanner');
 Route::post('/banner/destroyBanner/{id}', [App\Http\Controllers\BannerController::class, 'destroyBanner'])->name('banner.destroyBanner');
 Route::post('/banner/updateBanner/{id}', [App\Http\Controllers\BannerController::class, 'updateBanner'])->name('banner.updateBanner');
-Route::post('/banner/blockActiveBanner/{id}', [App\Http\Controllers\BannerController::class, 'blockActiveBanner'])->name('banner.blockActiveBanner');
+Route::post('/banner/blockActiveBanner', [App\Http\Controllers\BannerController::class, 'blockActiveBanner'])->name('banner.blockActiveBanner');
 /* Api Featured Post */
 Route::get('/featuredPost/getFeaturedPost', [App\Http\Controllers\FeaturedPostController::class, 'getFeaturedPost'])->name('featuredPost.getFeaturedPost');
 Route::post('/featuredPost/createFeaturedPost', [App\Http\Controllers\FeaturedPostController::class, 'createFeaturedPost'])->name('featuredPost.createFeaturedPost');

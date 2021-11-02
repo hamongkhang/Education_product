@@ -3,35 +3,35 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 toast.configure();
-const TeacherTable = (props) => {
+const BannerTable = (props) => {
     const $token=localStorage.getItem('access_token');
-    const [teacher, setTeacher] = useState([]);
+    const [addBanner,setAddBanner ] = useState([]);
     const [render, setRender] = useState(false);
     const [classOption, setClassOption] = useState("hidden");
     const handleOption = () => {
         classOption === "hidden" ? setClassOption("block") : setClassOption("hidden")
     }
-    const getTeacher=()=>{
-        fetch("http://localhost:8000/api/teacher/getTeacher", {
+    const getBanner=()=>{
+        fetch("http://localhost:8000/api/banner/getBanner", {
             method: "GET",
             headers: {"Authorization": `Bearer `+$token}
           })
         .then(response => response.json())
         .then(data =>  {
-            setTeacher(data.data);
+            setAddBanner(data.data);
         });
         return () => {
         }
     }
-    const onDeleteTeacher = (id)=>{
+    const onDeleteBanner = (id)=>{
         if(window.confirm("Bạn có chắc chắn muốn xóa không ?")){
-            deleteTeacher(id);
+            deleteBanner(id);
         }
     }
-    const deleteTeacher = (id) =>{
+    const deleteBanner = (id) =>{
         const _formData = new FormData();
         _formData.append("id",id)
-        fetch("http://localhost:8000/api/teacher/destroyTeacher/"+id, {
+        fetch("http://localhost:8000/api/banner/destroyBanner/"+id, {
             method: "POST",
             body:_formData,
             headers: {"Authorization": `Bearer `+$token}
@@ -65,10 +65,48 @@ const TeacherTable = (props) => {
            }
         });
     }
-    
+    const changeStatus = (id) =>{
+        const _formData = new FormData();
+        _formData.append("id",id)
+        fetch("http://localhost:8000/api/banner/blockActiveBanner", {
+            method: "POST",
+            body:_formData,
+            headers: {"Authorization": `Bearer `+$token}
+          })
+        .then(response => response.json())
+        .then(data =>  {
+            if(data.error){
+                toast.error('Thay đổi trạng thái lỗi', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                });
+   
+            }
+            else{
+                setRender(!render)
+                toast.success('Thay đổi trạng thái thành công', {
+                 position: "bottom-right",
+                 autoClose: 3000,
+                 hideProgressBar: false,
+                 closeOnClick: true,
+                 pauseOnHover: true,
+                 draggable: true,
+                 progress: undefined,
+                 theme: "colored"
+             });
+
+            }
+        });
+    }
     useEffect(() => {
         if($token){
-           getTeacher();
+           getBanner();
         }
     }, [render])
     return (
@@ -86,7 +124,7 @@ const TeacherTable = (props) => {
                     </button>
                     <div className={`absolute top-full right-0 ${classOption}`}>
                         <div className="py-2 bg-white shadow-lg text-13">
-                            <Link className="block w-full py-1 text-left px-2 hover:bg-gray-200" to={`teacher/add`} >Add</Link>
+                            <Link className="block w-full py-1 text-left px-2 hover:bg-gray-200" to={`banner/add`} >Add</Link>
                             <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
                             <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Export Excel</button>
                         </div>
@@ -102,28 +140,13 @@ const TeacherTable = (props) => {
                         ID
                     </th>
                     <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Tên giáo viên
-                    </th>
-                    <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Chức vụ
-                    </th>
-                    <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Mô tả
-                    </th>
-                    <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Số điện thoại
-                    </th>
-                    <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Facebook
+                        Tên chủ đề
                     </th>
                     <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                         Hình ảnh
                     </th>
                     <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Youtube
-                    </th>
-                    <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Skype
+                        Trạng thái
                     </th>
                     <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                         Ngày tạo
@@ -136,7 +159,7 @@ const TeacherTable = (props) => {
                 <tbody>
 
                     {
-                        teacher.map((item,index)=>{
+                        addBanner.map((item,index)=>{
                             return(
                             <tr key={index}>
                                 <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
@@ -145,33 +168,26 @@ const TeacherTable = (props) => {
                                 <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                     {item.name}
                                 </td>
-                                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                    {item.position}
-                                </td>
-                                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 " dangerouslySetInnerHTML={{ __html:item.description}}>
-                                </td>
-                                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                    {item.phone}
-                                </td>
-                                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                    {item.facebook}
+                                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <img alt="" src={`http://localhost:8000/upload/images/banner/${item.image}`} className="w-12 h-16 object-cover" />
                                 </td>
                                 <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    <img alt="" src={`http://localhost:8000/upload/images/teacher/${item.image}`} className="w-12 h-16 object-cover" />
-                                </td>
-                                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                    {item.youtube}
-                                </td>
-                                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                    {item.skype}
+                                    <label htmlFor={`toggle${item.id}`} className="toggle-label">
+                                        <input type="checkbox" name="" id={`toggle${item.id}`} 
+                                            defaultChecked = {item.status === 'Active'?true:false}
+                                            hidden onClick={()=>changeStatus(item.id)}/>
+                                        <div className="toggle-btn">
+                                            <div className="spinner"></div>
+                                        </div>
+                                    </label>
                                 </td>
                                 <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                     {item.updated_at}
                                 </td>
                                 <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                     <div className="space-x-2">
-                                        <Link to={`teacher/edit/${item.id}`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-green-400 shadow-lg block md:inline-block">Edit</Link>
-                                        <button className="py-1 px-2 text-white rounded hover:opacity-80 bg-red-500 shadow-lg block md:inline-block" onClick={()=>onDeleteTeacher(item.id)}>Delete</button>
+                                        <Link to={`banner/edit/${item.id}`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-green-400 shadow-lg block md:inline-block">Edit</Link>
+                                        <button className="py-1 px-2 text-white rounded hover:opacity-80 bg-red-500 shadow-lg block md:inline-block" onClick={()=>onDeleteBanner(item.id)}>Delete</button>
                                     </div>
                                 </td>
                             </tr>
@@ -189,4 +205,4 @@ const TeacherTable = (props) => {
     )
 }
 
-export default TeacherTable
+export default BannerTable

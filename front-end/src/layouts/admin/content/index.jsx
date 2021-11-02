@@ -11,6 +11,12 @@ import Chat from '../../../views/admin/chat'
 import TeacherTable from '../../../views/admin/teacher'
 import AddTeacher from '../../../views/admin/teacher/add'
 import EditTeacher from '../../../views/admin/teacher/edit'
+import BannerTable from '../../../views/admin/banner'
+import EditBanner from '../../../views/admin/banner/edit'
+import AddBanner from '../../../views/admin/banner/add'
+
+
+
 
 const AdminContent = (props) => {
     return (
@@ -27,7 +33,9 @@ const AdminContent = (props) => {
                     <Route path="/admin/teacher" exact component={TeacherTable} />
                     <Route path="/admin/teacher/add" exact component={AddTeacher} />
                     <Route path="/admin/teacher/edit/:id" exact component={EditTeacher} />
-
+                    <Route path="/admin/banner" exact component={BannerTable} />
+                    <Route path="/admin/banner/add" exact component={AddBanner} />
+                    <Route path="/admin/banner/edit/:id" exact component={EditBanner} />
                     {/* <Redirect from="*" to="/admin" /> */}
                 </Switch>
         </div>

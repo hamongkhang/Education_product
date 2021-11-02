@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react"
 import JoditEditor from "jodit-react";
 import { toast } from 'react-toastify';
+import {useHistory} from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css';
 toast.configure();
 const AddBook = () => {
@@ -38,6 +39,7 @@ const AddBook = () => {
     const config = {
 		readonly: false
 	}
+    const history = useHistory();
     const addBook = () => {
         const _formData = new FormData();
         _formData.append("id",book.id)
@@ -80,6 +82,7 @@ const AddBook = () => {
                     draggable: true,
                     progress: undefined,
                 });
+                history.push("/admin/books")
             }
         });
     }
@@ -147,9 +150,28 @@ const AddBook = () => {
         if(_type === "checkbox"){
             if(event.target.checked){
                 setBook({...book,["status"]:"Active"})
+                toast.success('Trạng thái mở ', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+
             }
             else{
                 setBook({...book,["status"]:"Block"})
+                toast.success('Trạng thái khóa', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
             }
         }
         else if(_type === "file"){
@@ -184,8 +206,11 @@ const AddBook = () => {
                 <div className="rounded-t bg-white mb-0 px-6 py-6">
                     <div className="text-center flex justify-between">
                     <h6 className="text-gray-700 text-xl font-bold">
-                        Chỉnh sửa thông tin sách
+                        Thêm sách
                     </h6>
+                    {/* <button className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="button">
+                        Settings
+                    </button> */}
                     </div>
                 </div>
                 <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
@@ -199,7 +224,7 @@ const AddBook = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                     Tên sách
                                 </label>
-                                <input type="text" name="name" required className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} value={book.name}/>
+                                <input type="text" name="name" required className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)}/>
                                 <span className="text-red-500 text-sm">{error.name?error.name[0]:""}</span>
                             </div>
                         </div>
@@ -208,7 +233,7 @@ const AddBook = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                     Tác giả
                                 </label>
-                                <input type="text" name="author" required className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} value={book.author} />
+                                <input type="text" name="author" required className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} />
                                 <span className="text-red-500 text-sm">{error.author?error.author[0]:""}</span>
                             </div>
                         </div>
@@ -217,7 +242,7 @@ const AddBook = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                     Số lượng
                                 </label>
-                                <input type="number" name="quantity" required className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} value={book.quantity} />
+                                <input type="number" name="quantity" required className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} />
                                 <span className="text-red-500 text-sm">{error.quantity?error.quantity[0]:""}</span>
                             </div>
                         </div>
@@ -226,7 +251,7 @@ const AddBook = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                     Số trang
                                 </label>
-                                <input type="number" name="page_number" required min="0" className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} value={book.page_number} onBlur ={(event) => onBlurHandle(event)} />
+                                <input type="number" name="page_number" required min="0" className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} onBlur ={(event) => onBlurHandle(event)} />
                                 <span className="text-red-500 text-sm">{error.page_number?error.page_number[0]:""}</span>
                             </div>
                         </div>
@@ -235,7 +260,7 @@ const AddBook = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                     Giá gốc
                                 </label>
-                                <input type="number" name="Initial_price" required min="0" className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} value={book.Initial_price} onBlur ={(event) => onBlurHandle(event)} />
+                                <input type="number" name="Initial_price" required min="0" className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} onBlur ={(event) => onBlurHandle(event)} />
                                 <span className="text-red-500 text-sm">{error.Initial_price?error.Initial_price[0]:""}</span>
                             </div>
                         </div>
@@ -244,7 +269,7 @@ const AddBook = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                     Giảm giá (%)
                                 </label>
-                                <input type="number" name="promotion" required min="0" className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} value={book.promotion} onBlur ={(event) => onBlurHandle(event)} />
+                                <input type="number" name="promotion" required min="0" className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} onBlur ={(event) => onBlurHandle(event)} />
                                 <span className="text-red-500 text-sm">{error.promotion?error.promotion[0]:""}</span>
                             </div>
                         </div>
@@ -288,7 +313,7 @@ const AddBook = () => {
                                 </select>
                             </div>
                         </div>
-                        <div className="w-full px-4 ">
+                        <div className="w-full px-4">
                             <div className="relative w-full mb-3 group h-96">
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                     Hình ảnh
@@ -296,10 +321,12 @@ const AddBook = () => {
                                 <img src={file ? URL.createObjectURL(file):"a"}  className="w-full min-h-96 h-full mb-30 md:mb-1 object-scale-down rounded-lg" alt=""/>
                                 <label htmlFor="avt" className="w-3/5 text-center opacity-0 group-hover:opacity-100 block py-2 rounded-md bg-yellow-400 hover:bg-yellow-500 cursor-pointer text-15 font-semibold absolute bottom-5 transform left-1/2 -translate-x-1/2 duration-300 text-white">
                                     <i className="fad fa-camera mr-2"></i>
-                                    <span> Đổi ảnh</span>
+                                    <span> Chọn ảnh</span>
                                 </label>
                                 <input type="file" id="avt" name="image" hidden required onChange={(event) => onChangeHandle(event)}/>
                                 <span className="text-red-500 text-sm">{error.image?error.image[0]:""}</span>
+
+                                {/* <input type="file" required min="0" className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" /> */}
                             </div>
                         </div>
                         <div className="w-full lg:w-12/12 px-4 mt-10">
@@ -308,7 +335,7 @@ const AddBook = () => {
                                     Mô tả
                                 </label>
                                 <JoditEditor
-                                    value={book.description}
+                                    // ref={editor}
                                     config={config}
                                     tabIndex={1}
                                     onBlur={newContent => setBook({...book,["description"]:newContent})} 
