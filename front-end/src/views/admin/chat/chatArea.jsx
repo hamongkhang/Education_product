@@ -79,6 +79,7 @@ const ChatArea = (props) => {
 
     return (
         <div className="w-2/3">
+            <h5>{props.idd}</h5>
             <div className="bg-white border-l border-gray-300">
                 <div className="flex justify-between items-center p-6">
                     <div className="flex items-center space-x-2">

@@ -125,7 +125,7 @@ const BookDetails = (props) => {
             <div className="my-10">
                 <div>
                     <div className="font-semibold my-4 border-b-2 uppercase border-blue-600 mb-4 py-1">Giới thiệu sách</div>
-                    <p className="text-gray-700">{bookk.description}</p>
+                    <p className="text-gray-700" dangerouslySetInnerHTML={{ __html:bookk.description}}></p>
                 </div>
             </div>
           </div>

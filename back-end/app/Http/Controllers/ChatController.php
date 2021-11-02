@@ -41,7 +41,7 @@ class ChatController extends Controller
                 ]);
             }
             else{
-                $users = User::where('is_admin', false)->orderBy('id', 'DESC')->get('id');
+                $users = User::where('is_admin', false)->orderBy('id', 'DESC')->get(['id','fullName','avatar']);
                 return [
                     'success' => 1,
                     'users' => $users,

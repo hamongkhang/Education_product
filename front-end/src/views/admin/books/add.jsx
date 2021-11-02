@@ -313,7 +313,7 @@ const AddBook = () => {
                                 </select>
                             </div>
                         </div>
-                        <div className="w-full px-4 ">
+                        <div className="w-full px-4">
                             <div className="relative w-full mb-3 group h-96">
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                     Hình ảnh

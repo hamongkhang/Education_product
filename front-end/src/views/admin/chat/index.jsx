@@ -5,40 +5,16 @@ import ChatList from './chatList';
 import ChatArea from './chatArea';
 
 const Chat = (props) => {
-    const [messages, setMessages] = useState([{
-        type: "incoming",
-        image: "./assets/images/slider/city.jpg",
-        message: "Lorem ipsum, dolor sit amet elit."
-    },
-    {
-        type: "incoming",
-        image: "./assets/images/slider/city.jpg",
-        message: "Admin gửi user"
-    },
-    {
-        type: "outgoing",
-        image: "./assets/images/slider/city.jpg",
-        message: "Lorem ipsum, dolor sit amet elit."
-    },
-    {
-        type: "outgoing",
-        image: "./assets/images/slider/city.jpg",
-        message: "Admin gửi user"
-    },
-    {
-        type: "incoming",
-        image: "./assets/images/slider/city.jpg",
-        message: "Lorem ipsum, dolor sit amet elit."
-    },
-    {
-        type: "incoming",
-        image: "./assets/images/slider/city.jpg",
-        message: "Admin gửi user lần 2"
-    },
-    
-    ]);
+    const $token=localStorage.getItem('access_token');
+    const [id, setID] = useState("");
+    const changeID = (id) =>{
+        console.log(id);
+        setID(id)
+    }
     const messageEl = useRef(null);
+    const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState("");
+    const [users, setUsers] = useState([]);
     
     const handleOnchange = (e) => {
         setMessage(e.target.value);
@@ -63,6 +39,19 @@ const Chat = (props) => {
         }
     }
 
+    const getMessages=()=>{
+        fetch("http://localhost:8000/api/inbox", {
+            method: "POST",
+            headers: {"Authorization": `Bearer `+$token}
+          })
+        .then(response => response.json())
+        .then(data =>  {
+           setUsers(data.users)
+           console.log(data.users);
+        });
+        return () => {
+        }
+    }
     const fetchMessages = () => {
         setInterval(() => {
             // api
@@ -78,12 +67,17 @@ const Chat = (props) => {
     //     });
     //     }
     // }, []);
-
+   
+    
+    useEffect(() => {
+        console.log('index');
+        getMessages()
+     }, []);
     return (
         <div className="shadow-xl rounded-lg overflow-hidden bg-white" style={{ height: "calc(100vh - 140px)" }}>
             <div className="flex">
-                <ChatList/>
-                <ChatArea/>
+                <ChatList changeID = {changeID} users={users}/>
+                <ChatArea idd = {id}/>
             </div>
         </div>
     )

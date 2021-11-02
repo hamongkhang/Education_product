@@ -35,80 +35,83 @@ const BooksTable = (props) => {
         }
     }
     const deleteBook = (id) =>{
-        const _formData = new FormData();
-        _formData.append("id",id)
-        fetch("http://localhost:8000/api/deleteBook", {
-            method: "POST",
-            body:_formData,
-            headers: {"Authorization": `Bearer `+$token}
-          })
-        .then(response => response.json())
-        .then(data =>  {
-           if(data.error){
-                toast.error('Xóa bị lỗi', {
-                    position: "bottom-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored"
-                });
-           }
-           else{
-                setRender(!render)
-                toast.success('Xóa thành công', {
-                    position: "bottom-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored"
-                });
-               
-           }
-        });
+        if(window.confirm("Có muốn xóa không")){
+            const _formData = new FormData();
+            _formData.append("id",id)
+            fetch("http://localhost:8000/api/deleteBook", {
+                method: "POST",
+                body:_formData,
+                headers: {"Authorization": `Bearer `+$token}
+              })
+            .then(response => response.json())
+            .then(data =>  {
+               if(data.error){
+                    toast.error('Xóa bị lỗi', {
+                        position: "bottom-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored"
+                    });
+               }
+               else{
+                    setRender(!render)
+                    toast.success('Xóa thành công', {
+                        position: "bottom-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored"
+                    });
+               }
+            });
+        }
     }
     const deleteBookType = (id) =>{
-        const _formData = new FormData();
-        _formData.append("id",id)
-            fetch("http://localhost:8000/api/deleteBookType", {
-            method: "POST",
-            body:_formData,
-            headers: {"Authorization": `Bearer `+$token}
-          })
-        .then(response => response.json())
-        .then(data =>  {
-           if(data.error){
-                toast.error('Xóa bị lỗi', {
-                    position: "bottom-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored"
-                });
-           }
-           else{
-                setRender(!render)
-                toast.success('Xóa thành công', {
-                    position: "bottom-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored"
-                });
-               
-           }
-        });
+        if(window.confirm("Có muốn xóa không")){
+            const _formData = new FormData();
+            _formData.append("id",id)
+                fetch("http://localhost:8000/api/deleteBookType", {
+                method: "POST",
+                body:_formData,
+                headers: {"Authorization": `Bearer `+$token}
+            })
+            .then(response => response.json())
+            .then(data =>  {
+            if(data.error){
+                    toast.error('Xóa bị lỗi', {
+                        position: "bottom-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored"
+                    });
+            }
+            else{
+                    setRender(!render)
+                    toast.success('Xóa thành công', {
+                        position: "bottom-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored"
+                    });
+                
+            }
+            });
+        }
     }
     const changeStatus = (id) =>{
         const _formData = new FormData();
