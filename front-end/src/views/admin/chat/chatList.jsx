@@ -3,7 +3,7 @@ import Outgoing from './outgoing';
 import Incoming from './incoming';
 
 const ChatList = (props) => {
-    const {changeID} = props
+    const {changeUser} = props
     const {users} = props
     const [messages, setMessages] = useState([{
         type: "incoming",
@@ -62,9 +62,7 @@ const ChatList = (props) => {
             setMessage("");
         }
     }
-    useEffect(() => {
-        console.log("chatList");
-     }, []);
+    useEffect(() => {}, [users]);
     return (
         <div className="w-1/3">
             <div className="p-6">
@@ -78,18 +76,19 @@ const ChatList = (props) => {
             <div className="mt-1 border-t border-gray-300 ">
                 <div className="overflow-y-scroll custom-scroll shadow-inner p-6 space-y-4" style={{ height: "calc(100vh - 252px)" }}>
                     {
-                        users.map((item,index)=>{
-                            <div className="shadow flex items-center p-3 rounded-lg cursor-pointer hover:bg-gray-100">
+                        users?
+                        users.map((item,index)=>(
+                            <div key={index} className="shadow flex items-center p-3 rounded-lg cursor-pointer hover:bg-gray-100">
                                 <div className="mr-4">
-                                    <img className="w-12 h-12 object-cover rounded-full" srcset={`${window.location.origin}/assets/images/slider/city.jpg 2x`} />
+                                    <img className="w-12 h-12 object-cover rounded-full" srcSet={`http://localhost:8000/upload/images/avatar/${item.avatar} 2x`} />
                                 </div>
-                                <div onClick={()=>changeID(1)}>
+                                <div onClick={()=>changeUser(item.id,item.avatar)}>
                                     <h3 className="line-1 font-semibold">{item.fullName}</h3>
                                     <span className="line-1 text-gray-500">Last message</span>
                                     {/* <button >cai nut</button> */}
                                 </div>
                             </div>                    
-                        })
+                        )):""
                     }
                     
                 </div>

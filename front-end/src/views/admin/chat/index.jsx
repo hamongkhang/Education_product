@@ -6,10 +6,14 @@ import ChatArea from './chatArea';
 
 const Chat = (props) => {
     const $token=localStorage.getItem('access_token');
-    const [id, setID] = useState("");
-    const changeID = (id) =>{
+    const [user, setUser] = useState({});
+    const changeUser = (id,avatar) =>{
         console.log(id);
-        setID(id)
+        console.log(avatar);
+        setUser({
+            id:id,
+            avatar:avatar
+        })
     }
     const messageEl = useRef(null);
     const [messages, setMessages] = useState([]);
@@ -76,8 +80,8 @@ const Chat = (props) => {
     return (
         <div className="shadow-xl rounded-lg overflow-hidden bg-white" style={{ height: "calc(100vh - 140px)" }}>
             <div className="flex">
-                <ChatList changeID = {changeID} users={users}/>
-                <ChatArea idd = {id}/>
+                <ChatList changeUser = {changeUser} users={users}/>
+                <ChatArea userClicked = {user}/>
             </div>
         </div>
     )

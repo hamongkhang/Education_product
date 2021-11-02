@@ -3,41 +3,10 @@ import Outgoing from './outgoing';
 import Incoming from './incoming';
 
 const ChatArea = (props) => {
-    const [messages, setMessages] = useState([{
-        type: "incoming",
-        image: "./assets/images/slider/city.jpg",
-        message: "Lorem ipsum, dolor sit amet elit."
-    },
-    {
-        type: "incoming",
-        image: "./assets/images/slider/city.jpg",
-        message: "Admin gửi user"
-    },
-    {
-        type: "outgoing",
-        image: "./assets/images/slider/city.jpg",
-        message: "Lorem ipsum, dolor sit amet elit."
-    },
-    {
-        type: "outgoing",
-        image: "./assets/images/slider/city.jpg",
-        message: "Admin gửi user"
-    },
-    {
-        type: "incoming",
-        image: "./assets/images/slider/city.jpg",
-        message: "Lorem ipsum, dolor sit amet elit."
-    },
-    {
-        type: "incoming",
-        image: "./assets/images/slider/city.jpg",
-        message: "Admin gửi user lần 2"
-    },
-    
-    ]);
+    const [messages, setMessages] = useState([]);
     const messageEl = useRef(null);
     const [message, setMessage] = useState("");
-    
+    const $token=localStorage.getItem('access_token');
     const handleOnchange = (e) => {
         setMessage(e.target.value);
     }
@@ -60,7 +29,25 @@ const ChatArea = (props) => {
             setMessage("");
         }
     }
-
+    const getMessages = () =>{
+        if(props.userClicked.id){
+            const _formData = new FormData();
+            _formData.append("sender_id",props.userClicked.id)
+            if($token){
+                const requestOptions = {
+                    method: 'POST',
+                    body:_formData,
+                    headers: {"Authorization": `Bearer `+$token}
+                };
+                fetch('http://127.0.0.1:8000/api/inbox_admin', requestOptions)
+                .then(res => res.json())
+                .then(data =>  {
+                    console.log(data);
+                    setMessages(data.messages)
+                });
+            }
+        }
+    }
     const fetchMessages = () => {
         setInterval(() => {
             // api
@@ -69,17 +56,18 @@ const ChatArea = (props) => {
     
     useEffect(() => {
         // fetchMessages();
+        getMessages();
         if (messageEl) {
         messageEl.current.addEventListener('DOMNodeInserted', event => {
             const { currentTarget: target } = event;
             target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
         });
         }
-    }, []);
+    }, [props.userClicked]);
 
     return (
         <div className="w-2/3">
-            <h5>{props.idd}</h5>
+            <h5>{props.userClicked.id}</h5>
             <div className="bg-white border-l border-gray-300">
                 <div className="flex justify-between items-center p-6">
                     <div className="flex items-center space-x-2">
@@ -89,9 +77,11 @@ const ChatArea = (props) => {
                 </div>
                 <div className="bg-indigo-100 p-4 custom-scroll overflow-y-scroll shadow-inner" ref={messageEl} style={{ height: "calc(100vh - 284px)" }}>
                     {
-                        messages.map((item, index) => (
-                            item.type === "incoming" ? <Incoming key={index} {...item}/> : <Outgoing key={index} {...item}/>
-                        ))
+                        messages?
+                            messages.map((item, index) => (
+                                item.user_id === props.userClicked.id ? <Incoming key={index} {...item} avatar={props.userClicked.avatar}/> : <Outgoing key={index} {...item}/>
+                            ))
+                        :""
                     }
                 </div>
                 <form action="#" className="h-14 relative" onSubmit={handleMessage}>

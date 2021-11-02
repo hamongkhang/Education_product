@@ -2,6 +2,7 @@ import React, { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2'
 toast.configure();
 const BooksTable = (props) => {
     const $token=localStorage.getItem('access_token');
@@ -35,83 +36,105 @@ const BooksTable = (props) => {
         }
     }
     const deleteBook = (id) =>{
-        if(window.confirm("Có muốn xóa không")){
-            const _formData = new FormData();
-            _formData.append("id",id)
-            fetch("http://localhost:8000/api/deleteBook", {
-                method: "POST",
-                body:_formData,
-                headers: {"Authorization": `Bearer `+$token}
-              })
-            .then(response => response.json())
-            .then(data =>  {
-               if(data.error){
-                    toast.error('Xóa bị lỗi', {
-                        position: "bottom-right",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "colored"
-                    });
-               }
-               else{
-                    setRender(!render)
-                    toast.success('Xóa thành công', {
-                        position: "bottom-right",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "colored"
-                    });
-               }
-            });
-        }
+        Swal.fire({
+            title: 'Cảnh báo',
+            text: "Bạn có chắc chắn muốn xóa?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Hủy',
+            confirmButtonText: 'Xóa'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                const _formData = new FormData();
+                _formData.append("id",id)
+                fetch("http://localhost:8000/api/deleteBook", {
+                    method: "POST",
+                    body:_formData,
+                    headers: {"Authorization": `Bearer `+$token}
+                  })
+                .then(response => response.json())
+                .then(data =>  {
+                   if(data.error){
+                        toast.error('Xóa bị lỗi', {
+                            position: "bottom-right",
+                            autoClose: 3000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored"
+                        });
+                   }
+                   else{
+                        setRender(!render)
+                        toast.success('Xóa thành công', {
+                            position: "bottom-right",
+                            autoClose: 3000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored"
+                        });
+                   }
+                });
+            }
+          })
     }
     const deleteBookType = (id) =>{
-        if(window.confirm("Có muốn xóa không")){
-            const _formData = new FormData();
-            _formData.append("id",id)
-                fetch("http://localhost:8000/api/deleteBookType", {
-                method: "POST",
-                body:_formData,
-                headers: {"Authorization": `Bearer `+$token}
-            })
-            .then(response => response.json())
-            .then(data =>  {
-            if(data.error){
-                    toast.error('Xóa bị lỗi', {
-                        position: "bottom-right",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "colored"
-                    });
+        Swal.fire({
+            title: 'Cảnh báo',
+            text: "Bạn có chắc chắn muốn xóa?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Hủy',
+            confirmButtonText: 'Xóa'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                const _formData = new FormData();
+                _formData.append("id",id)
+                    fetch("http://localhost:8000/api/deleteBookType", {
+                    method: "POST",
+                    body:_formData,
+                    headers: {"Authorization": `Bearer `+$token}
+                })
+                .then(response => response.json())
+                .then(data =>  {
+                if(data.error){
+                        toast.error('Xóa bị lỗi', {
+                            position: "bottom-right",
+                            autoClose: 3000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored"
+                        });
+                }
+                else{
+                        setRender(!render)
+                        toast.success('Xóa thành công', {
+                            position: "bottom-right",
+                            autoClose: 3000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored"
+                        });
+                    
+                }
+                });
             }
-            else{
-                    setRender(!render)
-                    toast.success('Xóa thành công', {
-                        position: "bottom-right",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "colored"
-                    });
-                
-            }
-            });
-        }
+          })
     }
     const changeStatus = (id) =>{
         const _formData = new FormData();
