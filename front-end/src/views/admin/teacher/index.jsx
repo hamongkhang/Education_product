@@ -2,6 +2,7 @@ import React, { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2'
 toast.configure();
 const TeacherTable = (props) => {
     const $token=localStorage.getItem('access_token');
@@ -24,9 +25,20 @@ const TeacherTable = (props) => {
         }
     }
     const onDeleteTeacher = (id)=>{
-        if(window.confirm("Bạn có chắc chắn muốn xóa không ?")){
-            deleteTeacher(id);
-        }
+        Swal.fire({
+            title: 'Cảnh báo',
+            text: "Bạn có chắc chắn muốn xóa?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Hủy',
+            confirmButtonText: 'Xóa'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                deleteTeacher(id);
+            }
+          })
     }
     const deleteTeacher = (id) =>{
         const _formData = new FormData();

@@ -14,6 +14,7 @@ import EditTeacher from '../../../views/admin/teacher/edit'
 import BannerTable from '../../../views/admin/banner'
 import EditBanner from '../../../views/admin/banner/edit'
 import AddBanner from '../../../views/admin/banner/add'
+import UserTable from '../../../views/admin/users'
 
 
 
@@ -36,7 +37,8 @@ const AdminContent = (props) => {
                     <Route path="/admin/banner" exact component={BannerTable} />
                     <Route path="/admin/banner/add" exact component={AddBanner} />
                     <Route path="/admin/banner/edit/:id" exact component={EditBanner} />
-                    {/* <Redirect from="*" to="/admin" /> */}
+                    <Route path="/admin/users" exact component={UserTable} />
+                    {/* {/* <Redirect from="*" to="/admin" /> */}
                 </Switch>
         </div>
     )

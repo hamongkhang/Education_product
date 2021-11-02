@@ -49,6 +49,11 @@ Route::get('/callback/{provider}',  [App\Http\Controllers\SocialController::clas
 Route::get('/auth/facebook', [FbController::class, 'redirectToFacebook']);
 Route::get('/auth/facebook/callback', [FbController::class, 'callBackFaceBook']);
 Route::get('/users/getAdmin', [App\Http\Controllers\UsersController::class, 'getAdmin'])->name('user.getAdmin');
+Route::get('/users/getAllUser', [App\Http\Controllers\UsersController::class, 'getAllUser'])->name('user.getAllUser');
+Route::post('/users/blockActiveUser', [App\Http\Controllers\UsersController::class, 'blockActiveUser'])->name('user.blockActiveUser');
+Route::post('/users/changeDecentralise', [App\Http\Controllers\UsersController::class, 'changeDecentralise'])->name('user.changeDecentralise');
+
+
 
 /* Api Payment */
 Route::post('/payment/momoPaymentExam', [App\Http\Controllers\PaymentController::class, 'momoPaymentExam'])->name('payment.momoPaymentExam');
