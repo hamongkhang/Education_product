@@ -52,6 +52,10 @@ Route::get('/users/getAdmin', [App\Http\Controllers\UsersController::class, 'get
 Route::get('/users/getAllUser', [App\Http\Controllers\UsersController::class, 'getAllUser'])->name('user.getAllUser');
 Route::post('/users/blockActiveUser', [App\Http\Controllers\UsersController::class, 'blockActiveUser'])->name('user.blockActiveUser');
 Route::post('/users/changeDecentralise', [App\Http\Controllers\UsersController::class, 'changeDecentralise'])->name('user.changeDecentralise');
+Route::get('/admins/getAllAdmin', [App\Http\Controllers\AdminController::class, 'getAllAdmin'])->name('user.getAllAdmin');
+Route::post('/admins/changeCentralise', [App\Http\Controllers\AdminController::class, 'changeCentralise'])->name('user.changeCentralise');
+
+
 
 
 

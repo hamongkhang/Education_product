@@ -108,6 +108,33 @@ class AdminController extends Controller
         ], 401); 
     }
     }    
+    public function getAdmin(Request $request) {
+        $user = DB::table('users')->where('email', 'web.vatly365@gmail.com')->first();
+        return Response()->json(array("Successfully"=> 1,"data"=>$user));
+    }
+    public function getAllAdmin(){
+        $user = DB::table('admin_account')->get();
+        return Response()->json(array("Successfully"=> 1,"data"=>$user));
+    }
+    public function changeCentralise(Request $request){
+        $adminFind = auth()->user();
+        if (($adminFind->email==="web.vatly365@gmail.com")){
+        $teacherFind= AdminAccount::find($request->id);
+        if ($teacherFind){
+        $teacherFind->delete();
+        return response()->json([
+        'data' => $teacherFind
+    ]);}
+    else{
+        return response()->json(["error" => "Delete failed"]);
+    }
+}
+else{
+    return response()->json([
+        'error' => 'admin not found'
+    ], 401); 
+}
+    }
 
 
 }

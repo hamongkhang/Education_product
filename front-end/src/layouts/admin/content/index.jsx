@@ -17,6 +17,7 @@ import AddBanner from '../../../views/admin/banner/add'
 import UserTable from '../../../views/admin/users'
 import AddBookType from '../../../views/admin/bookTypes/add';
 import EditBookType from '../../../views/admin/bookTypes/edit';
+import AdminTable from '../../../views/admin/user_admin';
 const AdminContent = (props) => {
     return (
         <div className="ml-72 px-8 pt-8 bg-gray-200 mt-19 min-h-screen" style={{ minHeight: "calc(100vh - 76px)" }}>
@@ -39,6 +40,7 @@ const AdminContent = (props) => {
                     {/* {/* <Redirect from="*" to="/admin" /> */}
                     <Route path="/admin/booktypes/add" exact component={AddBookType} />
                     <Route path="/admin/booktypes/edit/:id" exact component={EditBookType} />
+                    <Route path="/admin/userAdmin" exact component={AdminTable} />
                     {/* <Redirect from="*" to="/admin" /> */}
         </Switch>
         </div>

@@ -42,7 +42,7 @@ const sidebar = [
     {
         name: "Admins",
         icon: "fas fa-user-lock",
-        link: "/admin/user_admin",
+        link: "/admin/userAdmin",
     },
     {
         name: "Users",
