@@ -1,48 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react'
-import Outgoing from './outgoing';
-import Incoming from './incoming';
 import ChatList from './chatList';
 import ChatArea from './chatArea';
 
 const Chat = (props) => {
     const $token=localStorage.getItem('access_token');
     const [user, setUser] = useState({});
-    const changeUser = (id,avatar) =>{
-        console.log(id);
-        console.log(avatar);
+    const changeUser = (id,avatar,name) =>{
         setUser({
             id:id,
-            avatar:avatar
+            avatar:avatar,
+            name:name
         })
     }
     const messageEl = useRef(null);
-    const [messages, setMessages] = useState([]);
-    const [message, setMessage] = useState("");
     const [users, setUsers] = useState([]);
     
-    const handleOnchange = (e) => {
-        setMessage(e.target.value);
-    }
-
-    const handleKeyPress = (e) => {
-        if(e.key === 'Enter'){
-            handleMessage(e);
-        }
-    }
-
-    const handleMessage = (e) => {
-        e.preventDefault();
-        if(message.trim()) {
-            let messTerm = {
-                type: "outgoing",
-                image: "",
-                message: message,
-            }
-            messages.push(messTerm);
-            setMessage("");
-        }
-    }
-
     const getMessages=()=>{
         fetch("http://localhost:8000/api/inbox", {
             method: "POST",
@@ -50,31 +22,17 @@ const Chat = (props) => {
           })
         .then(response => response.json())
         .then(data =>  {
-           setUsers(data.users)
-           console.log(data.users);
+            if(!data.users){
+                setUsers(null)
+            }
+            else{
+                setUsers(data.users)
+            }
         });
         return () => {
         }
     }
-    const fetchMessages = () => {
-        setInterval(() => {
-            // api
-        }, 500);
-    }
-    
-    // useEffect(() => {
-    //     // fetchMessages();
-    //     if (messageEl) {
-    //     messageEl.current.addEventListener('DOMNodeInserted', event => {
-    //         const { currentTarget: target } = event;
-    //         target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
-    //     });
-    //     }
-    // }, []);
-   
-    
     useEffect(() => {
-        console.log('index');
         getMessages()
      }, []);
     return (
