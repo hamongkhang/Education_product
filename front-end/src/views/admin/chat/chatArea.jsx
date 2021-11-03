@@ -13,22 +13,10 @@ const ChatArea = (props) => {
 
     const handleKeyPress = (e) => {
         if(e.key === 'Enter'){
-            handleMessage(e);
+            sendMessage(e);
         }
     }
 
-    const handleMessage = (e) => {
-        e.preventDefault();
-        if(message.trim()) {
-            let messTerm = {
-                type: "outgoing",
-                image: "",
-                message: message,
-            }
-            messages.push(messTerm);
-            setMessage("");
-        }
-    }
     const getMessages = () =>{
         if(props.userClicked.id){
             const _formData = new FormData();
@@ -42,37 +30,62 @@ const ChatArea = (props) => {
                 fetch('http://127.0.0.1:8000/api/inbox_admin', requestOptions)
                 .then(res => res.json())
                 .then(data =>  {
-                    console.log(data);
-                    setMessages(data.messages)
+                    let data_messages = data.messages;
+                    data_messages.reverse();
+                    setMessages(data_messages)
                 });
             }
         }
     }
-    const fetchMessages = () => {
-        setInterval(() => {
-            // api
-        }, 500);
-    }
-    
+    const sendMessage = (e)=>{
+        e.preventDefault();
+        if($token){
+            const _formData = new FormData();
+            _formData.append("message",message);
+            _formData.append("sender_id", props.userClicked.id);
+            const requestOptions = {
+                method: 'POST',
+                headers: {"Authorization": `Bearer `+$token},
+                body:_formData
+            }
+            fetch('http://127.0.0.1:8000/api/sendmess', requestOptions)
+            .then(res => res.json())
+            .then(json => {
+                if(json.access_token){
+                    localStorage.setItem('access_token_chat',json.access_token);
+                }
+                getMessages();
+                setMessage("");
+            });
+        }
+    } 
+
     useEffect(() => {
-        // fetchMessages();
+        console.log('render chat area');
+        const interval = setInterval(() => {
+            getMessages();
+        }, 20000);
         getMessages();
         if (messageEl) {
-        messageEl.current.addEventListener('DOMNodeInserted', event => {
-            const { currentTarget: target } = event;
-            target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
-        });
+            messageEl.current.addEventListener('DOMNodeInserted', event => {
+                const { currentTarget: target } = event;
+                target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+            });
         }
+        return () => clearInterval(interval);
     }, [props.userClicked]);
 
     return (
         <div className="w-2/3">
-            <h5>{props.userClicked.id}</h5>
             <div className="bg-white border-l border-gray-300">
                 <div className="flex justify-between items-center p-6">
                     <div className="flex items-center space-x-2">
-                        <img src={`${window.location.origin}/assets/images/slider/city.jpg`} className="w-10 h-10 rounded-full object-cover" alt="" />
-                        <span className="font-medium line-2 leading-5">Lorem ipsum, dolor sit amet elit. Voluptatibus beatae a numquam! Ex recusandae deleniti porro, a nihil, officiis repudiandae doloribus neque aut maxime non cupiditate, iste cum saepe eos.</span>
+                        {
+                            props.userClicked.avatar?
+                            <img src={`http://localhost:8000/upload/images/avatar/${props.userClicked.avatar}`} className="w-10 h-10 rounded-full object-cover" alt="" />
+                            : <div className="w-10 h-10 rounded-full object-cover"></div>
+                        }
+                        <span className="font-medium line-2 leading-5">{props.userClicked.name}</span>
                     </div>
                 </div>
                 <div className="bg-indigo-100 p-4 custom-scroll overflow-y-scroll shadow-inner" ref={messageEl} style={{ height: "calc(100vh - 284px)" }}>
@@ -84,8 +97,8 @@ const ChatArea = (props) => {
                         :""
                     }
                 </div>
-                <form action="#" className="h-14 relative" onSubmit={handleMessage}>
-                    <textarea type="text" className="block my-auto h-full px-4 py-3.5 custom-scroll outline-none resize-none" placeholder="Tin nhắn" style={{ width: "calc(100% - 64px)"}} onChange={handleOnchange} onKeyPress={handleKeyPress} value={message}/>
+                <form action="#" className="h-14 relative" onSubmit={sendMessage}>
+                    <textarea type="text" name="message" className="block my-auto h-full px-4 py-3.5 custom-scroll outline-none resize-none" placeholder="Tin nhắn" style={{ width: "calc(100% - 64px)"}} onChange={handleOnchange} onKeyPress={handleKeyPress} value={message}/>
                     <button type="submit" className="absolute right-0 bottom-0 flex items-center justify-center w-16 h-full hover:bg-indigo-50">
                         <i className="fad fa-paper-plane text-indigo-500"></i>
                     </button>
