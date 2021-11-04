@@ -21,9 +21,7 @@ const ITinTeachingItem = (props) =>{
                         </h5>
                     </div>
                     <div className="">
-                        <p className="line-3">
-                            {props.description}
-                        </p>
+                        <p className="line-3" dangerouslySetInnerHTML={{ __html:props.description}}></p>
                     </div>
                 </div>
             </div>
