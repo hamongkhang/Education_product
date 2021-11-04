@@ -5,8 +5,14 @@ import { Link, useLocation } from 'react-router-dom';
 const sidebar = [
     {
         name: "Dashboard",
-        icon: "fad fa-book-open",
+        icon: "fas fa-tachometer-slow",
         link: "/admin",
+    },
+    ,
+    {
+        name: "Banners",
+        icon: "fas fa-address-card",
+        link: "/admin/banner",
     },
     {
         name: "Table",
@@ -29,8 +35,23 @@ const sidebar = [
         link: "/admin/books",
     },
     {
+        name: "Teachers",
+        icon: "fas fa-chalkboard-teacher",
+        link: "/admin/teacher",
+    },
+    {
+        name: "Admins",
+        icon: "fas fa-user-lock",
+        link: "/admin/userAdmin",
+    },
+    {
+        name: "Users",
+        icon: "fas fa-users",
+        link: "/admin/users",
+    },
+    {
         name: "Chat",
-        icon: "fad fa-book-open",
+        icon: "fas fa-sms",
         link: "/admin/chat",
 
     },

@@ -16,6 +16,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Mockery\Undefined;
+use Illuminate\Support\Facades\File;
+
 
 class UsersController extends Controller
 {
@@ -79,7 +81,7 @@ class UsersController extends Controller
      {
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);      
@@ -998,5 +1000,80 @@ class UsersController extends Controller
     public function getAdmin(Request $request) {
         $user = DB::table('users')->where('email', 'web.vatly365@gmail.com')->first();
         return Response()->json(array("Successfully"=> 1,"data"=>$user));
+    }
+    public function getAllUser(){
+        $user = DB::table('users')->where("is_admin",false)->get();
+        return Response()->json(array("Successfully"=> 1,"data"=>$user));
+    }
+    public function blockActiveUser(Request $request){
+        $login = auth()->user();
+        if($login->is_admin == true){
+            $validator = Validator::make($request->all(), [
+                'id' => 'required|exists:users,id',
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['error'=>$validator->errors()], 400);      
+            }
+            $book = User::find($request->id);
+            if($book->status == 'Active'){
+                $book->status = 'Block';
+                $book->save();
+                return response()->json([
+                    'success'=>1,
+                    'book'=>$book,
+                ], 200);
+            }
+            else{
+                $book->status = 'Active';
+                $book->save();
+                return response()->json([
+                    'success'=>1,
+                    'book'=>$book,
+                ], 200);
+            }
+        }
+        else{
+            return response()->json([
+                'error'=>1,
+                'description'=>'account login is not admin',
+            ], 401);
+        }
+    }
+    public function changeDecentralise(Request $request){
+        $login = auth()->user();
+        if($login->is_admin == true){
+            $validator = Validator::make($request->all(), [
+                'id' => 'required|exists:users,id',
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['error'=>$validator->errors()], 400);      
+            }
+            $book = User::find($request->id);
+            $user =[
+                'address'=> $book->address,
+                'avatar'=>$book->avatar,
+                'birthday'=> $book->birthday,
+                'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+                'email'=>$book->email,
+                'fullName'=> $book->fullName,
+                'linkFB'=> $book->linkFB,
+                'nameAccount'=>$book->nameAccount,
+                'password'=>$book->password,
+                'phone'=> $book->phone,
+                'sex'=> $book->sex,
+                'status'=>$book->status,
+                'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh')];
+            $create = AdminAccount::create($user);
+            return response()->json([
+                'success'=>1,
+                'book'=>$book,
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'error'=>1,
+                'description'=>'account login is not admin',
+            ], 401);
+        }
     }
 }

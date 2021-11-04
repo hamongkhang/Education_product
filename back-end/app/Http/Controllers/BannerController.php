@@ -40,7 +40,25 @@ class BannerController extends Controller
     }
     
 
-
+    public function getOneBanner(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:banner_background,id',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 400);      
+        }
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $book = Banner::find($request->id);
+        }
+        else{
+            $book = Banner::where('status','Active')->where('id',$request->id)->first();
+        }
+        return response()->json([
+            'data'=>$book
+        ], 200);
+       
+    }
 
     /**
      * @SWG\POST(
@@ -77,7 +95,13 @@ class BannerController extends Controller
         if (($adminFind->email==="web.vatly365@gmail.com")){
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
-            'image'=>'required|max:2048',     
+            'status' =>'required',
+            'image'=>'image|mimes:png,jpeg,jpg',    
+           ],[
+            'name.required' => 'Tên chủ đề không để trống',
+            'name.max' => 'Tên chủ đề không được vượt quá 255 ký tự',
+            'image.image' => 'Hãy chọn hình ảnh',
+            'image.mimes' => 'Hãy chọn hình ảnh có đuôi là PNG, JPG, JPEG',
            ]);
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 401);     
@@ -95,7 +119,7 @@ class BannerController extends Controller
                     'name'  => $request->name,
                     'path'  => 'upload\images\banner',
                     'image'  => $picture,
-                    'status'=>"Active",
+                    'status'=>$request->status,
                     'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
                     'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh')
                     ];
@@ -104,10 +128,10 @@ class BannerController extends Controller
             } 
             else
             {
-                  return response()->json(["message" => "Upload Failed"]);
+                  return response()->json(["error" => "Upload Failed"]);
             }
     }else{
-        return response()->json(["message" => "Name already exist!!!"]);
+        return response()->json(["error" => "Name already exist!!!"]);
     }
 }
     else{
@@ -126,7 +150,10 @@ public function updateBanner($id,Request $request){
     if (($adminFind->email==="web.vatly365@gmail.com")){
     $validator = Validator::make($request->all(), [
         'name' => 'max:255',
-        'image'=>'max:2048',
+        'image' => 'mimes:jpeg,png,jpg,gif,svg',
+    ],[
+        'name.max' => 'Tên chủ đề không quá 255 kí tự',
+        'image.mimes' => 'Hãy chọn hình ảnh có đuôi là PNG, JPG, JPEG',
     ]);
     if ($validator->fails()) {
         return response()->json(['error'=>$validator->errors()], 401);     
@@ -135,7 +162,6 @@ public function updateBanner($id,Request $request){
     if($banner){
     $image=$banner->image;
     $created_at=$banner->created_at;
-    $status=$banner->status;
     $path=$banner->path;
     if($request->name==="undefined"||$request->name===null){
         $request->name=$banner->name;
@@ -143,7 +169,12 @@ public function updateBanner($id,Request $request){
     else{
         $request->name=$request->name;
     }
-    
+    if($request->status==="undefined"||$request->status===null){
+        $request->status=$banner->status;
+    }
+    else{
+        $request->status=$request->status;
+    }
     if ($request->hasFile('image'))
     {
           $file      = $request->file('image');
@@ -154,7 +185,7 @@ public function updateBanner($id,Request $request){
           $file->move('upload\images\banner', $picture);
           $banner->image=$picture;
           $banner->name=$request->name;
-          $banner->status=$status;  
+          $banner->status=$request->status;  
           $banner->path=$path;                      
           $banner->created_at=$created_at;               
           $banner->updated_at=Carbon::now('Asia/Ho_Chi_Minh');      
@@ -163,11 +194,11 @@ public function updateBanner($id,Request $request){
         }
     else
     {  
-        $banner->name=$request->name;      
-        $banner->file=$image;     
-        $banner->path=$path;     
-        $banner->status=$status;      
-        $banner->created_at=$created_at;      
+        $banner->image=$image;     
+        $banner->name=$request->name;
+        $banner->status=$request->status;  
+        $banner->path=$path;                      
+        $banner->created_at=$created_at;               
         $banner->updated_at=Carbon::now('Asia/Ho_Chi_Minh');      
         $banner->save();
         return Response()->json(array("Successfully. Update successfully!"=> 1,"data"=>$banner ));
@@ -257,38 +288,38 @@ else{
      *       }
      * )
      */
-    public function blockActiveBanner($id){
-        $adminFind = auth()->user();
-        if (($adminFind->email==="web.vatly365@gmail.com")){
-            $banner = DB::table('banner')->where('id', $id)->first();
-            if ($banner){ 
-                if ($banner->status==="Block"){
-                    DB::table('banner_background')->where('id', $banner->id)->update(['status'	=>	"Active"]);  
-                    $freeDocumentRespon = DB::table('banner_background')->where('id', $id)->first();
-                    return response()->json([
-                        'message' => 'successfully',
-                        'user' => $freeDocumentRespon
-                    ], 201);
-                }
-                else{
-                    DB::table('banner_background')->where('id', $banner->id)->update(['status'	=>	"Block"]);  
-                    $freeDocumentRespon = DB::table('banner_background')->where('id', $id)->first();
-                    return response()->json([
-                        'message' => 'successfully',
-                        'user' => $freeDocumentRespon
-                    ], 201);
-                }
+    public function blockActiveBanner(Request $request){
+        $login = auth()->user();
+        if($login->is_admin == true){
+            $validator = Validator::make($request->all(), [
+                'id' => 'required|exists:banner_background,id',
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['error'=>$validator->errors()], 400);      
+            }
+            $book = Banner::find($request->id);
+            if($book->status == 'Active'){
+                $book->status = 'Block';
+                $book->save();
+                return response()->json([
+                    'success'=>1,
+                    'book'=>$book,
+                ], 200);
             }
             else{
+                $book->status = 'Active';
+                $book->save();
                 return response()->json([
-                    'error' => 'id not found'
-                ], 401); 
+                    'success'=>1,
+                    'book'=>$book,
+                ], 200);
             }
         }
         else{
             return response()->json([
-                'error' => 'admin not found'
-            ], 401); 
+                'error'=>1,
+                'description'=>'account login is not admin',
+            ], 401);
         }
     }
 
