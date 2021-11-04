@@ -79,7 +79,7 @@ class UsersController extends Controller
      {
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);      

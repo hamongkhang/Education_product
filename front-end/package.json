@@ -22,11 +22,13 @@
         "react-router-dom": "^5.3.0",
         "react-scripts": "4.0.3",
         "react-slick": "^0.28.1",
+        "react-toastify": "^8.0.3",
         "slick-carousel": "^1.8.1",
         "swiper": "^7.0.5",
         "web-vitals": "^1.0.1"
     },
     "scripts": {
+        "beautiful": "prettier --single-quote --trailing-comma all --tab-width 4 --write src/**/*.{js,jsx}",
         "start": "craco start",
         "build": "craco build",
         "test": "craco test",
@@ -57,7 +59,9 @@
     "license": "ISC",
     "devDependencies": {
         "autoprefixer": "^9.8.6",
+        "husky": "^7.0.4",
         "postcss": "^7.0.36",
+        "prettier": "^2.4.1",
         "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.14"
     }
 }

@@ -1,32 +1,27 @@
-import React, { useState, useRef, useEffect } from 'react'
-
+import React, { useState, useRef, useEffect } from 'react';
 
 const CheckResult = (props) => {
-    const $token=localStorage.getItem('access_token');
+    const $token = localStorage.getItem('access_token');
 
-    const checkResultFunction = ()=>{
+    const checkResultFunction = () => {
         const requestOptions = {
             method: 'POST',
-            headers: {"Authorization": `Bearer `+$token}
+            headers: { Authorization: `Bearer ` + $token },
         };
         fetch('http://127.0.0.1:8000/api/payment/checkResult', requestOptions)
-        .then(res => res.json())
-        .then(json => {
-           alert(json.response);
-           window.location.href = "http://localhost:3000/";
-        });
-    } 
+            .then((res) => res.json())
+            .then((json) => {
+                alert(json.response);
+                window.location.href = 'http://localhost:3000/';
+            });
+    };
 
     useEffect(() => {
-        if($token){
+        if ($token) {
             checkResultFunction();
         }
     }, []);
 
-    return (
-        <div>
-
-        </div>
-    )
-}
-export default CheckResult
+    return <div></div>;
+};
+export default CheckResult;

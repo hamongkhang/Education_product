@@ -111,25 +111,6 @@ var PATH = {};
         })
     }
 
-    /** handle open/close chat box */
-    PATH.HandleChatbox = function() {
-        const chatOpen = $('.chat-open'),
-            chatClose = $('.chat-close'),
-            chatbox = $('.chatbox');
-
-        chatOpen.on('click', function() {
-            chatbox.removeClass('w-0 h-0');
-            chatbox.addClass('w-80 h-508');
-            chatOpen.addClass('hidden');
-        });
-
-        chatClose.on('click', function() {
-            chatbox.removeClass('w-80 h-508');
-            chatbox.addClass('w-0 h-0');
-            chatOpen.removeClass('hidden');
-        })
-    }
-
     /** handle fixed header on scroll */
     PATH.HeaderFixed = function() {
         const varHeaderFix = $(window).scrollTop() >= 60,
