@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2'
 toast.configure();
+
 const BooksTable = (props) => {
     const $token=localStorage.getItem('access_token');
     const [booktypes, setBookTypes] = useState([]);

@@ -17,6 +17,9 @@ import AddBanner from '../../../views/admin/banner/add'
 import UserTable from '../../../views/admin/users'
 import AddBookType from '../../../views/admin/bookTypes/add';
 import EditBookType from '../../../views/admin/bookTypes/edit';
+import ITinTeach from '../../../views/admin/ITinTeach';
+import EditITINTeach from '../../../views/admin/ITinTeach/edit';
+import AddITinTeach from '../../../views/admin/ITinTeach/add';
 import AdminTable from '../../../views/admin/user_admin';
 const AdminContent = (props) => {
     return (
@@ -40,6 +43,9 @@ const AdminContent = (props) => {
                     {/* {/* <Redirect from="*" to="/admin" /> */}
                     <Route path="/admin/booktypes/add" exact component={AddBookType} />
                     <Route path="/admin/booktypes/edit/:id" exact component={EditBookType} />
+                    <Route path="/admin/itinTeach" exact component={ITinTeach} />
+                    <Route path="/admin/itinTeach/updateITinTeach/:id" exact component={EditITINTeach} />
+                    <Route path="/admin/itinTeach/add" exact component={AddITinTeach} />
                     <Route path="/admin/userAdmin" exact component={AdminTable} />
                     {/* <Redirect from="*" to="/admin" /> */}
         </Switch>

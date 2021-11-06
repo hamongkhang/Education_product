@@ -55,7 +55,12 @@ const sidebar = [
         link: "/admin/chat",
 
     },
+    {
+        name: "CNTT trong dạy học",
+        icon: "fad fa-book-open",
+        link: "/admin/itinteach",
 
+    },
 ]
 
 const AdminSidebar = (props) => {

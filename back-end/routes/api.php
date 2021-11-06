@@ -82,12 +82,15 @@ Route::post('/deleteBook', [App\Http\Controllers\BookController::class, 'deleteB
 Route::post('/changeBookStatus', [App\Http\Controllers\BookController::class, 'changeStatus'])->name('book.status');
 Route::post('/getBookTypeSearch', [App\Http\Controllers\BookController::class, 'getBookTypeSearch'])->name('book.getBookTypeSearch');
 
+
 /* Api ITinTeach */
 Route::get('/ITinTeach/getITinTeach', [App\Http\Controllers\ITinTeachController::class, 'getITinTeach'])->name('ITinTeach.getITinTeach');
 Route::post('/ITinTeach/createITinTeach', [App\Http\Controllers\ITinTeachController::class, 'createITinTeach'])->name('ITinTeach.createITinTeach');
 Route::post('/ITinTeach/destroyITinTeach/{id}', [App\Http\Controllers\ITinTeachController::class, 'destroyITinTeach'])->name('ITinTeach.destroyITinTeach');
 Route::post('/ITinTeach/updateITinTeach/{id}', [App\Http\Controllers\ITinTeachController::class, 'updateITinTeach'])->name('ITinTeach.updateITinTeach');
 Route::post('/ITinTeach/blockActiveITinTeach/{id}', [App\Http\Controllers\ITinTeachController::class, 'blockActiveITinTeach'])->name('ITinTeach.blockActiveITinTeach');
+
+
 /* Api Comment */
 Route::post('/comment/addComment', [App\Http\Controllers\CommentController::class, 'addComment'])->name('comment.addComment');
 Route::post('/comment/getComment', [App\Http\Controllers\CommentController::class, 'getComment'])->name('comment.getComment');

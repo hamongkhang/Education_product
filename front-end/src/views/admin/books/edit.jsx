@@ -343,7 +343,7 @@ const EditBook = () => {
                                     <i className="fad fa-camera mr-2"></i>
                                     <span> Đổi ảnh</span>
                                 </label>
-                                <input type="file" name="image" hidden required onChange={(event) => onChangeHandle(event)}/>
+                                <input type="file" id='avt' name="image" hidden required onChange={(event) => onChangeHandle(event)}/>
                                 <span className="text-red-500 text-sm">{error.image?error.image[0]:""}</span>
                             </div>
                         </div>
