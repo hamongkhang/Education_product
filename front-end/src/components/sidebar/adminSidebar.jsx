@@ -8,6 +8,11 @@ const sidebar = [
         icon: "fas fa-tachometer-slow",
         link: "/admin",
     },
+    {
+        name: "Exam",
+        icon: "fas fa-book-reader",
+        link: "/admin/exam",
+    }
     ,
     {
         name: "Banners",
@@ -56,8 +61,8 @@ const sidebar = [
 
     },
     {
-        name: "CNTT trong dạy học",
-        icon: "fad fa-book-open",
+        name: "IT in teaching",
+        icon: "far fa-browser",
         link: "/admin/itinteach",
 
     },

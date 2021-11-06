@@ -152,7 +152,7 @@ const EditITINTeach = () => {
                 <div className="rounded-t bg-white mb-0 px-6 py-6">
                     <div className="text-center flex justify-between">
                     <h6 className="text-gray-700 text-xl font-bold">
-                        Chỉnh sửa thông tin sách
+                        Chỉnh sửa thông tin bài viết
                     </h6>
                     </div>
                 </div>
@@ -165,7 +165,7 @@ const EditITINTeach = () => {
                         <div className="w-full lg:w-6/12 px-4">
                             <div className="relative w-full mb-3">
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                    Tên sách
+                                    Tên bài viết
                                 </label>
                                 <input type="text" name="name" className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} value={itinTeach.name}/>
                                 <span className="text-red-500 text-sm">{error.name?error.name[0]:""}</span>
@@ -218,10 +218,8 @@ const EditITINTeach = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
                                     file
                                 </label> 
-                                <img src={file2 ? URL.createObjectURL(file2):$link+itinTeach.file}  className="w-full min-h-96 h-full mb-30 md:mb-1 object-scale-down rounded-lg" alt=""/>
                                 <label htmlFor="file2" className="w-3/5 text-center opacity-0 group-hover:opacity-100 block py-2 rounded-md bg-yellow-400 hover:bg-yellow-500 cursor-pointer text-15 font-semibold absolute bottom-5 transform left-1/2 -translate-x-1/2 duration-300 text-white">
-                                    <i className="fad fa-camera mr-2"></i>
-                                    <span> Chọn file</span>
+                                <i className="fas fa-file"></i>                                    <span> Đổi file</span>
                                 </label>
                                 <input type="file" id="file2" name="file" hidden required onChange={(event) => onChangeHandle(event)}/>
                                 <span className="text-red-500 text-sm">{error.file?error.file[0]:""}</span>

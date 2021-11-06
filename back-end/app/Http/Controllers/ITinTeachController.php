@@ -139,6 +139,7 @@ class ITinTeachController extends Controller
             'author' => 'required|max:255',
             'image'=>'required|max:2048',
             'description'=>'required',
+            'status'=>'required'
         ]);
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 401);     
@@ -165,7 +166,7 @@ class ITinTeachController extends Controller
                     'path'=>$path,
                     'description'=>$request->description,
                     'image'=>$picture2,
-                    'status'=>"Active",
+                    'status'=>$request->status,
                     'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
                     'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh')
                 ];
@@ -257,6 +258,7 @@ class ITinTeachController extends Controller
             'author' => 'max:255',
             'image'=>'max:2048',
             'description'=>'',
+            'status'=>''
         ]);
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 401);     
@@ -266,8 +268,12 @@ class ITinTeachController extends Controller
         $file=$ITinTeach->file;
         $image=$ITinTeach->image;
         $created_at=$ITinTeach->created_at;
-        $status=$ITinTeach->status;
         $path=$ITinTeach->path;
+        if ($request->name==null){
+            $status=$ITinTeach->status;
+        }else{
+            $status=$request->status;
+        }
         if ($request->name==null){
             $name=$ITinTeach->name;
         }else{
@@ -334,8 +340,8 @@ class ITinTeachController extends Controller
                 $filename2  = $file2->getClientOriginalName();
                 $extension2 = $file2->getClientOriginalExtension();
                 $picture2   = $filename2;
-                $path2      = 'upload\images\new';
-                $file2->move('upload\images\new', $picture2);
+                $path2      = 'upload\images\IT_in_teach';
+                $file2->move('upload\images\IT_in_teach', $picture2);
                 $ITinTeach->file=$file;
                 $ITinTeach->name=$name;
                 $ITinTeach->status=$status;  

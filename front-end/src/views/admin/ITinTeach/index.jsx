@@ -159,19 +159,19 @@ const ITinTeach = (props) => {
                        Mô tả 
                     </th>
                     <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Thời gian
-                    </th>
-                    <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                     Tác giả
                     </th>
                     <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        ảnh
+                        Ảnh
                     </th>
                     <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                         File
                     </th>
                     <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Lock
+                        Trạng thái
+                    </th>
+                    <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                        Ngày tạo
                     </th>
                     <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                        Hành động
@@ -190,13 +190,7 @@ const ITinTeach = (props) => {
                                             {item.name}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 " dangerouslySetInnerHTML={{ __html:item.description}}></td>
-                                            <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                            {new Intl.DateTimeFormat('en-GB', { 
-                                                    month: 'numeric', 
-                                                    day: '2-digit',
-                                                    year: 'numeric', 
-                                                }).format(new Date(item.updated_at))}
-                                        </td>
+
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                             {item.author}
                                         </td>
@@ -215,6 +209,13 @@ const ITinTeach = (props) => {
                                                     <div className="spinner"></div>
                                                 </div>
                                             </label>
+                                        </td>
+                                            <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            {new Intl.DateTimeFormat('en-GB', { 
+                                                    month: 'numeric', 
+                                                    day: '2-digit',
+                                                    year: 'numeric', 
+                                                }).format(new Date(item.updated_at))}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <div className="space-x-2">
