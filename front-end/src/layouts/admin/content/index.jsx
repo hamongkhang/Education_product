@@ -17,6 +17,9 @@ import AddBanner from '../../../views/admin/banner/add'
 import UserTable from '../../../views/admin/users'
 import AddBookType from '../../../views/admin/bookTypes/add';
 import EditBookType from '../../../views/admin/bookTypes/edit';
+import ITinTeach from '../../../views/admin/ITinTeach';
+import EditITINTeach from '../../../views/admin/ITinTeach/edit';
+import AddITinTeach from '../../../views/admin/ITinTeach/add';
 import AdminTable from '../../../views/admin/user_admin';
 
 const AdminContent = (props) => {

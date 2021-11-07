@@ -9,6 +9,11 @@ const sidebar = [
         link: "/admin/dashboard",
         role: 1
     },
+    {
+        name: "Exam",
+        icon: "fas fa-book-reader",
+        link: "/admin/exam",
+    }
     ,
     {
         name: "Banners",
@@ -71,7 +76,12 @@ const sidebar = [
         link: "/admin/otherDocuments",
         role: 2
     },
-
+    {
+        name: "IT in teaching",
+        icon: "far fa-browser",
+        link: "/admin/itinteach",
+        role: 1
+    },
 ]
 
 const AdminSidebar = (props) => {
