@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import {useHistory} from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2'
 toast.configure();
@@ -9,9 +10,16 @@ const BooksTable = (props) => {
     const [booktypes, setBookTypes] = useState([]);
     const [books, setBooks] = useState([]);
     const [render, setRender] = useState(false);
-    const [classOption, setClassOption] = useState("hidden");
-    const handleOption = () => {
-        classOption === "hidden" ? setClassOption("block") : setClassOption("hidden")
+    const [classOption1, setClassOption1] = useState("hidden");
+    const [classOption2, setClassOption2] = useState("hidden");
+    const history = useHistory();
+    const handleOption = (type) => {
+        if(type == 1){
+            classOption1 === "hidden" ? setClassOption1("block") : setClassOption1("hidden")
+        }
+        else{
+            classOption2 === "hidden" ? setClassOption2("block") : setClassOption2("hidden")
+        }
     }
     const getBookTypes = () =>{
         fetch("http://localhost:8000/api/getBookTypes", {
@@ -20,7 +28,14 @@ const BooksTable = (props) => {
           })
         .then(response => response.json())
         .then(data =>  {
-            setBookTypes(data.book_types)
+            console.log(data);
+            if(data.url){
+                let url = data.url;
+                history.push(url);
+            }
+            if(data.book_types){
+                setBookTypes(data.book_types)
+            }
         });
     }
     const getBooks=()=>{
@@ -176,9 +191,9 @@ const BooksTable = (props) => {
         });
     }
     useEffect(() => {
+        getBookTypes();
         if($token){
            getBooks();
-           getBookTypes();
         }
     }, [render])
     return (
@@ -193,10 +208,10 @@ const BooksTable = (props) => {
                             <input type="text" placeholder="Tìm kiếm..." className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded"/>
                         </div>
                         <div className="relative w-full max-w-full flex-grow flex-1 text-right">
-                            <button onClick={handleOption} className="bg-indigo-500 hover:bg-indigo-700 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                            <button onClick={()=>handleOption(1)} className="bg-indigo-500 hover:bg-indigo-700 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
                                 <i className="far fa-ellipsis-v"></i>
                             </button>
-                            <div className={`absolute top-full right-0 ${classOption}`}>
+                            <div className={`absolute top-full right-0 ${classOption1}`}>
                                 <div className="py-2 bg-white shadow-lg text-13">
                                     <Link className="block w-full py-1 text-left px-2 hover:bg-gray-200" to={`booktypes/add`} >Add</Link>
                                     <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
@@ -271,10 +286,10 @@ const BooksTable = (props) => {
                             <input type="text" placeholder="Tìm kiếm..." className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded"/>
                         </div>
                         <div className="relative w-full max-w-full flex-grow flex-1 text-right">
-                            <button onClick={handleOption} className="bg-indigo-500 hover:bg-indigo-700 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                            <button onClick={()=>handleOption(2)} className="bg-indigo-500 hover:bg-indigo-700 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
                                 <i className="far fa-ellipsis-v"></i>
                             </button>
-                            <div className={`absolute top-full right-0 ${classOption}`}>
+                            <div className={`absolute top-full right-0 ${classOption2}`}>
                                 <div className="py-2 bg-white shadow-lg text-13">
                                     <Link className="block w-full py-1 text-left px-2 hover:bg-gray-200" to={`books/add`} >Add</Link>
                                     <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
