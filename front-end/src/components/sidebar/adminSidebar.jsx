@@ -6,7 +6,8 @@ const sidebar = [
     {
         name: "Dashboard",
         icon: "fas fa-tachometer-slow",
-        link: "/admin",
+        link: "/admin/dashboard",
+        role: 1
     },
     {
         name: "Exam",
@@ -18,53 +19,68 @@ const sidebar = [
         name: "Banners",
         icon: "fas fa-address-card",
         link: "/admin/banner",
+        role: 1
     },
     {
         name: "Table",
         icon: "fad fa-book-open",
         link: "/admin/table",
+        role: 1
     },
     {
         name: "Form",
         icon: "fad fa-book-open",
         link: "/admin/form",
+        role: 1
     },
     {
         name: "Text Editor",
         icon: "fad fa-book-open",
         link: "/admin/text-editor",
+        role: 1
     },
     {
         name: "Books",
         icon: "fad fa-book-open",
         link: "/admin/books",
+        role: 1
     },
     {
         name: "Teachers",
         icon: "fas fa-chalkboard-teacher",
         link: "/admin/teacher",
+        role: 1
     },
     {
         name: "Admins",
         icon: "fas fa-user-lock",
         link: "/admin/userAdmin",
+        role: 1
     },
     {
         name: "Users",
         icon: "fas fa-users",
         link: "/admin/users",
+        role: 1
     },
     {
         name: "Chat",
         icon: "fas fa-sms",
         link: "/admin/chat",
+        role: 1
 
+    },
+    {
+        name: "Other Document",
+        icon: "fas fa-sms",
+        link: "/admin/otherDocuments",
+        role: 2
     },
     {
         name: "IT in teaching",
         icon: "far fa-browser",
         link: "/admin/itinteach",
-
+        role: 1
     },
 ]
 
@@ -77,19 +93,20 @@ const AdminSidebar = (props) => {
                     <div className="p-8 space-y-5">
                         {
                             sidebar.map((item, index) => (
-                                <Link key={index} to={item.link} className={`flex items-center justify-between ${location.pathname === item.link ? "text-white" : "text-gray-300 hover:text-white"}`}>
-                                    <div className="flex items-center space-x-3">
-                                        <div className={`w-10 h-10 flex items-center justify-center shadow-md rounded ${location.pathname === item.link ? "bg-white text-purple-800" : "bg-purple-700"}`}>
-                                            <i className={item.icon}></i>
+                                props.role == item.role?
+                                    <Link key={index} to={item.link} className={`flex items-center justify-between ${location.pathname === item.link ? "text-white" : "text-gray-300 hover:text-white"}`}>
+                                        <div className="flex items-center space-x-3">
+                                            <div className={`w-10 h-10 flex items-center justify-center shadow-md rounded ${location.pathname === item.link ? "bg-white text-purple-800" : "bg-purple-700"}`}>
+                                                <i className={item.icon}></i>
+                                            </div>
+                                            <div>
+                                                <span>{item.name}</span>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <span>{item.name}</span>
-                                        </div>
-                                    </div>
-                                    {/* <div>
-                                        <i className="far fa-arrow-right"></i>
-                                    </div> */}
-                                </Link>
+                                        {/* <div>
+                                            <i className="far fa-arrow-right"></i>
+                                        </div> */}
+                                    </Link>:""
                             ))
                         }
                     </div>

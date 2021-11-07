@@ -41,10 +41,17 @@ class ChatController extends Controller
                 ]);
             }
             else{
-                $users = User::where('is_admin', false)->orderBy('id', 'DESC')->get(['id','fullName','avatar']);
+                $idusers = Message::all('user_id')->unique('user_id')->whereNotIn('user_id', $login->id);
+                $users = collect(null);
+                foreach($idusers as $id){
+                    $user = User::where('id',$id->user_id)->first();
+                    $users->push($user);
+                }
+                // $users = User::where('is_admin', false)->orderBy('id', 'DESC')->get(['id','fullName','avatar']);
                 return [
                     'success' => 1,
                     'users' => $users,
+                    'id'=>$idusers,
                     'messages' => []
                 ];
             }

@@ -123,6 +123,8 @@ Route::post('/featuredPost/blockActiveFeaturedPost/{id}', [App\Http\Controllers\
 /* Api Admin */
 Route::post('/admin/loginAdmin', [App\Http\Controllers\UsersController::class, 'loginAdmin'])->name('admin.loginAdmin');
 Route::post('/admin/blockAccount/{id}', [App\Http\Controllers\AdminController::class, 'blockAccount'])->name('admin.loginAdmin');
+Route::post('/admin/checkAdmin', [App\Http\Controllers\AdminController::class, 'checkAdmin'])->name('admin.checkAdmin')
+->middleware('adminLogin');
 /* Api History */
 Route::get('/history/getHistoryExam', [App\Http\Controllers\HistoryController::class, 'getHistoryExam'])->name('history.getHistoryExam');
 Route::get('/history/getHistory', [App\Http\Controllers\HistoryController::class, 'getHistory'])->name('history.getHistory');

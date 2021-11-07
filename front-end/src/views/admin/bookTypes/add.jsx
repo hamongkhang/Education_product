@@ -65,7 +65,6 @@ const AddBookType = () => {
         let _value = event.target.value;
         setType({...type,[_name]:_value});
     };
-
     return (
         <section className=" py-1">
             <div className="w-full">
