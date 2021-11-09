@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
+
 class ExamController extends Controller
 {
     public function __construct() {
@@ -48,6 +50,14 @@ class ExamController extends Controller
      *     ),
      * )
      */
+    public function getExamAdmin()
+    {
+            $login = auth()->user();
+            $examCategoryFind=DB::table('exam_category')->get();
+            $examFind = DB::table('exam')->get();
+            $respon=[$examCategoryFind,$examFind];
+            return Response()->json(array("Successfully"=> 1,"data"=>$respon ));
+    }
 
     public function getExam()
     {
@@ -69,9 +79,7 @@ class ExamController extends Controller
             }
             $examRespon=[$examCategoryFind,$exam];
         return Response()->json(array("Successfully"=> 1,"data"=>$examRespon ));
-        }
-
-        
+        }  
     }
 
 
@@ -102,383 +110,372 @@ class ExamController extends Controller
         
     }
 
+    public function deleteCategory(Request $request){
+        $login = auth()->user();
+        if($login->is_admin == true){
+            $validator = Validator::make($request->all(), [
+                'id' => 'required|exists:exam_category,id',
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['error'=>$validator->errors()], 400);      
+            }
+            $book = ExamCategory::find($request->id);
+            $book->delete();
+                return response()->json([
+                    'success'=>1,
+                    'description'=>'xóa thành công'
+                ], 200);
+        }
+        else{
+            return response()->json([
+                'error'=>1,
+                'description'=>'account login is not admin',
+            ], 401);
+        }
+    }
+    public function changeCategoryStatus(Request $request){
+        $login = auth()->user();
+        if($login->is_admin == true){
+            $validator = Validator::make($request->all(), [
+                'id' => 'required|exists:exam_category,id',
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['error'=>$validator->errors()], 400);      
+            }
+            $book = ExamCategory::find($request->id);
+            if($book->status == 'Active'){
+                $book->status = 'Block';
+                $book->save();
+                return response()->json([
+                    'success'=>1,
+                    'book'=>$book,
+                ], 200);
+            }
+            else{
+                $book->status = 'Active';
+                $book->save();
+                return response()->json([
+                    'success'=>1,
+                    'book'=>$book,
+                ], 200);
+            }
+        }
+        else{
+            return response()->json([
+                'error'=>1,
+                'description'=>'account login is not admin',
+            ], 401);
+        }
+    }
+
+    public function addExamCategory(Request $request){
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|min:1|max:255|unique:exam_category,name',
+            'status'=>'required'
+        ],[
+            'name.required'=>'Tên không được bỏ trống',
+            'name.max' => 'Tên sách không quá 255 kí tự',
+            'name.unique' => 'Tên này đã tồn tại',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 400);      
+        }
+        $examCategory = new ExamCategory();
+        $examCategory->name = $request->name;
+        $examCategory->status = $request->status;
+        $examCategory->created_at =  Carbon::now('Asia/Ho_Chi_Minh');
+        $examCategory->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
+        $examCategory->save();
+        return response()->json([
+            'success'=>1,
+            'book_type'=>$examCategory,
+        ], 201);
+    }
+    else{
+        return response()->json([
+            'error'=>1,
+            'description'=>'account login is not admin',
+        ], 401);
+    }
+    }
+    public function editExamCategory(Request $request){
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+        $validator = Validator::make($request->all(), [
+            'id'    => 'required',
+            'name' => 'max:255|string',
+            'status'=>''
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 400);      
+        }
+        $category = ExamCategory::find($request->id);
+        if($category){
+            if($category->name == $request->name || $request->name == null){
+                $category->name = $category->name;
+            }
+            else{
+                $validator = Validator::make($request->all(), [
+                    'name' => 'unique:exam_category,name',
+                ]);
+                if ($validator->fails()) {
+                    return response()->json(['error'=>$validator->errors()], 400);      
+                }
+                $category->name = $request->name;
+            }
+            if($category->status == $request->status || $request->status == null){
+                $category->status = $category->status;
+            }
+            else{
+                $category->status = $request->status;
+            }
+            $category->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
+            $category->save();
+            return response()->json([
+                'success'=>1,
+                'book_type'=>$category,
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'error'=>'Not found',
+            ], 404);
+        }
+        }
+        else{
+            return response()->json([
+                'error'=>1,
+                'description'=>'account login is not admin',
+            ], 401);
+        }
+    }
+    public function getOneExamCategory(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:exam_category,id',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 400);      
+        }
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $category = ExamCategory::find($request->id);
+        }
+        else{
+            $category = ExamCategory::where('status','Active')->where('id',$request->id)->first();
+        }
+        return response()->json([
+            'data'=>$category
+        ], 200);
+       
+    }
 
 
 
 
-//     public function getFreeDocument()
-//     {
-//         $login = auth()->user();
-//         if($login && $login->is_admin == true){
-//             $documentFind = DB::table('free_document')->get();
-//             $dataRespon=[];
-//             $dataRespon[0]=DB::table('free_document_category')->get();
-//             $array=[];
-//             for ($i = 0; $i <count($documentFind); $i++) {
-//                 $data = DB::table('free_document_category')->where('id', $documentFind[$i]->category_id)->first();
-//                 $array[$i]=array(
-//                     'id' => $documentFind[$i]->id,
-//                     'category_name' => $data->name,
-//                     'name' => $documentFind[$i]->name,
-//                     'file' => $documentFind[$i]->file,
-//                     'path' => $documentFind[$i]->path,
-//                     'status' => $documentFind[$i]->status,
-//                     'created_at'=> $documentFind[$i]->created_at,
-//                     'updated_at'=> $documentFind[$i]->updated_at,
-//                 );
-//             }
-//             $dataRespon[1]=$array;
-//             return Response()->json(array("Successfully"=> 1,"data"=>$dataRespon ));
-//         }
-//         else{
-//             $documentFind = DB::table('free_document')->where('status','Active')->get();
-//         $dataRespon=[];
-//         $dataRespon[0]=DB::table('free_document_category')->where('status','Active')->get();
-//         $array=[];
-//         for ($i = 0; $i <count($documentFind); $i++) {
-//             $data = DB::table('free_document_category')->where('id', $documentFind[$i]->category_id)->first();
-//             $array[$i]=array(
-//                 'id' => $documentFind[$i]->id,
-//                 'category_name' => $data->name,
-//                 'name' => $documentFind[$i]->name,
-//                 'file' => $documentFind[$i]->file,
-//                 'path' => $documentFind[$i]->path,
-//                 'status' => $documentFind[$i]->status,
-//                 'created_at'=> $documentFind[$i]->created_at,
-//                 'updated_at'=> $documentFind[$i]->updated_at,
-//             );
-//         }
-//         $dataRespon[1]=$array;
-//         return Response()->json(array("Successfully"=> 1,"data"=>$dataRespon ));
-//         } 
-//     }
-    
-//     /**
-//      * @SWG\POST(
-//      *     path="api/freeDocument/createFreeDocument/",
-//      *     description="Return teacher's informaion.",
-//      * @SWG\Parameter(
-//      *         name="name",
-//      *         in="query",
-//      *         type="string",
-//      *         description="Document name",
-//      *         required=true,
-//      *     ),
-//      * @SWG\Parameter(
-//      *         name="file",
-//      *         in="query",
-//      *         type="file",
-//      *         description="Document file",
-//      *         required=true,
-//      *     ),
-//      * @SWG\Parameter(
-//      *         name="category",
-//      *         in="query",
-//      *         type="integer",
-//      *         description="Category's id",
-//      *         required=true,
-//      *     ),
-//      *     @SWG\Response(
-//      *         response=200,
-//      *         description="Successfully",
-//      *         @SWG\Schema(
-//      *             @SWG\Property(property="name", type="integer"),
-//      *             @SWG\Property(property="file", type="string"),
-//      *             @SWG\Property(property="category_id", type="integer"),
-//      *             @SWG\Property(property="path", type="string"),
-//      *             @SWG\Property(property="status", type="string"),
-//      *             @SWG\Property(property="created_at", type="timestamp"),
-//      *             @SWG\Property(property="updated_at", type="timestamp"),
-//      *            )
-//      *     ),
-//      *     @SWG\Response(
-//      *         response=401,
-//      *         description="Missing Data"
-//      *     ),
-//      * security={
-//      *           {"api_key_security_example": {}}
-//      *       }
-//      * )
-//      */
-//     public function createFreeDocument(Request $request){
-//         $adminFind = auth()->user();
-//         if (($adminFind->email==="web.vatly365@gmail.com")){
-//         $validator = Validator::make($request->all(), [
-//             'name' => 'required|max:255',
-//             'file'=>'required|max:2048',
-//             'category' => 'required|numeric|digits_between:1,12',
-//         ]);
-//         if ($validator->fails()) {
-//             return response()->json(['error'=>$validator->errors()], 401);     
-//         }
-//         $data = DB::table('free_document_category')->where('id', $request->category)->first();
-//         if ($data){
-//         if ($request->hasFile('file'))
-//         {
-//               $file      = $request->file('file');      
-//               $path      = 'upload\images\free_document';
-//               $filename  = $file->getClientOriginalName();
-//               $extension = $file->getClientOriginalExtension();
-//               $picture   = $filename;
-//               $file->move('upload\images\free_document', $picture);
-//               $postArray = [
-//                     'name'  => $request->name,
-//                     'file'  => $picture,
-//                     'category_id'  => $request->category,
-//                     'path'=>$path,
-//                     'status'=>"Active",
-//                     'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
-//                     'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh')
-//                 ];
-//                  $freeDocument = FreeDocument::create($postArray);
-//               return Response()->json(array("Successfully. Upload successfully!"=> 1,"data"=>$postArray ));
-//         } 
-//         else
-//         {
-//               return response()->json(["message" => "Upload Failed"]);
-//         }
-//     }else{
-//         return response()->json(["message" => "id category not found!!!"]);
-
-//     }
-// }
-//     else{
-//         return response()->json([
-//             'error' => 'admin not found'
-//         ], 401); 
-//     }
-//     }
 
 
-//     /**
-//      * @SWG\POST(
-//      *     path="api/freeDocument/updateFreeDocument/{id}",
-//      *     description="Return free Document's informaion.",
-//      *  @SWG\Parameter(
-//      *         name="name",
-//      *         in="query",
-//      *         type="string",
-//      *         description="Frê Document's Name",
-//      *         required=true,
-//      *     ),
-//      * @SWG\Parameter(
-//      *         name="category",
-//      *         in="query",
-//      *         type="integer",
-//      *         description="Free Document's Type",
-//      *         required=true,
-//      *     ),
-//      * @SWG\Parameter(
-//      *         name="file",
-//      *         in="query",
-//      *         type="file",
-//      *         description="Free Document's File",
-//      *         required=true,
-//      *     ),
-//      *     @SWG\Response(
-//      *         response=200,
-//      *         description="Successfully",
-//      *         @SWG\Schema(
-//      *            @SWG\Property(property="id", type="integer"),
-//      *             @SWG\Property(property="name", type="integer"),
-//      *             @SWG\Property(property="file", type="string"),
-//      *             @SWG\Property(property="category_id", type="integer"),
-//      *             @SWG\Property(property="path", type="string"),
-//      *             @SWG\Property(property="status", type="string"),
-//      *             @SWG\Property(property="created_at", type="timestamp"),
-//      *             @SWG\Property(property="updated_at", type="timestamp"),
-//      *            )
-//      *     ),
-//      *     @SWG\Response(
-//      *         response=401,
-//      *         description="Missing Data"
-//      *     ),
-//      * security={
-//      *           {"api_key_security_example": {}}
-//      *       }
-//      * )
-//      */
-// public function updateFreeDocument($id,Request $request){
-//     $adminFind = auth()->user();
-//     if (($adminFind->email==="web.vatly365@gmail.com")){
-//     $validator = Validator::make($request->all(), [
-//         'name' => 'max:255',
-//         'file'=>'max:2048',
-//         'category' => 'numeric|digits_between:1,12',
-//     ]);
-//     if ($validator->fails()) {
-//         return response()->json(['error'=>$validator->errors()], 401);     
-//     }
-//     $freeDocument = FreeDocument::find($id);
-//     if($freeDocument){
-//     $file=$freeDocument->file;
-//     $created_at=$freeDocument->created_at;
-//     $status=$freeDocument->status;
-//     $path=$freeDocument->path;
-//     if ($request->name==null){
-//         $name=$freeDocument->name;
-//     }else{
-//         $name=$request->name;
-//     }
-//     if ($request->category==null){
-//         $category=$freeDocument->category_id;
-//     }else{
-//         $data = DB::table('free_document_category')->where('id', $request->category)->first();
-//         if ($data){
-//         $category=$request->category;
-//         }
-//         else{
-//             return response()->json(["message" => "id category not found!!!"]);
-//         }
-//     }
-//     if ($request->hasFile('file'))
-//     {
-//           $file      = $request->file('file');
-//           $filename  = $file->getClientOriginalName();
-//           $extension = $file->getClientOriginalExtension();
-//           $picture   = $filename;
-//           $path      = 'upload\images\free_document';
-//           $file->move('upload\images\free_document', $picture);
-//           $freeDocument->file=$picture;
-//           $freeDocument->name=$name;
-//           $freeDocument->status=$status;  
-//           $freeDocument->path=$path;          
-//           $freeDocument->category_id=$category;            
-//           $freeDocument->created_at=$created_at;               
-//           $freeDocument->updated_at=Carbon::now('Asia/Ho_Chi_Minh');      
-//           $freeDocument->save();
-//           return Response()->json(array("Successfully. Update successfully!"=> 1,"data"=>$freeDocument ));
-//         }
-//     else
-//     {  
-//         $freeDocument->name=$name;      
-//         $freeDocument->category_id=$category;      
-//         $freeDocument->file=$file;     
-//         $freeDocument->path=$path;     
-//         $freeDocument->status=$status;      
-//         $freeDocument->created_at=$created_at;      
-//         $freeDocument->updated_at=Carbon::now('Asia/Ho_Chi_Minh');      
-//         $freeDocument->save();
-//         return Response()->json(array("Successfully. Update successfully!"=> 1,"data"=>$freeDocument ));
-//     }
-// }else{
-//     return Response()->json(array("error!"=> 401,"message"=>"Id Not Found" ));
-// }
-// }
-// else{
-//     return response()->json([
-//         'error' => 'admin not found'
-//     ], 401); 
-// }
-// }
 
-// /**
-//      * @SWG\POST(
-//      *     path="api/freeDocument/destroyFreeDocument/{id}",
-//      *     description="Return freeDocument's informaion.",
-//      *     @SWG\Response(
-//      *         response=200,
-//      *         description="Successfully",
-//      *         @SWG\Schema(
-//      *             @SWG\Property(property="id", type="integer"),
-//      *             @SWG\Property(property="name", type="integer"),
-//      *             @SWG\Property(property="file", type="string"),
-//      *             @SWG\Property(property="category_id", type="integer"),
-//      *             @SWG\Property(property="path", type="string"),
-//      *             @SWG\Property(property="status", type="string"),
-//      *             @SWG\Property(property="created_at", type="timestamp"),
-//      *             @SWG\Property(property="updated_at", type="timestamp"),
-//      *            )
-//      *     ),
-//      *     @SWG\Response(
-//      *         response=401,
-//      *         description="Missing Data"
-//      *     ),
-//      * security={
-//      *           {"api_key_security_example": {}}
-//      *       }
-//      * )
-//      */
-//     public function destroyFreeDocument($id){
-//         $adminFind = auth()->user();
-//         if (($adminFind->email==="web.vatly365@gmail.com")){
-//         $freeDocumentFind= FreeDocument::find($id);
-//         if ($freeDocumentFind){
-//         $freeDocumentFind->delete();
-//         return response()->json([
-//         'data' => $freeDocumentFind
-//     ]);}
-//     else{
-//         return response()->json(["message" => "Delete failed"]);
-//     }
-// }
-// else{
-//     return response()->json([
-//         'error' => 'admin not found'
-//     ], 401); 
-// }
-//     }
 
-//     /**
-//      * @SWG\POST(
-//      *     path="api/freeDocument/blockActiveFreeDocument/{id}",
-//      *     description="Return freeDocument's informaion.",
-//      *     @SWG\Response(
-//      *         response=200,
-//      *         description="Successfully",
-//      *         @SWG\Schema(
-//      *             @SWG\Property(property="id", type="integer"),
-//      *             @SWG\Property(property="name", type="integer"),
-//      *             @SWG\Property(property="file", type="string"),
-//      *             @SWG\Property(property="category_id", type="integer"),
-//      *             @SWG\Property(property="path", type="string"),
-//      *             @SWG\Property(property="status", type="string"),
-//      *             @SWG\Property(property="created_at", type="timestamp"),
-//      *             @SWG\Property(property="updated_at", type="timestamp"),
-//      *            )
-//      *     ),
-//      *     @SWG\Response(
-//      *         response=401,
-//      *         description="Missing Data"
-//      *     ),
-//      * security={
-//      *           {"api_key_security_example": {}}
-//      *       }
-//      * )
-//      */
-//     public function blockActiveFreeDocument($id){
-//         $adminFind = auth()->user();
-//         if (($adminFind->email==="web.vatly365@gmail.com")){
-//             $freeDocumentFind = DB::table('free_document')->where('id', $id)->first();
-//             if ($freeDocumentFind){ 
-//                 if ($freeDocumentFind->status==="Block"){
-//                     DB::table('free_document')->where('id', $freeDocumentFind->id)->update(['status'	=>	"Active"]);  
-//                     $freeDocumentRespon = DB::table('free_document')->where('id', $id)->first();
-//                     return response()->json([
-//                         'message' => 'successfully',
-//                         'user' => $freeDocumentRespon
-//                     ], 201);
-//                 }
-//                 else{
-//                     DB::table('free_document')->where('id', $freeDocumentFind->id)->update(['status'	=>	"Block"]);  
-//                     $freeDocumentRespon = DB::table('free_document')->where('id', $id)->first();
-//                     return response()->json([
-//                         'message' => 'successfully',
-//                         'user' => $freeDocumentRespon
-//                     ], 201);
-//                 }
-//             }
-//             else{
-//                 return response()->json([
-//                     'error' => 'id not found'
-//                 ], 401); 
-//             }
-//         }
-//         else{
-//             return response()->json([
-//                 'error' => 'admin not found'
-//             ], 401); 
-//         }
-//     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // public function changeCategoryStatus(Request $request){
+    //     $login = auth()->user();
+    //     if($login->is_admin == true){
+    //         $validator = Validator::make($request->all(), [
+    //             'id' => 'required|exists:exam_category,id',
+    //         ]);
+    //         if ($validator->fails()) {
+    //             return response()->json(['error'=>$validator->errors()], 400);      
+    //         }
+    //         $book = ExamCategory::find($request->id);
+    //         if($book->status == 'Active'){
+    //             $book->status = 'Block';
+    //             $book->save();
+    //             return response()->json([
+    //                 'success'=>1,
+    //                 'book'=>$book,
+    //             ], 200);
+    //         }
+    //         else{
+    //             $book->status = 'Active';
+    //             $book->save();
+    //             return response()->json([
+    //                 'success'=>1,
+    //                 'book'=>$book,
+    //             ], 200);
+    //         }
+    //     }
+    //     else{
+    //         return response()->json([
+    //             'error'=>1,
+    //             'description'=>'account login is not admin',
+    //         ], 401);
+    //     }
+    // }
+
+    public function addExamAdmin(Request $request){
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|min:1|max:255|unique:exam_category,name',
+            'price' =>'required|min:1',
+             'time' =>"required|min:1",
+             'image'=>"required|mimes:png,jpeg,jpg",
+             'category_id' =>"required",
+             'number_question'=>"required|min:1",
+             'file_question'=>'required',
+            'status'=>'required'
+        ],[
+            'name.max' => 'Tên sách không quá 255 kí tự',
+            'name.required' => 'Tên không được bỏ trống',
+            'name.unique' => 'Tên này đã tồn tại',
+            'price.required' => 'Gía không được bỏ trống',
+            'price.min' => 'Gía phải lớn hơn 1 đồng',
+            'time.required' => 'Thời gian không được bỏ trống',
+            'time.min' => 'Thời gian phải lớn hơn 1 đồng',
+            'number_question.required' => 'Số lượng câu hỏi không được bỏ trống',
+            'number_question.min' => 'Số lượng câu hỏi phải lớn hơn 1 đồng',
+            'image.image' => 'Hãy chọn hình ảnh',
+            'image.mimes' => 'Hãy chọn hình ảnh có đuôi là PNG, JPG, JPEG',
+            'category_id.required' => 'Loại bài kiểm tra không để trống',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 400);      
+        }
+        $exam = new Exam();
+        $exam->name = $request->name;
+        $exam->status = $request->status;
+        $exam->created_at =  Carbon::now('Asia/Ho_Chi_Minh');
+        $exam->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
+        $exam->save();
+        return response()->json([
+            'success'=>1,
+            'book_type'=>$exam,
+        ], 201);
+    }
+    else{
+        return response()->json([
+            'error'=>1,
+            'description'=>'account login is not admin',
+        ], 401);
+    }
+    }
+    // public function editExamCategory(Request $request){
+    //     $login = auth()->user();
+    //     if($login && $login->is_admin == true){
+    //     $validator = Validator::make($request->all(), [
+    //         'id'    => 'required',
+    //         'name' => 'max:255|string',
+    //         'status'=>''
+    //     ]);
+    //     if ($validator->fails()) {
+    //         return response()->json(['error'=>$validator->errors()], 400);      
+    //     }
+    //     $category = ExamCategory::find($request->id);
+    //     if($category){
+    //         if($category->name == $request->name || $request->name == null){
+    //             $category->name = $category->name;
+    //         }
+    //         else{
+    //             $validator = Validator::make($request->all(), [
+    //                 'name' => 'unique:exam_category,name',
+    //             ]);
+    //             if ($validator->fails()) {
+    //                 return response()->json(['error'=>$validator->errors()], 400);      
+    //             }
+    //             $category->name = $request->name;
+    //         }
+    //         if($category->status == $request->status || $request->status == null){
+    //             $category->status = $category->status;
+    //         }
+    //         else{
+    //             $category->status = $request->status;
+    //         }
+    //         $category->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
+    //         $category->save();
+    //         return response()->json([
+    //             'success'=>1,
+    //             'book_type'=>$category,
+    //         ], 200);
+    //     }
+    //     else{
+    //         return response()->json([
+    //             'error'=>'Not found',
+    //         ], 404);
+    //     }
+    //     }
+    //     else{
+    //         return response()->json([
+    //             'error'=>1,
+    //             'description'=>'account login is not admin',
+    //         ], 401);
+    //     }
+    // }
+    // public function getOneExamCategory(Request $request){
+    //     $validator = Validator::make($request->all(), [
+    //         'id' => 'required|exists:exam_category,id',
+    //     ]);
+    //     if ($validator->fails()) {
+    //         return response()->json(['error'=>$validator->errors()], 400);      
+    //     }
+    //     $login = auth()->user();
+    //     if($login && $login->is_admin == true){
+    //         $category = ExamCategory::find($request->id);
+    //     }
+    //     else{
+    //         $category = ExamCategory::where('status','Active')->where('id',$request->id)->first();
+    //     }
+    //     return response()->json([
+    //         'data'=>$category
+    //     ], 200);
+       
+    // }
 }

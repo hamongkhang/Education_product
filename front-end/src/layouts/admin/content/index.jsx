@@ -21,6 +21,11 @@ import ITinTeach from '../../../views/admin/ITinTeach';
 import EditITINTeach from '../../../views/admin/ITinTeach/edit';
 import AddITinTeach from '../../../views/admin/ITinTeach/add';
 import AdminTable from '../../../views/admin/user_admin';
+import ExamTable from '../../../views/admin/exam'
+import EditCategory from '../../../views/admin/exam/editCategory'
+import AddCategory from '../../../views/admin/exam/addCategory'
+// import EditExam from '../../../views/admin/exam/editExam'
+import AddExam from '../../../views/admin/exam/addExam'
 const AdminContent = (props) => {
     return (
         <div className="ml-72 px-8 pt-8 bg-gray-200 mt-19 min-h-screen" style={{ minHeight: "calc(100vh - 76px)" }}>
@@ -40,14 +45,17 @@ const AdminContent = (props) => {
                     <Route path="/admin/banner/add" exact component={AddBanner} />
                     <Route path="/admin/banner/edit/:id" exact component={EditBanner} />
                     <Route path="/admin/users" exact component={UserTable} />
-                    {/* {/* <Redirect from="*" to="/admin" /> */}
                     <Route path="/admin/booktypes/add" exact component={AddBookType} />
                     <Route path="/admin/booktypes/edit/:id" exact component={EditBookType} />
                     <Route path="/admin/itinTeach" exact component={ITinTeach} />
                     <Route path="/admin/itinTeach/updateITinTeach/:id" exact component={EditITINTeach} />
                     <Route path="/admin/itinTeach/add" exact component={AddITinTeach} />
                     <Route path="/admin/userAdmin" exact component={AdminTable} />
-                    {/* <Redirect from="*" to="/admin" /> */}
+                    <Route path="/admin/exam" exact component={ExamTable} />
+                    <Route path="/admin/exam/addCategory" exact component={AddCategory} />
+                    <Route path="/admin/exam/editCategory/:id" exact component={EditCategory} />
+                    <Route path="/admin/exam/addExam" exact component={AddExam} />
+                    {/* <Route path="/admin/exam/editExam/:id" exact component={EditExam} /> */}
         </Switch>
         </div>
     )

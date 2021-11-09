@@ -206,5 +206,17 @@ Route::post('/cart/updateCart', [App\Http\Controllers\CartController::class, 'up
 Route::post('/cart/removeCart', [App\Http\Controllers\CartController::class, 'removeCart'])->name('cart.remove');
 /* Api exam */
 Route::get('/exam/getExam', [App\Http\Controllers\ExamController::class, 'getExam'])->name('exam.getExam');
+Route::get('/exam/getExamAdmin', [App\Http\Controllers\ExamController::class, 'getExamAdmin'])->name('exam.getExamAdmin');
 Route::post('/exam/getQuestionAnswer', [App\Http\Controllers\ExamController::class, 'getQuestionAnswer'])->name('exam.getQuestionAnswer');
+Route::post('/exam/changeCategoryStatus', [App\Http\Controllers\ExamController::class, 'changeCategoryStatus'])->name('exam.changeCategoryStatus');
+Route::post('/exam/deleteCategory', [App\Http\Controllers\ExamController::class, 'deleteCategory'])->name('exam.deleteCategory');
+Route::post('/exam/addExamCategory', [App\Http\Controllers\ExamController::class, 'addExamCategory'])->name('exam.addExamCategory');
+Route::post('/exam/addExamAdmin', [App\Http\Controllers\ExamController::class, 'addExam'])->name('exam.addExam');
+Route::post('/exam/editExamCategory', [App\Http\Controllers\ExamController::class, 'editExamCategory'])->name('exam.editExamCategory');
+Route::post('/exam/editExamAdmin', [App\Http\Controllers\ExamController::class, 'editExam'])->name('exam.editExam');
+Route::post('/exam/getOneExamCategory', [App\Http\Controllers\ExamController::class, 'getOneExamCategory'])->name('exam.getOneExamCategory');
+Route::post('/exam/changeExamStatus', [App\Http\Controllers\ExamController::class, 'changeExamStatus'])->name('exam.changeExamStatus');
+Route::post('/exam/getOneExamAdmin', [App\Http\Controllers\ExamController::class, 'vgetOneExamAdmin'])->name('exam.getOneExamAdmin');
+
+
 // Route::post('/freeDocumentCategory/destroyFreeDocumentCategory/{id}', [App\Http\Controllers\FreeDocumentCategoryController::class, 'destroyFreeDocumentCategory'])->name('freeDocumentCategory.destroyFreeDocumentCategory');
