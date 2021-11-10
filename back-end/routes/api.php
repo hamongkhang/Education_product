@@ -211,7 +211,7 @@ Route::post('/exam/getQuestionAnswer', [App\Http\Controllers\ExamController::cla
 Route::post('/exam/changeCategoryStatus', [App\Http\Controllers\ExamController::class, 'changeCategoryStatus'])->name('exam.changeCategoryStatus');
 Route::post('/exam/deleteCategory', [App\Http\Controllers\ExamController::class, 'deleteCategory'])->name('exam.deleteCategory');
 Route::post('/exam/addExamCategory', [App\Http\Controllers\ExamController::class, 'addExamCategory'])->name('exam.addExamCategory');
-Route::post('/exam/addExamAdmin', [App\Http\Controllers\ExamController::class, 'addExam'])->name('exam.addExam');
+Route::post('/exam/addExamAdmin', [App\Http\Controllers\ExamController::class, 'addExamAdmin'])->name('exam.addExamAdmin');
 Route::post('/exam/editExamCategory', [App\Http\Controllers\ExamController::class, 'editExamCategory'])->name('exam.editExamCategory');
 Route::post('/exam/editExamAdmin', [App\Http\Controllers\ExamController::class, 'editExam'])->name('exam.editExam');
 Route::post('/exam/getOneExamCategory', [App\Http\Controllers\ExamController::class, 'getOneExamCategory'])->name('exam.getOneExamCategory');

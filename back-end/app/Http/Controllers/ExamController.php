@@ -365,14 +365,13 @@ class ExamController extends Controller
         $login = auth()->user();
         if($login && $login->is_admin == true){
         $validator = Validator::make($request->all(), [
-            'name' => 'required|min:1|max:255|unique:exam_category,name',
-            'price' =>'required|min:1',
+             'name' => 'required|min:1|max:255|unique:exam_category,name',
+             'price' =>'required|min:1',
              'time' =>"required|min:1",
              'image'=>"required|mimes:png,jpeg,jpg",
              'category_id' =>"required",
              'number_question'=>"required|min:1",
-             'file_question'=>'required',
-            'status'=>'required'
+             'status'=>'required',
         ],[
             'name.max' => 'Tên sách không quá 255 kí tự',
             'name.required' => 'Tên không được bỏ trống',
@@ -390,8 +389,57 @@ class ExamController extends Controller
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 400);      
         }
+        if (($request->hasFile('file_question')))
+        {
+            if (($request->hasFile('image')))
+            {
+              $file      = $request->file('file_question');      
+              $path      = 'upload\images\exam';
+              $filename  = $file->getClientOriginalName();
+              $extension = $file->getClientOriginalExtension();
+              $picture   = $filename;
+              $file->move('upload\images\exam', $picture);
+
+              $file2      = $request->file('image');      
+              $path      = 'upload\images\exam';
+              $filename2  = $file2->getClientOriginalName();
+              $extension2 = $file2->getClientOriginalExtension();
+              $picture2   = $filename2;
+              $file2->move('upload\images\exam', $picture2);
+              $postArray = [
+                    'name'  => $request->name,
+                    'file_question'  => $picture,
+                    'price'  => $request->price,
+                    'time'=>$request->time,
+                    'image'=>$picture2,
+                    'category_id'=>$request->category_id,
+                    'number_question'=>$request->number_question,
+                    'status'=>$request->status,
+                    'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+                    'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh')
+                ];
+                 $news = Exam::create($postArray);
+              return Response()->json(array("Successfully. Upload successfully!"=> 1,"data"=>$postArray ));
+        } 
+        else
+        {
+              return response()->json(["message" => "Upload Failed"]);
+        }
+    }else{
+        $file2      = $request->file('image');      
+        $path      = 'upload\images\exam';
+        $filename2  = $file2->getClientOriginalName();
+        $extension2 = $file2->getClientOriginalExtension();
+        $picture2   = $filename2;
+        $file2->move('upload\images\exam', $picture2);
         $exam = new Exam();
         $exam->name = $request->name;
+        $exam->price = $request->price;
+        $exam->time = $request->time;
+        $exam->image = $picture2;
+        $exam->category_id = $request->category_id;
+        $exam->number_question = $request->number_question;
+        $exam->file_question ="Block";
         $exam->status = $request->status;
         $exam->created_at =  Carbon::now('Asia/Ho_Chi_Minh');
         $exam->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
@@ -400,6 +448,7 @@ class ExamController extends Controller
             'success'=>1,
             'book_type'=>$exam,
         ], 201);
+    }
     }
     else{
         return response()->json([

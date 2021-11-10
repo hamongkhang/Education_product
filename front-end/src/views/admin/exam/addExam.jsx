@@ -5,14 +5,14 @@ import {useHistory} from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css';
 toast.configure();
 const AddExam = () => {
-    const [book, setBook] = useState({
+    const [examAdd, setExamAdd] = useState({
         id:"",
         name:"",
         category_id:"",
         price:0,
         time:"",
         number_question:"",
-        file_question:"",
+        file_question:"Block",
         image:"",
         status:"Active",
     });
@@ -28,14 +28,13 @@ const AddExam = () => {
         status:null,
     });
     const [file, setFile] = useState(null);
-    const [examAdd, setExamAdd] = useState([]);
     const $token=localStorage.getItem('access_token');
     const [examCategoryAdmin2, setExamCategoryAdmin2] = useState([]);
     const config = {
 		readonly: false
 	}
     const history = useHistory();
-    const addBook = () => {
+    const addExamFunction = () => {
         const _formData = new FormData();
         _formData.append("id",examAdd.id)
         _formData.append("name",examAdd.name)
@@ -46,7 +45,7 @@ const AddExam = () => {
         _formData.append("file_question",examAdd.file_question)
         _formData.append("status",examAdd.status)
         _formData.append("image",file)
-        fetch("http://localhost:8000/api/exam/addExam", {
+        fetch("http://localhost:8000/api/exam/addExamAdmin", {
             method: "POST",
             body:_formData,
             headers: {"Authorization": `Bearer `+$token}
@@ -90,6 +89,8 @@ const AddExam = () => {
         });
     }
     const onChangeHandle = (event) => {
+        console.log( event.target.name)
+
         let _name = event.target.name;
         let _type = event.target.type;
         let _value = event.target.value;
@@ -121,7 +122,11 @@ const AddExam = () => {
             }
         }
         else if(_type === "file"){
-            setFile(event.target.files[0])
+            if(event.target.name === "image"){
+                setFile(event.target.files[0])
+            }else if(event.target.name === "file_question"){
+                setExamAdd({...examAdd,[_name]:event.target.files[0]});
+                }
         }
         else{
             setExamAdd({...examAdd,[_name]:_value});
@@ -180,7 +185,7 @@ const AddExam = () => {
                                     Gía bài thi (đ)
                                 </label>
                                 <input type="number" name="price" required className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} />
-                                <span className="text-red-500 text-sm">{error.quantity?error.quantity[0]:""}</span>
+                                <span className="text-red-500 text-sm">{error.price?error.price[0]:""}</span>
                             </div>
                         </div>
                         <div className="w-full lg:w-6/12 px-4">
@@ -231,8 +236,17 @@ const AddExam = () => {
                                 <span className="text-red-500 text-sm">{error.image?error.image[0]:""}</span>
                             </div>
                         </div>
+                        <div className="w-full px-4">
+                            <div className="relative w-full mb-3 group h-96">
+                                <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                                    File đề
+                                </label> 
+                                <input type="file" name="file_question" onChange={(event) => onChangeHandle(event)}/>
+                                <span className="text-red-500 text-sm">{error.file_question?error.file_question[0]:""}</span>
+                            </div>
+                        </div>
                     </div>
-                    <button type="button" onClick={()=>addBook()} className="bg-indigo-600 text-white px-5 py-2 rounded hover:bg-indigo-700 hover:shadow-xl font-semibold duration-300">Thêm</button>
+                    <button type="button" onClick={()=>addExamFunction()} className="bg-indigo-600 text-white px-5 py-2 rounded hover:bg-indigo-700 hover:shadow-xl font-semibold duration-300">Thêm</button>
                     </form>
                 </div>
                 </div>
