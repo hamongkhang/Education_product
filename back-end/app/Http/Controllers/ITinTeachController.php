@@ -131,21 +131,29 @@ class ITinTeachController extends Controller
      * )
      */
     public function createITinTeach(Request $request){
-        $adminFind = auth()->user();
-        if (($adminFind->email==="web.vatly365@gmail.com")){
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
-            'file'=>'required',
             'author' => 'required|max:255',
-            'image'=>'required|max:2048',
+            'image'=>'required',
             'description'=>'required',
             'status'=>'required'
+        ],[
+            'name.max' => 'Tên bài viết không quá 255 kí tự',
+            'name.required' => 'Tên không được bỏ trống',
+            'author.max' => 'Tên tác giả không quá 255 kí tự',
+            'author.required' => 'Tên tác giả không được bỏ trống',
+            'image.required' => 'Hãy chọn hình ảnh',
+            'description.required' => 'Mô tả không được bỏ trống',
         ]);
         if ($validator->fails()) {
-            return response()->json(['error'=>$validator->errors()], 401);     
+            return response()->json(['error'=>$validator->errors()], 400);      
         }
-        if (($request->hasFile('file'))&&($request->hasFile('image')))
+        if (($request->hasFile('file')))
         {
+            if (($request->hasFile('image')))
+            {
               $file      = $request->file('file');      
               $path      = 'upload\images\IT_in_teach';
               $filename  = $file->getClientOriginalName();
@@ -177,7 +185,30 @@ class ITinTeachController extends Controller
         {
               return response()->json(["message" => "Upload Failed"]);
         }
-}
+} 
+else{
+    $file2      = $request->file('image');      
+    $path      = 'upload\images\IT_in_teach';
+    $filename2  = $file2->getClientOriginalName();
+    $extension2 = $file2->getClientOriginalExtension();
+    $picture2   = $filename2;
+    $file2->move('upload\images\IT_in_teach', $picture2);
+    $exam = new ITinTeach();
+    $exam->name = $request->name;
+    $exam->author = $request->author;
+    $exam->path = $path;
+    $exam->image = $picture2;
+    $exam->description = $request->description;
+    $exam->file ="Block";
+    $exam->status = $request->status;
+    $exam->created_at =  Carbon::now('Asia/Ho_Chi_Minh');
+    $exam->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
+    $exam->save();
+    return response()->json([
+        'success'=>1,
+        'book_type'=>$exam,
+    ], 201);
+}}
     else{
         return response()->json([
             'error' => 'admin not found'

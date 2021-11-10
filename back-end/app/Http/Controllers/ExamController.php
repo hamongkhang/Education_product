@@ -373,7 +373,7 @@ class ExamController extends Controller
              'number_question'=>"required|min:1",
              'status'=>'required',
         ],[
-            'name.max' => 'Tên sách không quá 255 kí tự',
+            'name.max' => 'Tên bài kiểm tra không quá 255 kí tự',
             'name.required' => 'Tên không được bỏ trống',
             'name.unique' => 'Tên này đã tồn tại',
             'price.required' => 'Gía không được bỏ trống',

@@ -10,7 +10,7 @@ const AddITinTeach = () => {
         name:"",
         description:"",
         image:"",
-        file:"",
+        file:"Block",
         author:"",
         status:"Active",
     });
@@ -23,9 +23,7 @@ const AddITinTeach = () => {
         author:null,
         status:null,
     });
-    const [file1, setFile1] = useState(null);
-    const [file2, setFile2] = useState(null);
-    // const [booktypes, setBookTypes] = useState([]);
+    const [file, setFile] = useState(null);
     const $token=localStorage.getItem('access_token');
     const config = {
 		readonly: false
@@ -38,8 +36,8 @@ const AddITinTeach = () => {
         _formData.append("name",itInTeach.name)
         _formData.append("author",itInTeach.author)
         _formData.append("status",itInTeach.status)
-        _formData.append("image",file1)
-        _formData.append("file",file2)
+        _formData.append("image",file)
+        _formData.append("file",itInTeach.file)
         _formData.append("description",itInTeach.description)
         fetch("http://localhost:8000/api/ITinTeach/createITinTeach", {
             method: "POST",
@@ -105,11 +103,12 @@ const AddITinTeach = () => {
                 });
             }
         }
-        else if(_type === "file" && _name==='image'){
-            setFile1(event.target.files[0])
-        }
-        else if(_type === "file" && _name==='file'){
-            setFile2(event.target.files[0])
+        else if(_type === "file"){
+            if(event.target.name === "image"){
+                setFile(event.target.files[0])
+            }else if(event.target.name === "file"){
+                setItInTeach({...itInTeach,[_name]:event.target.files[0]});
+                }
         }
         else{
             setItInTeach({...itInTeach,[_name]:_value});
@@ -177,7 +176,7 @@ const AddITinTeach = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                     Hình ảnh
                                 </label> 
-                                <img src={file1 ? URL.createObjectURL(file1):"a"}  className="w-full min-h-96 h-full mb-30 md:mb-1 object-scale-down rounded-lg" alt=""/>
+                                <img src={file ? URL.createObjectURL(file):"a"}  className="w-full min-h-96 h-full mb-30 md:mb-1 object-scale-down rounded-lg" alt=""/>
                                 <label htmlFor="file" className="w-3/5 text-center opacity-0 group-hover:opacity-100 block py-2 rounded-md bg-yellow-400 hover:bg-yellow-500 cursor-pointer text-15 font-semibold absolute bottom-5 transform left-1/2 -translate-x-1/2 duration-300 text-white">
                                     <i className="fad fa-camera mr-2"></i>
                                     <span> Chọn ảnh</span>
@@ -186,21 +185,15 @@ const AddITinTeach = () => {
                                 <span className="text-red-500 text-sm">{error.image?error.image[0]:""}</span>
                             </div>
                         </div>
-
                         <div className="w-full px-4">
                             <div className="relative w-full mb-3 group h-96">
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                                    file
+                                    File
                                 </label> 
-                                <label htmlFor="file2" className="w-3/5 text-center opacity-0 group-hover:opacity-100 block py-2 rounded-md bg-yellow-400 hover:bg-yellow-500 cursor-pointer text-15 font-semibold absolute bottom-5 transform left-1/2 -translate-x-1/2 duration-300 text-white">
-                                <i className="fas fa-file"></i>
-                                    <span> Chọn file</span>
-                                </label>
-                                <input type="file" id="file2" name="file" hidden required onChange={(event) => onChangeHandle(event)} />
+                                <input type="file" name="file" onChange={(event) => onChangeHandle(event)}/>
                                 <span className="text-red-500 text-sm">{error.file?error.file[0]:""}</span>
                             </div>
                         </div>
-
                         <div className="w-full lg:w-12/12 px-4 mt-10">
                             <div className="relative w-full mb-3">
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
