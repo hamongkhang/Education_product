@@ -217,10 +217,10 @@ const ExamTable = (props) => {
     //         }
     //       })
     // }
-    const changeStatus = (id) =>{
+    const changeExamStatus = (id) =>{
         const _formData = new FormData();
         _formData.append("id",id)
-        fetch("http://localhost:8000/api/changeBookStatus", {
+        fetch("http://localhost:8000/api/exam/changeExamStatus", {
             method: "POST",
             body:_formData,
             headers: {"Authorization": `Bearer `+$token}
@@ -453,10 +453,10 @@ const ExamTable = (props) => {
                                             {item.time}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <label htmlFor={`toggle${item.id}`} className="toggle-label">
-                                                <input type="checkbox" name="" id={`toggle${item.id}`} 
+                                            <label htmlFor={`toggle${item.id+"exam"}`} className="toggle-label">
+                                                <input type="checkbox" name="" id={`toggle${item.id+"exam"}`} 
                                                     defaultChecked = {item.status === 'Active'?true:false}
-                                                    hidden onClick={()=>changeStatus(item.id)}/>
+                                                    hidden onClick={()=>changeExamStatus(item.id)}/>
                                                 <div className="toggle-btn">
                                                     <div className="spinner"></div>
                                                 </div>

@@ -281,8 +281,8 @@ else{
      * )
      */
     public function updateITinTeach($id,Request $request){
-        $adminFind = auth()->user();
-        if (($adminFind->email==="web.vatly365@gmail.com")){
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
         $validator = Validator::make($request->all(), [
             'name' => 'max:255',
             'file'=>'',

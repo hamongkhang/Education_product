@@ -326,40 +326,40 @@ class ExamController extends Controller
 
 
 
-    // public function changeCategoryStatus(Request $request){
-    //     $login = auth()->user();
-    //     if($login->is_admin == true){
-    //         $validator = Validator::make($request->all(), [
-    //             'id' => 'required|exists:exam_category,id',
-    //         ]);
-    //         if ($validator->fails()) {
-    //             return response()->json(['error'=>$validator->errors()], 400);      
-    //         }
-    //         $book = ExamCategory::find($request->id);
-    //         if($book->status == 'Active'){
-    //             $book->status = 'Block';
-    //             $book->save();
-    //             return response()->json([
-    //                 'success'=>1,
-    //                 'book'=>$book,
-    //             ], 200);
-    //         }
-    //         else{
-    //             $book->status = 'Active';
-    //             $book->save();
-    //             return response()->json([
-    //                 'success'=>1,
-    //                 'book'=>$book,
-    //             ], 200);
-    //         }
-    //     }
-    //     else{
-    //         return response()->json([
-    //             'error'=>1,
-    //             'description'=>'account login is not admin',
-    //         ], 401);
-    //     }
-    // }
+    public function changeExamStatus(Request $request){
+        $login = auth()->user();
+        if($login->is_admin == true){
+            $validator = Validator::make($request->all(), [
+                'id' => 'required|exists:exam,id',
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['error'=>$validator->errors()], 400);      
+            }
+            $book = Exam::find($request->id);
+            if($book->status == 'Active'){
+                $book->status = 'Block';
+                $book->save();
+                return response()->json([
+                    'success'=>1,
+                    'book'=>$book,
+                ], 200);
+            }
+            else{
+                $book->status = 'Active';
+                $book->save();
+                return response()->json([
+                    'success'=>1,
+                    'book'=>$book,
+                ], 200);
+            }
+        }
+        else{
+            return response()->json([
+                'error'=>1,
+                'description'=>'account login is not admin',
+            ], 401);
+        }
+    }
 
     public function addExamAdmin(Request $request){
         $login = auth()->user();
