@@ -7,22 +7,20 @@ const Chat = (props) => {
     const messageEl = useRef(null);
     const [message, setMessage] = useState('');
     const [userID, setUserId] = useState('');
-    const [classesChatbox, setClassesChatbox] = useState('w-0 h-0')
-    const [classesBtnChatbox, setClassesBtnChatbox] = useState('block')
+    const [classesChatbox, setClassesChatbox] = useState('w-0 h-0');
+    const [classesBtnChatbox, setClassesBtnChatbox] = useState('block');
     var $token = localStorage.getItem('access_token_chat');
     var $login_token = localStorage.getItem('access_token');
 
     const handleChatbox = () => {
         if (classesChatbox === 'w-0 h-0') {
-            setClassesChatbox('w-80 h-508')
-            setClassesBtnChatbox('hidden')
+            setClassesChatbox('w-80 h-508');
+            setClassesBtnChatbox('hidden');
+        } else {
+            setClassesChatbox('w-0 h-0');
+            setClassesBtnChatbox('block');
         }
-        else {
-            setClassesChatbox('w-0 h-0')
-            setClassesBtnChatbox('block')
-        }
-
-    }
+    };
 
     const handleOnchange = (e) => {
         setMessage(e.target.value);
@@ -50,18 +48,15 @@ const Chat = (props) => {
                 method: 'POST',
                 headers: { Authorization: `Bearer ` + token },
             };
-                fetch(
-                    'http://127.0.0.1:8000/api/users/userProfile',
-                    requestOptions,
-                )
-                    .then((res) => res.json())
-                    .then((json) => {
-                        if (json.id) {
-                            setUserId(json.id);
-                        } else {
-                            setUserId(null);
-                        }
-                    });
+            fetch('http://127.0.0.1:8000/api/users/userProfile', requestOptions)
+                .then((res) => res.json())
+                .then((json) => {
+                    if (json.id) {
+                        setUserId(json.id);
+                    } else {
+                        setUserId(null);
+                    }
+                });
         }
     };
     const getMessagesAPI = (token) => {
@@ -157,7 +152,9 @@ const Chat = (props) => {
 
     return (
         <div>
-            <div className={`w-0 h-0 z-50 duration-300 fixed bottom-14 right-5 sm:bottom-10 sm:right-10 shadow-xl rounded-lg overflow-hidden bg-white ${classesChatbox}`}>
+            <div
+                className={`w-0 h-0 z-50 duration-300 fixed bottom-14 right-5 sm:bottom-10 sm:right-10 shadow-xl rounded-lg overflow-hidden bg-white ${classesChatbox}`}
+            >
                 <div className="flex justify-between items-center p-4">
                     <div className="flex items-center space-x-2">
                         <img
@@ -170,7 +167,10 @@ const Chat = (props) => {
                         </span>
                     </div>
                     <div>
-                        <i className="far fa-times chat-close text-xl mr-2 hover:text-yellow-700 duration-200 cursor-pointer" onClick={handleChatbox}></i>
+                        <i
+                            className="far fa-times chat-close text-xl mr-2 hover:text-yellow-700 duration-200 cursor-pointer"
+                            onClick={handleChatbox}
+                        ></i>
                     </div>
                 </div>
                 <div
@@ -208,7 +208,10 @@ const Chat = (props) => {
                 </form>
             </div>
 
-            <div className={`fixed bottom-5 right-5 sm:bottom-14 sm:right-14 cursor-pointer w-12 h-12 sm:w-14 sm:h-14  mb-2 flex items-center justify-center rounded-full duration-500 bg-white ${classesBtnChatbox}`} onClick={handleChatbox}>
+            <div
+                className={`fixed bottom-5 right-5 sm:bottom-14 sm:right-14 cursor-pointer w-12 h-12 sm:w-14 sm:h-14  mb-2 flex items-center justify-center rounded-full duration-500 bg-white ${classesBtnChatbox}`}
+                onClick={handleChatbox}
+            >
                 <div className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gradient-to-tr to-red-500 from-blue-600 opacity-75" />
                 <i className="fab fa-facebook-messenger mt-1 bg-gradient-to-tr to-red-500 from-blue-600 text-transparent bg- text-3xl sm:text-4xl bg-clip-text"></i>
             </div>

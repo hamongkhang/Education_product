@@ -18,9 +18,9 @@ const OrderItem = (props) => {
         })
             .then((response) => response.json())
             .then((data) => {
+                console.log(data.data);
                 setHistory(data.data.reverse());
             });
-        return () => {};
     };
     const getApiSecond = () => {
         const _formData = new FormData();
@@ -34,7 +34,6 @@ const OrderItem = (props) => {
             .then((data) => {
                 setType(data.data.reverse());
             });
-        return () => {};
     };
     const handleClick = () => {
         if (classIcon === 'down') {
@@ -74,9 +73,17 @@ const OrderItem = (props) => {
                 </div>
             </div>
             <div className={`overflow-hidden sm1:ml-5 ${classOrder} mt-3`}>
-                {history.map((item, i) => {
-                    return <OrderDetailsItem product={item} type={type[i]} />;
-                })}
+                {history &&
+                    history.map((item, i) => {
+                        console.log(item);
+                        return (
+                            <OrderDetailsItem
+                                key={i}
+                                product={item}
+                                type={type[i]}
+                            />
+                        );
+                    })}
             </div>
         </div>
     );

@@ -24,7 +24,7 @@ import CheckResultExam from '../../components/cart/checkResultExam';
 
 const HomePages = (props) => {
     const { changeRender } = props;
-    const [reRender, setReRender] = useState(false);// Dành cho login/ logout
+    const [reRender, setReRender] = useState(false); // Dành cho login/ logout
 
     const [checkLoggedIn, setCheckLoggedIn] = useState(false);
     // const [reRender, setReRender] = useState(false);
@@ -32,14 +32,12 @@ const HomePages = (props) => {
     const handleCheckLoggedIn = () => {
         if (localStorage.getItem('access_token')) {
             let token = localStorage.getItem('access_token');
-            if(token) {
-                setCheckLoggedIn(true)
-            }
-            else {
+            if (token) {
+                setCheckLoggedIn(true);
+            } else {
                 setCheckLoggedIn(false);
             }
-        }
-        else {
+        } else {
             setCheckLoggedIn(false);
         }
     };
@@ -50,7 +48,7 @@ const HomePages = (props) => {
 
     return (
         <>
-            <Header setReRender={setReRender} checkLoggedIn={checkLoggedIn}/>
+            <Header setReRender={setReRender} checkLoggedIn={checkLoggedIn} />
             <div>
                 {/*  Route home page */}
                 <Route path="/dang-ky" exact component={Register} />

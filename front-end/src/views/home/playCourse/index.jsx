@@ -31,18 +31,17 @@ const PlayCourse = (props) => {
     const handleCheckLoggedIn = () => {
         if (localStorage.getItem('access_token')) {
             let token = localStorage.getItem('access_token');
-            if(!token) {
+            if (!token) {
                 history.goBack();
             }
-        }
-        else {
+        } else {
             history.goBack();
         }
-    }
+    };
 
     useEffect(() => {
-        handleCheckLoggedIn()
-    }, [])
+        handleCheckLoggedIn();
+    }, []);
 
     const getComment = (id) => {
         const _formData = new FormData();
@@ -279,27 +278,30 @@ const PlayCourse = (props) => {
                                     </form>
                                 </div>
                                 <div className="space-y-4 lg:h-814 custom-scroll-1 lg:overflow-y-scroll">
-                                    {comment.map((item, index) => {
-                                        if (item.lessonId === id) {
-                                            let reply = commentReply.filter(
-                                                (item2) =>
-                                                    item2.id_reply ===
-                                                        item.id &&
-                                                    item2.lessonId === id,
-                                            );
-                                            return (
-                                                <Comment
-                                                    key={index}
-                                                    item={item}
-                                                    replyComment={reply}
-                                                    amountReply={reply.length}
-                                                    setCommentReply={
-                                                        setCommentReply
-                                                    }
-                                                />
-                                            );
-                                        }
-                                    })}
+                                    {comment &&
+                                        comment.map((item, index) => {
+                                            if (item.lessonId === id) {
+                                                let reply = commentReply.filter(
+                                                    (item2) =>
+                                                        item2.id_reply ===
+                                                            item.id &&
+                                                        item2.lessonId === id,
+                                                );
+                                                return (
+                                                    <Comment
+                                                        key={index}
+                                                        item={item}
+                                                        replyComment={reply}
+                                                        amountReply={
+                                                            reply.length
+                                                        }
+                                                        setCommentReply={
+                                                            setCommentReply
+                                                        }
+                                                    />
+                                                );
+                                            }
+                                        })}
                                 </div>
                             </div>
                         </div>

@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { LoginName } from '../account';
 
 const AccountControls = (props) => {
     const { setReRender, checkLoggedIn } = props;
-    
+
     return (
         <div className="flex items-center space-x-3">
             <div className="text-white space-x-3">
-                {
-                    checkLoggedIn && <>
-                <button className="search-open leading-5 left-1 px-3 p-2 rounded-md bg-indigo-600 hover:bg-indigo-700 duration-300">
-                    <i className="far fa-search font-medium" />
-                </button>
-                <button
-                    type="button"
-                    className="relative cart bg-green-700 hover:bg-green-800 pr-3 leading-5 p-2 duration-500 rounded-md"
-                >
-                    <i class="far fa-cart-plus font-medium"></i>
-                    <label className="absolute top-0 right-1 font-medium text-15">
+                {checkLoggedIn && (
+                    <>
+                        <button className="search-open leading-5 left-1 px-3 p-2 rounded-md bg-indigo-600 hover:bg-indigo-700 duration-300">
+                            <i className="far fa-search font-medium" />
+                        </button>
+                        <button
+                            type="button"
+                            className="relative cart bg-green-700 hover:bg-green-800 pr-3 leading-5 p-2 duration-500 rounded-md"
+                        >
+                            <i class="far fa-cart-plus font-medium"></i>
+                            {/* <label className="absolute top-0 right-1 font-medium text-15">
                         4
-                    </label>
-                </button>
-                </>
-                }
+                    </label> */}
+                        </button>
+                    </>
+                )}
             </div>
             {checkLoggedIn ? (
                 <div className="hidden sm:block">

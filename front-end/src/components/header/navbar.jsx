@@ -22,24 +22,23 @@ const Navbar = (props) => {
                     </div>
                     <div className="custom-scroll overflow-y-scroll lg:overflow-y-visible menu-mobile text-lg font-medium">
                         <div className="">
-                            {
-                                checkLoggedIn ? <Link
-                                to="tai-khoan"
-                                className="sm:hidden flex nav-link items-center justify-between bg-indigo-100 px-5 py-4 hover:bg-indigo-200"
-                            >
-                                <span>Tài khoản</span>
-                                <i class="fad fa-user text-lg"></i>
-                            </Link>
-                            : <Link
-                            to="dang-nhap"
-                            className="sm:hidden flex nav-link items-center justify-between text-white px-5 py-4 bg-green-700 hover:bg-green-800"
-                        >
-                            <span>Đăng nhập</span>
-                            <i class="far fa-sign-in text-lg"></i>
-                        </Link>
-                            }
-                            
-                            
+                            {checkLoggedIn ? (
+                                <Link
+                                    to="tai-khoan"
+                                    className="sm:hidden flex nav-link items-center justify-between bg-indigo-100 px-5 py-4 hover:bg-indigo-200"
+                                >
+                                    <span>Tài khoản</span>
+                                    <i class="fad fa-user text-lg"></i>
+                                </Link>
+                            ) : (
+                                <Link
+                                    to="dang-nhap"
+                                    className="sm:hidden flex nav-link items-center justify-between text-white px-5 py-4 bg-green-700 hover:bg-green-800"
+                                >
+                                    <span>Đăng nhập</span>
+                                    <i class="far fa-sign-in text-lg"></i>
+                                </Link>
+                            )}
                         </div>
                         <ul className="nav-menu pt-5 lg:pt-0 flex lg:flex-row items-start mx-5 space-y-3 lg:space-y-0 flex-col text-white lg:space-x-4 uppercase tracking-wide">
                             <li

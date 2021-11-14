@@ -28,7 +28,7 @@
 }
 
 .other-doc-left__title {
-    background-color: #0673ba;
+    background-color: #5B21B6;
     color: white;
     padding: 8px 0px;
     margin-top: 0;
@@ -89,7 +89,7 @@
 
 .other-doc-right__title {
     position: absolute;
-    background-color: #0673ba;
+    background-color: #5B21B6;
     border-radius: 3px 0 0 3px;
 }
 
@@ -110,7 +110,7 @@
     border-bottom: 18px solid transparent;
     border-right: 0 solid transparent;
     border-top: 18px solid transparent;
-    border-left: 13px solid #0673BA;
+    border-left: 13px solid #5B21B6;
     top: 0;
     right: -13px;
 }
@@ -130,7 +130,7 @@
 .other-doc-right-content__icon {
     margin-left: 20px;
     width: 8%;
-    color: #0673BA;
+    color: #5B21B6;
     padding-left: 10px;
     min-height: 30px;
 }

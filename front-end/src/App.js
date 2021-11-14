@@ -11,6 +11,7 @@ import Cart from './components/cart';
 import UserProfile from './views/home/userProfile';
 import PlayCourse from './views/home/playCourse';
 import 'react-toastify/dist/ReactToastify.css';
+import FullWidthTabs from './views/home/test';
 
 const loading = (
     <svg viewBox="25 25 50 50" className="preloader">
@@ -21,7 +22,6 @@ const loading = (
 function App() {
     const [render, setRender] = useState(false);
     const changeRender = () => {
-        console.log('đã được render lại');
         setRender(!render);
     };
     return (

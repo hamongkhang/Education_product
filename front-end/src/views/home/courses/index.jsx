@@ -4,58 +4,13 @@ import { CourseItem } from '../../../components/courses';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
-const arr = [
-    {
-        name: '12',
-    },
-    {
-        name: '12',
-    },
-    {
-        name: '12',
-    },
-    {
-        name: '12',
-    },
-    {
-        name: 'THPT',
-    },
-    {
-        name: 'THPT',
-    },
-    {
-        name: 'THPT',
-    },
-    {
-        name: 'THPT',
-    },
-    {
-        name: '11',
-    },
-    {
-        name: '11',
-    },
-    {
-        name: '11',
-    },
-    {
-        name: '11',
-    },
-    {
-        name: '10',
-    },
-    {
-        name: '10',
-    },
-];
-
 const Books = (props) => {
     const [show, setShow] = useState(8);
-    const [arr1, setArr1] = useState([]);
     const [pageItem, setPageItem] = useState(1);
     const [page, setPage] = useState(0);
 
     const [course, setCourse] = useState([]);
+    const [course1, setCourse1] = useState([]);
     const [search, setSearch] = useState([]);
     const [categoryCourse, setCategoryCourse] = useState([]);
     const [count, setCount] = useState([]);
@@ -76,7 +31,10 @@ const Books = (props) => {
                 headers: { Authorization: `Bearer ` + $token },
             })
                 .then((response) => response.json())
-                .then((data) => setCourse(data.data));
+                .then((data) => {
+                    setCourse(data.data);
+                    setCourse1(data.data);
+                });
             return () => {};
         } else {
             fetch('http://localhost:8000/api/getCourseSearch', {
@@ -84,7 +42,10 @@ const Books = (props) => {
                 body: _formData,
             })
                 .then((response) => response.json())
-                .then((data) => setCourse(data.data));
+                .then((data) => {
+                    setCourse(data.data);
+                    setCourse1(data.data);
+                });
             return () => {};
         }
     };
@@ -101,7 +62,10 @@ const Books = (props) => {
             method: 'GET',
         })
             .then((response) => response.json())
-            .then((data) => setCourse(data.data));
+            .then((data) => {
+                setCourse(data.data);
+                setCourse1(data.data);
+            });
         return () => {};
     };
 
@@ -122,6 +86,7 @@ const Books = (props) => {
             }
         };
     };
+
     const tinhTongSecond = (id) => {
         const _formData = new FormData();
         _formData.append('id', id);
@@ -151,29 +116,35 @@ const Books = (props) => {
 
     const handleChange = (event, value) => {
         setPageItem(value);
-        renderBooks(value);
+        renderCourses(value);
     };
 
-    const renderBooks = (value = 1) => {
+    const renderCourses = (value = 1) => {
         let end = value * show,
             start = end - show;
-        setArr1(arr.slice(start, end));
+        setCourse(course1.slice(start, end));
     };
+
     useEffect(() => {
         getCategoryCourses();
         getApiSecond();
         tinhTong();
         getAdmin();
-        setPage(parseInt(arr.length / show + 1));
-        renderBooks();
+        setPage(parseInt(course1.length / show + 1));
+        renderCourses();
     }, []);
+
+    useEffect(() => {
+        setPage(parseInt(course1.length / show + 1));
+        renderCourses();
+    }, [course1]);
     return (
         <>
             <BannerBook />
             <div className="xl:w-4/5 xl:px-0 px-4 w-full relative left-1/2 transform -translate-x-1/2 mt-10">
                 <div className="bg-purple-800 w-full h-12 md:h-16 rounded-md mb-10 flex items-center justify-between px-3 md:px-6">
                     <div className="font-medium text-white uppercase">
-                        Hiển thị 9/20
+                        Hiển thị {course.length + '/' + course1.length}
                     </div>
 
                     <div>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import ExamLesson from './examLesson';
 import { toast } from 'react-toastify';
 
-toast.configure()
+toast.configure();
 
 const ExamDetail = ({
     examDetails,
@@ -114,19 +114,21 @@ const ExamDetail = ({
                                 </div>
                             </>
                             {examDetails.check ? (
-                                <button
-                                    type="submit"
-                                    onClick={() =>
-                                        handleExamLesson(
-                                            examDetails.id,
-                                            1,
-                                            examDetails.time,
-                                        )
-                                    }
-                                    className="answer-right__button answer-right__button--succ"
-                                >
-                                    Bắt đầu thi
-                                </button>
+                                <>
+                                    <button
+                                        type="submit"
+                                        onClick={() =>
+                                            handleExamLesson(
+                                                examDetails.id,
+                                                1,
+                                                examDetails.time,
+                                            )
+                                        }
+                                        className="mt-3 bg-indigo-600 text-white px-5 py-2 rounded hover:bg-indigo-700 hover:shadow-xl font-semibold duration-300"
+                                    >
+                                        Bắt đầu thi
+                                    </button>
+                                </>
                             ) : (
                                 <button
                                     type="submit"
@@ -137,7 +139,7 @@ const ExamDetail = ({
                                             examDetails.id,
                                         )
                                     }
-                                    className="answer-right__button answer-right__button--succ"
+                                    className="mt-3 bg-indigo-600 text-white px-5 py-2 rounded hover:bg-indigo-700 hover:shadow-xl font-semibold duration-300"
                                 >
                                     Mua bài kiểm tra
                                 </button>

@@ -52,6 +52,7 @@ const EnrolledCourses = (props) => {
     const [page, setPage] = useState(0);
     const [course, setCourse] = useState([]);
     const [history, setHistory] = useState([]);
+    const [enrolledCourses, setEnrolledCourses] = useState([]);
     const [count, setCount] = useState([]);
     const [count2, setCount2] = useState([]);
     const [search, setSearch] = useState([]);
@@ -71,6 +72,7 @@ const EnrolledCourses = (props) => {
                 }
             }
             setHistory(a);
+            setEnrolledCourses(a);
             setCount(b);
         }
     };
@@ -83,6 +85,7 @@ const EnrolledCourses = (props) => {
             .then((response) => response.json())
             .then((data) => {
                 setHistory(data.data);
+                setEnrolledCourses(data.data);
                 setSearch(data.data);
             });
         return () => {};
@@ -110,6 +113,8 @@ const EnrolledCourses = (props) => {
     useEffect(() => {
         getApiSecond();
         tinhTong();
+        setPage(parseInt(enrolledCourses.length / show + 1));
+        renderCourses();
     }, []);
 
     const handleChange = (event, value) => {
@@ -120,12 +125,12 @@ const EnrolledCourses = (props) => {
     const renderCourses = (value = 1) => {
         let end = value * show,
             start = end - show;
-        setArr1(arr.slice(start, end));
+        setHistory(enrolledCourses.slice(start, end));
     };
     useEffect(() => {
-        setPage(parseInt(arr.length / show + 1));
+        setPage(parseInt(enrolledCourses.length / show + 1));
         renderCourses();
-    }, []);
+    }, [enrolledCourses]);
     return (
         <div className="">
             <div className="flex flex-col md:flex-row items-start justify-between uppercase font-semibold mt-5">

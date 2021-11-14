@@ -5,59 +5,14 @@ import { BannerBook } from '../../../components/banner';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
-const arr = [
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
-    },
-];
-
 const Articles = (props) => {
     const [show, setShow] = useState(4);
-    const [arr1, setArr1] = useState([]);
     const [pageItem, setPageItem] = useState(1);
     const [page, setPage] = useState(0);
     const [search, setSearch] = useState([]);
     const $link = 'http://localhost:8000/upload/images/featured_post/';
     const [featuredPost, setFeaturedPost] = useState([]);
+    const [articles, setArticles] = useState([]);
     const $user = window.localStorage.getItem('nameAccount');
     const $token = localStorage.getItem('access_token');
 
@@ -72,12 +27,11 @@ const Articles = (props) => {
                 }
             }
             setFeaturedPost(a);
+            setArticles(a);
         }
     };
 
     useEffect(() => {
-        setPage(parseInt(arr.length / show + 1));
-        renderArticles();
         if ($token) {
             fetch('http://localhost:8000/api/featuredPost/getFeaturedPost', {
                 method: 'GET',
@@ -86,9 +40,9 @@ const Articles = (props) => {
                 .then((response) => response.json())
                 .then((data) => {
                     setFeaturedPost(data.data);
+                    setArticles(data.data);
                     setSearch(data.data);
                 });
-            return () => {};
         } else {
             fetch('http://localhost:8000/api/featuredPost/getFeaturedPost', {
                 method: 'GET',
@@ -96,10 +50,13 @@ const Articles = (props) => {
                 .then((response) => response.json())
                 .then((data) => {
                     setFeaturedPost(data.data);
+                    setArticles(data.data);
                     setSearch(data.data);
                 });
-            return () => {};
         }
+
+        setPage(parseInt(articles.length / show + 1));
+        renderArticles();
     }, []);
 
     const handleChange = (event, value) => {
@@ -110,12 +67,12 @@ const Articles = (props) => {
     const renderArticles = (value = 1) => {
         let end = value * show,
             start = end - show;
-        setArr1(arr.slice(start, end));
+        setFeaturedPost(articles.slice(start, end));
     };
-    // useEffect(() => {
-    //     setPage(parseInt(arr.length/show + 1));
-    //     renderArticles();
-    // }, [])
+    useEffect(() => {
+        setPage(parseInt(articles.length / show + 1));
+        renderArticles();
+    }, [articles]);
     return (
         <>
             <BannerBook />

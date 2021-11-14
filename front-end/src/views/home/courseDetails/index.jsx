@@ -6,7 +6,7 @@ import CourseDesc from './courseDesc';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 
-toast.configure()
+toast.configure();
 
 const CourseDetails = (props) => {
     const $link = 'http://localhost:8000/upload/images/course/';
@@ -223,9 +223,7 @@ const CourseDetails = (props) => {
                                 className="flex items-center justify-center space-x-4 text-white"
                                 onClick={() => addToCart(course.id)}
                             >
-                                <button
-                                    className="w-full py-2 rounded-sm bg-green-700 hover:bg-green-800 space-x-2 hover:shadow-lg"
-                                >
+                                <button className="w-full py-2 rounded-sm bg-green-700 hover:bg-green-800 space-x-2 hover:shadow-lg">
                                     <i className="far fa-cart-plus" />
                                     <span>Đăng ký</span>
                                 </button>
