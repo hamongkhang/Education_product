@@ -29,11 +29,6 @@ const BooksTable = (props) => {
           })
         .then(response => response.json())
         .then(data =>  {
-            console.log(data);
-            if(data.url){
-                let url = data.url;
-                history.push(url);
-            }
             if(data.book_types){
                 setBookTypes(data.book_types)
             }
@@ -192,9 +187,9 @@ const BooksTable = (props) => {
         });
     }
     useEffect(() => {
-        getBookTypes();
         if($token){
-           getBooks();
+            getBookTypes();
+            getBooks();
         }
     }, [render])
     return (

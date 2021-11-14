@@ -15,9 +15,6 @@ import ArticleDetails from './articleDetails';
 import ExamIndex from './exam';
 import CheckResultExam from '../../components/cart/checkResultExam';
 
-
-
-
 const HomePages = (props) => {
     const { changeRender } = props;
     return (

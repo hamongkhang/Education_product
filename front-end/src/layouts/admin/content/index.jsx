@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom'
 import Dashboard from '../../../views/admin';
 import DataTable from '../../../views/admin/table';
@@ -21,6 +21,11 @@ import ITinTeach from '../../../views/admin/ITinTeach';
 import EditITINTeach from '../../../views/admin/ITinTeach/edit';
 import AddITinTeach from '../../../views/admin/ITinTeach/add';
 import AdminTable from '../../../views/admin/user_admin';
+import CategoryCourse from '../../../views/admin/categoryCourses';
+import Courses from '../../../views/admin/courses';
+import TableContent from '../../../views/admin/tableContent';
+import Content from '../../../views/admin/content';
+import Lessson from '../../../views/admin/lessons';
 
 const AdminContent = (props) => {
     return (
@@ -53,6 +58,12 @@ const AdminContent = (props) => {
                         <Route path="/admin/itinTeach/updateITinTeach/:id" exact component={EditITINTeach} />
                         <Route path="/admin/itinTeach/add" exact component={AddITinTeach} />
                         <Route path="/admin/userAdmin" exact component={AdminTable} />
+                        
+                        <Route path="/admin/category_courses" exact component={CategoryCourse} />
+                        <Route path="/admin/courses/:id" exact component={Courses} />
+                        <Route path="/admin/table_content/:id" exact component={TableContent} />
+                        <Route path="/admin/content/:id" exact component={Content} />
+                        <Route path="/admin/lessons/:id" exact component={Lessson} />
                     </>
                     :
                     <>

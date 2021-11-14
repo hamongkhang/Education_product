@@ -28,7 +28,6 @@ const Admin = (props) =>{
         });
     }
     useEffect(() => {
-        console.log('check role');
         if($token){
             checkRole()
         }
