@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Countdown from './Countdown';
 
 export const ExamLesson = ({
@@ -15,9 +15,10 @@ export const ExamLesson = ({
     const [answerExam, setAnswerExam] = useState([]);
     const [idExam, setIdExam] = useState([]);
     const [sum, setSum] = useState(0);
+    const counterRef = useRef(null)
 
     const onExam = (event) => {
-        event.preventDefault();
+        event.preventDefault(); 
         var tong = 0;
         for (var i = 0; i < number; i++) {
             if (correct[i]) {
@@ -39,10 +40,33 @@ export const ExamLesson = ({
         setIdExam([...idExam, Number(field)]);
         setAnswerExam([...answerExam, value]);
     };
+
+    useEffect(() => {
+        const fixedCounter = () => {
+            if (
+                document.body.scrollTop > 384 ||
+                document.documentElement.scrollTop > 384
+            ) {
+                counterRef.current.classList.remove('absolute');
+                counterRef.current.classList.remove('top-0');
+                counterRef.current.classList.add('fixed');
+                counterRef.current.classList.add('top-19');
+            } else {
+                counterRef.current.classList.remove('fixed');
+                counterRef.current.classList.remove('top-19');
+                counterRef.current.classList.add('absolute');
+                counterRef.current.classList.add('top-0');
+            }
+        };
+        window.addEventListener('scroll', fixedCounter);
+        return () => {
+            window.removeEventListener('scroll', fixedCounter);
+        };
+    }, [])
+
     return (
         <>
             <div className="test">
-                <Countdown timer={timer} />
                 <div className="test__block">
                     <div className="test__title">
                         <h3>{name}</h3>
@@ -145,6 +169,9 @@ export const ExamLesson = ({
                             Nộp bài
                         </button>
                     </form>
+                </div>
+                <div ref={counterRef} className="absolute top-0 px-5 py-3 right-0 bg-white shadow-lg rounded-md">
+                    <Countdown timer={timer} />
                 </div>
             </div>
         </>

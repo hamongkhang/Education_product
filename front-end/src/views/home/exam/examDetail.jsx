@@ -165,7 +165,7 @@ const ExamDetail = ({
                         </ul>
                     </div>
                 </div>
-                <div className={isShow2 ? 'block' : 'hidden'}>
+                <div className={`relative ${isShow2 ? 'block' : 'hidden'}`}>
                     <ExamLesson
                         correct={correct}
                         timer={timer}

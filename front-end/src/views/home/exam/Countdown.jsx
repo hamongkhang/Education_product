@@ -11,7 +11,7 @@ const formatTime = (timer) => {
 const Countdown = ({ seconds, timer }) => {
     return (
         <div className="app">
-            <h3>Thời gian làm bài</h3>
+            <p>Thời gian làm bài</p>
             <div className="stopwatch-card">
                 <p>{formatTime(timer)}</p>
             </div>

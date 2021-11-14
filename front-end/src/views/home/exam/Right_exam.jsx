@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, Route } from 'react-router-dom';
 import ExamDetail from './examDetail';
 import ExamGrid from './examGrid';
+import RightItem from './rightItem';
 
 const RightExamItem = (props) => {
     const [historyExam, setHistoryExam] = useState([]);
@@ -18,6 +19,16 @@ const RightExamItem = (props) => {
             });
         return () => {};
     };
+
+    const handleExam = itemCategory => {
+        let examTemp = props.examRight.filter(item => item.category_id === itemCategory.id);
+        return <ExamGrid
+            examRight={examTemp}
+            itemCategoryID={itemCategory.id}
+            handleExamDetails={props.handleExamDetails}
+            historyExam={historyExam}
+        />
+    }
 
     useEffect(() => {
         getExamHistory();
@@ -39,40 +50,9 @@ const RightExamItem = (props) => {
                                     <h4>{itemCategory.name}</h4>
                                 </div>
                             </div>
-                            <ExamGrid
-                                examRight={props.examRight}
-                                itemCategoryID={itemCategory.id}
-                                handleExamDetails={props.handleExamDetails}
-                                historyExam={historyExam}
-                            />
-                            {/* <div className="online-exam-body">
-                                {props.examRight.map((item, index) => {
-                                    if (item.category_id === itemCategory.id) {
-                                        var kt = 0;
-                                        for (
-                                            var i = 0;
-                                            i < historyExam.length;
-                                            i++
-                                        ) {
-                                            if (
-                                                historyExam[i].product_id ===
-                                                item.id
-                                            ) {
-                                                kt = 1;
-                                            }
-                                        }
-                                        return (
-                                            <RightItem key={index} item={item} handleExamDetails={props.handleExamDetails} kt={kt}/>
-                                        );
-                                    }
-                                })}
-                            </div>
-                            <div
-                                className="online-exam-right__seemore"
-                                onClick={handleShow}
-                            >
-                                <p>{txt}</p>
-                            </div> */}
+                            {
+                                handleExam(itemCategory)
+                            }
                         </div>
                     );
                 })}
