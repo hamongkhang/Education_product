@@ -10,9 +10,14 @@ const BooksTable = (props) => {
     const [booktypes, setBookTypes] = useState([]);
     const [books, setBooks] = useState([]);
     const [render, setRender] = useState(false);
-    const [classOption, setClassOption] = useState("hidden");
-    const handleOption = () => {
-        classOption === "hidden" ? setClassOption("block") : setClassOption("hidden")
+    const [classOptionType, setClassOptionType] = useState("hidden");
+    const [classOptionBook, setClassOptionBook] = useState("hidden");
+
+    const handleOptionType = () => {
+        classOptionType === "hidden" ? setClassOptionType("block") : setClassOptionType("hidden")
+    }
+    const handleOptionBook = () => {
+        classOptionBook === "hidden" ? setClassOptionBook("block") : setClassOptionBook("hidden")
     }
     const getBookTypes = () =>{
         fetch("http://localhost:8000/api/getBookTypes", {
@@ -194,10 +199,10 @@ const BooksTable = (props) => {
                             <input type="text" placeholder="Tìm kiếm..." className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded"/>
                         </div>
                         <div className="relative w-full max-w-full flex-grow flex-1 text-right">
-                            <button onClick={handleOption} className="bg-indigo-500 hover:bg-indigo-700 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                            <button onClick={handleOptionType} className="bg-indigo-500 hover:bg-indigo-700 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
                                 <i className="far fa-ellipsis-v"></i>
                             </button>
-                            <div className={`absolute top-full right-0 ${classOption}`}>
+                            <div className={`absolute top-full right-0 ${classOptionType}`}>
                                 <div className="py-2 bg-white shadow-lg text-13">
                                     <Link className="block w-full py-1 text-left px-2 hover:bg-gray-200" to={`booktypes/add`} >Add</Link>
                                     <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
@@ -272,10 +277,10 @@ const BooksTable = (props) => {
                             <input type="text" placeholder="Tìm kiếm..." className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded"/>
                         </div>
                         <div className="relative w-full max-w-full flex-grow flex-1 text-right">
-                            <button onClick={handleOption} className="bg-indigo-500 hover:bg-indigo-700 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                            <button onClick={handleOptionBook} className="bg-indigo-500 hover:bg-indigo-700 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
                                 <i className="far fa-ellipsis-v"></i>
                             </button>
-                            <div className={`absolute top-full right-0 ${classOption}`}>
+                            <div className={`absolute top-full right-0 ${classOptionBook}`}>
                                 <div className="py-2 bg-white shadow-lg text-13">
                                     <Link className="block w-full py-1 text-left px-2 hover:bg-gray-200" to={`books/add`} >Add</Link>
                                     <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>

@@ -89,8 +89,6 @@ const AddExam = () => {
         });
     }
     const onChangeHandle = (event) => {
-        console.log( event.target.name)
-
         let _name = event.target.name;
         let _type = event.target.type;
         let _value = event.target.value;

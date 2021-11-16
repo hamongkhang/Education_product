@@ -10,9 +10,13 @@ const ExamTable = (props) => {
     const [examCategoryAdmin, setExamCategoryAdmin] = useState([]);
     const [examAdmin, setExamAdmin] = useState([]);
     const [render, setRender] = useState(false);
-    const [classOption, setClassOption] = useState("hidden");
-    const handleOption = () => {
-        classOption === "hidden" ? setClassOption("block") : setClassOption("hidden")
+    const [classOptionCategory, setClassOptionCategory] = useState("hidden");
+    const [classOptionExam, setClassOptionExam] = useState("hidden");
+    const handleOptionCategory = () => {
+        classOptionCategory === "hidden" ? setClassOptionCategory("block") : setClassOptionCategory("hidden")
+    }
+    const handleOptionExam = () => {
+        classOptionExam === "hidden" ? setClassOptionExam("block") : setClassOptionExam("hidden")
     }
     const getExamAdmin = () =>{
         fetch("http://localhost:8000/api/exam/getExamAdmin", {
@@ -116,7 +120,7 @@ const ExamTable = (props) => {
             }
           })
     }
-    const deleteExam = (id) =>{
+    const deleteExamAdmin = (id) =>{
         Swal.fire({
             title: 'Cảnh báo',
             text: "Bạn có chắc chắn muốn xóa?",
@@ -130,14 +134,14 @@ const ExamTable = (props) => {
             if (result.isConfirmed) {
                 const _formData = new FormData();
                 _formData.append("id",id)
-                fetch("http://localhost:8000/api/deleteBook", {
+                    fetch("http://localhost:8000/api/exam/deleteExamAdmin", {
                     method: "POST",
                     body:_formData,
                     headers: {"Authorization": `Bearer `+$token}
-                  })
+                })
                 .then(response => response.json())
                 .then(data =>  {
-                   if(data.error){
+                if(data.error){
                         toast.error('Xóa bị lỗi', {
                             position: "bottom-right",
                             autoClose: 3000,
@@ -148,8 +152,8 @@ const ExamTable = (props) => {
                             progress: undefined,
                             theme: "colored"
                         });
-                   }
-                   else{
+                }
+                else{
                         setRender(!render)
                         toast.success('Xóa thành công', {
                             position: "bottom-right",
@@ -161,62 +165,12 @@ const ExamTable = (props) => {
                             progress: undefined,
                             theme: "colored"
                         });
-                   }
+                    
+                }
                 });
             }
           })
-     }
-    // const deleteBookType = (id) =>{
-    //     Swal.fire({
-    //         title: 'Cảnh báo',
-    //         text: "Bạn có chắc chắn muốn xóa?",
-    //         icon: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#d33',
-    //         cancelButtonText: 'Hủy',
-    //         confirmButtonText: 'Xóa'
-    //       }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             const _formData = new FormData();
-    //             _formData.append("id",id)
-    //                 fetch("http://localhost:8000/api/deleteBookType", {
-    //                 method: "POST",
-    //                 body:_formData,
-    //                 headers: {"Authorization": `Bearer `+$token}
-    //             })
-    //             .then(response => response.json())
-    //             .then(data =>  {
-    //             if(data.error){
-    //                     toast.error('Xóa bị lỗi', {
-    //                         position: "bottom-right",
-    //                         autoClose: 3000,
-    //                         hideProgressBar: false,
-    //                         closeOnClick: true,
-    //                         pauseOnHover: true,
-    //                         draggable: true,
-    //                         progress: undefined,
-    //                         theme: "colored"
-    //                     });
-    //             }
-    //             else{
-    //                     setRender(!render)
-    //                     toast.success('Xóa thành công', {
-    //                         position: "bottom-right",
-    //                         autoClose: 3000,
-    //                         hideProgressBar: false,
-    //                         closeOnClick: true,
-    //                         pauseOnHover: true,
-    //                         draggable: true,
-    //                         progress: undefined,
-    //                         theme: "colored"
-    //                     });
-                    
-    //             }
-    //             });
-    //         }
-    //       })
-    // }
+    }
     const changeExamStatus = (id) =>{
         const _formData = new FormData();
         _formData.append("id",id)
@@ -273,10 +227,10 @@ const ExamTable = (props) => {
                             <input type="text" placeholder="Tìm kiếm..." className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded"/>
                         </div>
                         <div className="relative w-full max-w-full flex-grow flex-1 text-right">
-                            <button onClick={handleOption} className="bg-indigo-500 hover:bg-indigo-700 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                            <button onClick={handleOptionCategory} className="bg-indigo-500 hover:bg-indigo-700 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
                                 <i className="far fa-ellipsis-v"></i>
                             </button>
-                            <div className={`absolute top-full right-0 ${classOption}`}>
+                            <div className={`absolute top-full right-0 ${classOptionCategory}`}>
                                 <div className="py-2 bg-white shadow-lg text-13">
                                     <Link className="block w-full py-1 text-left px-2 hover:bg-gray-200" to={`exam/addCategory`} >Add</Link>
                                     <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
@@ -345,9 +299,7 @@ const ExamTable = (props) => {
                                     </tr>
                                     )
                                 })
-
                             }
-                        
                         </tbody>
                         </table>
                     </div>
@@ -355,7 +307,7 @@ const ExamTable = (props) => {
                 </div>
             </section>
             <section className="bg-blueGray-50">
-             <h6 className="text-gray-700 text-xl font-bold mb-4">Sách</h6>
+             <h6 className="text-gray-700 text-xl font-bold mb-4">Bài kiểm tra</h6>
                 <div className="w-full">
                     <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
                     <div className="rounded-t mb-0 px-4 py-3 border-0">
@@ -364,10 +316,10 @@ const ExamTable = (props) => {
                             <input type="text" placeholder="Tìm kiếm..." className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded"/>
                         </div>
                         <div className="relative w-full max-w-full flex-grow flex-1 text-right">
-                            <button onClick={handleOption} className="bg-indigo-500 hover:bg-indigo-700 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                            <button onClick={handleOptionExam} className="bg-indigo-500 hover:bg-indigo-700 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
                                 <i className="far fa-ellipsis-v"></i>
                             </button>
-                            <div className={`absolute top-full right-0 ${classOption}`}>
+                            <div className={`absolute top-full right-0 ${classOptionExam}`}>
                                 <div className="py-2 bg-white shadow-lg text-13">
                                     <Link className="block w-full py-1 text-left px-2 hover:bg-gray-200" to={`exam/addExam`} >Add</Link>
                                     <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
@@ -472,7 +424,8 @@ const ExamTable = (props) => {
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <div className="space-x-2">
                                                 <Link to={`exam/editExam/${item.id}`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-green-400 shadow-lg block md:inline-block">Edit</Link>
-                                                <button className="py-1 px-2 text-white rounded hover:opacity-80 bg-red-500 shadow-lg block md:inline-block" onClick={()=>deleteExam(item.id)}>Delete</button>
+                                                <button className="py-1 px-2 text-white rounded hover:opacity-80 bg-red-500 shadow-lg block md:inline-block" onClick={()=>deleteExamAdmin(item.id)}>Delete</button>
+                                                <Link to={`exam/IndexQuestionExam/${item.id}`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-blue-400 shadow-lg block md:inline-block"><i class="fad fa-arrow-right"></i></Link>
                                             </div>
                                         </td>
                                     </tr>

@@ -24,8 +24,13 @@ import AdminTable from '../../../views/admin/user_admin';
 import ExamTable from '../../../views/admin/exam'
 import EditCategory from '../../../views/admin/exam/editCategory'
 import AddCategory from '../../../views/admin/exam/addCategory'
-// import EditExam from '../../../views/admin/exam/editExam'
+import EditExam from '../../../views/admin/exam/editExam'
 import AddExam from '../../../views/admin/exam/addExam'
+import IndexQuestionExam from '../../../views/admin/exam/indexQuestionExam'
+import EditQuestion from '../../../views/admin/exam/editQuestion'
+import AddQuestionAnswer from '../../../views/admin/exam/addQuestionAnswer'
+
+
 const AdminContent = (props) => {
     return (
         <div className="ml-72 px-8 pt-8 bg-gray-200 mt-19 min-h-screen" style={{ minHeight: "calc(100vh - 76px)" }}>
@@ -55,6 +60,10 @@ const AdminContent = (props) => {
                     <Route path="/admin/exam/addCategory" exact component={AddCategory} />
                     <Route path="/admin/exam/editCategory/:id" exact component={EditCategory} />
                     <Route path="/admin/exam/addExam" exact component={AddExam} />
+                    <Route path="/admin/exam/editExam/:id" exact component={EditExam} />
+                    <Route path="/admin/exam/indexQuestionExam/:id" exact component={IndexQuestionExam} />
+                    <Route path="/admin/exam/indexQuestionExam/editQuestion/:id" exact component={EditQuestion} />
+                    <Route path="/admin/exam/:idExam/addQuestionAnswer/:num" exact component={AddQuestionAnswer} />
                     {/* <Route path="/admin/exam/editExam/:id" exact component={EditExam} /> */}
         </Switch>
         </div>
