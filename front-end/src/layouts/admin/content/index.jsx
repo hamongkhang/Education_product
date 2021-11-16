@@ -21,6 +21,14 @@ import ITinTeach from '../../../views/admin/ITinTeach';
 import EditITINTeach from '../../../views/admin/ITinTeach/edit';
 import AddITinTeach from '../../../views/admin/ITinTeach/add';
 import AdminTable from '../../../views/admin/user_admin';
+import ExamTable from '../../../views/admin/exam'
+import EditCategory from '../../../views/admin/exam/editCategory'
+import AddCategory from '../../../views/admin/exam/addCategory'
+import EditExam from '../../../views/admin/exam/editExam'
+import AddExam from '../../../views/admin/exam/addExam'
+import IndexQuestionExam from '../../../views/admin/exam/indexQuestionExam'
+import EditQuestion from '../../../views/admin/exam/editQuestion'
+import AddQuestionAnswer from '../../../views/admin/exam/addQuestionAnswer'
 
 const AdminContent = (props) => {
     return (
@@ -53,6 +61,14 @@ const AdminContent = (props) => {
                         <Route path="/admin/itinTeach/updateITinTeach/:id" exact component={EditITINTeach} />
                         <Route path="/admin/itinTeach/add" exact component={AddITinTeach} />
                         <Route path="/admin/userAdmin" exact component={AdminTable} />
+                        <Route path="/admin/exam" exact component={ExamTable} />
+                    <Route path="/admin/exam/addCategory" exact component={AddCategory} />
+                    <Route path="/admin/exam/editCategory/:id" exact component={EditCategory} />
+                    <Route path="/admin/exam/addExam" exact component={AddExam} />
+                    <Route path="/admin/exam/editExam/:id" exact component={EditExam} />
+                    <Route path="/admin/exam/indexQuestionExam/:id" exact component={IndexQuestionExam} />
+                    <Route path="/admin/exam/indexQuestionExam/editQuestion/:id" exact component={EditQuestion} />
+                    <Route path="/admin/exam/:idExam/addQuestionAnswer/:num" exact component={AddQuestionAnswer} />
                     </>
                     :
                     <>
@@ -60,7 +76,7 @@ const AdminContent = (props) => {
                     </>
                 }
             </Switch>
-        </div>
+</div>
     )
 }
 

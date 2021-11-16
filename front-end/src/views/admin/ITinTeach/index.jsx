@@ -184,7 +184,7 @@ const ITinTeach = (props) => {
                                     return(
                                     <tr key={index}>
                                         <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                                            {item.id}
+                                            {index+1}
                                         </th>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                             {item.name}
@@ -197,9 +197,9 @@ const ITinTeach = (props) => {
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <img alt="" src={`http://localhost:8000/upload/images/IT_in_teach/${item.image}`} className="w-12 h-16 object-cover" />
                                         </td>
-                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <img alt="" src={`http://localhost:8000/upload/images/IT_in_teach/${item.file}`} className="w-12 h-16 object-cover" />
-                                        </td>                                       
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            {item.file}
+                                        </td>                                     
                                          <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <label htmlFor={`toggle${item.id}`} className="toggle-label">
                                                 <input type="checkbox" name="" id={`toggle${item.id}`} 

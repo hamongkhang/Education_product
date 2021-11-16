@@ -19,7 +19,7 @@ class QuestionAnswer extends Authenticatable implements JWTSubject
      *
      * @var string[]
      */
-    protected $table="exam_answer";
+    protected $table="question_answer";
     protected $fillable = [
         'id',
         'id_question',

@@ -34,7 +34,9 @@
     float: left;
     margin: 0;
 }
-
+.flex-answer{
+    display:flex;
+}
 .online-exam__title >h4::after{
     content:" ";
     position: absolute;
