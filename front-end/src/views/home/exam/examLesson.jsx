@@ -53,7 +53,7 @@ export const ExamLesson = ({
                                   </label>
                                 </th>
                                 <td className="test-body__left--list-answer">
-                                  <p dangerouslySetInnerHTML={{ __html:items.answer}}></p>
+                                  <p dangerouslySetInnerHTML={{ __html:item.answer}}></p>
                                 </td>
                               </tr>    
                             </>
