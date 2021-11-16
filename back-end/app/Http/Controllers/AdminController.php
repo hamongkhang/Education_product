@@ -135,6 +135,30 @@ else{
     ], 401); 
 }
     }
+    public function checkAdmin (){
+        $adminFind = auth()->user();
+        if($adminFind->email==="web.vatly365@gmail.com"){
+            return response()->json([
+                'login'=> true,
+                'role'=>1
+            ]);
+        }
+        else{
+            $otherDocument = DB::table('admin_account')->where('email',$adminFind->email)->first();
+            if($otherDocument){
+                return response()->json([
+                    'login'=> true,
+                    'role'=>2
+                ]);
+            }
+            else{
+                return response()->json([
+                    'login'=> false,
+                    'role'=>3
+                ]);
+            }
+        }
+    }
 
 
 }

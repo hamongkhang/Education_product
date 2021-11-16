@@ -792,22 +792,36 @@ class UsersController extends Controller
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 401);        
         }
-        if (($request->email!=="web.vatly365@gmail.com")||($request->password!=="vatli365")) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-        if (! $token = auth()->attempt($validator->validated())) {
+        if (!$token = auth()->attempt(['email' => $request->email, 'password' => $request->password])) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         if (auth()->user()->status==="Block") {
             return response()->json(['error' => 'Blocked'], 401);
         }
-        $adminFind = DB::table('admin_account')->where('id', 1)->first();
-        $dataRespon=response()->json([
+        if (auth()->user()->email=="web.vatly365@gmail.com") {
+            $adminFind = DB::table('admin_account')
+            ->where('email', auth()->user()->email)
+            ->where('password',auth()->user()->password)->first();
+            $dataRespon=response()->json([
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => auth()->factory()->getTTL() * 60,
+                'user' => $adminFind,
+            ]);
+        }
+        else if( $adminFind = DB::table('admin_account')
+        ->where('email', auth()->user()->email)
+        ->where('password',auth()->user()->password)->first()){
+            $dataRespon=response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => $adminFind
+            'user' => $adminFind,
         ]);
+        }
+        else{
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
         return $dataRespon; 
         }
 

@@ -30,33 +30,38 @@ import IndexQuestionExam from '../../../views/admin/exam/indexQuestionExam'
 import EditQuestion from '../../../views/admin/exam/editQuestion'
 import AddQuestionAnswer from '../../../views/admin/exam/addQuestionAnswer'
 
-
 const AdminContent = (props) => {
     return (
         <div className="ml-72 px-8 pt-8 bg-gray-200 mt-19 min-h-screen" style={{ minHeight: "calc(100vh - 76px)" }}>
-                <Switch>
-                    <Route path="/admin/table" exact component={DataTable} />
-                    <Route path="/admin/form" exact component={Form} />
-                    <Route path="/admin/text-editor" exact component={TextEditor} />
-                    <Route path="/admin/chat" exact component={Chat} />
-                    <Route path="/admin" exact component={Dashboard} />
-                    <Route path="/admin/books" exact component={BooksTable} />
-                    <Route path="/admin/books/edit/:id" exact component={EditBook} />
-                    <Route path="/admin/books/add" exact component={AddBook} />
-                    <Route path="/admin/teacher" exact component={TeacherTable} />
-                    <Route path="/admin/teacher/add" exact component={AddTeacher} />
-                    <Route path="/admin/teacher/edit/:id" exact component={EditTeacher} />
-                    <Route path="/admin/banner" exact component={BannerTable} />
-                    <Route path="/admin/banner/add" exact component={AddBanner} />
-                    <Route path="/admin/banner/edit/:id" exact component={EditBanner} />
-                    <Route path="/admin/users" exact component={UserTable} />
-                    <Route path="/admin/booktypes/add" exact component={AddBookType} />
-                    <Route path="/admin/booktypes/edit/:id" exact component={EditBookType} />
-                    <Route path="/admin/itinTeach" exact component={ITinTeach} />
-                    <Route path="/admin/itinTeach/updateITinTeach/:id" exact component={EditITINTeach} />
-                    <Route path="/admin/itinTeach/add" exact component={AddITinTeach} />
-                    <Route path="/admin/userAdmin" exact component={AdminTable} />
-                    <Route path="/admin/exam" exact component={ExamTable} />
+            <Switch>
+                {
+                    props.role == 1 ?
+                    <>
+                        <Route path="/admin/dashboard" exact component={Dashboard} />
+                        <Route path="/admin/table" exact component={DataTable} />
+                        <Route path="/admin/form" exact component={Form} />
+                        <Route path="/admin/text-editor" exact component={TextEditor} />
+                        <Route path="/admin/chat" exact component={Chat} />
+                        <Route path="/admin/books" exact component={BooksTable} />
+                        <Route path="/admin/books/edit/:id" exact component={EditBook} />
+                        <Route path="/admin/books/add" exact component={AddBook} />
+                        <Route path="/admin/teacher" exact component={TeacherTable} />
+                        <Route path="/admin/teacher/add" exact component={AddTeacher} />
+                        <Route path="/admin/teacher/edit/:id" exact component={EditTeacher} />
+                        <Route path="/admin/banner" exact component={BannerTable} />
+                        <Route path="/admin/banner/add" exact component={AddBanner} />
+                        <Route path="/admin/banner/edit/:id" exact component={EditBanner} />
+                        <Route path="/admin/users" exact component={UserTable} />
+                        {/* {/* <Redirect from="*" to="/admin" /> */}
+                        <Route path="/admin/booktypes/add" exact component={AddBookType} />
+                        <Route path="/admin/booktypes/edit/:id" exact component={EditBookType} />
+                        <Route path="/admin/userAdmin" exact component={AdminTable} />
+                        {/* <Redirect from="*" to="/admin" /> */}
+                        <Route path="/admin/itinTeach" exact component={ITinTeach} />
+                        <Route path="/admin/itinTeach/updateITinTeach/:id" exact component={EditITINTeach} />
+                        <Route path="/admin/itinTeach/add" exact component={AddITinTeach} />
+                        <Route path="/admin/userAdmin" exact component={AdminTable} />
+                        <Route path="/admin/exam" exact component={ExamTable} />
                     <Route path="/admin/exam/addCategory" exact component={AddCategory} />
                     <Route path="/admin/exam/editCategory/:id" exact component={EditCategory} />
                     <Route path="/admin/exam/addExam" exact component={AddExam} />
@@ -64,9 +69,14 @@ const AdminContent = (props) => {
                     <Route path="/admin/exam/indexQuestionExam/:id" exact component={IndexQuestionExam} />
                     <Route path="/admin/exam/indexQuestionExam/editQuestion/:id" exact component={EditQuestion} />
                     <Route path="/admin/exam/:idExam/addQuestionAnswer/:num" exact component={AddQuestionAnswer} />
-                    {/* <Route path="/admin/exam/editExam/:id" exact component={EditExam} /> */}
-        </Switch>
-        </div>
+                    </>
+                    :
+                    <>
+                        {/* Route for role other document */}
+                    </>
+                }
+            </Switch>
+</div>
     )
 }
 
