@@ -60,15 +60,14 @@ const AdminContent = (props) => {
                         <Route path="/admin/itinTeach" exact component={ITinTeach} />
                         <Route path="/admin/itinTeach/updateITinTeach/:id" exact component={EditITINTeach} />
                         <Route path="/admin/itinTeach/add" exact component={AddITinTeach} />
-                        <Route path="/admin/userAdmin" exact component={AdminTable} />
                         <Route path="/admin/exam" exact component={ExamTable} />
-                    <Route path="/admin/exam/addCategory" exact component={AddCategory} />
-                    <Route path="/admin/exam/editCategory/:id" exact component={EditCategory} />
-                    <Route path="/admin/exam/addExam" exact component={AddExam} />
-                    <Route path="/admin/exam/editExam/:id" exact component={EditExam} />
-                    <Route path="/admin/exam/indexQuestionExam/:id" exact component={IndexQuestionExam} />
-                    <Route path="/admin/exam/indexQuestionExam/editQuestion/:id" exact component={EditQuestion} />
-                    <Route path="/admin/exam/:idExam/addQuestionAnswer/:num" exact component={AddQuestionAnswer} />
+                        <Route path="/admin/exam/addCategory" exact component={AddCategory} />
+                        <Route path="/admin/exam/editCategory/:id" exact component={EditCategory} />
+                        <Route path="/admin/exam/addExam" exact component={AddExam} />
+                        <Route path="/admin/exam/editExam/:id" exact component={EditExam} />
+                        <Route path="/admin/exam/indexQuestionExam/:id" exact component={IndexQuestionExam} />
+                        <Route path="/admin/exam/indexQuestionExam/editQuestion/:id" exact component={EditQuestion} />
+                        <Route path="/admin/exam/:idExam/addQuestionAnswer/:num" exact component={AddQuestionAnswer} />
                     </>
                     :
                     <>

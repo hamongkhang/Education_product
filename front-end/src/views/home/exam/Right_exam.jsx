@@ -42,6 +42,8 @@ const RightExamItem = (props) => {
   const [show, setShow] = useState(7);
   const [txt, setTxt] = useState("Xem thêm");
   const [arrlist, setArrlist] = useState([]);
+  const $nameAccount=localStorage.getItem('nameAccount');
+
   
   const [historyExam,setHistoryExam] = useState([]);
   const $token=localStorage.getItem('access_token');
@@ -115,7 +117,7 @@ const RightExamItem = (props) => {
                           <div className="answer-right__content">
                             
                           <p className="answer-right__script">
-                            &nbsp; { kt ? "Đã mua" : "Chưa mua"}
+                            &nbsp; { (kt)||($nameAccount==="Admin") ? "Đã mua" : "Chưa mua"}
                           </p>
                           <p className="answer-right__time">
                             &nbsp;Thời gian làm bài:{" "}

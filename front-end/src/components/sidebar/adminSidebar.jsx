@@ -13,6 +13,7 @@ const sidebar = [
         name: "Exam",
         icon: "fas fa-book-reader",
         link: "/admin/exam",
+        role: 1
     }
     ,
     {

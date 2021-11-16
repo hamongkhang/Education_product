@@ -300,7 +300,7 @@ const IndexQuestionExam = () => {
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 " dangerouslySetInnerHTML={{ __html:items.question}}>
                                         </td>
-                                        {items.image?
+                                        {(items.image!=="Block")&&(items.image)?
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                         <img alt="" src={`http://localhost:8000/upload/images/exam/${items.image}`} className="w-12 h-16 object-cover" />
                                     </td>
