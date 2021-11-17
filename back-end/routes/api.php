@@ -123,6 +123,7 @@ Route::post('/banner/blockActiveBanner', [App\Http\Controllers\BannerController:
 /* Api Featured Post */
 Route::get('/featuredPost/getFeaturedPost', [App\Http\Controllers\FeaturedPostController::class, 'getFeaturedPost'])->name('featuredPost.getFeaturedPost');
 Route::post('/featuredPost/createFeaturedPost', [App\Http\Controllers\FeaturedPostController::class, 'createFeaturedPost'])->name('featuredPost.createFeaturedPost');
+Route::post('/featuredPost/getOnePost', [App\Http\Controllers\FeaturedPostController::class, 'getOnePost'])->name('featuredPost.getOnePost');
 Route::post('/featuredPost/destroyFeaturedPost/{id}', [App\Http\Controllers\FeaturedPostController::class, 'destroyFeaturedPost'])->name('featuredPost.destroyFeaturedPost');
 Route::post('/featuredPost/updateFeaturedPost/{id}', [App\Http\Controllers\FeaturedPostController::class, 'updateFeaturedPost'])->name('featuredPost.updateFeaturedPost');
 Route::post('/featuredPost/blockActiveFeaturedPost/{id}', [App\Http\Controllers\FeaturedPostController::class, 'blockActiveFeaturedPost'])->name('featuredPost.blockActiveFeaturedPost');

@@ -30,6 +30,12 @@ import IndexQuestionExam from '../../../views/admin/exam/indexQuestionExam'
 import EditQuestion from '../../../views/admin/exam/editQuestion'
 import AddQuestionAnswer from '../../../views/admin/exam/addQuestionAnswer'
 import CommentTable from '../../../views/admin/comments'
+import PostTable from '../../../views/admin/featured_posts'
+import AddPost from '../../../views/admin/featured_posts/add'
+import EditPost from '../../../views/admin/featured_posts/edit'
+
+
+
 
 const AdminContent = (props) => {
     return (
@@ -70,7 +76,9 @@ const AdminContent = (props) => {
                         <Route path="/admin/exam/:idExam/editQuestion/:id" exact component={EditQuestion} />
                         <Route path="/admin/exam/:idExam/addQuestionAnswer/:num" exact component={AddQuestionAnswer} />
                         <Route path="/admin/comment" exact component={CommentTable} />
-
+                        <Route path="/admin/featured_post" exact component={PostTable} />
+                        <Route path="/admin/featured_post/add" exact component={AddPost} />
+                        <Route path="/admin/featured_post/edit/:id" exact component={EditPost} />
                     </>
                     :
                     <>
