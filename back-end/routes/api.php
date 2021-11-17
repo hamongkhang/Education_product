@@ -95,6 +95,12 @@ Route::post('/ITinTeach/blockActiveITinTeach/{id}', [App\Http\Controllers\ITinTe
 Route::post('/comment/addComment', [App\Http\Controllers\CommentController::class, 'addComment'])->name('comment.addComment');
 Route::post('/comment/getComment', [App\Http\Controllers\CommentController::class, 'getComment'])->name('comment.getComment');
 Route::post('/comment/replyComment', [App\Http\Controllers\CommentController::class, 'replyComment'])->name('comment.replyComment');
+Route::get('/comment/getCommentAdmin', [App\Http\Controllers\CommentController::class, 'getCommentAdmin'])->name('news.getCommentAdmin');
+Route::post('/comment/deleteComment', [App\Http\Controllers\CommentController::class, 'deleteComment'])->name('comment.deleteComment');
+Route::post('/comment/deleteCommentReply', [App\Http\Controllers\CommentController::class, 'deleteCommentReply'])->name('comment.deleteCommentReply');
+
+
+
 /* Api News */
 Route::get('/news/getNews', [App\Http\Controllers\NewsController::class, 'getNews'])->name('news.getNews');
 Route::post('/news/createNews', [App\Http\Controllers\NewsController::class, 'createNews'])->name('news.createNews');
