@@ -36,6 +36,23 @@ import AddContent from '../../../views/admin/content/add';
 import EditContent from '../../../views/admin/content/edit';
 import EditLesson from '../../../views/admin/lessons/edit';
 import AddLesson from '../../../views/admin/lessons/add';
+import ExamTable from '../../../views/admin/exam'
+import EditCategory from '../../../views/admin/exam/editCategory'
+import AddCategory from '../../../views/admin/exam/addCategory'
+import EditExam from '../../../views/admin/exam/editExam'
+import AddExam from '../../../views/admin/exam/addExam'
+import IndexQuestionExam from '../../../views/admin/exam/indexQuestionExam'
+import EditQuestion from '../../../views/admin/exam/editQuestion'
+import AddQuestionAnswer from '../../../views/admin/exam/addQuestionAnswer'
+import CommentTable from '../../../views/admin/comments'
+import PostTable from '../../../views/admin/featured_posts'
+import AddPost from '../../../views/admin/featured_posts/add'
+import EditPost from '../../../views/admin/featured_posts/edit'
+import DocumentTable from '../../../views/admin/other_document'
+
+
+
+
 
 const AdminContent = (props) => {
     return (
@@ -92,6 +109,19 @@ const AdminContent = (props) => {
                         <Route path="/admin/lessons/:id_content" exact component={Lessson} />
                         <Route path="/admin/lessons_add" exact component={AddLesson} />
                         <Route path="/admin/lessons/:id/edit" exact component={EditLesson} />
+                        <Route path="/admin/exam" exact component={ExamTable} />
+                        <Route path="/admin/exam/addCategory" exact component={AddCategory} />
+                        <Route path="/admin/exam/editCategory/:id" exact component={EditCategory} />
+                        <Route path="/admin/exam/addExam" exact component={AddExam} />
+                        <Route path="/admin/exam/editExam/:id" exact component={EditExam} />
+                        <Route path="/admin/exam/indexQuestionExam/:id" exact component={IndexQuestionExam} />
+                        <Route path="/admin/exam/:idExam/editQuestion/:id" exact component={EditQuestion} />
+                        <Route path="/admin/exam/:idExam/addQuestionAnswer/:num" exact component={AddQuestionAnswer} />
+                        <Route path="/admin/comment" exact component={CommentTable} />
+                        <Route path="/admin/featured_post" exact component={PostTable} />
+                        <Route path="/admin/featured_post/add" exact component={AddPost} />
+                        <Route path="/admin/featured_post/edit/:id" exact component={EditPost} />
+                        <Route path="/admin/other_document" exact component={DocumentTable} />
                     </>
                     :
                     <>
@@ -99,7 +129,7 @@ const AdminContent = (props) => {
                     </>
                 }
             </Switch>
-        </div>
+</div>
     )
 }
 

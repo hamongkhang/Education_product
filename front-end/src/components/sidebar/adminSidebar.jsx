@@ -13,6 +13,7 @@ const sidebar = [
         name: "Exam",
         icon: "fas fa-book-reader",
         link: "/admin/exam",
+        role: 1
     }
     ,
     {
@@ -64,6 +65,12 @@ const sidebar = [
         role: 1
     },
     {
+        name: "Comments",
+        icon: "fas fa-comments",
+        link: "/admin/comment",
+        role: 1
+    },
+    {
         name: "Chat",
         icon: "fas fa-sms",
         link: "/admin/chat",
@@ -72,9 +79,15 @@ const sidebar = [
     },
     {
         name: "Other Document",
-        icon: "fas fa-sms",
-        link: "/admin/otherDocuments",
-        role: 2
+        icon: "fas fa-folder-open",
+        link: "/admin/other_document",
+        role: 1
+    },
+    {
+        name: "Featured posts",
+        icon: "fas fa-blog",
+        link: "/admin/featured_post",
+        role: 1
     },
     {
         name: "IT in teaching",

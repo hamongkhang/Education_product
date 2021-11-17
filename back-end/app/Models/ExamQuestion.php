@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
-class ExamAnswer extends Authenticatable implements JWTSubject
+class ExamQuestion extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -19,11 +19,12 @@ class ExamAnswer extends Authenticatable implements JWTSubject
      *
      * @var string[]
      */
-    protected $table="exam_answer";
+    protected $table="exam_question";
     protected $fillable = [
         'id',
-        'answer',
+        'question',
         'exam_id',
+        'image',
         'created_at',
         'updated_at',
     ];

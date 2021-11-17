@@ -184,7 +184,7 @@ const UserTable = (props) => {
                             return(
                             <tr key={index}>
                                  <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                    {item.id}
+                                    {index+1}
                                 </td>
                                 <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                     {item.fullName}

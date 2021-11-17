@@ -85,6 +85,7 @@ const TeacherTable = (props) => {
     }, [render])
     return (
         <section className="bg-blueGray-50">
+        <h6 className="text-gray-700 text-xl font-bold mb-4">Thông tin giáo viên</h6>
         <div className="w-full">
             <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
             <div className="rounded-t mb-0 px-4 py-3 border-0">
@@ -152,7 +153,7 @@ const TeacherTable = (props) => {
                             return(
                             <tr key={index}>
                                 <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                                    {item.id}
+                                    {index+1}
                                 </th>
                                 <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                     {item.name}

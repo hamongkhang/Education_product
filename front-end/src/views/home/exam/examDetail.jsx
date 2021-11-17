@@ -13,7 +13,7 @@ const ExamDetail = ({
   isShow2
 }) => {
   const $token=localStorage.getItem('access_token');
-
+  const $nameAccount=localStorage.getItem('nameAccount');
   const payMent=(event,total,id)=>{
     if($token){
         if(total!=0){
@@ -78,7 +78,7 @@ alert("Chưa đăng nhập!!!")
                           </p>
                         </div>
                       </>
-                      {examDetails.check ?  
+                      {(examDetails.check)||($nameAccount==="Admin") ?  
                       <button type="submit"  onClick={() => handleExamLesson(examDetails.id, 1)} className='answer-right__button answer-right__button--succ'>Bắt đầu thi</button>
                        :  <button type="submit" onClick={(event) => payMent(event, examDetails.price, examDetails.id)} className='answer-right__button answer-right__button--succ'>Mua bài kiểm tra</button>
                       }

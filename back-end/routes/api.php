@@ -95,6 +95,12 @@ Route::post('/ITinTeach/blockActiveITinTeach/{id}', [App\Http\Controllers\ITinTe
 Route::post('/comment/addComment', [App\Http\Controllers\CommentController::class, 'addComment'])->name('comment.addComment');
 Route::post('/comment/getComment', [App\Http\Controllers\CommentController::class, 'getComment'])->name('comment.getComment');
 Route::post('/comment/replyComment', [App\Http\Controllers\CommentController::class, 'replyComment'])->name('comment.replyComment');
+Route::get('/comment/getCommentAdmin', [App\Http\Controllers\CommentController::class, 'getCommentAdmin'])->name('news.getCommentAdmin');
+Route::post('/comment/deleteComment', [App\Http\Controllers\CommentController::class, 'deleteComment'])->name('comment.deleteComment');
+Route::post('/comment/deleteCommentReply', [App\Http\Controllers\CommentController::class, 'deleteCommentReply'])->name('comment.deleteCommentReply');
+
+
+
 /* Api News */
 Route::get('/news/getNews', [App\Http\Controllers\NewsController::class, 'getNews'])->name('news.getNews');
 Route::post('/news/createNews', [App\Http\Controllers\NewsController::class, 'createNews'])->name('news.createNews');
@@ -117,6 +123,7 @@ Route::post('/banner/blockActiveBanner', [App\Http\Controllers\BannerController:
 /* Api Featured Post */
 Route::get('/featuredPost/getFeaturedPost', [App\Http\Controllers\FeaturedPostController::class, 'getFeaturedPost'])->name('featuredPost.getFeaturedPost');
 Route::post('/featuredPost/createFeaturedPost', [App\Http\Controllers\FeaturedPostController::class, 'createFeaturedPost'])->name('featuredPost.createFeaturedPost');
+Route::post('/featuredPost/getOnePost', [App\Http\Controllers\FeaturedPostController::class, 'getOnePost'])->name('featuredPost.getOnePost');
 Route::post('/featuredPost/destroyFeaturedPost/{id}', [App\Http\Controllers\FeaturedPostController::class, 'destroyFeaturedPost'])->name('featuredPost.destroyFeaturedPost');
 Route::post('/featuredPost/updateFeaturedPost/{id}', [App\Http\Controllers\FeaturedPostController::class, 'updateFeaturedPost'])->name('featuredPost.updateFeaturedPost');
 Route::post('/featuredPost/blockActiveFeaturedPost/{id}', [App\Http\Controllers\FeaturedPostController::class, 'blockActiveFeaturedPost'])->name('featuredPost.blockActiveFeaturedPost');
@@ -208,5 +215,30 @@ Route::post('/cart/updateCart', [App\Http\Controllers\CartController::class, 'up
 Route::post('/cart/removeCart', [App\Http\Controllers\CartController::class, 'removeCart'])->name('cart.remove');
 /* Api exam */
 Route::get('/exam/getExam', [App\Http\Controllers\ExamController::class, 'getExam'])->name('exam.getExam');
+Route::get('/exam/getExamAdmin', [App\Http\Controllers\ExamController::class, 'getExamAdmin'])->name('exam.getExamAdmin');
 Route::post('/exam/getQuestionAnswer', [App\Http\Controllers\ExamController::class, 'getQuestionAnswer'])->name('exam.getQuestionAnswer');
+Route::post('/exam/changeCategoryStatus', [App\Http\Controllers\ExamController::class, 'changeCategoryStatus'])->name('exam.changeCategoryStatus');
+Route::post('/exam/deleteCategory', [App\Http\Controllers\ExamController::class, 'deleteCategory'])->name('exam.deleteCategory');
+Route::post('/exam/addExamCategory', [App\Http\Controllers\ExamController::class, 'addExamCategory'])->name('exam.addExamCategory');
+Route::post('/exam/addExamAdmin', [App\Http\Controllers\ExamController::class, 'addExamAdmin'])->name('exam.addExamAdmin');
+Route::post('/exam/editExamCategory', [App\Http\Controllers\ExamController::class, 'editExamCategory'])->name('exam.editExamCategory');
+Route::post('/exam/updateExamAdmin', [App\Http\Controllers\ExamController::class, 'updateExamAdmin'])->name('exam.updateExamAdmin');
+Route::post('/exam/getOneExamCategory', [App\Http\Controllers\ExamController::class, 'getOneExamCategory'])->name('exam.getOneExamCategory');
+Route::post('/exam/changeExamStatus', [App\Http\Controllers\ExamController::class, 'changeExamStatus'])->name('exam.changeExamStatus');
+Route::post('/exam/getOneExamAdmin', [App\Http\Controllers\ExamController::class, 'vgetOneExamAdmin'])->name('exam.getOneExamAdmin');
+Route::post('/exam/deleteExamAdmin', [App\Http\Controllers\ExamController::class, 'deleteExamAdmin'])->name('exam.deleteExamAdmin');
+Route::post('/exam/getOneExamEdit', [App\Http\Controllers\ExamController::class, 'getOneExamEdit'])->name('exam.getOneExamEdit');
+Route::post('/exam/getOneExamQuestionEdit', [App\Http\Controllers\ExamController::class, 'getOneExamQuestionEdit'])->name('exam.getOneExamQuestionEdit');
+Route::post('/exam/getOneQuestionAnswer', [App\Http\Controllers\ExamController::class, 'getOneQuestionAnswer'])->name('exam.getOneQuestionAnswer');
+Route::post('/exam/updateQuestionAdmin', [App\Http\Controllers\ExamController::class, 'updateQuestionAdmin'])->name('exam.updateQuestionAdmin');
+Route::post('/exam/deleteQuestionAnswer', [App\Http\Controllers\ExamController::class, 'deleteQuestionAnswer'])->name('exam.deleteQuestionAnswer');
+Route::post('/exam/addQuestionAnswer', [App\Http\Controllers\ExamController::class, 'addQuestionAnswer'])->name('exam.addQuestionAnswer');
+Route::post('/exam/addQuestionAnswerFileQuestion', [App\Http\Controllers\ExamController::class, 'addQuestionAnswerFileQuestion'])->name('exam.addQuestionAnswerFileQuestion');
+
+
+
+
+
+
+
 // Route::post('/freeDocumentCategory/destroyFreeDocumentCategory/{id}', [App\Http\Controllers\FreeDocumentCategoryController::class, 'destroyFreeDocumentCategory'])->name('freeDocumentCategory.destroyFreeDocumentCategory');

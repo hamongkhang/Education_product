@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export const ExamLesson = ({
     question,
@@ -22,16 +24,16 @@ export const ExamLesson = ({
                       <tbody>
                         <tr>
                           <th className="test-body__left">Câu&nbsp;{""}{Number(index)+1}:</th>
-                          {items.image ? (
+                          {(items.image)&&(items.image!=="Block") ? (
                               <td className="test-body__right">
-                                 <p>{items.question}</p>
+                                 <p dangerouslySetInnerHTML={{ __html:items.question}}></p>
                                  <p className='test-body__right--img'>
                                  <img src={$link+items.image} />
                                  </p>
                               </td>
                           ) : (
                             <td className="test-body__right">
-                              <p>{items.question}</p>
+                              <p dangerouslySetInnerHTML={{ __html:items.question}}></p>
                             </td>
                           )}
                         </tr>
@@ -51,7 +53,7 @@ export const ExamLesson = ({
                                   </label>
                                 </th>
                                 <td className="test-body__left--list-answer">
-                                  <p>{item.answer}</p>
+                                  <p dangerouslySetInnerHTML={{ __html:item.answer}}></p>
                                 </td>
                               </tr>    
                             </>

@@ -4,42 +4,29 @@ import { toast } from 'react-toastify';
 import {useHistory} from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css';
 toast.configure();
-const AddITinTeach = () => {
-    const [itInTeach, setItInTeach] = useState({
+const AddCategory = () => {
+    const [file, setFile] = useState(null);
+    const [examCategoryAdd, setExamCategoryAdd] = useState({
         id:"",
         name:"",
-        description:"",
-        image:"",
-        file:"Block",
-        author:"",
         status:"Active",
     });
     const [error, setError] = useState({
         id:null,
         name:null,
-        description:null,
-        image:null,
-        file:null,
-        author:null,
         status:null,
     });
-    const [file, setFile] = useState(null);
     const $token=localStorage.getItem('access_token');
     const config = {
 		readonly: false
 	}
     const history = useHistory();
-
-    const addITinTeach = () => {
+    const onAddExamCategory = () => {
         const _formData = new FormData();
-        _formData.append("id",itInTeach.id)
-        _formData.append("name",itInTeach.name)
-        _formData.append("author",itInTeach.author)
-        _formData.append("status",itInTeach.status)
-        _formData.append("image",file)
-        _formData.append("file",itInTeach.file)
-        _formData.append("description",itInTeach.description)
-        fetch("http://localhost:8000/api/ITinTeach/createITinTeach", {
+        _formData.append("id",examCategoryAdd.id)
+        _formData.append("name",examCategoryAdd.name)
+        _formData.append("status",examCategoryAdd.status)
+        fetch("http://localhost:8000/api/exam/addExamCategory", {
             method: "POST",
             body:_formData,
             headers: {"Authorization": `Bearer `+$token}
@@ -68,18 +55,17 @@ const AddITinTeach = () => {
                     draggable: true,
                     progress: undefined,
                 });
-                history.push("/admin/itinTeach");
+                history.push("/admin/exam")
             }
         });
     }
-
     const onChangeHandle = (event) => {
         let _name = event.target.name;
         let _type = event.target.type;
         let _value = event.target.value;
         if(_type === "checkbox"){
             if(event.target.checked){
-                setItInTeach({...itInTeach,["status"]:"Active"})
+                setExamCategoryAdd({...examCategoryAdd,["status"]:"Active"})
                 toast.success('Trạng thái mở ', {
                     position: "bottom-right",
                     autoClose: 3000,
@@ -89,9 +75,10 @@ const AddITinTeach = () => {
                     draggable: true,
                     progress: undefined,
                 });
+
             }
             else{
-                setItInTeach({...itInTeach,["status"]:"Block"})
+                setExamCategoryAdd({...examCategoryAdd,["status"]:"Block"})
                 toast.success('Trạng thái khóa', {
                     position: "bottom-right",
                     autoClose: 3000,
@@ -104,19 +91,12 @@ const AddITinTeach = () => {
             }
         }
         else if(_type === "file"){
-            if(event.target.name === "image"){
-                setFile(event.target.files[0])
-            }else if(event.target.name === "file"){
-                setItInTeach({...itInTeach,[_name]:event.target.files[0]});
-                }
+            setFile(event.target.files[0])
         }
         else{
-            setItInTeach({...itInTeach,[_name]:_value});
+            setExamCategoryAdd({...examCategoryAdd,[_name]:_value});
         }
     };
-
-    useEffect(() => {
-    }, [])
     return (
         <section className=" py-1">
             <div className="w-full">
@@ -124,7 +104,7 @@ const AddITinTeach = () => {
                 <div className="rounded-t bg-white mb-0 px-6 py-6">
                     <div className="text-center flex justify-between">
                     <h6 className="text-gray-700 text-xl font-bold">
-                        Thêm bài viết
+                        Thêm loại bài kiểm tra
                     </h6>
                     </div>
                 </div>
@@ -137,23 +117,12 @@ const AddITinTeach = () => {
                         <div className="w-full lg:w-6/12 px-4">
                             <div className="relative w-full mb-3">
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                                    Tên bài viết
+                                    Tên loại bài kiểm tra
                                 </label>
                                 <input type="text" name="name" required className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)}/>
                                 <span className="text-red-500 text-sm">{error.name?error.name[0]:""}</span>
                             </div>
                         </div>
-                        <div className="w-full lg:w-6/12 px-4">
-                            <div className="relative w-full mb-3">
-                                <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                                    Tác giả
-                                </label>
-                                <input type="text" name="author" required className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandle(event)} />
-                                <span className="text-red-500 text-sm">{error.author?error.author[0]:""}</span>
-                            </div>
-                        </div>
-                 
-        
                         <div className="w-full lg:w-3/12 px-4">
                             <div className="relative w-full mb-3">
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
@@ -161,7 +130,7 @@ const AddITinTeach = () => {
                                 </label>
                                 <label htmlFor={`toggle`} className="toggle-label">
                                     <input type="checkbox" name="status" id={`toggle`} 
-                                        defaultChecked = {itInTeach.status === 'Active'?true:false}
+                                        defaultChecked = {examCategoryAdd.status === 'Active'?true:false}
                                         onChange={(event) => onChangeHandle(event)}
                                         hidden />
                                     <div className="toggle-btn">
@@ -170,45 +139,8 @@ const AddITinTeach = () => {
                                 </label>
                             </div>
                         </div>
-
-                        <div className="w-full px-4">
-                            <div className="relative w-full mb-3 group h-96">
-                                <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                                    Hình ảnh
-                                </label> 
-                                <img src={file ? URL.createObjectURL(file):"a"}  className="w-full min-h-96 h-full mb-30 md:mb-1 object-scale-down rounded-lg" alt=""/>
-                                <label htmlFor="file" className="w-3/5 text-center opacity-0 group-hover:opacity-100 block py-2 rounded-md bg-yellow-400 hover:bg-yellow-500 cursor-pointer text-15 font-semibold absolute bottom-5 transform left-1/2 -translate-x-1/2 duration-300 text-white">
-                                    <i className="fad fa-camera mr-2"></i>
-                                    <span> Chọn ảnh</span>
-                                </label>
-                                <input type="file" id="file" name="image" hidden required onChange={(event) => onChangeHandle(event)}/>
-                                <span className="text-red-500 text-sm">{error.image?error.image[0]:""}</span>
-                            </div>
-                        </div>
-                        <div className="w-full px-4">
-                            <div className="relative w-full mb-3 group h-96">
-                                <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                                    File
-                                </label> 
-                                <input type="file" name="file" onChange={(event) => onChangeHandle(event)}/>
-                                <span className="text-red-500 text-sm">{error.file?error.file[0]:""}</span>
-                            </div>
-                        </div>
-                        <div className="w-full lg:w-12/12 px-4 mt-10">
-                            <div className="relative w-full mb-3">
-                                <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
-                                    Mô tả
-                                </label>
-                                <JoditEditor
-                                    config={config}
-                                    tabIndex={1}
-                                    onBlur={newContent => setItInTeach({...itInTeach,["description"]:newContent})} 
-                                />
-                                <span className="text-red-500 text-sm">{error.description?error.description[0]:""}</span>
-                            </div>
-                        </div>
                     </div>
-                    <button type="button" onClick={()=>addITinTeach()} className="bg-indigo-600 text-white px-5 py-2 rounded hover:bg-indigo-700 hover:shadow-xl font-semibold duration-300">Thêm</button>
+                    <button type="button" onClick={()=>onAddExamCategory()} className="bg-indigo-600 text-white px-5 py-2 rounded hover:bg-indigo-700 hover:shadow-xl font-semibold duration-300">Thêm</button>
                     </form>
                 </div>
                 </div>
@@ -217,4 +149,4 @@ const AddITinTeach = () => {
     )
 }
 
-export default AddITinTeach;
+export default AddCategory
