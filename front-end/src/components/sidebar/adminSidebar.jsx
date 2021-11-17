@@ -79,9 +79,9 @@ const sidebar = [
     },
     {
         name: "Other Document",
-        icon: "fas fa-sms",
-        link: "/admin/otherDocuments",
-        role: 2
+        icon: "fas fa-folder-open",
+        link: "/admin/other_document",
+        role: 1
     },
     {
         name: "Featured posts",

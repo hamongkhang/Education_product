@@ -33,6 +33,8 @@ import CommentTable from '../../../views/admin/comments'
 import PostTable from '../../../views/admin/featured_posts'
 import AddPost from '../../../views/admin/featured_posts/add'
 import EditPost from '../../../views/admin/featured_posts/edit'
+import DocumentTable from '../../../views/admin/other_document'
+
 
 
 
@@ -79,6 +81,8 @@ const AdminContent = (props) => {
                         <Route path="/admin/featured_post" exact component={PostTable} />
                         <Route path="/admin/featured_post/add" exact component={AddPost} />
                         <Route path="/admin/featured_post/edit/:id" exact component={EditPost} />
+                        <Route path="/admin/other_document" exact component={DocumentTable} />
+
                     </>
                     :
                     <>
