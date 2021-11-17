@@ -9,7 +9,9 @@ toast.configure();
 
 const Lessson = (props) => {
     const $token=localStorage.getItem('access_token');
-    const [render, serRender] = useState(false);
+    const [render1, setRender1] = useState(false);
+    const [render, setRender] = useState(false);
+    const [contents, setContents] = useState([]);
     const [lessons, setLessons] = useState([]);
     const [lessonsFilter, setLessonsFilter] = useState([]);
     const [classOption, setClassOption] = useState("hidden");
@@ -18,6 +20,22 @@ const Lessson = (props) => {
     const handleOption = () => {
         classOption === "hidden" ? setClassOption("block") : setClassOption("hidden")        
     }
+    const getContents = () =>{
+        fetch("http://localhost:8000/api/getContents", {
+            method: "GET",
+            headers: {"Authorization": `Bearer `+$token}
+          })
+        .then(response => response.json())
+        .then(data =>  {
+            if(data.url){
+                let url = data.url;
+                history.push(url);
+            }
+            if(data.contents){
+                setContents(data.contents)
+            }
+        });
+    }
     const getLessons = () =>{
         fetch("http://localhost:8000/api/getLessons", {
             method: "GET",
@@ -25,42 +43,135 @@ const Lessson = (props) => {
           })
         .then(response => response.json())
         .then(data =>  {
-            console.log(data);
             if(data.url){
                 let url = data.url;
                 history.push(url);
             }
             if(data.lessons){
-                if(param.id){
-                    console.log(param.id);
-                    let table = data.lessons.filter(item => item.content_id == param.id)
+                if(param.id_content){
+                    let table = data.lessons.filter(item => item.content_id == param.id_content)
                     setLessonsFilter(table)
                 }
                 setLessons(data.lessons)
             }
         });
     }
+    const onChangeView = (e) =>{
+        if(Number(e.target.value)){
+            param.id_content = e.target.value;
+            let lessons1 = lessons.filter(item => item.content_id == param.id_content)
+            setLessonsFilter(lessons1);
+        }
+        else{
+            param.id_content = null;
+        }
+        setRender1(!render1)
+    }
     const viewAll = () =>{
-        param.id = null;
+        param.id_content = null;
         handleOption()
-        serRender(!render)
+        setRender1(!render1)
     }
-    const changeStatus = () =>{
+    const changeStatus = (id) =>{
+        const _formData = new FormData();
+        _formData.append("id",id)
+        fetch("http://localhost:8000/api/changeLessonStatus", {
+            method: "POST",
+            body:_formData,
+            headers: {"Authorization": `Bearer `+$token}
+          })
+        .then(response => response.json())
+        .then(data =>  {
+            if(data.error){
+                toast.error('Thay đổi trạng thái lỗi', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                });
+   
+            }
+            else{
+                setRender(!render)
+                toast.success('Thay đổi trạng thái thành công', {
+                 position: "bottom-right",
+                 autoClose: 3000,
+                 hideProgressBar: false,
+                 closeOnClick: true,
+                 pauseOnHover: true,
+                 draggable: true,
+                 progress: undefined,
+                 theme: "colored"
+             });
 
+            }
+        });
     }
-    const deleteCategoryCourse = (id) =>{
-
+    const deleteLesson = (id) =>{
+        Swal.fire({
+            title: 'Cảnh báo',
+            text: "Bạn có chắc chắn muốn xóa?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Hủy',
+            confirmButtonText: 'Xóa'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                const _formData = new FormData();
+                _formData.append("id",id)
+                fetch("http://localhost:8000/api/deleteLesson", {
+                    method: "POST",
+                    body:_formData,
+                    headers: {"Authorization": `Bearer `+$token}
+                  })
+                .then(response => response.json())
+                .then(data =>  {
+                   if(data.error){
+                        toast.error('Xóa bị lỗi', {
+                            position: "bottom-right",
+                            autoClose: 3000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored"
+                        });
+                   }
+                   else{
+                        setRender(!render)
+                        toast.success('Xóa thành công', {
+                            position: "bottom-right",
+                            autoClose: 3000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored"
+                        });
+                   }
+                });
+            }
+          })
     }
     useEffect(() => {
         if($token){
             getLessons();
+            getContents();
         }
-    }, []);
-    useEffect(() => {}, [render]);
+    }, [render]);
+    useEffect(() => {}, [render1]);
     return (
         <>
         <section className="bg-blueGray-50">
-            <h6 className="text-gray-700 text-xl font-bold mb-4">Nội dung</h6>
+            <h6 className="text-gray-700 text-xl font-bold mb-4">Danh sách bài học</h6>
                <div className="w-full">
                    <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
                    <div className="rounded-t mb-0 px-4 py-3 border-0">
@@ -71,11 +182,13 @@ const Lessson = (props) => {
                        {/* <div className="w-full lg:w-6/12 px-4"> */}
                            <div className="relative w-full max-w-full flex-grow flex-1">
                                <div className="block uppercase text-gray-600 text-xs font-bold mb-2 inline mr-2">
-                                  Danh mục khóa học
+                                Chương
                                </div>
-                               <select name="type" id="type" className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded">
-                                 <option>option 1</option>
-                               </select>
+                               <select name="type" id="type" className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded" 
+                                onChange={(event) => onChangeView(event)}>
+                                    <option value={null}>Xem tất cả</option>
+                                    {contents.map((item,index)=> <option key={index} value={item.id}>{item.name}</option>)}
+                                </select>
                            </div>
                        {/* </div> */}
                        <div className="relative w-full max-w-full flex-grow flex-1 text-right">
@@ -84,7 +197,7 @@ const Lessson = (props) => {
                            </button>
                            <div className={`absolute top-full right-0 ${classOption}`}>
                                <div className="py-2 bg-white shadow-lg text-13">
-                                   <Link className="block w-full py-1 text-left px-2 hover:bg-gray-200" to={`#`} >Add</Link>
+                                   <Link className="block w-full py-1 text-left px-2 hover:bg-gray-200" to={`/admin/lessons_add`} >Add</Link>
                                    <button className="w-full py-1 text-left px-2 hover:bg-gray-200" onClick={()=>viewAll()}>View All</button>
                                    <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
                                    <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Export Excel</button>
@@ -105,6 +218,9 @@ const Lessson = (props) => {
                                Tên khóa học
                            </th>
                            <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                               Nội dung
+                           </th>
+                           <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                Trạng thái
                            </th>
                            <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
@@ -118,7 +234,7 @@ const Lessson = (props) => {
                        <tbody>
                           
                            {
-                               param.id?
+                               param.id_content?
                                lessonsFilter.map((item,index)=>{
                                    return(
                                    <tr key={index}>
@@ -128,6 +244,14 @@ const Lessson = (props) => {
                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                           {item.name}
                                        </td>
+                                       <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs p-4 text-left text-blueGray-700 ">
+                                            {
+                                            contents.map((content)=>{
+                                                if(content.id == item.content_id){
+                                                    return(content.name)
+                                                }
+                                            })}
+                                        </td>
                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                            <label htmlFor={`toggle${item.id}`} className="toggle-label">
                                                <input type="checkbox" name="" id={`toggle${item.id}`} 
@@ -139,16 +263,16 @@ const Lessson = (props) => {
                                            </label>
                                        </td>
                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                           {new Intl.DateTimeFormat('en-GB', { 
-                                                   month: 'numeric', 
-                                                   day: '2-digit',
-                                                   year: 'numeric', 
-                                               }).format(new Date(item.updated_at))}
+                                           {new Intl.DateTimeFormat('en-GB', {
+                                                    timeZone: 'Africa/Abidjan',
+                                                    dateStyle: 'short',
+                                                    timeStyle: 'medium'
+                                                }).format(new Date(item.updated_at))}
                                        </td>
                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                            <div className="space-x-2">
-                                               <Link to={`#`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-green-400 shadow-lg block md:inline-block">Edit</Link>
-                                               <button className="py-1 px-2 text-white rounded hover:opacity-80 bg-red-500 shadow-lg block md:inline-block" onClick={()=>deleteCategoryCourse(item.id)}>Delete</button>
+                                               <Link to={`/admin/lessons/${item.id}/edit`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-green-400 shadow-lg block md:inline-block">Edit</Link>
+                                               <button className="py-1 px-2 text-white rounded hover:opacity-80 bg-red-500 shadow-lg block md:inline-block" onClick={()=>deleteLesson(item.id)}>Delete</button>
                                            </div>
                                        </td>
                                    </tr>
@@ -163,6 +287,14 @@ const Lessson = (props) => {
                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                           {item.name}
                                        </td>
+                                       <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs p-4 text-left text-blueGray-700 ">
+                                            {
+                                            contents.map((content)=>{
+                                                if(content.id == item.content_id){
+                                                    return(content.name)
+                                                }
+                                            })}
+                                        </td>
                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                            <label htmlFor={`toggle${item.id}`} className="toggle-label">
                                                <input type="checkbox" name="" id={`toggle${item.id}`} 
@@ -174,16 +306,16 @@ const Lessson = (props) => {
                                            </label>
                                        </td>
                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                           {new Intl.DateTimeFormat('en-GB', { 
-                                                   month: 'numeric', 
-                                                   day: '2-digit',
-                                                   year: 'numeric', 
-                                               }).format(new Date(item.updated_at))}
+                                           {new Intl.DateTimeFormat('en-GB', {
+                                                    timeZone: 'Africa/Abidjan',
+                                                    dateStyle: 'short',
+                                                    timeStyle: 'medium'
+                                                }).format(new Date(item.updated_at))}
                                        </td>
                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                            <div className="space-x-2">
-                                               <Link to={`#`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-green-400 shadow-lg block md:inline-block">Edit</Link>
-                                               <button className="py-1 px-2 text-white rounded hover:opacity-80 bg-red-500 shadow-lg block md:inline-block" onClick={()=>deleteCategoryCourse(item.id)}>Delete</button>
+                                               <Link to={`/admin/lessons/${item.id}/edit`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-green-400 shadow-lg block md:inline-block">Edit</Link>
+                                               <button className="py-1 px-2 text-white rounded hover:opacity-80 bg-red-500 shadow-lg block md:inline-block" onClick={()=>deleteLesson(item.id)}>Delete</button>
                                            </div>
                                        </td>
                                    </tr>

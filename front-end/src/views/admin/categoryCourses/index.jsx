@@ -10,6 +10,7 @@ const CategoryCourse = (props) => {
     const $token=localStorage.getItem('access_token');
     const [categoryCourses, setCategoryCourses] = useState([]);
     const [classOption, setClassOption] = useState("hidden");
+    const [render, setRender] = useState(false);
     const history = useHistory();
     const handleOption = () => {
         classOption === "hidden" ? setClassOption("block") : setClassOption("hidden")        
@@ -21,7 +22,6 @@ const CategoryCourse = (props) => {
           })
         .then(response => response.json())
         .then(data =>  {
-            console.log(data);
             if(data.url){
                 let url = data.url;
                 history.push(url);
@@ -31,21 +31,104 @@ const CategoryCourse = (props) => {
             }
         });
     }
-    const changeStatus = () =>{
+    const changeStatus = (cate_id) =>{
+        const _formData = new FormData();
+        _formData.append("id",cate_id)
+        fetch("http://localhost:8000/api/changeCategoryCourseStatus", {
+            method: "POST",
+            body:_formData,
+            headers: {"Authorization": `Bearer `+$token}
+          })
+        .then(response => response.json())
+        .then(data =>  {
+            if(data.error){
+                toast.error('Thay đổi trạng thái lỗi', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                });
+   
+            }
+            else{
+                setRender(!render)
+                toast.success('Thay đổi trạng thái thành công', {
+                 position: "bottom-right",
+                 autoClose: 3000,
+                 hideProgressBar: false,
+                 closeOnClick: true,
+                 pauseOnHover: true,
+                 draggable: true,
+                 progress: undefined,
+                 theme: "colored"
+             });
 
+            }
+        });
     }
     const deleteCategoryCourse = (id) =>{
-
+        Swal.fire({
+            title: 'Cảnh báo',
+            text: "Bạn có chắc chắn muốn xóa?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Hủy',
+            confirmButtonText: 'Xóa'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                const _formData = new FormData();
+                _formData.append("id",id)
+                fetch("http://localhost:8000/api/deleteCategoryCourse", {
+                    method: "POST",
+                    body:_formData,
+                    headers: {"Authorization": `Bearer `+$token}
+                  })
+                .then(response => response.json())
+                .then(data =>  {
+                   if(data.error){
+                        toast.error('Xóa bị lỗi', {
+                            position: "bottom-right",
+                            autoClose: 3000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored"
+                        });
+                   }
+                   else{
+                        setRender(!render)
+                        toast.success('Xóa thành công', {
+                            position: "bottom-right",
+                            autoClose: 3000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored"
+                        });
+                   }
+                });
+            }
+          })
     }
     useEffect(() => {
         if($token){
             getCategoryCourses();
         }
-    }, [])
+    }, [render])
     return (
         <>
          <section className="bg-blueGray-50">
-             <h6 className="text-gray-700 text-xl font-bold mb-4">Danh mục khóa học</h6>
+             <h6 className="text-gray-700 text-xl font-bold mb-4">Danh sách Loại khóa học</h6>
                 <div className="w-full relative">
                     <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
                     <div className="rounded-t mb-0 px-4 py-3 border-0">
@@ -59,7 +142,7 @@ const CategoryCourse = (props) => {
                             </button>
                             <div className={`absolute top-full right-0 ${classOption}`}>
                                 <div className="py-2 bg-white shadow-lg text-13">
-                                    <Link className="block w-full py-1 text-left px-2 hover:bg-gray-200" to={`#`} >Add</Link>
+                                    <Link className="block w-full py-1 text-left px-2 hover:bg-gray-200" to={`/admin/category_courses/add`} >Add</Link>
                                     <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
                                     <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Export Excel</button>
                                 </div>
@@ -111,17 +194,17 @@ const CategoryCourse = (props) => {
                                             </label>
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                            {new Intl.DateTimeFormat('en-GB', { 
-                                                    month: 'numeric', 
-                                                    day: '2-digit',
-                                                    year: 'numeric', 
+                                            {new Intl.DateTimeFormat('en-GB', {
+                                                    timeZone: 'Africa/Abidjan',
+                                                    dateStyle: 'short',
+                                                    timeStyle: 'medium'
                                                 }).format(new Date(item.updated_at))}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <div className="space-x-2">
-                                                <Link to={`courses/${item.id}`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-blue-400 shadow-lg block md:inline-block">View</Link>
-                                                <Link to={`#`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-green-400 shadow-lg block md:inline-block">Edit</Link>
+                                                <Link to={`/admin/category_courses/${item.id}/edit`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-green-400 shadow-lg block md:inline-block">Edit</Link>
                                                 <button className="py-1 px-2 text-white rounded hover:opacity-80 bg-red-500 shadow-lg block md:inline-block" onClick={()=>deleteCategoryCourse(item.id)}>Delete</button>
+                                                <Link to={`courses/${item.id}`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-blue-400 shadow-lg block md:inline-block"><i className="fas fa-arrow-right"></i></Link>
                                             </div>
                                         </td>
                                     </tr>

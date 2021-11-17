@@ -565,7 +565,7 @@ class CourseController extends Controller
                 }
             }
             if($request->hasfile('image')) {
-                $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'course_images';
+                $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'course';
                 if (!file_exists($destinationPath)) {
                     File::makeDirectory($destinationPath, 0775, true);
                 }       
@@ -574,8 +574,8 @@ class CourseController extends Controller
                 $date = $date->format('d-m-Y-H-i-s');
                 $extension = $file->extension();
                 $newImageName = Str::slug('course_img', '_').'_'.$date.'.'.$extension;
-                $file->move(public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'course_images', $newImageName);
-                $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'course_images'.'/'.$newImageName;
+                $file->move(public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'course', $newImageName);
+                $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'images'.'/'.'course'.'/'.$newImageName;
             }
             $course = new Course();
             $course->name = $request->name;
@@ -642,7 +642,7 @@ class CourseController extends Controller
                 }
             }
             if($request->hasfile('image')) {
-                $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'course_images';
+                $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'course';
                 if (!file_exists($destinationPath)) {
                     File::makeDirectory($destinationPath, 0775, true);
                 }       
@@ -651,8 +651,8 @@ class CourseController extends Controller
                 $date = $date->format('d-m-Y-H-i-s');
                 $extension = $file->extension();
                 $newImageName = Str::slug('course_img', '_').'_'.$date.'.'.$extension;
-                $file->move(public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'course_images', $newImageName);
-                $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'course_images'.'/'.$newImageName;
+                $file->move(public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'course', $newImageName);
+                $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'images'.'/'.'course'.'/'.$newImageName;
             }
             $request->Initial_price == null || $request->Initial_price=='undefined'
             ? $course->Initial_price = $course->Initial_price 
@@ -711,7 +711,7 @@ class CourseController extends Controller
                 return response()->json(['error'=>$validator->errors()], 400);      
             }
             $course = Course::find($request->id);
-            $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'course_images';
+            $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'course';
             File::delete($destinationPath.'/'.$course->image);
             $table_of_content = TableOfContent::where('course_id',$request->id);
             foreach($table_of_content->get() as $toc){
