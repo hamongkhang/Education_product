@@ -29,6 +29,7 @@ import AddExam from '../../../views/admin/exam/addExam'
 import IndexQuestionExam from '../../../views/admin/exam/indexQuestionExam'
 import EditQuestion from '../../../views/admin/exam/editQuestion'
 import AddQuestionAnswer from '../../../views/admin/exam/addQuestionAnswer'
+import CommentTable from '../../../views/admin/comments'
 
 const AdminContent = (props) => {
     return (
@@ -68,6 +69,8 @@ const AdminContent = (props) => {
                         <Route path="/admin/exam/indexQuestionExam/:id" exact component={IndexQuestionExam} />
                         <Route path="/admin/exam/:idExam/editQuestion/:id" exact component={EditQuestion} />
                         <Route path="/admin/exam/:idExam/addQuestionAnswer/:num" exact component={AddQuestionAnswer} />
+                        <Route path="/admin/comment" exact component={CommentTable} />
+
                     </>
                     :
                     <>

@@ -65,6 +65,12 @@ const sidebar = [
         role: 1
     },
     {
+        name: "Comments",
+        icon: "fas fa-comments",
+        link: "/admin/comment",
+        role: 1
+    },
+    {
         name: "Chat",
         icon: "fas fa-sms",
         link: "/admin/chat",
