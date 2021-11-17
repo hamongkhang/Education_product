@@ -66,7 +66,7 @@ const AdminContent = (props) => {
                         <Route path="/admin/exam/addExam" exact component={AddExam} />
                         <Route path="/admin/exam/editExam/:id" exact component={EditExam} />
                         <Route path="/admin/exam/indexQuestionExam/:id" exact component={IndexQuestionExam} />
-                        <Route path="/admin/exam/indexQuestionExam/editQuestion/:id" exact component={EditQuestion} />
+                        <Route path="/admin/exam/:idExam/editQuestion/:id" exact component={EditQuestion} />
                         <Route path="/admin/exam/:idExam/addQuestionAnswer/:num" exact component={AddQuestionAnswer} />
                     </>
                     :

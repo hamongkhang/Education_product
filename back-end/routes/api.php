@@ -226,6 +226,8 @@ Route::post('/exam/getOneQuestionAnswer', [App\Http\Controllers\ExamController::
 Route::post('/exam/updateQuestionAdmin', [App\Http\Controllers\ExamController::class, 'updateQuestionAdmin'])->name('exam.updateQuestionAdmin');
 Route::post('/exam/deleteQuestionAnswer', [App\Http\Controllers\ExamController::class, 'deleteQuestionAnswer'])->name('exam.deleteQuestionAnswer');
 Route::post('/exam/addQuestionAnswer', [App\Http\Controllers\ExamController::class, 'addQuestionAnswer'])->name('exam.addQuestionAnswer');
+Route::post('/exam/addQuestionAnswerFileQuestion', [App\Http\Controllers\ExamController::class, 'addQuestionAnswerFileQuestion'])->name('exam.addQuestionAnswerFileQuestion');
+
 
 
 

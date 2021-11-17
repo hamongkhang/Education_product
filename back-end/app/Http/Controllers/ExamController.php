@@ -1029,4 +1029,76 @@ class ExamController extends Controller
         ], 401);
     }
     }
+    public function addQuestionAnswerFileQuestion(Request $request){
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            for($i=0;$i<$request->count;$i++){
+                    $question = [
+                        'question'  => "Chọn đáp án chính xác:",
+                        'exam_id'  => $request->id,
+                        'image'  => "Block",
+                        'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+                        'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh')
+                    ];
+                    $examQuestion = ExamQuestion::create($question);
+                    $questionTable=DB::table('exam_question')->where('exam_id',$request->id)->get();
+                    $id_question=$questionTable[count($questionTable)-1]->id;
+                    $answer1 = [
+                            'id_question'  => $id_question,
+                            'id_exam'  => $request->id,
+                            'type_answer'  => "A",
+                            'answer'  => " ",
+                            'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+                            'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh')
+                        ];
+                    $examQuestion1 = QuestionAnswer::create($answer1);
+                    $answer2 = [
+                        'id_question'  => $id_question,
+                        'id_exam'  => $request->id,
+                        'type_answer'  => "B",
+                        'answer'  => " ",
+                        'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+                        'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh')
+                    ];
+                    $examQuestion2 = QuestionAnswer::create($answer2);
+                    $answer3 = [
+                        'id_question'  => $id_question,
+                        'id_exam'  => $request->id,
+                        'type_answer'  => "C",
+                        'answer'  => " ",
+                        'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+                        'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh')
+                    ];
+                    $examQuestion3 = QuestionAnswer::create($answer3);
+                   $answer4 = [
+                    'id_question'  => $id_question,
+                    'id_exam'  => $request->id,
+                    'type_answer'  => "D",
+                    'answer'  => " ",
+                    'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+                    'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh')
+                ];
+                $a="correctAnswerArray".$i;
+                    $examQuestion4 = QuestionAnswer::create($answer4);
+                        $correct = [
+                            'exam_id'  => $request->id,
+                            'question_id'  => $id_question,
+                            'answer'  => $request->$a,
+                            'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
+                            'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh')
+                        ];
+                    $correct1 = ExamAnswer::create($correct);
+                }
+            return response()->json([
+                'success'=>1,
+                'data'=>$request->count
+            ], 201);
+    }
+    else{
+        return response()->json([
+            'error'=>1,
+            'description'=>'account login is not admin',
+        ], 401);
+    }
+    }
 }

@@ -325,7 +325,7 @@ const IndexQuestionExam = () => {
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <div className="space-x-2">
-                                                <Link to={`editQuestion/${items.id}`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-green-400 shadow-lg block md:inline-block">Edit</Link>
+                                                <Link to={`/admin/exam/${match.params.id}/editQuestion/${items.id}`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-green-400 shadow-lg block md:inline-block">Edit</Link>
                                                 <button onClick={(event)=>deleteQuestionAnswer(event,items.id)} className="py-1 px-2 text-white rounded hover:opacity-80 bg-red-500 shadow-lg block md:inline-block">Delete</button>
                                             </div>
                                         </td>

@@ -10,6 +10,8 @@ const AddQuestionAnswer = () => {
     const [respon,setRespon]=useState([]);
     const [responFile,setResponFile]=useState([]);
     const [responFile2,setResponFile2]=useState([]);
+    const [examEdit, setExamEdit] = useState({});
+    const [correctAnswerArray, setCorrectAnswerArray] = useState([]);
     const [error, setError] = useState({
         id:null,
         question:null,
@@ -89,6 +91,45 @@ const AddQuestionAnswer = () => {
             progress: undefined,
         });
     }
+    }
+    const onAddQuestionAnswerFile = () => {
+        const _formData = new FormData();
+        _formData.append('id', match.params.idExam);
+        for(var i=0;i<correctAnswerArray.length;i++){
+            _formData.append('correctAnswerArray'+i, correctAnswerArray[i]);
+        }
+        _formData.append('count', correctAnswerArray.length);
+        fetch("http://localhost:8000/api/exam/addQuestionAnswerFileQuestion", {
+            method: "POST",
+            body:_formData,
+            headers: {"Authorization": `Bearer `+$token}
+          })
+        .then(response => response.json())
+        .then(data =>  {
+            if(data.error){
+                toast.error('Thêm bị lỗi', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
+            else{
+                toast.success('Thêm thành công', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                window.history.back();
+            }
+        });
     }
     const onAddQuestion = (index) => {
         var kt=true;
@@ -178,6 +219,53 @@ const AddQuestionAnswer = () => {
                         respon.push(dataAdd);
                     }
     }
+    const onChangeHandleFile = (event,index) => {
+        let _name = event.target.name;
+        let _value = event.target.value;
+        correctAnswerArray[index]=_value;
+    };
+
+    if(respon.length<match.params.num){
+        for(var i=0;i<match.params.num;i++){
+                        respon.push(dataAdd);
+                    }
+    }
+    const getOneExamEdit = () =>{
+        const _formData = new FormData();
+        _formData.append("id",match.params.idExam)
+        fetch("http://localhost:8000/api/exam/getOneExamEdit", {
+            method: "POST",
+            body:_formData,
+            headers: {"Authorization": `Bearer `+$token}
+          })
+        .then(response => response.json())
+        .then(data =>  {
+            if(data.error){
+                toast.error('Không load được dữ liệu', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
+            else{
+                setExamEdit(data.data);
+            }
+            
+        });
+    }
+    useEffect(() => {
+        if($token){
+           getOneExamEdit();
+           for(var i=0;i<respon.length;i++){
+            correctAnswerArray[i]="A";
+              }
+        }
+    }, [])
+    if((!examEdit.file_question)||(examEdit.file_question==="Block")){
     return (
         <section className=" py-1">
         <div className="w-full">
@@ -347,7 +435,52 @@ const AddQuestionAnswer = () => {
             </div>
         </div>
     </section>
-    )
+    );
+        }else{
+            return(
+            <section className=" py-1">
+        <div className="w-full">
+            <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-100 border-0">   
+            <div className="rounded-t bg-white mb-0 px-6 py-6">
+                <div className="text-center flex justify-between">
+                <h6 className="text-gray-700 text-xl font-bold">
+                    Thêm đáp án chính xác cho bài kiểm tra
+                </h6>
+                </div>
+            </div>
+            <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
+                {respon.length>0?
+                    respon.map((items,index)=>{
+                        return(
+            <form>
+                <h6 className="text-gray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                    Câu {index+1}
+                </h6>
+                <div className="flex flex-wrap">
+                   <div className="w-full lg:w-6/12 px-4">
+                        <div className="relative w-full mb-3">
+                            <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                               Đáp án chính xác
+                            </label>
+                             <select name={"correct_answer"} id="type" className="border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" onChange={(event) => onChangeHandleFile(event,index)}>
+                             <option value="A">A</option>
+                             <option value="B">B</option>
+                             <option value="C">C</option>
+                             <option value="D">D</option>
+                             </select>
+                             </div>
+                        </div>
+                </div>                
+            </form>
+                        )
+            }):""}
+            </div>
+            <button type="button" onClick={()=>onAddQuestionAnswerFile()} className="bg-indigo-600 text-white px-5 py-2 rounded hover:bg-indigo-700 hover:shadow-xl font-semibold duration-300">Hoàn thành</button>
+            </div>
+        </div>
+    </section>
+            );
+        }
 }
 
 export default AddQuestionAnswer
