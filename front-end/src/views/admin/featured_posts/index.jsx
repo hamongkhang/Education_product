@@ -121,6 +121,7 @@ const PostTable = (props) => {
     }, [render])
     return (
         <section className="bg-blueGray-50">
+                         <h6 className="text-gray-700 text-xl font-bold mb-4">Thông tin bào viết nổi bật</h6>
         <div className="w-full">
             <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
             <div className="rounded-t mb-0 px-4 py-3 border-0">

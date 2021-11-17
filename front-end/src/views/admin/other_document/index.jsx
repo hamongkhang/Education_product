@@ -4,27 +4,63 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2'
 toast.configure();
-const TeacherTable = (props) => {
+const DocumentTable = (props) => {
     const $token=localStorage.getItem('access_token');
-    const [teacher, setTeacher] = useState([]);
+    const [post, setPost] = useState([]);
     const [render, setRender] = useState(false);
     const [classOption, setClassOption] = useState("hidden");
     const handleOption = () => {
         classOption === "hidden" ? setClassOption("block") : setClassOption("hidden")
     }
-    const getTeacher=()=>{
-        fetch("http://localhost:8000/api/teacher/getTeacher", {
+    const getPost=()=>{
+        fetch("http://localhost:8000/api/featuredPost/getFeaturedPost", {
             method: "GET",
             headers: {"Authorization": `Bearer `+$token}
           })
         .then(response => response.json())
         .then(data =>  {
-            setTeacher(data.data);
+            setPost(data.data);
         });
         return () => {
         }
     }
-    const onDeleteTeacher = (id)=>{
+    const changeStatus = (id) =>{
+        fetch(`http://localhost:8000/api/featuredPost/blockActiveFeaturedPost/${id}`, {
+            method: "POST",
+            headers: {"Authorization": `Bearer `+$token}
+          })
+        .then(response => response.json())
+        .then(data =>  {
+            if(data.error){
+                toast.error('Thay đổi trạng thái lỗi', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                });
+   
+            }
+            else{
+                setRender(!render)
+                toast.success('Thay đổi trạng thái thành công', {
+                 position: "bottom-right",
+                 autoClose: 3000,
+                 hideProgressBar: false,
+                 closeOnClick: true,
+                 pauseOnHover: true,
+                 draggable: true,
+                 progress: undefined,
+                 theme: "colored"
+             });
+
+            }
+        });
+    }
+    const onDeletePost = (id)=>{
         Swal.fire({
             title: 'Cảnh báo',
             text: "Bạn có chắc chắn muốn xóa?",
@@ -36,14 +72,14 @@ const TeacherTable = (props) => {
             confirmButtonText: 'Xóa'
           }).then((result) => {
             if (result.isConfirmed) {
-                deleteTeacher(id);
+                deletePost(id);
             }
           })
     }
-    const deleteTeacher = (id) =>{
+    const deletePost = (id) =>{
         const _formData = new FormData();
         _formData.append("id",id)
-        fetch("http://localhost:8000/api/teacher/destroyTeacher/"+id, {
+        fetch("http://localhost:8000/api/featuredPost/destroyFeaturedPost/"+id, {
             method: "POST",
             body:_formData,
             headers: {"Authorization": `Bearer `+$token}
@@ -80,12 +116,12 @@ const TeacherTable = (props) => {
     
     useEffect(() => {
         if($token){
-           getTeacher();
+           getPost();
         }
     }, [render])
     return (
         <section className="bg-blueGray-50">
-        <h6 className="text-gray-700 text-xl font-bold mb-4">Thông tin giáo viên</h6>
+        <h6 className="text-gray-700 text-xl font-bold mb-4">Thông tin danh sách tài liệu</h6>
         <div className="w-full">
             <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
             <div className="rounded-t mb-0 px-4 py-3 border-0">
@@ -99,7 +135,7 @@ const TeacherTable = (props) => {
                     </button>
                     <div className={`absolute top-full right-0 ${classOption}`}>
                         <div className="py-2 bg-white shadow-lg text-13">
-                            <Link className="block w-full py-1 text-left px-2 hover:bg-gray-200" to={`teacher/add`} >Add</Link>
+                            <Link className="block w-full py-1 text-left px-2 hover:bg-gray-200" to={`featured_post/add`} >Add</Link>
                             <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
                             <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Export Excel</button>
                         </div>
@@ -112,31 +148,25 @@ const TeacherTable = (props) => {
                 <thead>
                     <tr>
                     <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        ID
+                        STT
                     </th>
                     <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Tên giáo viên
+                        Tên bài viết
                     </th>
                     <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Chức vụ
+                        Tác giả
+                    </th>
+                    <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                        File
                     </th>
                     <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                         Mô tả
                     </th>
                     <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Số điện thoại
-                    </th>
-                    <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Facebook
-                    </th>
-                    <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                         Hình ảnh
                     </th>
                     <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Youtube
-                    </th>
-                    <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                        Skype
+                        Trạng thái
                     </th>
                     <th className="px-4 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                         Ngày tạo
@@ -149,7 +179,7 @@ const TeacherTable = (props) => {
                 <tbody>
 
                     {
-                        teacher.map((item,index)=>{
+                        post.map((item,index)=>{
                             return(
                             <tr key={index}>
                                 <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
@@ -159,32 +189,34 @@ const TeacherTable = (props) => {
                                     {item.name}
                                 </td>
                                 <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                    {item.position}
+                                    {item.author}
+                                </td>
+                                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                    {item.file}
                                 </td>
                                 <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 " dangerouslySetInnerHTML={{ __html:item.description}}>
                                 </td>
-                                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                    {item.phone}
-                                </td>
-                                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                    {item.facebook}
+                                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <img alt="" src={`http://localhost:8000/upload/images/featured_post/${item.image}`} className="w-12 h-16 object-cover" />
                                 </td>
                                 <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                    <img alt="" src={`http://localhost:8000/upload/images/teacher/${item.image}`} className="w-12 h-16 object-cover" />
-                                </td>
-                                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                    {item.youtube}
-                                </td>
-                                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                    {item.skype}
-                                </td>
+                                            <label htmlFor={`toggle${item.id}`} className="toggle-label">
+                                                <input type="checkbox" name="" id={`toggle${item.id}`} 
+                                                    defaultChecked = {item.status === 'Active'?true:false}
+                                                    hidden onClick={()=>changeStatus(item.id)}
+                                                    />
+                                                <div className="toggle-btn">
+                                                    <div className="spinner"></div>
+                                                </div>
+                                            </label>
+                                        </td>
                                 <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                     {item.updated_at}
                                 </td>
                                 <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                     <div className="space-x-2">
-                                        <Link to={`teacher/edit/${item.id}`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-green-400 shadow-lg block md:inline-block">Edit</Link>
-                                        <button className="py-1 px-2 text-white rounded hover:opacity-80 bg-red-500 shadow-lg block md:inline-block" onClick={()=>onDeleteTeacher(item.id)}>Delete</button>
+                                        <Link to={`featured_post/edit/${item.id}`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-green-400 shadow-lg block md:inline-block">Edit</Link> 
+                                        <button className="py-1 px-2 text-white rounded hover:opacity-80 bg-red-500 shadow-lg block md:inline-block" onClick={()=>onDeletePost(item.id)}>Delete</button>
                                     </div>
                                 </td>
                             </tr>
@@ -202,4 +234,4 @@ const TeacherTable = (props) => {
     )
 }
 
-export default TeacherTable
+export default DocumentTable
