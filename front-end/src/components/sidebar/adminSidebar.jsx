@@ -84,6 +84,12 @@ const sidebar = [
         role: 2
     },
     {
+        name: "Featured posts",
+        icon: "fas fa-blog",
+        link: "/admin/featured_post",
+        role: 1
+    },
+    {
         name: "IT in teaching",
         icon: "far fa-browser",
         link: "/admin/itinteach",
