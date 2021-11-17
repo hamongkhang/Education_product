@@ -21,7 +21,7 @@ use Illuminate\Support\Str;
 class FreeDocumentCategoryController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['onLogin','getFreeDocument','getTeacher', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
+        $this->middleware('auth:api', ['except' => ['updateFreeDocumentCategory','onLogin','getFreeDocument','getTeacher', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
     /**
      * @SWG\POST(
@@ -54,8 +54,6 @@ class FreeDocumentCategoryController extends Controller
      * )
      */
     public function createFreeDocumentCategory(Request $request){
-        $adminFind = auth()->user();
-        if (($adminFind->email==="web.vatly365@gmail.com")){
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255'
         ]);
@@ -66,7 +64,7 @@ class FreeDocumentCategoryController extends Controller
         if (!$data){
               $postArray = [
                     'name'  => $request->name,
-                    'status'=>"Active",
+                    'status'=>$request->status,
                     'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
                     'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh')
                 ];
@@ -75,15 +73,21 @@ class FreeDocumentCategoryController extends Controller
     }else{
         return response()->json(["message" => "Name already exist!!!"]);
     }
-}
-    else{
+    }
+
+    public function getOneDocumentCategory(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:free_document_category,id',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 400);      
+        }      
+            $book = FreeDocumentCategory::find($request->id);
         return response()->json([
-            'error' => 'admin not found'
-        ], 401); 
+            'data'=>$book
+        ], 200);
+       
     }
-    }
-
-
     /**
      * @SWG\POST(
      *     path="api/freeDocumentCategory/updateFreeDocumentCategory/{id}",
@@ -115,11 +119,9 @@ class FreeDocumentCategoryController extends Controller
      * )
      */
 public function updateFreeDocumentCategory($id,Request $request){
-    $adminFind = auth()->user();
-    if (($adminFind->email==="web.vatly365@gmail.com")){
     $validator = Validator::make($request->all(), [
         'name' => 'max:255',
-
+        'status'=>""
     ]);
     if ($validator->fails()) {
         return response()->json(['error'=>$validator->errors()], 401);     
@@ -127,16 +129,14 @@ public function updateFreeDocumentCategory($id,Request $request){
     $freeDocumentCategory = FreeDocumentCategory::find($id);
     if($freeDocumentCategory){
     $created_at=$freeDocumentCategory->created_at;
-    $status=$freeDocumentCategory->status;
+    if ($request->status==null){
+        $status=$freeDocumentCategory->status;
+    }else{
+        $status=$request->status;
+    }    
     if ($request->name==null){
         $name=$freeDocumentCategory->name;
     }else{
-        $data = DB::table('free_document_category')->where('name', $request->name)->first();
-        if ($data){
-            return response()->json([
-                'error' => 'free document category name already exist'
-            ], 401); 
-        }
         $name=$request->name;
     }
     $freeDocumentCategory->name=$name;
@@ -147,12 +147,6 @@ public function updateFreeDocumentCategory($id,Request $request){
     return Response()->json(array("Successfully. Update successfully!"=> 1,"data"=>$freeDocumentCategory ));
 }else{
     return Response()->json(array("error!"=> 401,"message"=>"Id Not Found" ));
-}
-}
-else{
-    return response()->json([
-        'error' => 'admin not found'
-    ], 401); 
 }
 }
 
@@ -181,8 +175,6 @@ else{
      * )
      */
     public function destroyFreeDocumentCategory($id){
-        $adminFind = auth()->user();
-        if (($adminFind->email==="web.vatly365@gmail.com")){
         $freeDocumentCategoryFind= FreeDocumentCategory::find($id);
         if ($freeDocumentCategoryFind){
         DB::delete('delete from free_document where category_id = ?',[$id]);
@@ -193,12 +185,31 @@ else{
     else{
         return response()->json(["message" => "Delete failed"]);
     }
-}
-else{
-    return response()->json([
-        'error' => 'admin not found'
-    ], 401); 
-}
     }
-
+    public function blockActiveDocumentCategory($id){
+            $featuredPostFind = DB::table('free_document_category')->where('id', $id)->first();
+            if ($featuredPostFind){ 
+                if ($featuredPostFind->status==="Block"){
+                    DB::table('free_document_category')->where('id', $featuredPostFind->id)->update(['status'	=>	"Active"]);  
+                    $freeDocumentRespon = DB::table('free_document_category')->where('id', $id)->first();
+                    return response()->json([
+                        'message' => 'successfully',
+                        'user' => $freeDocumentRespon
+                    ], 201);
+                }
+                else{
+                    DB::table('free_document_category')->where('id', $featuredPostFind->id)->update(['status'	=>	"Block"]);  
+                    $freeDocumentRespon = DB::table('free_document_category')->where('id', $id)->first();
+                    return response()->json([
+                        'message' => 'successfully',
+                        'user' => $freeDocumentRespon
+                    ], 201);
+                }
+            }
+            else{
+                return response()->json([
+                    'error' => 'id not found'
+                ], 401); 
+            }
+    }
 }
