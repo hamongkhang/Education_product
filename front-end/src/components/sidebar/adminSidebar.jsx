@@ -29,24 +29,6 @@ const sidebar = [
         role: 1
     },
     {
-        name: "Table",
-        icon: "fad fa-book-open",
-        link: "/admin/table",
-        role: 1
-    },
-    {
-        name: "Form",
-        icon: "fad fa-book-open",
-        link: "/admin/form",
-        role: 1
-    },
-    {
-        name: "Text Editor",
-        icon: "fad fa-book-open",
-        link: "/admin/text-editor",
-        role: 1
-    },
-    {
         name: "Books",
         icon: "fad fa-book-open",
         link: "/admin/books",
