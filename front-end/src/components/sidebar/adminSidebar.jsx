@@ -21,6 +21,12 @@ const sidebar = [
         icon: "fas fa-address-card",
         link: "/admin/banner",
         role: 1
+    } ,
+    {
+        name: "Orders",
+        icon: "fas fa-money-bill-wave",
+        link: "/admin/order",
+        role: 1
     },
     {
         name: "Table",

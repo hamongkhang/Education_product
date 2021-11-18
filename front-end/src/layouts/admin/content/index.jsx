@@ -38,6 +38,8 @@ import AddDocumentCategory from '../../../views/admin/other_document/documentCat
 import EditDocumentCategory from '../../../views/admin/other_document/documentCategoryEdit'
 import AddDocument from '../../../views/admin/other_document/documentAdd'
 import EditDocument from '../../../views/admin/other_document/documentEdit'
+import OrderTable from '../../../views/admin/order'
+
 
 
 
@@ -90,6 +92,8 @@ const AdminContent = (props) => {
                         <Route path="/admin/other_document/editDocumentCategory/:id" exact component={EditDocumentCategory} />
                         <Route path="/admin/other_document/addDocument" exact component={AddDocument} />
                         <Route path="/admin/other_document/editDocument/:id" exact component={EditDocument} />
+                        <Route path="/admin/order" exact component={OrderTable} />
+
                     </>
                     :
                     <>
