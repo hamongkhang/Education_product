@@ -65,6 +65,8 @@ Route::post('/payment/checkResultExam', [App\Http\Controllers\PaymentController:
 Route::post('/payment/momoPayment', [App\Http\Controllers\PaymentController::class, 'momoPayment'])->name('payment.momoPayment');
 Route::post('/payment/checkResult', [App\Http\Controllers\PaymentController::class, 'checkResult'])->name('payment.checkResult');
 Route::post('/payment/atmPayment', [App\Http\Controllers\PaymentController::class, 'atmPayment'])->name('payment.atmPayment');
+Route::get('/order/getOrder', [App\Http\Controllers\PaymentController::class, 'getOrder'])->name('order.getOrder');
+Route::post('/order/destroyOrder', [App\Http\Controllers\PaymentController::class, 'destroyOrder'])->name('order.destroyOrder');
 //Route::post('/payment/checkResultATM', [App\Http\Controllers\PaymentController::class, 'checkResultATM'])->name('payment.checkResultATM');
 
 
@@ -144,6 +146,7 @@ Route::post('/history/destroyHistory/{id}', [App\Http\Controllers\HistoryControl
 /* Api Free Document */
 
 Route::post('/freeDocument/getFreeDocument', [App\Http\Controllers\FreeDocumentController::class, 'getFreeDocument'])->name('freeDocument.getFreeDocument');
+Route::get('/freeDocument/getFreeDocumentAlpha2', [App\Http\Controllers\FreeDocumentController::class, 'getFreeDocumentAlpha2'])->name('freeDocument.getFreeDocumentAlpha2');
 //Route::post('/freeDocument/blockAccount', [App\Http\Controllers\FreeDocumentController::class, 'blockAccount'])->name('freeDocument.loginAdmin');
 
 /*Api Lesson*/
@@ -196,6 +199,8 @@ Route::post('/changeCategoryCourseStatus', [App\Http\Controllers\CategoryCourseC
 Route::post('/freeDocumentCategory/createFreeDocumentCategory', [App\Http\Controllers\FreeDocumentCategoryController::class, 'createFreeDocumentCategory'])->name('freeDocumentCategory.createFreeDocumentCategory');
 Route::post('/freeDocumentCategory/updateFreeDocumentCategory/{id}', [App\Http\Controllers\FreeDocumentCategoryController::class, 'updateFreeDocumentCategory'])->name('freeDocumentCategory.updateFreeDocumentCategory');
 Route::post('/freeDocumentCategory/destroyFreeDocumentCategory/{id}', [App\Http\Controllers\FreeDocumentCategoryController::class, 'destroyFreeDocumentCategory'])->name('freeDocumentCategory.destroyFreeDocumentCategory');
+Route::post('/freeDocumentCategory/blockActiveDocumentCategory/{id}', [App\Http\Controllers\FreeDocumentCategoryController::class, 'blockActiveDocumentCategory'])->name('freeDocumentCategory.blockActiveDocumentCategory');
+Route::post('/freeDocumentCategory/getOneDocumentCategory', [App\Http\Controllers\FreeDocumentCategoryController::class, 'getOneDocumentCategory'])->name('freeDocumentCategory.getOneDocumentCategory');
 
 /* Api NewsType */
 Route::post('/newsType/createNewsType', [App\Http\Controllers\NewsTypeController::class, 'createNewsType'])->name('newsType.createNewsType');
@@ -207,6 +212,8 @@ Route::post('/freeDocument/createFreeDocument', [App\Http\Controllers\FreeDocume
 Route::post('/freeDocument/updateFreeDocument/{id}', [App\Http\Controllers\FreeDocumentController::class, 'updateFreeDocument'])->name('freeDocument.updateFreeDocument');
 Route::post('/freeDocument/destroyFreeDocument/{id}', [App\Http\Controllers\FreeDocumentController::class, 'destroyFreeDocument'])->name('freeDocument.destroyFreeDocument');
 Route::post('/freeDocument/blockActiveFreeDocument/{id}', [App\Http\Controllers\FreeDocumentController::class, 'blockActiveFreeDocument'])->name('freeDocument.blockActiveFreeDocument');
+Route::get('/freeDocument/getFreeDocumentAdmin', [App\Http\Controllers\FreeDocumentController::class, 'getFreeDocumentAdmin'])->name('freeDocument.getFreeDocumentAdmin');
+Route::post('/freeDocument/getOneDocument', [App\Http\Controllers\FreeDocumentController::class, 'getOneDocument'])->name('freeDocument.getOneDocument');
 
 
 Route::post('/cart/getCart', [App\Http\Controllers\CartController::class, 'getCart'])->name('cart.get');

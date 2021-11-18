@@ -49,6 +49,12 @@ import PostTable from '../../../views/admin/featured_posts'
 import AddPost from '../../../views/admin/featured_posts/add'
 import EditPost from '../../../views/admin/featured_posts/edit'
 import DocumentTable from '../../../views/admin/other_document'
+import AddDocumentCategory from '../../../views/admin/other_document/documentCategoryAdd'
+import EditDocumentCategory from '../../../views/admin/other_document/documentCategoryEdit'
+import AddDocument from '../../../views/admin/other_document/documentAdd'
+import EditDocument from '../../../views/admin/other_document/documentEdit'
+import OrderTable from '../../../views/admin/order'
+
 
 
 
@@ -122,6 +128,11 @@ const AdminContent = (props) => {
                         <Route path="/admin/featured_post/add" exact component={AddPost} />
                         <Route path="/admin/featured_post/edit/:id" exact component={EditPost} />
                         <Route path="/admin/other_document" exact component={DocumentTable} />
+                        <Route path="/admin/other_document/addDocumentCategory" exact component={AddDocumentCategory} />
+                        <Route path="/admin/other_document/editDocumentCategory/:id" exact component={EditDocumentCategory} />
+                        <Route path="/admin/other_document/addDocument" exact component={AddDocument} />
+                        <Route path="/admin/other_document/editDocument/:id" exact component={EditDocument} />
+                        <Route path="/admin/order" exact component={OrderTable} />
                     </>
                     :
                     <>

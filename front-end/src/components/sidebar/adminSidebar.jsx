@@ -21,23 +21,11 @@ const sidebar = [
         icon: "fas fa-address-card",
         link: "/admin/banner",
         role: 1
-    },
+    } ,
     {
-        name: "Table",
-        icon: "fad fa-book-open",
-        link: "/admin/table",
-        role: 1
-    },
-    {
-        name: "Form",
-        icon: "fad fa-book-open",
-        link: "/admin/form",
-        role: 1
-    },
-    {
-        name: "Text Editor",
-        icon: "fad fa-book-open",
-        link: "/admin/text-editor",
+        name: "Orders",
+        icon: "fas fa-money-bill-wave",
+        link: "/admin/order",
         role: 1
     },
     {
