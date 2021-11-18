@@ -5,7 +5,6 @@ import Swal from 'sweetalert2'
 
 const LoginAdmin = (props) => {
     const [user, setUser] = useState({});
-    const match = useRouteMatch();
     const history = useHistory();
     const $token=localStorage.getItem('access_token');
     const addUser = (event) => {
@@ -17,8 +16,9 @@ const LoginAdmin = (props) => {
           [field]: value,
         });
       };
+      console.log(user)
       const loginAdmin = (e) =>{
-            e.preventDefault();
+                e.preventDefault();
                 if(user.email!="" && user.password!=""){
                 const _formData = new FormData();
                 _formData.append("email",user.email)

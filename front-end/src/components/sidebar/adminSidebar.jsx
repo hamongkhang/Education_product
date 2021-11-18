@@ -69,6 +69,12 @@ const sidebar = [
         name: "Other Document",
         icon: "fas fa-folder-open",
         link: "/admin/other_document",
+        role: 2
+    },
+    {
+        name: "Other Document",
+        icon: "fas fa-folder-open",
+        link: "/admin/other_document",
         role: 1
     },
     {
@@ -81,12 +87,6 @@ const sidebar = [
         name: "IT in teaching",
         icon: "far fa-browser",
         link: "/admin/itinteach",
-        role: 1
-    },
-    {
-        name: "Other Document",
-        icon: "fas fa-sms",
-        link: "/admin/otherDocuments",
         role: 1
     },
     {

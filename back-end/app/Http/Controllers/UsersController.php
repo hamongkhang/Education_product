@@ -799,7 +799,7 @@ class UsersController extends Controller
             return response()->json(['error' => 'Blocked'], 401);
         }
         if (auth()->user()->email=="web.vatly365@gmail.com") {
-            $adminFind = DB::table('admin_account')
+            $adminFind = DB::table('users')
             ->where('email', auth()->user()->email)
             ->where('password',auth()->user()->password)->first();
             $dataRespon=response()->json([

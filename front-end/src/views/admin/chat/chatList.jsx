@@ -21,9 +21,13 @@ const ChatList = (props) => {
                         users.map((item,index)=>
                                 (
                                     <div key={index} onClick={()=>changeUser(item.id,item.avatar,item.fullName)} className="shadow flex items-center p-3 rounded-lg cursor-pointer hover:bg-gray-100">
-                                        <div className="mr-4">
+                                        <div className="mr-4">{
+                                            item.avatar?
                                             <img className="w-12 h-12 object-cover rounded-full" srcSet={`http://localhost:8000/upload/images/avatar/${item.avatar} 2x`} />
-                                        </div>
+                                            :
+                                            <img className="w-12 h-12 object-cover rounded-full" srcSet={`http://localhost:8000/upload/images/avatar/male_avatar.jpg 2x`} />
+                                        }
+                                            </div>
                                         <div>
                                             <h3 className="line-1 font-semibold">{item.fullName}</h3>
                                             {/* <span className="line-1 text-gray-500">Last message</span> */}

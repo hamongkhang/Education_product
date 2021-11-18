@@ -82,11 +82,9 @@ const AdminContent = (props) => {
                         <Route path="/admin/banner/add" exact component={AddBanner} />
                         <Route path="/admin/banner/edit/:id" exact component={EditBanner} />
                         <Route path="/admin/users" exact component={UserTable} />
-                        {/* {/* <Redirect from="*" to="/admin" /> */}
                         <Route path="/admin/booktypes/add" exact component={AddBookType} />
                         <Route path="/admin/booktypes/edit/:id" exact component={EditBookType} />
                         <Route path="/admin/userAdmin" exact component={AdminTable} />
-                        {/* <Redirect from="*" to="/admin" /> */}
                         <Route path="/admin/itinTeach" exact component={ITinTeach} />
                         <Route path="/admin/itinTeach/updateITinTeach/:id" exact component={EditITINTeach} />
                         <Route path="/admin/itinTeach/add" exact component={AddITinTeach} />
@@ -136,7 +134,11 @@ const AdminContent = (props) => {
                     </>
                     :
                     <>
-                        {/* Route for role other document */}
+                        <Route path="/admin/other_document" exact component={DocumentTable} />
+                        <Route path="/admin/other_document/addDocumentCategory" exact component={AddDocumentCategory} />
+                        <Route path="/admin/other_document/editDocumentCategory/:id" exact component={EditDocumentCategory} />
+                        <Route path="/admin/other_document/addDocument" exact component={AddDocument} />
+                        <Route path="/admin/other_document/editDocument/:id" exact component={EditDocument} />
                     </>
                 }
             </Switch>
