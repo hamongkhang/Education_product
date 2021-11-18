@@ -28,6 +28,41 @@ class PaymentController extends Controller
         $this->middleware('auth:api', ['except' => ['onLogin', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
     
+    public function getOrder(Request $request){
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $books = momoOrderDetail::all();
+        }
+        else{
+            $books = momoOrderDetail::where('status','Active')->get();
+        }
+        return response()->json([
+            'data'=>$books
+        ], 200);  
+    }
+    public function destroyOrder(Request $request){
+        $login = auth()->user();
+        if($login->is_admin == true){
+            $validator = Validator::make($request->all(), [
+                'id' => 'required|exists:momoorderdetails,id',
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['error'=>$validator->errors()], 400);      
+            }
+            $book = momoOrderDetail::find($request->id);
+            $book->delete();
+                return response()->json([
+                    'success'=>1,
+                    'description'=>'xóa thành công'
+                ], 200);
+        }
+        else{
+            return response()->json([
+                'error'=>1,
+                'description'=>'account login is not admin',
+            ], 401);
+        }
+    }
       /**
      * @SWG\POST(
      *     path="api/payment/momoPayment",

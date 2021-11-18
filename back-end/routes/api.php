@@ -65,6 +65,8 @@ Route::post('/payment/checkResultExam', [App\Http\Controllers\PaymentController:
 Route::post('/payment/momoPayment', [App\Http\Controllers\PaymentController::class, 'momoPayment'])->name('payment.momoPayment');
 Route::post('/payment/checkResult', [App\Http\Controllers\PaymentController::class, 'checkResult'])->name('payment.checkResult');
 Route::post('/payment/atmPayment', [App\Http\Controllers\PaymentController::class, 'atmPayment'])->name('payment.atmPayment');
+Route::get('/order/getOrder', [App\Http\Controllers\PaymentController::class, 'getOrder'])->name('order.getOrder');
+Route::post('/order/destroyOrder', [App\Http\Controllers\PaymentController::class, 'destroyOrder'])->name('order.destroyOrder');
 //Route::post('/payment/checkResultATM', [App\Http\Controllers\PaymentController::class, 'checkResultATM'])->name('payment.checkResultATM');
 
 
