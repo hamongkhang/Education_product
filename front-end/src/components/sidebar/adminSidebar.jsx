@@ -83,6 +83,18 @@ const sidebar = [
         link: "/admin/itinteach",
         role: 1
     },
+    {
+        name: "Other Document",
+        icon: "fas fa-sms",
+        link: "/admin/otherDocuments",
+        role: 1
+    },
+    {
+        name: "Courses",
+        icon: "fas fa-chalkboard",
+        link: "/admin/category_courses",
+        role: 1
+    },
 ]
 
 const AdminSidebar = (props) => {

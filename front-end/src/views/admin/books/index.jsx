@@ -191,9 +191,9 @@ const BooksTable = (props) => {
         });
     }
     useEffect(() => {
-        getBookTypes();
         if($token){
-           getBooks();
+            getBookTypes();
+            getBooks();
         }
     }, [render])
     return (

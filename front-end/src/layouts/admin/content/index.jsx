@@ -1,5 +1,5 @@
 import React from 'react'
-import { HashRouter, Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import Dashboard from '../../../views/admin';
 import DataTable from '../../../views/admin/table';
 import Form from '../../../views/admin/form';
@@ -21,6 +21,21 @@ import ITinTeach from '../../../views/admin/ITinTeach';
 import EditITINTeach from '../../../views/admin/ITinTeach/edit';
 import AddITinTeach from '../../../views/admin/ITinTeach/add';
 import AdminTable from '../../../views/admin/user_admin';
+import CategoryCourse from '../../../views/admin/categoryCourses';
+import Courses from '../../../views/admin/courses';
+import TableContent from '../../../views/admin/tableContent';
+import Content from '../../../views/admin/content';
+import Lessson from '../../../views/admin/lessons';
+import EditCategoryCourse from '../../../views/admin/categoryCourses/edit';
+import AddCategoryCourse from '../../../views/admin/categoryCourses/add';
+import EditCourse from '../../../views/admin/courses/edit';
+import AddCourse from '../../../views/admin/courses/add';
+import AddTableContent from '../../../views/admin/tableContent/add';
+import EditTableContent from '../../../views/admin/tableContent/edit';
+import AddContent from '../../../views/admin/content/add';
+import EditContent from '../../../views/admin/content/edit';
+import EditLesson from '../../../views/admin/lessons/edit';
+import AddLesson from '../../../views/admin/lessons/add';
 import ExamTable from '../../../views/admin/exam'
 import EditCategory from '../../../views/admin/exam/editCategory'
 import AddCategory from '../../../views/admin/exam/addCategory'
@@ -75,6 +90,31 @@ const AdminContent = (props) => {
                         <Route path="/admin/itinTeach" exact component={ITinTeach} />
                         <Route path="/admin/itinTeach/updateITinTeach/:id" exact component={EditITINTeach} />
                         <Route path="/admin/itinTeach/add" exact component={AddITinTeach} />
+                        <Route path="/admin/userAdmin" exact component={AdminTable} />
+                        {/* CRUD category course */}
+                        <Route path="/admin/category_courses" exact component={CategoryCourse} />
+                        <Route path="/admin/category_courses/add" exact component={AddCategoryCourse} />
+                        <Route path="/admin/category_courses/:id/edit" exact component={EditCategoryCourse} />
+                        {/* CRUD course */}
+                        <Route path="/admin/courses" exact component={Courses} />
+                        <Route path="/admin/courses_add" exact component={AddCourse} />
+                        <Route path="/admin/courses/:id_cate" exact component={Courses} />
+                        <Route path="/admin/courses/:id/edit" exact component={EditCourse} />
+                        {/* CRUD table content */}
+                        <Route path="/admin/table_content" exact component={TableContent} />
+                        <Route path="/admin/table_content/:id_course" exact component={TableContent} />
+                        <Route path="/admin/table_content_add" exact component={AddTableContent} />
+                        <Route path="/admin/table_content/:id/edit" exact component={EditTableContent} />
+                        {/* CRUD content */}
+                        <Route path="/admin/content" exact component={Content} />
+                        <Route path="/admin/content/:id_table" exact component={Content} />
+                        <Route path="/admin/content_add" exact component={AddContent} />
+                        <Route path="/admin/content/:id/edit" exact component={EditContent} />
+                        {/* CRUD lesson */}
+                        <Route path="/admin/lessons" exact component={Lessson} />
+                        <Route path="/admin/lessons/:id_content" exact component={Lessson} />
+                        <Route path="/admin/lessons_add" exact component={AddLesson} />
+                        <Route path="/admin/lessons/:id/edit" exact component={EditLesson} />
                         <Route path="/admin/exam" exact component={ExamTable} />
                         <Route path="/admin/exam/addCategory" exact component={AddCategory} />
                         <Route path="/admin/exam/editCategory/:id" exact component={EditCategory} />
@@ -93,7 +133,6 @@ const AdminContent = (props) => {
                         <Route path="/admin/other_document/addDocument" exact component={AddDocument} />
                         <Route path="/admin/other_document/editDocument/:id" exact component={EditDocument} />
                         <Route path="/admin/order" exact component={OrderTable} />
-
                     </>
                     :
                     <>
