@@ -10,10 +10,16 @@ const OrderTable = (props) => {
     const $token=localStorage.getItem('access_token');
     const [user, setUser] = useState([]);
     const [order, setOrder] = useState([]);
+    const [orderSearch, setOrderSearch] = useState([]);
     const [render, setRender] = useState(false);
     const [classOption, setClassOption] = useState("hidden");
+    const [dateFilter, setDateFilter] = useState({
+        from:"",
+        end:"",
+        status: false
+    });
     const history = useHistory();
-    const handleOption = (type) => {
+    const handleOption = () => {
             classOption === "hidden" ? setClassOption("block") : setClassOption("hidden")
     }
     const getOrder=()=>{
@@ -90,6 +96,66 @@ const OrderTable = (props) => {
             }
           })
     }
+    const searchHandle = (e) => {
+        let searchString = e.target.value.replace(/\s+/g, '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
+        if(searchString.length > 0){
+            
+                let responseData = order.filter(l => {
+                    let name = l.partnerCode.replace(/\s+/g, '')
+                        .normalize('NFD')
+                        .replace(/[\u0300-\u036f]/g, '')
+                        .replace(/đ/g, 'd').replace(/Đ/g, 'D');
+                    let check = name.toLowerCase().indexOf(searchString.toLowerCase());
+                    if(check>-1){
+                        return l
+                    }
+                })
+                setOrderSearch(responseData)
+        }
+        else{
+            setOrderSearch([])
+        }
+    }
+    const searchByDate=(e)=>{
+        let v = e.target.value;
+        let n = e.target.name;
+        let from = "", end = "";
+        if( n == "from"){
+            setDateFilter({...dateFilter,from:v})
+            from = v
+            end = dateFilter.end
+            console.log(from);
+        }
+        else{
+            setDateFilter({...dateFilter,end:v})
+            end = v
+            from = dateFilter.from
+            console.log(end);
+        }
+        if(dateFilter.from != "" && dateFilter.end != ""){
+            let orderFilter = order.filter(item=>{
+                if(from <= item.updated_at && end >= item.updated_at)
+                {
+                    return item
+                }
+            })
+            if(orderFilter.length==0)
+            {
+                setDateFilter({...dateFilter,status:true})
+            }
+            setOrderSearch(orderFilter)
+        }
+       
+    }
+    const viewAll = () =>{
+        setOrderSearch([]);
+        setDateFilter({
+            from:"",
+            end:"",
+            status: false
+        })
+        handleOption()
+    }
     useEffect(() => {
         if($token){
            getUsers();
@@ -105,7 +171,18 @@ const OrderTable = (props) => {
                     <div className="rounded-t mb-0 px-4 py-3 border-0">
                         <div className="flex flex-wrap items-center">
                         <div className="relative w-full max-w-full flex-grow flex-1">
-                            <input type="text" placeholder="Tìm kiếm..." className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded"/>
+                            <input type="text" placeholder="Tìm kiếm..." onChange={(event) => searchHandle(event)} className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded"/>
+                        </div>
+                        <div className="relative w-full max-w-full flex-grow flex-1">
+                            <div className="block uppercase text-gray-600 text-xs font-bold mb-2 inline mr-2">
+                                Từ 
+                            </div>
+                            <input type="date" name="from" onChange={(event) => searchByDate(event)} className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded"/>
+                            <div className="block uppercase text-gray-600 text-xs font-bold mb-2 inline ml-2 mr-2">
+                                Đến 
+                            </div>
+                            <input type="date" name="end" onChange={(event) => searchByDate(event)} className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded"/>
+                            
                         </div>
                         <div className="relative w-full max-w-full flex-grow flex-1 text-right">
                             <button onClick={handleOption} className="bg-indigo-500 hover:bg-indigo-700 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
@@ -113,6 +190,7 @@ const OrderTable = (props) => {
                             </button>
                             <div className={`absolute top-full right-0 ${classOption}`}>
                                 <div className="py-2 bg-white shadow-lg text-13">
+                                    <button className="w-full py-1 text-left px-2 hover:bg-gray-200" onClick={()=>viewAll()}>View All</button>
                                     <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
                                     <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Export Excel</button>
                                 </div>
@@ -159,6 +237,57 @@ const OrderTable = (props) => {
                         <tbody>
 
                             {
+                                orderSearch.length>0 || dateFilter.status?
+                                orderSearch.map((item,index)=>{
+                                    return(
+                                    <tr key={index}>
+                                        <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                                            {index+1}
+                                        </th>
+                                        {user.map((items,index)=>{
+                                            if(items.id==item.userId){
+                                            return(
+                                                <td key={index} className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            {items.fullName}
+                                        </td>
+                                          );} })}
+                                            <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            {item.partnerCode}
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            {item.partnerName}
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            {item.orderId}
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            {item.amount}
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            {item.payType == 'qr'?'QR':'ATM'}
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                        {
+                                           (item.status==="unsuccessful")?                                           
+                                            "Thanh toán không thành công":"Thanh toán thành công"
+                                        }
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            {new Intl.DateTimeFormat('en-GB', { 
+                                                        month: 'numeric', 
+                                                        day: '2-digit',
+                                                        year: 'numeric', 
+                                                    }).format(new Date(item.updated_at))}
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                            <div className="space-x-2">
+                                                <button className="py-1 px-2 text-white rounded hover:opacity-80 bg-red-500 shadow-lg block md:inline-block" onClick={()=>deleteOrder(item.id)}>Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    )
+                                })
+                                :
                                 order.map((item,index)=>{
                                     return(
                                     <tr key={index}>
@@ -168,7 +297,7 @@ const OrderTable = (props) => {
                                         {user.map((items,index)=>{
                                             if(items.id==item.userId){
                                             return(
-                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                                <td key={index} className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                             {items.fullName}
                                         </td>
                                           );} })}

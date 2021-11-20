@@ -7,6 +7,7 @@ toast.configure();
 const BannerTable = (props) => {
     const $token=localStorage.getItem('access_token');
     const [addBanner,setAddBanner ] = useState([]);
+    const [bannerSearch,setAddBannerSearch ] = useState([]);
     const [render, setRender] = useState(false);
     const [classOption, setClassOption] = useState("hidden");
     const handleOption = () => {
@@ -116,6 +117,26 @@ const BannerTable = (props) => {
             }
         });
     }
+    const searchHandle = (e) => {
+        let searchString = e.target.value.replace(/\s+/g, '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
+        if(searchString.length > 0){
+            
+                let responseData = addBanner.filter(l => {
+                    let name = l.name.replace(/\s+/g, '')
+                        .normalize('NFD')
+                        .replace(/[\u0300-\u036f]/g, '')
+                        .replace(/đ/g, 'd').replace(/Đ/g, 'D');
+                    let check = name.toLowerCase().indexOf(searchString.toLowerCase());
+                    if(check>-1){
+                        return l
+                    }
+                })
+                setAddBannerSearch(responseData)
+        }
+        else{
+            setAddBannerSearch([])
+        }
+    }
     useEffect(() => {
         if($token){
            getBanner();
@@ -128,7 +149,7 @@ const BannerTable = (props) => {
             <div className="rounded-t mb-0 px-4 py-3 border-0">
                 <div className="flex flex-wrap items-center">
                 <div className="relative w-full max-w-full flex-grow flex-1">
-                    <input type="text" placeholder="Tìm kiếm..." className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded"/>
+                    <input type="text" placeholder="Tìm kiếm..." onChange={(event) => searchHandle(event)} className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded"/>
                 </div>
                 <div className="relative w-full max-w-full flex-grow flex-1 text-right">
                     <button onClick={handleOption} className="bg-indigo-500 hover:bg-indigo-700 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
@@ -171,6 +192,42 @@ const BannerTable = (props) => {
                 <tbody>
 
                     {
+                        bannerSearch.length>0?
+                        bannerSearch.map((item,index)=>{
+                            return(
+                            <tr key={index}>
+                                <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                                    {index+1}
+                                </th>
+                                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                    {item.name}
+                                </td>
+                                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <img alt="" src={`http://localhost:8000/upload/images/banner/${item.image}`} className="w-12 h-16 object-cover" />
+                                </td>
+                                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <label htmlFor={`toggle${item.id}`} className="toggle-label">
+                                        <input type="checkbox" name="" id={`toggle${item.id}`} 
+                                            defaultChecked = {item.status === 'Active'?true:false}
+                                            hidden onClick={()=>changeStatus(item.id)}/>
+                                        <div className="toggle-btn">
+                                            <div className="spinner"></div>
+                                        </div>
+                                    </label>
+                                </td>
+                                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                    {item.updated_at}
+                                </td>
+                                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    <div className="space-x-2">
+                                        <Link to={`banner/edit/${item.id}`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-green-400 shadow-lg block md:inline-block">Edit</Link>
+                                        <button className="py-1 px-2 text-white rounded hover:opacity-80 bg-red-500 shadow-lg block md:inline-block" onClick={()=>onDeleteBanner(item.id)}>Delete</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            )
+                        })
+                        :
                         addBanner.map((item,index)=>{
                             return(
                             <tr key={index}>
