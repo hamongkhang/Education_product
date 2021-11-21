@@ -9,6 +9,7 @@ toast.configure();
 const CategoryCourse = (props) => {
     const $token=localStorage.getItem('access_token');
     const [categoryCourses, setCategoryCourses] = useState([]);
+    const [categoryCoursesSearch, setCategoryCoursesSearch] = useState([]);
     const [classOption, setClassOption] = useState("hidden");
     const [render, setRender] = useState(false);
     const history = useHistory();
@@ -123,7 +124,25 @@ const CategoryCourse = (props) => {
     const [filefile,setFilefile] = useState(null);
     const [classOptionFile1, setClassOptionFile1] = useState("hidden");
     const [classOptionFile2, setClassOptionFile2] = useState("hidden");
-
+    const searchHandle = (e) => {
+        let searchString = e.target.value.replace(/\s+/g, '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
+        if(searchString.length > 0){
+            
+                let responseData = categoryCourses.filter(l => {
+                    let name = l.name.replace(/\s+/g, '')
+                        .normalize('NFD')
+                        .replace(/[\u0300-\u036f]/g, '')
+                        .replace(/đ/g, 'd').replace(/Đ/g, 'D');
+                    let check = name.toLowerCase().indexOf(searchString.toLowerCase());
+                    if(check>-1){
+                        return l
+                    }
+                })
+                setCategoryCoursesSearch(responseData)
+        }
+        else{
+            setCategoryCoursesSearch([])
+        }
     const handleOptionFile1 = () => {
         classOptionFile1 === "hidden" ? setClassOptionFile1("block") : setClassOptionFile1("hidden")
     }
@@ -254,7 +273,7 @@ const CategoryCourse = (props) => {
                     <div className="rounded-t mb-0 px-4 py-3 border-0">
                         <div className="flex flex-wrap items-center">
                         <div className="relative w-full max-w-full flex-grow flex-1">
-                            <input type="text" placeholder="Tìm kiếm..." className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded"/>
+                            <input type="text" placeholder="Tìm kiếm..." onChange={(event) => searchHandle(event)} className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded"/>
                         </div>
                         <div className="relative w-full max-w-full flex-grow flex-1 text-right">
                             <button onClick={()=>handleOption()} className="bg-indigo-500 hover:bg-indigo-700 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
@@ -264,9 +283,9 @@ const CategoryCourse = (props) => {
                                 <div className="py-2 bg-white shadow-lg text-13">
                                     <Link className="block w-full py-1 text-left px-2 hover:bg-gray-200" to={`/admin/category_courses/add`} >Add</Link>
                                     <button onClick={handleOptionFile1}  className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
-                            <input onChange={(event)=>importFilefile(event)}  className={`w-full py-1 text-left px-2 hover:bg-gray-200 ${classOptionFile1}`} type="file" placeholder="Chọn file" ></input>
-                            <button onClick={()=>importUser()} className={`w-full py-1 text-left px-2 hover:bg-gray-200 ${classOptionFile1}`} >Submit</button>
-                            <button onClick={()=>ExportUser1()} className="w-full py-1 text-left px-2 hover:bg-gray-200">Export Excel</button>
+                                    <input onChange={(event)=>importFilefile(event)}  className={`w-full py-1 text-left px-2 hover:bg-gray-200 ${classOptionFile1}`} type="file" placeholder="Chọn file" ></input>
+                                    <button onClick={()=>importUser()} className={`w-full py-1 text-left px-2 hover:bg-gray-200 ${classOptionFile1}`} >Submit</button>
+                                    <button onClick={()=>ExportUser1()} className="w-full py-1 text-left px-2 hover:bg-gray-200">Export Excel</button>
                                 </div>
                             </div>
                         </div>
@@ -296,6 +315,44 @@ const CategoryCourse = (props) => {
                         <tbody >
 
                             {
+                                categoryCoursesSearch.length>0?
+                                categoryCoursesSearch.map((item,index)=>{
+                                    return(
+                                    <tr key={index} >
+                                        <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                                            {index+1}
+                                        </th>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            <Link to={`courses/${item.id}`}>{item.name}</Link>
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                            <label htmlFor={`toggle${item.id}`} className="toggle-label">
+                                                <input type="checkbox" name="" id={`toggle${item.id}`} 
+                                                    defaultChecked = {item.status === 'Active'?true:false}
+                                                    hidden onClick={()=>changeStatus(item.id)}/>
+                                                <div className="toggle-btn">
+                                                    <div className="spinner"></div>
+                                                </div>
+                                            </label>
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            {new Intl.DateTimeFormat('en-GB', {
+                                                    timeZone: 'Africa/Abidjan',
+                                                    dateStyle: 'short',
+                                                    timeStyle: 'medium'
+                                                }).format(new Date(item.updated_at))}
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                            <div className="space-x-2">
+                                                <Link to={`/admin/category_courses/${item.id}/edit`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-green-400 shadow-lg block md:inline-block">Edit</Link>
+                                                <button className="py-1 px-2 text-white rounded hover:opacity-80 bg-red-500 shadow-lg block md:inline-block" onClick={()=>deleteCategoryCourse(item.id)}>Delete</button>
+                                                <Link to={`courses/${item.id}`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-blue-400 shadow-lg block md:inline-block"><i className="fas fa-arrow-right"></i></Link>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    )
+                                })
+                                :
                                 categoryCourses.map((item,index)=>{
                                     return(
                                     <tr key={index} >

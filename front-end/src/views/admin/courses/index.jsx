@@ -296,9 +296,9 @@ const Courses = (props) => {
                     <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
                     <div className="rounded-t mb-0 px-4 py-3 border-0">
                         <div className="flex flex-wrap items-center">
-                        <div className="relative w-full max-w-full flex-grow flex-1">
+                        {/* <div className="relative w-full max-w-full flex-grow flex-1">
                             <input type="text" placeholder="Tìm kiếm..." className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded"/>
-                        </div>
+                        </div> */}
                         {/* <div className="w-full lg:w-6/12 px-4"> */}
                             <div className="relative w-full max-w-full flex-grow flex-1">
                                 <div className="block uppercase text-gray-600 text-xs font-bold mb-2 inline mr-2">

@@ -9,7 +9,10 @@ toast.configure();
 const BooksTable = (props) => {
     const $token=localStorage.getItem('access_token');
     const [booktypes, setBookTypes] = useState([]);
+    const [booktypesSearch, setBookTypesSearch] = useState([]);
     const [books, setBooks] = useState([]);
+    const [booksSearch, setBooksSearch] = useState([]);
+    const [filter, setFilter] = useState(false);
     const [render, setRender] = useState(false);
     const [classOption1, setClassOption1] = useState("hidden");
     const [classOption2, setClassOption2] = useState("hidden");
@@ -310,6 +313,60 @@ const BooksTable = (props) => {
             }
         });
     }
+    const searchHandle = (e) => {
+        let searchString = e.target.value.replace(/\s+/g, '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
+        let type = e.target.name 
+        if(searchString.length > 0){
+            if(type == "searchBookType"){
+                let responseData = booktypes.filter(l => {
+                    let name = l.name.replace(/\s+/g, '')
+                        .normalize('NFD')
+                        .replace(/[\u0300-\u036f]/g, '')
+                        .replace(/đ/g, 'd').replace(/Đ/g, 'D');
+                    let check = name.toLowerCase().indexOf(searchString.toLowerCase());
+                    if(check>-1){
+                        return l
+                    }
+                })
+                setBookTypesSearch(responseData)
+            }
+            else{
+                let responseData = books.filter(l => {
+                    let name = l.name.replace(/\s+/g, '')
+                        .normalize('NFD')
+                        .replace(/[\u0300-\u036f]/g, '')
+                        .replace(/đ/g, 'd').replace(/Đ/g, 'D');
+                    let check = name.toLowerCase().indexOf(searchString.toLowerCase());
+                    if(check>-1){
+                        return l
+                    }
+                })
+                setBooksSearch(responseData)
+                setFilter(false)
+            }
+            
+        }
+        else{
+            if(type == "searchBookType"){
+                setBookTypesSearch([])
+            }
+            else{
+                setBooksSearch([])
+            }
+        }
+    }
+    const onChangeView = (e) =>{
+        if(Number(e.target.value)){
+            let id_type = e.target.value;
+            let book = books.filter(item => item.type == id_type)
+            setBooksSearch(book);
+            setFilter(true)
+        }
+        else{
+            setBooksSearch([]);
+            setFilter(false)
+        }
+    }
     useEffect(() => {
         if($token){
             getBookTypes();
@@ -325,8 +382,9 @@ const BooksTable = (props) => {
                     <div className="rounded-t mb-0 px-4 py-3 border-0">
                         <div className="flex flex-wrap items-center">
                         <div className="relative w-full max-w-full flex-grow flex-1">
-                            <input type="text" placeholder="Tìm kiếm..." className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded"/>
+                            <input type="text" name="searchBookType"  onChange={(event) => searchHandle(event)} placeholder="Tìm kiếm..." className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded"/>
                         </div>
+                       
                         <div className="relative w-full max-w-full flex-grow flex-1 text-right">
                             <button onClick={()=>handleOption(1)} className="bg-indigo-500 hover:bg-indigo-700 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
                                 <i className="far fa-ellipsis-v"></i>
@@ -364,7 +422,8 @@ const BooksTable = (props) => {
                         <tbody>
 
                             {
-                                booktypes.map((item,index)=>{
+                                booktypesSearch.length>0?
+                                booktypesSearch.map((item,index)=>{
                                     return(
                                     <tr key={index}>
                                         <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
@@ -389,9 +448,32 @@ const BooksTable = (props) => {
                                     </tr>
                                     )
                                 })
-
+                                :booktypes.map((item,index)=>{
+                                    return(
+                                    <tr key={index}>
+                                        <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                                            {index+1}
+                                        </th>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            {item.name}
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            {new Intl.DateTimeFormat('en-GB', { 
+                                                    month: 'numeric', 
+                                                    day: '2-digit',
+                                                    year: 'numeric', 
+                                                }).format(new Date(item.updated_at))}
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                            <div className="space-x-2">
+                                                <Link to={`booktypes/edit/${item.id}`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-green-400 shadow-lg block md:inline-block">Edit</Link>
+                                                <button className="py-1 px-2 text-white rounded hover:opacity-80 bg-red-500 shadow-lg block md:inline-block" onClick={()=>deleteBookType(item.id)}>Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    )
+                                })
                             }
-                        
                         </tbody>
                         </table>
                     </div>
@@ -405,8 +487,18 @@ const BooksTable = (props) => {
                     <div className="rounded-t mb-0 px-4 py-3 border-0">
                         <div className="flex flex-wrap items-center">
                         <div className="relative w-full max-w-full flex-grow flex-1">
-                            <input type="text" placeholder="Tìm kiếm..." className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded"/>
+                            <input type="text" placeholder="Tìm kiếm..." name="searchBook"  onChange={(event) => searchHandle(event)} className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded"/>
                         </div>
+                        <div className="relative w-full max-w-full flex-grow flex-1">
+                               <div className="block uppercase text-gray-600 text-xs font-bold mb-2 inline mr-2">
+                                Loại
+                               </div>
+                               <select name="type" id="type" className="text-13 px-3 py-1 outline-none border border-purple-800 focus:border-purple-900 rounded" 
+                                onChange={(event) => onChangeView(event)}>
+                                    <option value={null}>Xem tất cả</option>
+                                    {booktypes.map((item,index)=> <option key={index} value={item.id}>{item.name}</option>)}
+                                </select>
+                           </div>
                         <div className="relative w-full max-w-full flex-grow flex-1 text-right">
                             <button onClick={()=>handleOption(2)} className="bg-indigo-500 hover:bg-indigo-700 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
                                 <i className="far fa-ellipsis-v"></i>
@@ -465,7 +557,67 @@ const BooksTable = (props) => {
                         <tbody>
 
                             {
-                                books.map((item,index)=>{
+                                booksSearch.length>0 || filter?
+                                booksSearch.map((item,index)=>{
+                                    return(
+                                    <tr key={index}>
+                                        <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                                            {index+1}
+                                        </th>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            {item.name}
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            {item.author}
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            {item.Initial_price}
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            {item.promotion_price}
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            {item.promotion}
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                            <img alt="" src={`http://localhost:8000/upload/images/book/${item.image}`} className="w-12 h-16 object-cover" />
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            {
+                                                booktypes.map((bt,i)=>{
+                                                    if(item.type == bt.id){
+                                                        return bt.name
+                                                    }
+                                                })
+                                           }
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
+                                            {new Intl.DateTimeFormat('en-GB', { 
+                                                        month: 'numeric', 
+                                                        day: '2-digit',
+                                                        year: 'numeric', 
+                                                    }).format(new Date(item.updated_at))}
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                            <label htmlFor={`toggle${item.id}`} className="toggle-label">
+                                                <input type="checkbox" name="" id={`toggle${item.id}`} 
+                                                    defaultChecked = {item.status === 'Active'?true:false}
+                                                    hidden onClick={()=>changeStatus(item.id)}/>
+                                                <div className="toggle-btn">
+                                                    <div className="spinner"></div>
+                                                </div>
+                                            </label>
+                                        </td>
+                                        <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                            <div className="space-x-2">
+                                                <Link to={`books/edit/${item.id}`} className="py-1 px-2 text-white rounded hover:opacity-80 bg-green-400 shadow-lg block md:inline-block">Edit</Link>
+                                                <button className="py-1 px-2 text-white rounded hover:opacity-80 bg-red-500 shadow-lg block md:inline-block" onClick={()=>deleteBook(item.id)}>Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    )
+                                })
+                                :books.map((item,index)=>{
                                     return(
                                     <tr key={index}>
                                         <th className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
