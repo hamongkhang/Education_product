@@ -38,6 +38,10 @@ class MailNotify extends Mailable
             return $this->from('web.vatly365@gmail.com')->view('mails.mailNotification')->subject('[VatLy365]_Thông báo đăng kí thành công');
 
         }
+        else if ($this->data['description'] == 'notiPayment'){
+            return $this->from('web.vatly365@gmail.com')->view('mails.mailNotification')->subject('[VatLy365]_Thông báo thanh toán thành công');
+
+        }
         else if ($this->data['description'] == 'notiChangePasswordSuccess'){
             return $this->from('web.vatly365@gmail.com')->view('mails.mailNotification')->subject('[VatLy365]_Thông báo cập nhật tài khoản');
 
