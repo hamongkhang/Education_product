@@ -245,6 +245,12 @@ class PaymentController extends Controller
         $history = History::create($dataHistory);
           }
          DB:: delete( 'delete from cart where id_payment = ?' ,[ $dataCheck[count($dataCheck)-1]->orderId ]);
+         $dataSendMail = [
+            'description'=>'notiPayment',
+            'title' => 'Bạn đã thanh toán thành công đơn hàng ',
+            'content'=>"Chúc mừng bạn đã thanh toán thành công tại VatLy365 của chúng tôi, truy cập trang web để có những bài học bổ ích."
+        ];
+         SendEmail::dispatch($dataSendMail, $dataUser->email)->delay(now());
          return response()->json(['response' =>  $jsonResult['message']]);
          }
          else{
