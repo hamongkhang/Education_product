@@ -241,6 +241,20 @@ Route::post('/exam/updateQuestionAdmin', [App\Http\Controllers\ExamController::c
 Route::post('/exam/deleteQuestionAnswer', [App\Http\Controllers\ExamController::class, 'deleteQuestionAnswer'])->name('exam.deleteQuestionAnswer');
 Route::post('/exam/addQuestionAnswer', [App\Http\Controllers\ExamController::class, 'addQuestionAnswer'])->name('exam.addQuestionAnswer');
 Route::post('/exam/addQuestionAnswerFileQuestion', [App\Http\Controllers\ExamController::class, 'addQuestionAnswerFileQuestion'])->name('exam.addQuestionAnswerFileQuestion');
+//import_export file//
+Route::post('/users/importUser',[App\Http\Controllers\UsersController::class,'importUser'])->name('users.importUser');
+Route::get('/users/exportUserLink',[App\Http\Controllers\UsersController::class,'exportUserLink'])->name('users.exportUserLink');
+Route::get('/teacher/exportTeacherLink',[App\Http\Controllers\TeacherController::class,'exportTeacherLink'])->name('users.exportTeacherLink');
+Route::get('/exam/exportExamLink',[App\Http\Controllers\ExamController::class,'exportExamLink'])->name('exam.exportExamLink');
+Route::get('/exam/exportExamCategoryLink',[App\Http\Controllers\ExamController::class,'exportExamCategoryLink'])->name('exam.exportExamCategoryLink');
+Route::get('/order/exportOrderLink',[App\Http\Controllers\PaymentController::class,'exportOrderLink'])->name('exam.exportOrderLink');
+Route::get('/book/exportBookLink',[App\Http\Controllers\BookController::class,'exportBookLink'])->name('book.exportBookLink');
+Route::get('/book/exportBookTypeLink',[App\Http\Controllers\BookController::class,'exportBookTypeLink'])->name('book.exportBookTypeLink');
+Route::get('/document/exportDocumentCategoryLink',[App\Http\Controllers\FreeDocumentController::class,'exportDocumentCategoryLink'])->name('document.exportDocumentCategoryLink');
+Route::get('/document/exportDocumentLink',[App\Http\Controllers\FreeDocumentController::class,'exportDocumentLink'])->name('document.exportDocumentLink');
+Route::get('/post/exportPostLink',[App\Http\Controllers\FeaturedPostController::class,'exportPostLink'])->name('post.exportPostLink');
+Route::get('/it/exportItLink',[App\Http\Controllers\ITinTeachController::class,'exportItLink'])->name('it.exportItLink');
+
 
 
 

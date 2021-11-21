@@ -9,13 +9,29 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportBook;
+use App\Exports\ExportBookType;
+
 
 class BookController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api',['except' => ['getBookTypeSearch','getAllBooks','getOneBook','addBook','updateBook','deleteBook','changeStatus']]);
+        $this->middleware('auth:api',['except' => ['exportBookLink','exportBook','exportBookTypeLink','exportBookType','getBookTypeSearch','getAllBooks','getOneBook','addBook','updateBook','deleteBook','changeStatus']]);
     }
 
+    public function exportBookLink(){
+        return response()->json(['url' => "http://localhost:8000/book/exportBook"]);
+    }
+    public function exportBook(){
+        return Excel::download(new ExportBook, 'book.xlsx');
+    }
+    public function exportBookTypeLink(){
+        return response()->json(['url' => "http://localhost:8000/book/exportBookType"]);
+    }
+    public function exportBookType(){
+        return Excel::download(new ExportBookType, 'book_type.xlsx');
+    }
     public function getAllBooks(Request $request){
         $login = auth()->user();
         if($login && $login->is_admin == true){

@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Mockery\Undefined;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ImportUser;
+use App\Exports\ExportUser;
 
 
 class UsersController extends Controller
@@ -26,9 +29,21 @@ class UsersController extends Controller
      *
      * @return void
      */
+
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['getAdmin','onLogin','loginAdmin', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
+        $this->middleware('auth:api', ['except' => ['importUser','exportUser','getAdmin','onLogin','loginAdmin', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
+    public function importUser(Request $request){
+        return Response()->json(array("success"=> 1,"data"=>$request->file ));
+    }
+
+    public function exportUserLink(){
+        return response()->json(['url' => "http://localhost:8000/users/exportUser"]);
+    }
+    public function exportUser(){
+        return Excel::download(new ExportUser, 'users.xlsx');
+    }
+
      /**
      * @SWG\POST(
      *     path="api/users/login/",

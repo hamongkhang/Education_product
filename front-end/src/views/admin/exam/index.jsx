@@ -29,7 +29,125 @@ const ExamTable = (props) => {
             setExamAdmin(data.data[1])
         });
     }
-
+    const [filefile,setFilefile] = useState(null);
+    const [classOptionFile1, setClassOptionFile1] = useState("hidden");
+    const [classOptionFile2, setClassOptionFile2] = useState("hidden");
+    const handleOptionFile1 = () => {
+        classOptionFile1 === "hidden" ? setClassOptionFile1("block") : setClassOptionFile1("hidden")
+    }
+    const handleOptionFile2 = () => {
+        classOptionFile2 === "hidden" ? setClassOptionFile2("block") : setClassOptionFile2("hidden")
+    }
+    const importFilefile=(event)=>{
+        setFilefile(event.target.files[0]);
+    }
+    const importExamCategory = (id) =>{
+        const _formData = new FormData();
+        _formData.append("file",filefile)
+        fetch("http://localhost:8000/api/users/importUser", {
+            method: "POST",
+            body:_formData,
+            headers: {"Authorization": `Bearer `+$token}
+          })
+        .then(response => response.json())
+        .then(data =>  {
+            if(data.error){
+                toast.error('Import File không thành công', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                });
+            }
+            else{
+                setRender(!render)
+                toast.success('Import File thành công', {
+                 position: "bottom-right",
+                 autoClose: 3000,
+                 hideProgressBar: false,
+                 closeOnClick: true,
+                 pauseOnHover: true,
+                 draggable: true,
+                 progress: undefined,
+                 theme: "colored"
+             });
+            }
+        });
+    }
+    const   ExportExamCategory = () =>{
+        fetch("http://localhost:8000/api/exam/exportExamCategoryLink", {
+            method: "GET",
+            headers: {"Authorization": `Bearer `+$token}
+          })
+        .then(response => response.json())
+        .then(data =>  {
+            if(data.error){
+                toast.error('Thay đổi trạng thái lỗi', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                });
+   
+            }
+            else{
+                setRender(!render)
+                toast.success('Xuất file pdf thành công!', {
+                 position: "bottom-right",
+                 autoClose: 3000,
+                 hideProgressBar: false,
+                 closeOnClick: true,
+                 pauseOnHover: true,
+                 draggable: true,
+                 progress: undefined,
+                 theme: "colored"
+             });
+             window.location.href = data.url;            }
+        });
+    }
+    const   ExportExam = () =>{
+        fetch("http://localhost:8000/api/exam/exportExamLink", {
+            method: "GET",
+            headers: {"Authorization": `Bearer `+$token}
+          })
+        .then(response => response.json())
+        .then(data =>  {
+            if(data.error){
+                toast.error('Thay đổi trạng thái lỗi', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                });
+   
+            }
+            else{
+                setRender(!render)
+                toast.success('Xuất file pdf thành công!', {
+                 position: "bottom-right",
+                 autoClose: 3000,
+                 hideProgressBar: false,
+                 closeOnClick: true,
+                 pauseOnHover: true,
+                 draggable: true,
+                 progress: undefined,
+                 theme: "colored"
+             });
+             window.location.href = data.url;            }
+        });
+    }
      const changeCategoryStatus = (id) =>{
         const _formData = new FormData();
         _formData.append("id",id)
@@ -233,8 +351,10 @@ const ExamTable = (props) => {
                             <div className={`absolute top-full right-0 ${classOptionCategory}`}>
                                 <div className="py-2 bg-white shadow-lg text-13">
                                     <Link className="block w-full py-1 text-left px-2 hover:bg-gray-200" to={`exam/addCategory`} >Add</Link>
-                                    <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
-                                    <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Export Excel</button>
+                                    <button onClick={handleOptionFile1}  className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
+                            <input onChange={(event)=>importFilefile(event)}  className={`w-full py-1 text-left px-2 hover:bg-gray-200 ${classOptionFile1}`} type="file" placeholder="Chọn file" ></input>
+                            <button onClick={()=>importExamCategory()} className={`w-full py-1 text-left px-2 hover:bg-gray-200 ${classOptionFile1}`} >Submit</button>
+                            <button onClick={()=>ExportExamCategory()} className="w-full py-1 text-left px-2 hover:bg-gray-200">Export Excel</button>
                                 </div>
                             </div>
                         </div>
@@ -322,8 +442,10 @@ const ExamTable = (props) => {
                             <div className={`absolute top-full right-0 ${classOptionExam}`}>
                                 <div className="py-2 bg-white shadow-lg text-13">
                                     <Link className="block w-full py-1 text-left px-2 hover:bg-gray-200" to={`exam/addExam`} >Add</Link>
-                                    <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
-                                    <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Export Excel</button>
+                                    <button onClick={handleOptionFile2}  className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
+                            <input onChange={(event)=>importFilefile(event)}  className={`w-full py-1 text-left px-2 hover:bg-gray-200 ${classOptionFile2}`} type="file" placeholder="Chọn file" ></input>
+                            <button onClick={()=>importExamCategory()} className={`w-full py-1 text-left px-2 hover:bg-gray-200 ${classOptionFile2}`} >Submit</button>
+                            <button onClick={()=>ExportExam()} className="w-full py-1 text-left px-2 hover:bg-gray-200">Export Excel</button>
                                 </div>
                             </div>
                         </div>

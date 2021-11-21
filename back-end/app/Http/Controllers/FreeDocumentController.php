@@ -18,12 +18,27 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportDocument;
+use App\Exports\ExportDocumentCategory;
 class FreeDocumentController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['getFreeDocumentAdmin','getFreeDocumentAlpha2','getFreeDocumentAlpha','onLogin','getFreeDocument','getTeacher', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
+        $this->middleware('auth:api', ['except' => ['exportDocumentCategory','exportDocumentCategoryLink','exportDocument','exportDocumentLink','getFreeDocumentAdmin','getFreeDocumentAlpha2','getFreeDocumentAlpha','onLogin','getFreeDocument','getTeacher', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
     
+    public function exportDocumentLink(){
+        return response()->json(['url' => "http://localhost:8000/document/exportDocument"]);
+    }
+    public function exportDocument(){
+        return Excel::download(new ExportDocument, 'document.xlsx');
+    }
+    public function exportDocumentCategoryLink(){
+        return response()->json(['url' => "http://localhost:8000/document/exportDocumentCategory"]);
+    }
+    public function exportDocumentCategory(){
+        return Excel::download(new ExportDocumentCategory, 'document_category.xlsx');
+    }
     /**
      * @SWG\GET(
      *     path="api/freeDocument/getFreeDocument/",

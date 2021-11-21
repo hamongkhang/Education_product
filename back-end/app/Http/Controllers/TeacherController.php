@@ -18,10 +18,13 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ImportUser;
+use App\Exports\ExportTeacher;
 class TeacherController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['onLogin','getTeacher', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
+        $this->middleware('auth:api', ['except' => ['exportTeacherLink','exportTeacher','onLogin','getTeacher', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
     
     /**
@@ -56,7 +59,12 @@ class TeacherController extends Controller
         $teacherFind = DB::table('teacher')->get();
         return Response()->json(array("Successfully"=> 1,"data"=>$teacherFind ));
     }
-
+    public function exportTeacherLink(){
+        return response()->json(['url' => "http://localhost:8000/teacher/exportTeacher"]);
+    }
+    public function exportTeacher(){
+        return Excel::download(new ExportTeacher, 'teacher.xlsx');
+    }
 /**
      * @SWG\POST(
      *     path="api/teacher/createTeacher/",
