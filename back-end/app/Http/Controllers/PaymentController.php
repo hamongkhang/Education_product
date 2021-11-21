@@ -55,6 +55,55 @@ class PaymentController extends Controller
             'data'=>$books
         ], 200);  
     }
+    public function getMoney(Request $request){
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $books = momoOrderDetail::all();
+        }
+        else{
+            $books = momoOrderDetail::where('status','Active')->get();
+        }
+        $count=0;
+        for($i=0;$i<count($books);$i++){
+            if($books[$i]->status=="successfully"){
+                $count=$count+$books[$i]->amount;
+            }
+        }
+        return response()->json([
+            'data'=>$count
+        ], 200);  
+    }
+    public function getCount(Request $request){
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $books = momoOrderDetail::all();
+        }
+        else{
+            $books = momoOrderDetail::where('status','Active')->get();
+        }
+        $count1=0;
+        $count2=0;
+        $count3=0;
+        $count4=0;
+        for($i=0;$i<count($books);$i++){
+            if($books[$i]->created_at->isToday()){
+                $count1=$count1+$books[$i]->amount;
+            }
+            if($books[$i]->created_at->isYesterday()){
+                $count2=$count2+$books[$i]->amount;
+            }
+            if($books[$i]->created_at->year==Carbon::now()->year){
+                $count3=$count3+$books[$i]->amount;
+            }
+           if($books[$i]->created_at->month==Carbon::now()->month){
+               $count4=$count4+$books[$i]->amount;
+           }
+        }
+        $count=[$count1,$count2,$count3,$count4];
+        return response()->json([
+            'data'=>$count
+        ], 200);  
+    }
     public function destroyOrder(Request $request){
         $login = auth()->user();
         if($login->is_admin == true){
