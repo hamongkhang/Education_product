@@ -23,11 +23,16 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Mockery\Undefined;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ImportExamCategory;
+use App\Exports\ExportExamCategory;
+use App\Imports\ImportExam;
+use App\Exports\ExportExam;
 
 class ExamController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['getExam','getFreeDocumentAlpha','onLogin','getFreeDocument','getTeacher', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
+        $this->middleware('auth:api', ['except' => ['exportExamCategoryLink','exportExamCategory','exportExamLink','exportExam','getExam','getFreeDocumentAlpha','onLogin','getFreeDocument','getTeacher', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
     
     /**
@@ -53,6 +58,18 @@ class ExamController extends Controller
      *     ),
      * )
      */
+    public function exportExamCategoryLink(){
+        return response()->json(['url' => "http://localhost:8000/exam/exportExamCategory"]);
+    }
+    public function exportExamCategory(){
+        return Excel::download(new ExportExamCategory, 'exam_category.xlsx');
+    }
+    public function exportExamLink(){
+        return response()->json(['url' => "http://localhost:8000/exam/exportExam"]);
+    }
+    public function exportExam(){
+        return Excel::download(new ExportExam, 'exam.xlsx');
+    }
     public function getExamAdmin()
     {
             $login = auth()->user();

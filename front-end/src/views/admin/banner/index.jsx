@@ -136,9 +136,7 @@ const BannerTable = (props) => {
                     </button>
                     <div className={`absolute top-full right-0 ${classOption}`}>
                         <div className="py-2 bg-white shadow-lg text-13">
-                            <Link className="block w-full py-1 text-left px-2 hover:bg-gray-200" to={`banner/add`} >Add</Link>
-                            <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
-                            <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Export Excel</button>
+                            <Link className="block w-full py-1 text-left px-2 hover:bg-gray-200" to={`banner/add`} >Add New</Link>
                         </div>
                     </div>
                 </div>
