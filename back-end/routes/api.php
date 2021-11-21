@@ -254,6 +254,8 @@ Route::get('/document/exportDocumentCategoryLink',[App\Http\Controllers\FreeDocu
 Route::get('/document/exportDocumentLink',[App\Http\Controllers\FreeDocumentController::class,'exportDocumentLink'])->name('document.exportDocumentLink');
 Route::get('/post/exportPostLink',[App\Http\Controllers\FeaturedPostController::class,'exportPostLink'])->name('post.exportPostLink');
 Route::get('/it/exportItLink',[App\Http\Controllers\ITinTeachController::class,'exportItLink'])->name('it.exportItLink');
+Route::get('/course/exportCourseCategoryLink',[App\Http\Controllers\CourseController::class,'exportCourseCategoryLink'])->name('course.exportCourseCategoryLink');
+Route::get('/course/exportCourseLink',[App\Http\Controllers\CourseController::class,'exportCourseLink'])->name('course.exportCourseLink');
 
 
 

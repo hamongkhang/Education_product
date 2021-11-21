@@ -27,6 +27,8 @@ Route::get('/document/exportDocument',[App\Http\Controllers\FreeDocumentControll
 Route::get('/document/exportDocumentCategory',[App\Http\Controllers\FreeDocumentController::class,'exportDocumentCategory'])->name('document.exportDocumentCategory');
 Route::get('/post/exportPost',[App\Http\Controllers\FeaturedPostController::class,'exportPost'])->name('post.exportPost');
 Route::get('/it/exportIt',[App\Http\Controllers\ITinTeachController::class,'exportIt'])->name('it.exportIt');
+Route::get('/course/exportCourse',[App\Http\Controllers\CourseController::class,'exportCourse'])->name('course.exportCourse');
+Route::get('/course/exportCourseCategory',[App\Http\Controllers\CourseController::class,'exportCourseCategory'])->name('course.exportCourseCategory');
 
 
 

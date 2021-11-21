@@ -17,6 +17,126 @@ const Courses = (props) => {
     const [classOption, setClassOption] = useState("hidden");
     const history = useHistory();
     const param = useParams();
+    const [filefile,setFilefile] = useState(null);
+    const [classOptionFile1, setClassOptionFile1] = useState("hidden");
+    const [classOptionFile2, setClassOptionFile2] = useState("hidden");
+
+    const handleOptionFile1 = () => {
+        classOptionFile1 === "hidden" ? setClassOptionFile1("block") : setClassOptionFile1("hidden")
+    }
+    const handleOptionFile2 = () => {
+        classOptionFile2 === "hidden" ? setClassOptionFile2("block") : setClassOptionFile2("hidden")
+    }
+    const importFilefile=(event)=>{
+        setFilefile(event.target.files[0]);
+    }
+    const importUser = (id) =>{
+        const _formData = new FormData();
+        _formData.append("file",filefile)
+        fetch("http://localhost:8000/api/users/importUser", {
+            method: "POST",
+            body:_formData,
+            headers: {"Authorization": `Bearer `+$token}
+          })
+        .then(response => response.json())
+        .then(data =>  {
+            if(data.error){
+                toast.error('Import File không thành công', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                });
+            }
+            else{
+                setRender(!render)
+                toast.success('Import File thành công', {
+                 position: "bottom-right",
+                 autoClose: 3000,
+                 hideProgressBar: false,
+                 closeOnClick: true,
+                 pauseOnHover: true,
+                 draggable: true,
+                 progress: undefined,
+                 theme: "colored"
+             });
+            }
+        });
+    }
+    const   ExportUser1 = () =>{
+        fetch("http://localhost:8000/api/course/exportCourseLink", {
+            method: "GET",
+            headers: {"Authorization": `Bearer `+$token}
+          })
+        .then(response => response.json())
+        .then(data =>  {
+            if(data.error){
+                toast.error('Thay đổi trạng thái lỗi', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                });
+   
+            }
+            else{
+                setRender(!render)
+                toast.success('Xuất file pdf thành công!', {
+                 position: "bottom-right",
+                 autoClose: 3000,
+                 hideProgressBar: false,
+                 closeOnClick: true,
+                 pauseOnHover: true,
+                 draggable: true,
+                 progress: undefined,
+                 theme: "colored"
+             });
+             window.location.href = data.url;            }
+        });
+    }
+    const   ExportUser2 = () =>{
+        fetch("http://localhost:8000/api/document/exportDocumentLink", {
+            method: "GET",
+            headers: {"Authorization": `Bearer `+$token}
+          })
+        .then(response => response.json())
+        .then(data =>  {
+            if(data.error){
+                toast.error('Thay đổi trạng thái lỗi', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                });
+   
+            }
+            else{
+                setRender(!render)
+                toast.success('Xuất file pdf thành công!', {
+                 position: "bottom-right",
+                 autoClose: 3000,
+                 hideProgressBar: false,
+                 closeOnClick: true,
+                 pauseOnHover: true,
+                 draggable: true,
+                 progress: undefined,
+                 theme: "colored"
+             });
+             window.location.href = data.url;            }
+        });
+    }
     const handleOption = () => {
         classOption === "hidden" ? setClassOption("block") : setClassOption("hidden")        
     }
@@ -199,8 +319,10 @@ const Courses = (props) => {
                                 <div className="py-2 bg-white shadow-lg text-13">
                                     <Link className="block w-full py-1 text-left px-2 hover:bg-gray-200" to={`/admin/courses_add`} >Add</Link>
                                     <button className="w-full py-1 text-left px-2 hover:bg-gray-200" onClick={()=>viewAll(null)}>View All</button>
-                                    <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
-                                    <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Export Excel</button>
+                                    <button onClick={handleOptionFile1}  className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
+                            <input onChange={(event)=>importFilefile(event)}  className={`w-full py-1 text-left px-2 hover:bg-gray-200 ${classOptionFile1}`} type="file" placeholder="Chọn file" ></input>
+                            <button onClick={()=>importUser()} className={`w-full py-1 text-left px-2 hover:bg-gray-200 ${classOptionFile1}`} >Submit</button>
+                            <button onClick={()=>ExportUser1()} className="w-full py-1 text-left px-2 hover:bg-gray-200">Export Excel</button>
                                     <button className="w-full py-1 text-left px-2 hover:bg-gray-200" onClick={()=>history.goBack()}>Back</button>
                                 </div>
                             </div>
