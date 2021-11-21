@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportPost;
 class FeaturedPostController extends Controller
 {
      /**
@@ -24,9 +26,14 @@ class FeaturedPostController extends Controller
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['getNews','getFeaturedPost','onLogin','getITinTeach', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
+        $this->middleware('auth:api', ['except' => ['exportPostLink','exportPost','getNews','getFeaturedPost','onLogin','getITinTeach', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
-
+    public function exportPostLink(){
+        return response()->json(['url' => "http://localhost:8000/post/exportPost"]);
+    }
+    public function exportPost(){
+        return Excel::download(new ExportPost, 'featured_post.xlsx');
+    }
       /**
      * @SWG\GET(
      *     path="api/featuredPost/getFeaturedPost",

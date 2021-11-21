@@ -14,14 +14,28 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportCourse;
+use App\Exports\ExportCourseCategory;
 
 class CourseController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api',['except' => ['getCountSearch','getCourseSearch','getCountLesson','getCourseHome','getAllCourses','getOneCourse','addNewCourse','updateCourse','deleteCourse','changeStatusCourse']]);
+        $this->middleware('auth:api',['except' => ['exportCourseCategory','exportCourseCategoryLink','exportCourse','exportCourseLink','getCountSearch','getCourseSearch','getCountLesson','getCourseHome','getAllCourses','getOneCourse','addNewCourse','updateCourse','deleteCourse','changeStatusCourse']]);
     }
 
-
+    public function exportCourseLink(){
+        return response()->json(['url' => "http://localhost:8000/course/exportCourse"]);
+    }
+    public function exportCourse(){
+        return Excel::download(new ExportCourse, 'course.xlsx');
+    }
+    public function exportCourseCategoryLink(){
+        return response()->json(['url' => "http://localhost:8000/course/exportCourseCategory"]);
+    }
+    public function exportCourseCategory(){
+        return Excel::download(new ExportCourseCategory, 'course_category.xlsx');
+    }
     public function getCountSearch(Request $request){
         $userFind = auth()->user();
         $lesson=[];

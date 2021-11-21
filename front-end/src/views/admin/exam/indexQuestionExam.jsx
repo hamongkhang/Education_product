@@ -257,11 +257,9 @@ const IndexQuestionExam = () => {
                             </button>
                             <div className={`absolute top-full right-0 ${classOption}`}>
                                 <div className="py-2 bg-white shadow-lg text-13">
-                                    <button className="block w-full py-1 text-left px-2 hover:bg-gray-200" onClick={handleOptionInput} >Add</button>
+                                    <button className="block w-full py-1 text-left px-2 hover:bg-gray-200" onClick={handleOptionInput} >Add New</button>
                                     <input name="num" onChange={(event)=>onChangeSubmit(event)} type="number" className={`border-0 px-3 py-3 placeholder-gray-300 text-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 ${classOptionInput}`}></input>
                                     <Link className={`block w-full py-1 text-left px-2 hover:bg-gray-200  ${classOptionInput}`} to={`/admin/exam/${match.params.id}/addQuestionAnswer/${number.num}`} >Submit</Link>
-                                    <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
-                                    <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Export Excel</button>
                                 </div>
                             </div>
                         </div>

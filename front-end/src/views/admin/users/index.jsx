@@ -7,10 +7,15 @@ const UserTable = (props) => {
     const $token=localStorage.getItem('access_token');
     const [users,setUsers ] = useState([]);
     const [usersSearch,setUsersSearch ] = useState([]);
+    const [file,setFile] = useState(null);
     const [render, setRender] = useState(false);
     const [classOption, setClassOption] = useState("hidden");
+    const [classOptionFile, setClassOptionFile] = useState("hidden");
     const handleOption = () => {
         classOption === "hidden" ? setClassOption("block") : setClassOption("hidden")
+    }
+    const handleOptionFile = () => {
+        classOptionFile === "hidden" ? setClassOptionFile("block") : setClassOptionFile("hidden")
     }
     const getUsers=()=>{
         fetch("http://localhost:8000/api/users/getAllUser", {
@@ -23,6 +28,46 @@ const UserTable = (props) => {
         });
         return () => {
         }
+    }
+    const importFile=(event)=>{
+        setFile(event.target.files[0]);
+    }
+    const importUser = (id) =>{
+        const _formData = new FormData();
+        _formData.append("file",file)
+        fetch("http://localhost:8000/api/users/importUser", {
+            method: "POST",
+            body:_formData,
+            headers: {"Authorization": `Bearer `+$token}
+          })
+        .then(response => response.json())
+        .then(data =>  {
+            if(data.error){
+                toast.error('Import File không thành công', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                });
+            }
+            else{
+                setRender(!render)
+                toast.success('Import File thành công', {
+                 position: "bottom-right",
+                 autoClose: 3000,
+                 hideProgressBar: false,
+                 closeOnClick: true,
+                 pauseOnHover: true,
+                 draggable: true,
+                 progress: undefined,
+                 theme: "colored"
+             });
+            }
+        });
     }
     const onDecentralise = (id) =>{
         const _formData = new FormData();
@@ -100,6 +145,7 @@ const UserTable = (props) => {
             }
         });
     }
+
     const searchHandle = (e) => {
         let searchString = e.target.value.replace(/\s+/g, '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
         if(searchString.length > 0){
@@ -119,6 +165,40 @@ const UserTable = (props) => {
         else{
             setUsersSearch([])
         }
+    const   ExportUser = () =>{
+        fetch("http://localhost:8000/api/users/exportUserLink", {
+            method: "GET",
+            headers: {"Authorization": `Bearer `+$token}
+          })
+        .then(response => response.json())
+        .then(data =>  {
+            if(data.error){
+                toast.error('Thay đổi trạng thái lỗi', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                });
+   
+            }
+            else{
+                setRender(!render)
+                toast.success('Xuất file pdf thành công!', {
+                 position: "bottom-right",
+                 autoClose: 3000,
+                 hideProgressBar: false,
+                 closeOnClick: true,
+                 pauseOnHover: true,
+                 draggable: true,
+                 progress: undefined,
+                 theme: "colored"
+             });
+             window.location.href = data.url;            }
+        });
     }
     useEffect(() => {
         if($token){
@@ -140,8 +220,10 @@ const UserTable = (props) => {
                     </button>
                     <div className={`absolute top-full right-0 ${classOption}`}>
                         <div className="py-2 bg-white shadow-lg text-13">
-                            <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
-                            <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Export Excel</button>
+                            <button onClick={handleOptionFile}  className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
+                            <input onChange={(event)=>importFile(event)}  className={`w-full py-1 text-left px-2 hover:bg-gray-200 ${classOptionFile}`} type="file" placeholder="Chọn file" ></input>
+                            <button onClick={()=>importUser()} className={`w-full py-1 text-left px-2 hover:bg-gray-200 ${classOptionFile}`} >Submit</button>
+                            <button onClick={()=>ExportUser()} className="w-full py-1 text-left px-2 hover:bg-gray-200">Export Excel</button>
                         </div>
                     </div>
                 </div>

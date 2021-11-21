@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportIt;
 class ITinTeachController extends Controller
 {
      /**
@@ -24,9 +26,14 @@ class ITinTeachController extends Controller
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['onLogin','getITinTeach', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
+        $this->middleware('auth:api', ['except' => ['exportIt','exportItLink','onLogin','getITinTeach', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
-    
+    public function exportItLink(){
+        return response()->json(['url' => "http://localhost:8000/it/exportIt"]);
+    }
+    public function exportIt(){
+        return Excel::download(new ExportIt, 'IT_in_Teaching.xlsx');
+    }
       /**
      * @SWG\GET(
      *     path="api/ITinTeach/getITinTeach",

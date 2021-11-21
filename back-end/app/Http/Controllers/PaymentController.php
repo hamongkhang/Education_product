@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportOrder;
 class PaymentController extends Controller
 {
      /**
@@ -25,9 +27,22 @@ class PaymentController extends Controller
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['onLogin', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
+        $this->middleware('auth:api', ['except' => ['exportOrder','exportOrderLink','onLogin', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
-    
+    public function exportOrderLink(){
+        return response()->json(['url' => "http://localhost:8000/order/exportOrder"]);
+    }
+    public function exportOrder(){
+        return Excel::download(new ExportOrder, 'order.xlsx');
+    }
+    public function getExamAdmin()
+    {
+            $login = auth()->user();
+            $examCategoryFind=DB::table('exam_category')->get();
+            $examFind = DB::table('exam')->get();
+            $respon=[$examCategoryFind,$examFind];
+            return Response()->json(array("Successfully"=> 1,"data"=>$respon ));
+    }
     public function getOrder(Request $request){
         $login = auth()->user();
         if($login && $login->is_admin == true){
@@ -230,6 +245,12 @@ class PaymentController extends Controller
         $history = History::create($dataHistory);
           }
          DB:: delete( 'delete from cart where id_payment = ?' ,[ $dataCheck[count($dataCheck)-1]->orderId ]);
+         $dataSendMail = [
+            'description'=>'notiPayment',
+            'title' => 'Bạn đã thanh toán thành công đơn hàng ',
+            'content'=>"Chúc mừng bạn đã thanh toán thành công tại VatLy365 của chúng tôi, truy cập trang web để có những bài học bổ ích."
+        ];
+         SendEmail::dispatch($dataSendMail, $dataUser->email)->delay(now());
          return response()->json(['response' =>  $jsonResult['message']]);
          }
          else{

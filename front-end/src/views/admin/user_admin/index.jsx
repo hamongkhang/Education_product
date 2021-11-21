@@ -101,8 +101,6 @@ const AdminTable = (props) => {
                     </button>
                     <div className={`absolute top-full right-0 ${classOption}`}>
                         <div className="py-2 bg-white shadow-lg text-13">
-                            <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Import Excel</button>
-                            <button className="w-full py-1 text-left px-2 hover:bg-gray-200">Export Excel</button>
                         </div>
                     </div>
                 </div>
