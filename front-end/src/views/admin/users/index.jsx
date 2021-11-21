@@ -165,6 +165,7 @@ const UserTable = (props) => {
         else{
             setUsersSearch([])
         }
+    }
     const   ExportUser = () =>{
         fetch("http://localhost:8000/api/users/exportUserLink", {
             method: "GET",

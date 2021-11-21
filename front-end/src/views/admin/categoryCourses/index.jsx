@@ -143,6 +143,7 @@ const CategoryCourse = (props) => {
         else{
             setCategoryCoursesSearch([])
         }
+    }
     const handleOptionFile1 = () => {
         classOptionFile1 === "hidden" ? setClassOptionFile1("block") : setClassOptionFile1("hidden")
     }

@@ -136,6 +136,7 @@ const ITinTeach = (props) => {
         else{
             setITinTeachSearch([])
         }
+    }
     const handleOptionFile1 = () => {
         classOptionFile1 === "hidden" ? setClassOptionFile1("block") : setClassOptionFile1("hidden")
     }
