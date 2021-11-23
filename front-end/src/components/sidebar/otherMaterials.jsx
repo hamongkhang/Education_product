@@ -1,7 +1,17 @@
-import React from 'react';
-import MaterialItem from './materiaItem';
+import React, { useState, useEffect } from "react";
+import MaterialItem from './materiaItem'
 
 const OtherMaterials = (props) => {
+    const [otherDocument, setOtherDocument] = useState([]);
+useEffect(() => {
+  fetch("http://localhost:8000/api/freeDocument/getFreeDocumentAlpha2", {
+      method: "GET"
+    })
+  .then(response => response.json())
+  .then(data =>  setOtherDocument(data.data));
+  return () => {
+}
+}, []);
     return (
         <div className="materials shadow-lg rounded-md py-4 px-2 mt-5 bg-white">
             <div className="flex items-center px-4 space-x-2">
@@ -11,7 +21,13 @@ const OtherMaterials = (props) => {
                 </h3>
             </div>
             <div className="text-sm font-medium h-28 overflow-y-scroll overflow-hidden custom-scroll-1 mt-2">
-                <MaterialItem />
+            {
+                otherDocument.map((item,i) => {
+                      return(
+                          <MaterialItem data={item}/>
+                      );
+                    }
+                    )}
             </div>
         </div>
     );

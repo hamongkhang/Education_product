@@ -2564,11 +2564,7 @@
                 ]
             }
         },
-<<<<<<< HEAD
         "api/users/changePassword/": {
-=======
-        "api/users/login/": {
->>>>>>> FE
             "post": {
                 "description": "Return a user's information",
                 "parameters": [

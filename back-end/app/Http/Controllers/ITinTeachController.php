@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportIt;
 class ITinTeachController extends Controller
 {
      /**
@@ -24,9 +26,14 @@ class ITinTeachController extends Controller
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['onLogin','getITinTeach', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
+        $this->middleware('auth:api', ['except' => ['exportIt','exportItLink','onLogin','getITinTeach', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
-    
+    public function exportItLink(){
+        return response()->json(['url' => "http://localhost:8000/it/exportIt"]);
+    }
+    public function exportIt(){
+        return Excel::download(new ExportIt, 'IT_in_Teaching.xlsx');
+    }
       /**
      * @SWG\GET(
      *     path="api/ITinTeach/getITinTeach",
@@ -131,20 +138,29 @@ class ITinTeachController extends Controller
      * )
      */
     public function createITinTeach(Request $request){
-        $adminFind = auth()->user();
-        if (($adminFind->email==="web.vatly365@gmail.com")){
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
-            'file'=>'required',
             'author' => 'required|max:255',
-            'image'=>'required|max:2048',
+            'image'=>'required',
             'description'=>'required',
+            'status'=>'required'
+        ],[
+            'name.max' => 'Tên bài viết không quá 255 kí tự',
+            'name.required' => 'Tên không được bỏ trống',
+            'author.max' => 'Tên tác giả không quá 255 kí tự',
+            'author.required' => 'Tên tác giả không được bỏ trống',
+            'image.required' => 'Hãy chọn hình ảnh',
+            'description.required' => 'Mô tả không được bỏ trống',
         ]);
         if ($validator->fails()) {
-            return response()->json(['error'=>$validator->errors()], 401);     
+            return response()->json(['error'=>$validator->errors()], 400);      
         }
-        if (($request->hasFile('file'))&&($request->hasFile('image')))
+        if (($request->hasFile('file')))
         {
+            if (($request->hasFile('image')))
+            {
               $file      = $request->file('file');      
               $path      = 'upload\images\IT_in_teach';
               $filename  = $file->getClientOriginalName();
@@ -165,7 +181,7 @@ class ITinTeachController extends Controller
                     'path'=>$path,
                     'description'=>$request->description,
                     'image'=>$picture2,
-                    'status'=>"Active",
+                    'status'=>$request->status,
                     'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
                     'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh')
                 ];
@@ -176,7 +192,30 @@ class ITinTeachController extends Controller
         {
               return response()->json(["message" => "Upload Failed"]);
         }
-}
+} 
+else{
+    $file2      = $request->file('image');      
+    $path      = 'upload\images\IT_in_teach';
+    $filename2  = $file2->getClientOriginalName();
+    $extension2 = $file2->getClientOriginalExtension();
+    $picture2   = $filename2;
+    $file2->move('upload\images\IT_in_teach', $picture2);
+    $exam = new ITinTeach();
+    $exam->name = $request->name;
+    $exam->author = $request->author;
+    $exam->path = $path;
+    $exam->image = $picture2;
+    $exam->description = $request->description;
+    $exam->file ="Block";
+    $exam->status = $request->status;
+    $exam->created_at =  Carbon::now('Asia/Ho_Chi_Minh');
+    $exam->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
+    $exam->save();
+    return response()->json([
+        'success'=>1,
+        'book_type'=>$exam,
+    ], 201);
+}}
     else{
         return response()->json([
             'error' => 'admin not found'
@@ -249,14 +288,15 @@ class ITinTeachController extends Controller
      * )
      */
     public function updateITinTeach($id,Request $request){
-        $adminFind = auth()->user();
-        if (($adminFind->email==="web.vatly365@gmail.com")){
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
         $validator = Validator::make($request->all(), [
             'name' => 'max:255',
             'file'=>'',
             'author' => 'max:255',
             'image'=>'max:2048',
             'description'=>'',
+            'status'=>''
         ]);
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 401);     
@@ -266,8 +306,12 @@ class ITinTeachController extends Controller
         $file=$ITinTeach->file;
         $image=$ITinTeach->image;
         $created_at=$ITinTeach->created_at;
-        $status=$ITinTeach->status;
         $path=$ITinTeach->path;
+        if ($request->name==null){
+            $status=$ITinTeach->status;
+        }else{
+            $status=$request->status;
+        }
         if ($request->name==null){
             $name=$ITinTeach->name;
         }else{
@@ -334,8 +378,8 @@ class ITinTeachController extends Controller
                 $filename2  = $file2->getClientOriginalName();
                 $extension2 = $file2->getClientOriginalExtension();
                 $picture2   = $filename2;
-                $path2      = 'upload\images\new';
-                $file2->move('upload\images\new', $picture2);
+                $path2      = 'upload\images\IT_in_teach';
+                $file2->move('upload\images\IT_in_teach', $picture2);
                 $ITinTeach->file=$file;
                 $ITinTeach->name=$name;
                 $ITinTeach->status=$status;  

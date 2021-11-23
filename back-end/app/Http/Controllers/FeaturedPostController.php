@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportPost;
 class FeaturedPostController extends Controller
 {
      /**
@@ -24,9 +26,14 @@ class FeaturedPostController extends Controller
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['getNews','getFeaturedPost','onLogin','getITinTeach', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
+        $this->middleware('auth:api', ['except' => ['exportPostLink','exportPost','getNews','getFeaturedPost','onLogin','getITinTeach', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
-
+    public function exportPostLink(){
+        return response()->json(['url' => "http://localhost:8000/post/exportPost"]);
+    }
+    public function exportPost(){
+        return Excel::download(new ExportPost, 'featured_post.xlsx');
+    }
       /**
      * @SWG\GET(
      *     path="api/featuredPost/getFeaturedPost",
@@ -64,7 +71,25 @@ class FeaturedPostController extends Controller
         return Response()->json(array("Successfully"=> 1,"data"=>$featuredPostFind));
     }
 
-
+    public function getOnePost(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:featured_post,id',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 400);      
+        }
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $book = FeaturedPost::find($request->id);
+        }
+        else{
+            $book = FeaturedPost::where('status','Active')->where('id',$request->id)->first();
+        }
+        return response()->json([
+            'data'=>$book
+        ], 200);
+       
+    }
      /**
      * @SWG\POST(
      *     path="api/featuredPost/createFeaturedPost/",
@@ -125,10 +150,19 @@ class FeaturedPostController extends Controller
         if (($adminFind->email==="web.vatly365@gmail.com")){
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
-            'file'=>'required|max:2048',
-            'image'=>'required|max:2048',
+            'file'=>'required',
+            'image'=>'required|image|mimes:png,jpeg,jpg',
             'description'=>'required',
-        ]);
+        ],
+       [
+           'name.required'=>"Phần này không được bỏ trống",
+           'name.max'=>"Phần này không được dài quá 255 ký tự",
+           'file.required'=>"Phần này không được bỏ trống",
+           'image.image' => 'Hãy chọn hình ảnh',
+           'image.mimes' => 'Hãy chọn hình ảnh có đuôi là PNG, JPG, JPEG',
+           'description.required'=>"Phần này không được bỏ trống",
+       ]
+    );
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 401);     
         }
@@ -236,9 +270,12 @@ public function updateFeaturedPost($id,Request $request){
     if (($adminFind->email==="web.vatly365@gmail.com")){
     $validator = Validator::make($request->all(), [
         'name' => 'max:255',
-        'file'=>'max:2048',
-        'image'=>'max:2048',
+        'file'=>'',
+        'image'=>'mimes:png,jpeg,jpg',
         'description'=>'',
+    ],[
+        'name.max'=>"Phần này không được dài quá 255 ký tự",
+        'image.mimes' => 'Hãy chọn hình ảnh có đuôi là PNG, JPG, JPEG',
     ]);
     if ($validator->fails()) {
         return response()->json(['error'=>$validator->errors()], 401);     
@@ -248,9 +285,13 @@ public function updateFeaturedPost($id,Request $request){
     $file=$featuredPost->file;
     $image=$featuredPost->image;
     $created_at=$featuredPost->created_at;
-    $status=$featuredPost->status;
     $path=$featuredPost->path;
     $author=$adminFind->nameAccount;
+    if ($request->status==null){
+        $status=$featuredPost->status;
+    }else{
+        $status=$request->status;
+    }
     if ($request->name==null){
         $name=$featuredPost->name;
     }else{

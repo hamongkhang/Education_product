@@ -18,12 +18,27 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportDocument;
+use App\Exports\ExportDocumentCategory;
 class FreeDocumentController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['getFreeDocumentAlpha','onLogin','getFreeDocument','getTeacher', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
+        $this->middleware('auth:api', ['except' => ['exportDocumentCategory','exportDocumentCategoryLink','exportDocument','exportDocumentLink','getFreeDocumentAdmin','getFreeDocumentAlpha2','getFreeDocumentAlpha','onLogin','getFreeDocument','getTeacher', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
     
+    public function exportDocumentLink(){
+        return response()->json(['url' => "http://localhost:8000/document/exportDocument"]);
+    }
+    public function exportDocument(){
+        return Excel::download(new ExportDocument, 'document.xlsx');
+    }
+    public function exportDocumentCategoryLink(){
+        return response()->json(['url' => "http://localhost:8000/document/exportDocumentCategory"]);
+    }
+    public function exportDocumentCategory(){
+        return Excel::download(new ExportDocumentCategory, 'document_category.xlsx');
+    }
     /**
      * @SWG\GET(
      *     path="api/freeDocument/getFreeDocument/",
@@ -61,15 +76,35 @@ class FreeDocumentController extends Controller
             for ($i=0;$i<count($category);$i++){
                 $documentFind = DB::table('free_document')->where('category_id',$category[$i]->id)->where('status','Active')->get();
                 for ($j=0;$j<count($documentFind);$j++){
+                    if($documentFind[$j]->category_id!==3){
                     array_push($document,$documentFind[$j]);
+                    }
                 }
             }
         return Response()->json(array("Successfully"=> 1,"data"=>$document ));
         }
-
-        
     }
-
+    public function getFreeDocumentAlpha2()
+    {
+        $login = auth()->user();
+        if($login && $login->is_admin == true){
+            $documentFind = DB::table('free_document')->get();
+            return Response()->json(array("Successfully"=> 1,"data"=>$documentFind ));
+        }
+        else{
+            $document=[];
+            $category=DB::table('free_document_category')->where('status','Active')->get();
+            for ($i=0;$i<count($category);$i++){
+                $documentFind = DB::table('free_document')->where('category_id',$category[$i]->id)->where('status','Active')->get();
+                for ($j=0;$j<count($documentFind);$j++){
+                    if($documentFind[$j]->category_id===3){
+                    array_push($document,$documentFind[$j]);
+                    }
+                }
+            }
+        return Response()->json(array("Successfully"=> 1,"data"=>$document ));
+        }
+    }
 
 
 
@@ -118,6 +153,28 @@ class FreeDocumentController extends Controller
         $dataRespon[1]=$array;
         return Response()->json(array("Successfully"=> 1,"data"=>$dataRespon ));
         } 
+    }
+    public function getFreeDocumentAdmin()
+    {
+            $documentFind = DB::table('free_document')->get();
+            $dataRespon=[];
+            $dataRespon[0]=DB::table('free_document_category')->get();
+            $array=[];
+            for ($i = 0; $i <count($documentFind); $i++) {
+                $data = DB::table('free_document_category')->where('id', $documentFind[$i]->category_id)->first();
+                $array[$i]=array(
+                    'id' => $documentFind[$i]->id,
+                    'category_name' => $data->name,
+                    'name' => $documentFind[$i]->name,
+                    'file' => $documentFind[$i]->file,
+                    'path' => $documentFind[$i]->path,
+                    'status' => $documentFind[$i]->status,
+                    'created_at'=> $documentFind[$i]->created_at,
+                    'updated_at'=> $documentFind[$i]->updated_at,
+                );
+            }
+            $dataRespon[1]=$array;
+            return Response()->json(array("Successfully"=> 1,"data"=>$dataRespon )); 
     }
     
     /**
@@ -168,18 +225,18 @@ class FreeDocumentController extends Controller
      * )
      */
     public function createFreeDocument(Request $request){
-        $adminFind = auth()->user();
-        if (($adminFind->email==="web.vatly365@gmail.com")){
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
-            'file'=>'required|max:2048',
-            'category' => 'required|numeric|digits_between:1,12',
+            'file'=>'required',
+            'category_id' => 'required|numeric|digits_between:1,12',
+        ],[
+            'name.required' => 'Phần này không được để trống',
+            'name.max' => 'Tên không được vượt quá 255 ký tự',
+            'file.required'=>'Phần này không được để trống',
         ]);
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 401);     
         }
-        $data = DB::table('free_document_category')->where('id', $request->category)->first();
-        if ($data){
         if ($request->hasFile('file'))
         {
               $file      = $request->file('file');      
@@ -191,9 +248,9 @@ class FreeDocumentController extends Controller
               $postArray = [
                     'name'  => $request->name,
                     'file'  => $picture,
-                    'category_id'  => $request->category,
+                    'category_id'  => $request->category_id,
                     'path'=>$path,
-                    'status'=>"Active",
+                    'status'=>$request->status,
                     'created_at'=> Carbon::now('Asia/Ho_Chi_Minh'),
                     'updated_at'=> Carbon::now('Asia/Ho_Chi_Minh')
                 ];
@@ -202,20 +259,22 @@ class FreeDocumentController extends Controller
         } 
         else
         {
-              return response()->json(["message" => "Upload Failed"]);
+              return response()->json(["error" => "Upload Failed"]);
         }
-    }else{
-        return response()->json(["message" => "id category not found!!!"]);
-
     }
-}
-    else{
+    public function getOneDocument(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:free_document,id',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 400);      
+        }
+            $book = FreeDocument::find($request->id);
         return response()->json([
-            'error' => 'admin not found'
-        ], 401); 
+            'data'=>$book
+        ], 200);
+       
     }
-    }
-
 
     /**
      * @SWG\POST(
@@ -266,12 +325,11 @@ class FreeDocumentController extends Controller
      * )
      */
 public function updateFreeDocument($id,Request $request){
-    $adminFind = auth()->user();
-    if (($adminFind->email==="web.vatly365@gmail.com")){
     $validator = Validator::make($request->all(), [
         'name' => 'max:255',
-        'file'=>'max:2048',
-        'category' => 'numeric|digits_between:1,12',
+        'file'=>'',
+    ],[
+        'name.max' => 'Tên không được vượt quá 255 ký tự',
     ]);
     if ($validator->fails()) {
         return response()->json(['error'=>$validator->errors()], 401);     
@@ -280,23 +338,21 @@ public function updateFreeDocument($id,Request $request){
     if($freeDocument){
     $file=$freeDocument->file;
     $created_at=$freeDocument->created_at;
-    $status=$freeDocument->status;
+    if ($request->status==null){
+        $status=$freeDocument->status;
+    }else{
+        $status=$request->status;
+    }
     $path=$freeDocument->path;
     if ($request->name==null){
         $name=$freeDocument->name;
     }else{
         $name=$request->name;
     }
-    if ($request->category==null){
-        $category=$freeDocument->category_id;
+    if ($request->category_id==null){
+        $category_id=$freeDocument->category_id;
     }else{
-        $data = DB::table('free_document_category')->where('id', $request->category)->first();
-        if ($data){
-        $category=$request->category;
-        }
-        else{
-            return response()->json(["message" => "id category not found!!!"]);
-        }
+        $category_id=$request->category_id;
     }
     if ($request->hasFile('file'))
     {
@@ -310,7 +366,7 @@ public function updateFreeDocument($id,Request $request){
           $freeDocument->name=$name;
           $freeDocument->status=$status;  
           $freeDocument->path=$path;          
-          $freeDocument->category_id=$category;            
+          $freeDocument->category_id=$category_id;            
           $freeDocument->created_at=$created_at;               
           $freeDocument->updated_at=Carbon::now('Asia/Ho_Chi_Minh');      
           $freeDocument->save();
@@ -319,7 +375,7 @@ public function updateFreeDocument($id,Request $request){
     else
     {  
         $freeDocument->name=$name;      
-        $freeDocument->category_id=$category;      
+        $freeDocument->category_id=$category_id;      
         $freeDocument->file=$file;     
         $freeDocument->path=$path;     
         $freeDocument->status=$status;      
@@ -330,12 +386,6 @@ public function updateFreeDocument($id,Request $request){
     }
 }else{
     return Response()->json(array("error!"=> 401,"message"=>"Id Not Found" ));
-}
-}
-else{
-    return response()->json([
-        'error' => 'admin not found'
-    ], 401); 
 }
 }
 
@@ -367,8 +417,6 @@ else{
      * )
      */
     public function destroyFreeDocument($id){
-        $adminFind = auth()->user();
-        if (($adminFind->email==="web.vatly365@gmail.com")){
         $freeDocumentFind= FreeDocument::find($id);
         if ($freeDocumentFind){
         $freeDocumentFind->delete();
@@ -378,12 +426,6 @@ else{
     else{
         return response()->json(["message" => "Delete failed"]);
     }
-}
-else{
-    return response()->json([
-        'error' => 'admin not found'
-    ], 401); 
-}
     }
 
     /**
@@ -414,8 +456,6 @@ else{
      * )
      */
     public function blockActiveFreeDocument($id){
-        $adminFind = auth()->user();
-        if (($adminFind->email==="web.vatly365@gmail.com")){
             $freeDocumentFind = DB::table('free_document')->where('id', $id)->first();
             if ($freeDocumentFind){ 
                 if ($freeDocumentFind->status==="Block"){
@@ -440,12 +480,6 @@ else{
                     'error' => 'id not found'
                 ], 401); 
             }
-        }
-        else{
-            return response()->json([
-                'error' => 'admin not found'
-            ], 401); 
-        }
     }
 
 }

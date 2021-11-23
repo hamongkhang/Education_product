@@ -14,14 +14,28 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportCourse;
+use App\Exports\ExportCourseCategory;
 
 class CourseController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api',['except' => ['getCountSearch','getCourseSearch','getCountLesson','getCourseHome','getAllCourses','getOneCourse','addNewCourse','updateCourse','deleteCourse','changeStatusCourse']]);
+        $this->middleware('auth:api',['except' => ['exportCourseCategory','exportCourseCategoryLink','exportCourse','exportCourseLink','getCountSearch','getCourseSearch','getCountLesson','getCourseHome','getAllCourses','getOneCourse','addNewCourse','updateCourse','deleteCourse','changeStatusCourse']]);
     }
 
-
+    public function exportCourseLink(){
+        return response()->json(['url' => "http://localhost:8000/course/exportCourse"]);
+    }
+    public function exportCourse(){
+        return Excel::download(new ExportCourse, 'course.xlsx');
+    }
+    public function exportCourseCategoryLink(){
+        return response()->json(['url' => "http://localhost:8000/course/exportCourseCategory"]);
+    }
+    public function exportCourseCategory(){
+        return Excel::download(new ExportCourseCategory, 'course_category.xlsx');
+    }
     public function getCountSearch(Request $request){
         $userFind = auth()->user();
         $lesson=[];
@@ -565,7 +579,7 @@ class CourseController extends Controller
                 }
             }
             if($request->hasfile('image')) {
-                $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'course_images';
+                $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'course';
                 if (!file_exists($destinationPath)) {
                     File::makeDirectory($destinationPath, 0775, true);
                 }       
@@ -574,8 +588,8 @@ class CourseController extends Controller
                 $date = $date->format('d-m-Y-H-i-s');
                 $extension = $file->extension();
                 $newImageName = Str::slug('course_img', '_').'_'.$date.'.'.$extension;
-                $file->move(public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'course_images', $newImageName);
-                $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'course_images'.'/'.$newImageName;
+                $file->move(public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'course', $newImageName);
+                $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'images'.'/'.'course'.'/'.$newImageName;
             }
             $course = new Course();
             $course->name = $request->name;
@@ -642,7 +656,7 @@ class CourseController extends Controller
                 }
             }
             if($request->hasfile('image')) {
-                $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'course_images';
+                $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'course';
                 if (!file_exists($destinationPath)) {
                     File::makeDirectory($destinationPath, 0775, true);
                 }       
@@ -651,8 +665,8 @@ class CourseController extends Controller
                 $date = $date->format('d-m-Y-H-i-s');
                 $extension = $file->extension();
                 $newImageName = Str::slug('course_img', '_').'_'.$date.'.'.$extension;
-                $file->move(public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'course_images', $newImageName);
-                $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'course_images'.'/'.$newImageName;
+                $file->move(public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'course', $newImageName);
+                $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'images'.'/'.'course'.'/'.$newImageName;
             }
             $request->Initial_price == null || $request->Initial_price=='undefined'
             ? $course->Initial_price = $course->Initial_price 
@@ -711,7 +725,7 @@ class CourseController extends Controller
                 return response()->json(['error'=>$validator->errors()], 400);      
             }
             $course = Course::find($request->id);
-            $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'course_images';
+            $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'course';
             File::delete($destinationPath.'/'.$course->image);
             $table_of_content = TableOfContent::where('course_id',$request->id);
             foreach($table_of_content->get() as $toc){

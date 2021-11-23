@@ -9,13 +9,29 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportBook;
+use App\Exports\ExportBookType;
+
 
 class BookController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api',['except' => ['getBookTypeSearch','getAllBooks','getOneBook','addBook','updateBook','deleteBook','changeStatus']]);
+        $this->middleware('auth:api',['except' => ['exportBookLink','exportBook','exportBookTypeLink','exportBookType','getBookTypeSearch','getAllBooks','getOneBook','addBook','updateBook','deleteBook','changeStatus']]);
     }
 
+    public function exportBookLink(){
+        return response()->json(['url' => "http://localhost:8000/book/exportBook"]);
+    }
+    public function exportBook(){
+        return Excel::download(new ExportBook, 'book.xlsx');
+    }
+    public function exportBookTypeLink(){
+        return response()->json(['url' => "http://localhost:8000/book/exportBookType"]);
+    }
+    public function exportBookType(){
+        return Excel::download(new ExportBookType, 'book_type.xlsx');
+    }
     public function getAllBooks(Request $request){
         $login = auth()->user();
         if($login && $login->is_admin == true){
@@ -67,23 +83,19 @@ class BookController extends Controller
         return response()->json([
             'bookTypeSearch'=>$book
         ], 200);
-    }else{
-        $login = auth()->user();
-        if($login && $login->is_admin == true){
-            $books = Book::all();
+        }else{
+            $login = auth()->user();
+            if($login && $login->is_admin == true){
+                $books = Book::all();
+            }
+            else{
+                $books = Book::where('status','Active')->get();
+            }
+            return response()->json([
+                'bookTypeSearch'=>$books
+            ], 200);  
         }
-        else{
-            $books = Book::where('status','Active')->get();
-        }
-        return response()->json([
-            'bookTypeSearch'=>$books
-        ], 200);  
     }
-    }
-
-
-
-
     public function addBook(Request $request){
         $login = auth()->user();
         if($login && $login->is_admin == true){
@@ -94,16 +106,28 @@ class BookController extends Controller
                 'image'=>'required|image|mimes:png,jpeg,jpg',
                 'type'=>'required|exists:book_type,id',
                 'page_number'=>'required|numeric|min:1',
-                'author'=>'required|min:1',
+                'author'=>'required|min:1|max:255',
                 'status'=>'required|in:Active,Block',
                 'quantity'=>'required|numeric|min:1',
                 'description'=>'required'
+            ],[
+                'name.required' => 'Tên sách không để trống',
+                'name.max' => 'Tên sách không quá 255 kí tự',
+                'name.unique' => 'Tên này đã tồn tại',
+                'Initial_price.required' => 'Giá tiền không để trống',
+                'image.image' => 'Hãy chọn hình ảnh',
+                'image.mimes' => 'Hãy chọn hình ảnh có đuôi là PNG, JPG, JPEG',
+                'type.required' => 'Hãy chọn loại sách',
+                'page_number.required' => 'Số trang sách không để trống',
+                'author.required' => 'Tên tác giả không để trống',
+                'quantity.required' => 'Số lượng sách không để trống',
+                'description.required' => 'Mô tả sách không để trống',
             ]);
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      
             }
             if($request->hasfile('image')) {
-                $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'book_images';
+                $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'book';
                 if (!file_exists($destinationPath)) {
                     File::makeDirectory($destinationPath, 0775, true);
                 }       
@@ -112,8 +136,8 @@ class BookController extends Controller
                 $date = $date->format('d-m-Y-H-i-s');
                 $extension = $file->extension();
                 $newImageName = Str::slug('book_img', '_').'_'.$date.'.'.$extension;
-                $file->move(public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'book_images', $newImageName);
-                $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'book_images'.'/'.$newImageName;
+                $file->move(public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'book', $newImageName);
+                $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'images'.'/'.'book'.'/'.$newImageName;
             }
             $book = new Book();
             $book->name = $request->name;
@@ -157,9 +181,18 @@ class BookController extends Controller
                 'type'=>'exists:book_type,id',
                 'page_number'=>'numeric|min:1',
                 'status'=>'in:Active,Block',
-                'author'=>'',
+                'author'=>'max:255',
+                'quantity'=>'numeric|min:1',
                 'description'=>''
 
+            ],[
+                'name.max' => 'Tên sách không quá 255 kí tự',
+                'name.unique' => 'Tên này đã tồn tại',
+                'image.image' => 'Hãy chọn hình ảnh',
+                'image.mimes' => 'Hãy chọn hình ảnh có đuôi là PNG, JPG, JPEG',
+                'page_number.min' => 'Số trang sách ít nhất là 1 trang',
+                'author.required' => 'Tên tác giả không để trống',
+                'quantity.min' => 'Số lượng sách ít nhất 1 trang',
             ]);
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      
@@ -179,7 +212,7 @@ class BookController extends Controller
                 $book->name = $request->name;
             }
             if($request->hasfile('image')) {
-                $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'book_images';
+                $destinationPath = public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'book';
                 if (!file_exists($destinationPath)) {
                     File::makeDirectory($destinationPath, 0775, true);
                 }       
@@ -188,8 +221,8 @@ class BookController extends Controller
                 $date = $date->format('d-m-Y-H-i-s');
                 $extension = $file->extension();
                 $newImageName = Str::slug('book_img', '_').'_'.$date.'.'.$extension;
-                $file->move(public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'book_images', $newImageName);
-                $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'book_images'.'/'.$newImageName;
+                $file->move(public_path().DIRECTORY_SEPARATOR.'upload'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'book', $newImageName);
+                $linkFile = $request->getSchemeAndHttpHost().'/'.'upload'.'/'.'images'.'/'.'book'.'/'.$newImageName;
             }
             $request->Initial_price == null ? $book->Initial_price = $book->Initial_price : $book->Initial_price = $request->Initial_price;
             $request->promotion == null ? $book->promotion = $book->promotion : $book->promotion = $request->promotion;

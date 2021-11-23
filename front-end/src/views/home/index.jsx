@@ -24,10 +24,9 @@ import CheckResultExam from '../../components/cart/checkResultExam';
 
 const HomePages = (props) => {
     const { changeRender } = props;
-    const [reRender, setReRender] = useState(false); // Dành cho login/ logout
+    const [reRender, setReRender] = useState(false); 
 
     const [checkLoggedIn, setCheckLoggedIn] = useState(false);
-    // const [reRender, setReRender] = useState(false);
 
     const handleCheckLoggedIn = () => {
         if (localStorage.getItem('access_token')) {

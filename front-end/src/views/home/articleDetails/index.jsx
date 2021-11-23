@@ -52,8 +52,8 @@ const ArticleDetails = (props) => {
                     </h2>
                 </div>
                 <div className="text-justify">
-                    {/* dangerouslySetInnerHTML={{ __html: "text" }} */}
-                    <p>{ITItem.description}</p>
+                    <p dangerouslySetInnerHTML={{ __html:ITItem.description}}>
+                    </p>
                 </div>
             </div>
         </>

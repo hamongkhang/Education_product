@@ -19,12 +19,8 @@ const TeacherItem = (props) => {
                             {props.data.name}
                         </h4>
                     </Link>
-                    <span className="text-gray-600 block line-1">
-                        {props.data.position}
-                    </span>
-                    <span className="text-gray-600 line-2">
-                        {props.data.description}n
-                    </span>
+                    <span className="text-gray-600 block line-1">{props.data.position}</span>
+                    <span className="text-gray-600 line-2" dangerouslySetInnerHTML={{ __html:props.data.description}}></span>
                 </div>
                 <div className="space-x-4 text-center mt-5">
                     <a

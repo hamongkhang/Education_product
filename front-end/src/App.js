@@ -12,6 +12,9 @@ import UserProfile from './views/home/userProfile';
 import PlayCourse from './views/home/playCourse';
 import 'react-toastify/dist/ReactToastify.css';
 import FullWidthTabs from './views/home/test';
+import Admin from './layouts/admin';
+import LoginAdmin from './views/admin/account/login';
+
 
 const loading = (
     <svg viewBox="25 25 50 50" className="preloader">
@@ -31,6 +34,8 @@ function App() {
                     <React.Suspense fallback={loading}>
                         <Router>
                             <Switch>
+                            <Route path="/admin" exact component={LoginAdmin} />
+                          <Route path="/admin/:path" component={Admin} />
                                 <Route
                                     path="/tai-khoan"
                                     component={UserProfile}
