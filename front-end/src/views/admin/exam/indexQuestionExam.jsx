@@ -208,7 +208,7 @@ const IndexQuestionExam = () => {
                                            }
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                            {examQuestionEdit.price}
+                                            {String(examQuestionEdit.price).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <img alt="" src={`http://localhost:8000/upload/images/exam/${examQuestionEdit.image}`} className="w-12 h-16 object-cover" />

@@ -344,7 +344,7 @@ const OrderTable = (props) => {
                                             {item.orderId}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                            {item.amount}
+                                            {String(item.amount).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                             {item.payType == 'qr'?'QR':'ATM'}
@@ -394,7 +394,7 @@ const OrderTable = (props) => {
                                             {item.orderId}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                            {item.amount}
+                                            {String(item.amount).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                             {item.payType == 'qr'?'QR':'ATM'}

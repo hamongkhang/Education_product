@@ -571,10 +571,10 @@ const BooksTable = (props) => {
                                             {item.author}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                            {item.Initial_price}
+                                     {String(item.Initial_price).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                            {item.promotion_price}
+                                        {String(item.promotion_price).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                             {item.promotion}
@@ -630,10 +630,10 @@ const BooksTable = (props) => {
                                             {item.author}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                            {item.Initial_price}
+                                     {String(item.Initial_price).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                            {item.promotion_price}
+                                        {String(item.promotion_price).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                             {item.promotion}

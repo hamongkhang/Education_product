@@ -88,7 +88,6 @@ const AdminContent = (props) => {
                         <Route path="/admin/itinTeach" exact component={ITinTeach} />
                         <Route path="/admin/itinTeach/updateITinTeach/:id" exact component={EditITINTeach} />
                         <Route path="/admin/itinTeach/add" exact component={AddITinTeach} />
-                        <Route path="/admin/userAdmin" exact component={AdminTable} />
                         {/* CRUD category course */}
                         <Route path="/admin/category_courses" exact component={CategoryCourse} />
                         <Route path="/admin/category_courses/add" exact component={AddCategoryCourse} />
