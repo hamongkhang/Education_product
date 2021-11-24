@@ -68,7 +68,7 @@ const Dashboard = (props) => {
       })
     .then(response => response.json())
     .then(data =>  {
-        setMoney(data.data);
+        setMoney(String(data.data).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     });
     return () => {
     }
@@ -80,10 +80,10 @@ const getCount=()=>{
     })
   .then(response => response.json())
   .then(data =>  {
-      setToday(data.data[0]);
-      setYesterday(data.data[1]);
-      setWeek(data.data[2]);
-      setMonth(data.data[3]);
+      setToday(String(data.data[0]).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setYesterday(String(data.data[1]).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setWeek(String(data.data[2]).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setMonth(String(data.data[3]).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
   });
   return () => {
   }
