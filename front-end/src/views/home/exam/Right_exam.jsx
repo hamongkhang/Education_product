@@ -5,13 +5,6 @@ import ExamGrid from './examGrid';
 import RightItem from './rightItem';
 
 const RightExamItem = (props) => {
-  const [arr1, setArr1] = useState(arr);
-  const [show, setShow] = useState(7);
-  const [txt, setTxt] = useState("Xem thêm");
-  const [arrlist, setArrlist] = useState([]);
-  const $nameAccount=localStorage.getItem('nameAccount');
-
-  
   const [historyExam,setHistoryExam] = useState([]);
   const $token=localStorage.getItem('access_token');
 
@@ -27,18 +20,6 @@ const RightExamItem = (props) => {
     return () => {
 }
 }
-
-    const getExamHistory = () => {
-        fetch('http://localhost:8000/api/history/getHistoryExam', {
-            method: 'GET',
-            headers: { Authorization: `Bearer ` + $token },
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                setHistoryExam(data.data);
-            });
-        return () => {};
-    };
 
     const handleExam = itemCategory => {
         let examTemp = props.examRight.filter(item => item.category_id === itemCategory.id);
