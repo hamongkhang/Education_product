@@ -386,13 +386,13 @@ const Courses = (props) => {
                                             })}
                                         </td>                
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                            {item.Initial_price}
+                                            {String(item.Initial_price).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                             {item.promotion}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                            {item.promotion_price}
+                                            {String(item.promotion_price).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <img alt="" src={`http://localhost:8000/upload/images/course/${item.image}`} className="w-12 h-16 object-cover" />
@@ -442,13 +442,13 @@ const Courses = (props) => {
                                             })}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                            {item.Initial_price}
+                                            {String(item.Initial_price).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                             {item.promotion}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                            {item.promotion_price}
+                                            {String(item.promotion_price).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <img alt="" src={`http://localhost:8000/upload/images/course/${item.image}`} className="w-12 h-16 object-cover" />

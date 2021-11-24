@@ -593,7 +593,7 @@ const ExamTable = (props) => {
                                            }
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                            {item.price}
+                                            {String(item).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <img alt="" src={`http://localhost:8000/upload/images/exam/${item.image}`} className="w-12 h-16 object-cover" />
@@ -654,7 +654,7 @@ const ExamTable = (props) => {
                                            }
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                            {item.price}
+                                            {String(item.price).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                         </td>
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <img alt="" src={`http://localhost:8000/upload/images/exam/${item.image}`} className="w-12 h-16 object-cover" />
