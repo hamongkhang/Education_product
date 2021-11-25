@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react"
 import { useRouteMatch } from 'react-router';
-import JoditEditor from "jodit-react";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { DraftjsWidget } from "../../../components/DraftjsWidget";
 toast.configure();
 
 const EditQuestion = () => {
@@ -183,12 +183,8 @@ const EditQuestion = () => {
                                    Câu hỏi
                                 </label>
                                 {questionEdit2.length>0?
-                                <JoditEditor
-                                    value={questionEdit2[0].question}
-                                    config={config}
-                                    tabIndex={1}
-                                    onBlur={newContent => setDataEdit({...dataEdit,["question"]:newContent})} 
-                                />:""}
+                                <DraftjsWidget value={questionEdit2[0].question} onChange={(editorState)=>setDataEdit({...dataEdit,["question"]:editorState})}/>
+                                :""}
                             </div>
                         </div>{
                          answerEdit2.length>0?
@@ -208,12 +204,7 @@ const EditQuestion = () => {
                      </select></div>
                             </div>
                         <div className="w-full lg:w-6/12 px-4">
-                        <JoditEditor
-                                    value={items.answer}
-                                    config={config}
-                                    tabIndex={1}
-                                    onBlur={newContent => setDataEdit({...dataEdit,["answer"+index]:newContent})} 
-                                />
+                                <DraftjsWidget value={items.answer} onChange={(editorState)=>setDataEdit({...dataEdit,["answer"+index]:editorState})}/>
                         </div>
                         </>
                         )}):""}
