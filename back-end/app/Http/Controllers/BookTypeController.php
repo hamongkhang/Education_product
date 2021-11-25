@@ -41,6 +41,10 @@ class BookTypeController extends Controller
         if($login && $login->is_admin == true){
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:1|max:255|unique:book_type,name',
+        ],[
+            'name.required' => 'Tên không để trống',
+            'name.max' => 'Tên không quá 255 kí tự',
+            'name.unique' => 'Tên này đã tồn tại',
         ]);
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 400);      
@@ -68,6 +72,9 @@ class BookTypeController extends Controller
         $validator = Validator::make($request->all(), [
             'id'    => 'required',
             'name' => 'max:255|string',
+        ],[
+            'name.max' => 'Tên không quá 255 kí tự',
+            'name.string' => 'Tên này phải là kiểu chuỗi',
         ]);
         if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 400);      
@@ -80,6 +87,8 @@ class BookTypeController extends Controller
             else{
                 $validator = Validator::make($request->all(), [
                     'name' => 'unique:book_type,name',
+                ],[
+                    'name.unique' => 'Tên này đã tồn tại',
                 ]);
                 if ($validator->fails()) {
                     return response()->json(['error'=>$validator->errors()], 400);      
