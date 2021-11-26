@@ -28,13 +28,76 @@ use App\Imports\ImportExamCategory;
 use App\Exports\ExportExamCategory;
 use App\Imports\ImportExam;
 use App\Exports\ExportExam;
+use App\Models\ExamResult;
+
+
 
 class ExamController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['exportExamCategoryLink','exportExamCategory','exportExamLink','exportExam','getExam','getFreeDocumentAlpha','onLogin','getFreeDocument','getTeacher', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
+        $this->middleware('auth:api', ['except' => ['getResult','getOneResult','exportExamCategoryLink','exportExamCategory','exportExamLink','exportExam','getExam','getFreeDocumentAlpha','onLogin','getFreeDocument','getTeacher', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
     
+    public function createResult(Request $request){
+        if($request->length>0){
+            $answer=$request->answer0;
+            for($i=1;$i<$request->length;$i++){
+                $a="answer".$i;
+                $answer=$answer.$request->$a;
+            }
+            $content = new ExamResult();
+            $content->name = $request->name;
+            $content->time = $request->time;
+            $content->exam_id = $request->exam_id;
+            $content->scores = $request->scores;
+            $content->answer = $answer;
+            if($request->answer_false){
+            $content->answer_false = $request->answer_false;
+            }else{
+                $content->answer_false = "Không có đáp án sai";
+            }
+            $content->created_at =  Carbon::now('Asia/Ho_Chi_Minh');
+            $content->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
+            $content->save();
+            return response()->json([
+                'success'=>1,
+                'data'=> $content,
+            ], 201);
+        }else{
+            $content = new ExamResult();
+            $content->name = $request->name;
+            $content->time = $request->time;
+            $content->scores = $request->scores;
+            $content->exam_id = $request->exam_id;
+            $content->answer ="Không có đáp án";
+            if($request->answer_false){
+                $content->answer_false = $request->answer_false;
+                }else{
+                    $content->answer_false = "";
+                }            
+            $content->created_at =  Carbon::now('Asia/Ho_Chi_Minh');
+            $content->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
+            $content->save();
+            return response()->json([
+                'success'=>1,
+                'data'=>$content,
+            ], 201);
+        }
+    }
+    public function getOneResult(Request $request){
+        $resultFind = DB::table('exam_result')->where('exam_id',$request->id)->get();
+            return response()->json([
+                'success'=>1,
+                'data'=>$resultFind,
+            ], 201);
+    }
+    public function getResult(Request $request){
+        $resultFind = DB::table('exam_result')->get();
+            return response()->json([
+                'success'=>1,
+                'data'=>$resultFind,
+            ], 201);
+    }
     /**
      * @SWG\GET(
      *     path="api/freeDocument/getFreeDocument/",
@@ -129,7 +192,29 @@ class ExamController extends Controller
 
         
     }
-
+    public function deleteResult(Request $request){
+        $login = auth()->user();
+        if($login->is_admin == true){
+            $validator = Validator::make($request->all(), [
+                'id' => 'required|exists:exam_result,id',
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['error'=>$validator->errors()], 400);      
+            }
+            $book = ExamResult::find($request->id);
+            $book->delete();
+                return response()->json([
+                    'success'=>1,
+                    'description'=>'xóa thành công'
+                ], 200);
+        }
+        else{
+            return response()->json([
+                'error'=>1,
+                'description'=>'account login is not admin',
+            ], 401);
+        }
+    }
     public function deleteCategory(Request $request){
         $login = auth()->user();
         if($login->is_admin == true){
