@@ -568,6 +568,18 @@ class CourseController extends Controller
                 'description'=>'required',
                 'benefit'=>'required',
                 'target'=>'required'
+            ],[
+                'name.required' => 'Tên không để trống',
+                'name.max' => 'Tên không quá 255 kí tự',
+                'name.unique' => 'Tên này đã tồn tại',
+                'Initial_price.required' => 'Giá tiền không để trống',
+                'promotion.between' => 'Giảm giá từ 0% - 100%',
+                'image.image' => 'Hãy chọn hình ảnh',
+                'image.mimes' => 'Hãy chọn hình ảnh có đuôi là PNG, JPG, JPEG',
+                'category_course.required' => 'Hãy chọn danh mục',
+                'target.required' => 'Mục tiêu không để trống',
+                'benefit.required' => 'Lợi ích không để trống',
+                'description.required' => 'Mô tả không để trống',
             ]);
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      
@@ -633,6 +645,11 @@ class CourseController extends Controller
                 'description'=>'',
                 'target'=>'',
                 'benefit'=>''
+            ],[
+                'name.max' => 'Tên không quá 255 kí tự',
+                'image.image' => 'Hãy chọn hình ảnh',
+                'image.mimes' => 'Hãy chọn hình ảnh có đuôi là PNG, JPG, JPEG',
+                'category_course.exists' => 'Hãy chọn danh mục',
             ]);
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      

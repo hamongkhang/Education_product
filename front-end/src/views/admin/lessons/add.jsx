@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react"
 import { toast } from 'react-toastify';
-import JoditEditor from "jodit-react";
 import {useHistory} from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css';
+import { DraftjsWidget } from "../../../components/DraftjsWidget";
 toast.configure();
 
 const AddLesson = () => {
@@ -122,6 +122,12 @@ const AddLesson = () => {
             setLesson({...lesson,[_name]:_value});
         }
     };
+    const onChangeEditor = (value) =>{
+        if(lesson.description != value){
+            console.log(value);
+            setLesson({...lesson,["description"]:value})
+        }
+    }
     useEffect(() => {
         if($token){
             getContents();
@@ -216,13 +222,7 @@ const AddLesson = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2">
                                     Mô tả
                                 </label>
-                                <JoditEditor
-                                    // ref={editor}
-                                    value={lesson.description}
-                                    config={config}
-                                    tabIndex={1}
-                                    onBlur={newContent => setLesson({...lesson,["description"]:newContent})} 
-                                />
+                                <DraftjsWidget value="" onChange={(editorState)=>onChangeEditor(editorState)}/>
                                 <span className="text-red-500 text-sm">{error.description?error.description[0]:""}</span>
                             </div>
                         </div>

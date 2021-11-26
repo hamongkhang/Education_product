@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react"
-import JoditEditor from "jodit-react";
 import { toast } from 'react-toastify';
 import {useHistory} from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css';
+import { DraftjsWidget } from "../../../components/DraftjsWidget";
 toast.configure();
 const AddBook = () => {
     const [book, setBook] = useState({
@@ -193,6 +193,11 @@ const AddBook = () => {
         document.getElementsByName("promotion_price")[0].value=promotion_price
 
     }
+    const onChangeEditor = (value) =>{
+        if(book.description != value){
+            setBook({...book,["description"]:value})
+        }
+    }
     useEffect(() => {
         if($token){
            getBookTypes()
@@ -334,12 +339,7 @@ const AddBook = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                     Mô tả
                                 </label>
-                                <JoditEditor
-                                    // ref={editor}
-                                    config={config}
-                                    tabIndex={1}
-                                    onBlur={newContent => setBook({...book,["description"]:newContent})} 
-                                />
+                                    <DraftjsWidget value="" onChange={(editorState)=>onChangeEditor(editorState)}/>
                                 <span className="text-red-500 text-sm">{error.description?error.description[0]:""}</span>
                             </div>
                         </div>

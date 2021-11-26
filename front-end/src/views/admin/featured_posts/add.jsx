@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from "react"
-import JoditEditor from "jodit-react";
+import React, {useState} from "react"
 import { toast } from 'react-toastify';
 import {useHistory} from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css';
+import { DraftjsWidget } from "../../../components/DraftjsWidget";
 toast.configure();
 const AddPost = () => {
     const [postAdd, setPostAdd] = useState({
@@ -113,6 +113,11 @@ const AddPost = () => {
             setPostAdd({...postAdd,[_name]:_value});
         }
     };
+    const onChangeEditor = (value) =>{
+        if(postAdd.description != value){
+            setPostAdd({...postAdd,["description"]:value})
+        }
+    }
     return (
         <section className=" py-1">
             <div className="w-full">
@@ -183,11 +188,7 @@ const AddPost = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2" htmlfor="grid-password">
                                     Mô tả
                                 </label>
-                                <JoditEditor
-                                    config={config}
-                                    tabIndex={1}
-                                    onBlur={newContent => setPostAdd({...postAdd,["description"]:newContent})} 
-                                />
+                                <DraftjsWidget value="" onChange={(editorState)=>onChangeEditor(editorState)}/>
                                 <span className="text-red-500 text-sm">{error.description?error.description[0]:""}</span>
                             </div>
                         </div>

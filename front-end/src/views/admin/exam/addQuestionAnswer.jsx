@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from "react"
-import JoditEditor from "jodit-react";
 import { toast } from 'react-toastify';
-import {useHistory} from 'react-router-dom'
 import { useRouteMatch } from 'react-router';
 import 'react-toastify/dist/ReactToastify.css';
+import { DraftjsWidget } from "../../../components/DraftjsWidget";
 toast.configure();
 const AddQuestionAnswer = () => {
     const [dataAdd, setDataAdd] = useState({});
@@ -257,6 +256,20 @@ const AddQuestionAnswer = () => {
             
         });
     }
+    const onChangeEditor = (value,type) =>{
+        if(type == "question" && dataAdd.question != value){
+            setDataAdd({...dataAdd,["question"]:value})
+        }
+        else if(type == "answer1" && dataAdd.answer1 != value){
+            setDataAdd({...dataAdd,["answer1"]:value})
+        }
+        else if(type == "answer2" && dataAdd.answer2 != value){
+            setDataAdd({...dataAdd,["answer2"]:value})
+        }
+        else if(type == "answer3" && dataAdd.answer3 != value){
+            setDataAdd({...dataAdd,["answer3"]:value})
+        }
+    }
     useEffect(() => {
         if($token){
            getOneExamEdit();
@@ -291,11 +304,9 @@ const AddQuestionAnswer = () => {
                             <label className="block uppercase text-gray-600 text-xs font-bold mb-2">
                                Câu hỏi
                             </label>
-                            <JoditEditor
-                                config={config}
-                                tabIndex={1}
-                                onBlur={newContent => setDataAdd({...dataAdd,["question"]:newContent})} 
-                            />{
+                                <DraftjsWidget value="" onChange={(editorState)=>onChangeEditor(editorState,"question")}/>
+                            
+                            {
                                 error.id===index?
                             <span className="text-red-500 text-sm">{error.question?error.question:""}</span>:""
                     }
@@ -315,12 +326,8 @@ const AddQuestionAnswer = () => {
                  </div>
                         </div>
                     <div className="w-full lg:w-6/12 px-4">
-                    <JoditEditor
-                                value={items.answer}
-                                config={config}
-                                tabIndex={1}
-                                onBlur={newContent => setDataAdd({...dataAdd,["answer1"]:newContent})} 
-                            />
+                                <DraftjsWidget value={items.answer} onChange={(editorState)=>onChangeEditor(editorState,"answer1")}/>
+
                             {
                                 error.id===index?
                  <span className="text-red-500 text-sm">{error.answer1?error.answer1:""}</span>:""}
@@ -340,12 +347,8 @@ const AddQuestionAnswer = () => {
                  </div>
                         </div>
                     <div className="w-full lg:w-6/12 px-4">
-                    <JoditEditor
-                                value={items.answer}
-                                config={config}
-                                tabIndex={1}
-                                onBlur={newContent => setDataAdd({...dataAdd,["answer2"]:newContent})} 
-                            />
+                                <DraftjsWidget value={items.answer} onChange={(editorState)=>onChangeEditor(editorState,"answer2")}/>
+
                             {
                                 error.id===index?
                             <span className="text-red-500 text-sm">{error.answer2?error.answer2:""}</span>:""}
@@ -364,12 +367,8 @@ const AddQuestionAnswer = () => {
                  </div>
                         </div>
                     <div className="w-full lg:w-6/12 px-4">
-                    <JoditEditor
-                                value={items.answer}
-                                config={config}
-                                tabIndex={1}
-                                onBlur={newContent => setDataAdd({...dataAdd,["answer3"]:newContent})} 
-                            />
+                                <DraftjsWidget value={items.answer} onChange={(editorState)=>onChangeEditor(editorState,"answer3")}/>
+
                             {
                                 error.id===index?
                             <span className="text-red-500 text-sm">{error.answer3?error.answer3:""}</span>:""}
@@ -388,12 +387,8 @@ const AddQuestionAnswer = () => {
                  </div>
                         </div>
                     <div className="w-full lg:w-6/12 px-4">
-                    <JoditEditor
-                                value={items.answer}
-                                config={config}
-                                tabIndex={1}
-                                onBlur={newContent => setDataAdd({...dataAdd,["answer4"]:newContent})} 
-                            />
+                                <DraftjsWidget value={items.answer} onChange={(editorState)=>onChangeEditor(editorState,"answer4")}/>
+
                             {
                                 error.id===index?
                             <span className="text-red-500 text-sm">{error.answer4?error.answer4:""}</span>:""}

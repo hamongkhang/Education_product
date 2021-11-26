@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from "react"
-import JoditEditor from "jodit-react";
+import React, {useState} from "react"
 import { toast } from 'react-toastify';
 import {useHistory} from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css';

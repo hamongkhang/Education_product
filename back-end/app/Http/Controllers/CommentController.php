@@ -2,22 +2,11 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UsersResource;
-use App\Jobs\SendEmail;
-use App\Models\User;
-use App\Models\Cart;
-use App\Models\History;
-use App\Models\UserCode;
-use App\Models\UserCourse;
-use App\Models\Lesson;
 use App\Models\Comment;
 use App\Models\CommentReply;
-use App\Models\momoOrderDetail;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 class CommentController extends Controller
 {
     public function __construct() {

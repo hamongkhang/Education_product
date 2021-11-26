@@ -1,12 +1,15 @@
 import React,{useState,useEffect} from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import { useRouteMatch } from 'react-router'
 import Swal from 'sweetalert2'
 
 const LoginAdmin = (props) => {
     const [user, setUser] = useState({});
     const history = useHistory();
     const $token=localStorage.getItem('access_token');
+    const [error, setError] = useState({
+       email:null,
+       password:null
+    });
     const addUser = (event) => {
         const target=event.target;
         const field =target.name;
@@ -17,7 +20,7 @@ const LoginAdmin = (props) => {
         });
       };
       console.log(user)
-      const loginAdmin = (e) =>{
+    const loginAdmin = (e) =>{
                 e.preventDefault();
                 if(user.email!="" && user.password!=""){
                 const _formData = new FormData();
@@ -35,14 +38,14 @@ const LoginAdmin = (props) => {
                         icon: 'error',
                         title: 'Oops...',
                         text: 'Đăng nhập bị lỗi',
-                      })
+                    })
                 }
                 else if(json.error==='Blocked'){
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
                         text: 'Tài khoản đã bị khóa',
-                      })
+                    })
                 }
                 else{
                     if(json.error){
@@ -50,7 +53,8 @@ const LoginAdmin = (props) => {
                             icon: 'error',
                             title: 'Oops...',
                             text: 'Đăng nhập bị lỗi',
-                          })
+                        })
+                        setError(json.error)
                     }
                     else{
                         localStorage.setItem('access_token',json.access_token);
@@ -60,48 +64,76 @@ const LoginAdmin = (props) => {
                             icon: 'success',
                             title: 'Thành Công',
                             text: 'Đăng nhập thành công',
-                          })
+                        })
                         history.push("/admin/dashboard")
                     }
                 }
                 });
             }
         }
-        const onLogout = (e) => {
-            if($token){
-            Swal.fire({
-                title: 'Cảnh báo',
-                text: "Bạn có chắc chắn muốn đăng xuất?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                cancelButtonText: 'Hủy',
-                confirmButtonText: 'Đăng xuất'
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    fetch('http://localhost:8000/api/users/logout', {
-                        method: "POST",
-                        headers: {"Authorization": `Bearer `+$token}
-                        })
-                    .then(res => res.json())
-                    .then(json => {
-                        window.localStorage.removeItem('access_token');
-                        window.localStorage.removeItem('nameAccount');
-                        window.localStorage.removeItem('avatar');
-                        window.localStorage.removeItem('avatar_google');
-                        
-                    });
-                }
-                else{
-                    history.goBack();
-                }
+    const onLogout = (e) => {
+        if($token){
+        Swal.fire({
+            title: 'Cảnh báo',
+            text: "Bạn có chắc chắn muốn đăng xuất?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Hủy',
+            confirmButtonText: 'Đăng xuất'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('http://localhost:8000/api/users/logout', {
+                    method: "POST",
+                    headers: {"Authorization": `Bearer `+$token}
+                    })
+                .then(res => res.json())
+                .then(json => {
+                    window.localStorage.removeItem('access_token');
+                    window.localStorage.removeItem('nameAccount');
+                    window.localStorage.removeItem('avatar');
+                    window.localStorage.removeItem('avatar_google');
+                    
                 });
             }
-            };
-        useEffect(() => {
-           onLogout();
-        }, [])
+            else{
+                history.goBack();
+            }
+            });
+        }
+        };
+    const checkRole = () =>{
+        fetch("http://localhost:8000/api/admin/checkAdmin", {
+            method: "POST",
+            headers: {"Authorization": `Bearer `+$token}
+            })
+        .then(response => response.json())
+        .then(data =>  {
+            if(data.url){
+                let url = data.url;
+                history.push(url)
+            }
+            else{
+                if(data.role == 1 || data.role == 2){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành Công',
+                        text: 'Đăng nhập thành công',
+                    })
+                    history.push("/admin/dashboard")
+                }
+                else{
+                    onLogout()
+                }
+            }
+        });
+    }
+    useEffect(() => {
+        if($token){
+            checkRole()
+        }
+    }, [])
     return (
         <div className="relative py-28 px-5 bg-cover bg-center bg-no-repeat" style={{backgroundImage: `url("./assets/images/bg/about.jpg")`}}>
             <div className="bg-penetration-5 absolute inset-0 w-full h-full"></div>
@@ -116,10 +148,11 @@ const LoginAdmin = (props) => {
                         <form onSubmit={loginAdmin} className="mt-10 font-medium">
                             <div>
                                 <input type="email" placeholder="Email" name="email" onChange={(event) => addUser(event)} className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" required/>
+                                <span className="text-red-500 text-sm">{error.email?error.email[0]:""}</span>
                             </div>
                             <div className="mt-7">                
                                 <input type="password" placeholder="Mật khẩu" name="password"   onChange={(event) => addUser(event)} className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2" required/>
-                                <span className="text-red-500 text-sm"> Mật khẩu không khớp</span>
+                                <span className="text-red-500 text-sm">{error.password?error.password[0]:""}</span>
                             </div>
                             <div className="mt-7 flex">
                                 <label htmlFor="remember_me" className="inline-flex items-center w-full cursor-pointer">

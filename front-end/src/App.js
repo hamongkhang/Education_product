@@ -35,7 +35,7 @@ function App() {
                         <Router>
                             <Switch>
                             <Route path="/admin" exact component={LoginAdmin} />
-                          <Route path="/admin/:path" component={Admin} />
+                            <Route path="/admin/:path" component={Admin} />
                                 <Route
                                     path="/tai-khoan"
                                     component={UserProfile}

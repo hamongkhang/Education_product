@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react"
 import { useRouteMatch } from 'react-router';
-import JoditEditor from "jodit-react";
 import { toast } from 'react-toastify';
 import {useHistory} from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css';

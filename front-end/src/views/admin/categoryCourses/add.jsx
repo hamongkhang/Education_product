@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from "react"
 import { useRouteMatch } from 'react-router';
-import JoditEditor from "jodit-react";
 import { toast } from 'react-toastify';
 import {useHistory} from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css';
+import { DraftjsWidget } from "../../../components/DraftjsWidget";
 toast.configure();
 
 const AddCategoryCourse = () => {
@@ -94,6 +94,11 @@ const AddCategoryCourse = () => {
             setCategory({...category,[_name]:_value});
         }
     };
+    const onChangeEditor = (value) =>{
+        if(category.description != value){
+            setCategory({...category,["description"]:value})
+        }
+    }
     useEffect(() => {}, [])
     return (
         <section className=" py-1">
@@ -147,13 +152,7 @@ const AddCategoryCourse = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2">
                                     Mô tả
                                 </label>
-                                <JoditEditor
-                                    // ref={editor}
-                                    value={category.description}
-                                    config={config}
-                                    tabIndex={1}
-                                    onBlur={newContent => setCategory({...category,["description"]:newContent})} 
-                                />
+                                <DraftjsWidget value="" onChange={(editorState)=>onChangeEditor(editorState)}/>
                                 <span className="text-red-500 text-sm">{error.description?error.description[0]:""}</span>
                             </div>
                         </div>

@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from "react"
-import { useRouteMatch } from 'react-router';
-import JoditEditor from "jodit-react";
 import { toast } from 'react-toastify';
 import {useHistory} from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css';
+import { DraftjsWidget } from "../../../components/DraftjsWidget";
 toast.configure();
 
 
@@ -203,6 +202,22 @@ const AddCourse = () => {
         document.getElementsByName("promotion_price")[0].value=promotion_price
 
     }
+    const onChangeEditor = (value,type) =>{
+        if(type == "target" && course.target != value){
+            setCourse({...course,["target"]:value})
+            console.log(value);
+        }
+        else if(type == "benefit" && course.benefit != value){
+            setCourse({...course,["benefit"]:value})
+            console.log(value);
+
+        }
+        else if(type == "description" && course.description != value){
+            setCourse({...course,["description"]:value})
+            console.log(value);
+
+        }
+    }
     useEffect(() => {
         if($token){
            getCategoryCourses()
@@ -318,13 +333,7 @@ const AddCourse = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2">
                                     Mục tiêu
                                 </label>
-                                <JoditEditor
-                                    // ref={editor}
-                                    value={course.target}
-                                    config={config}
-                                    tabIndex={1}
-                                    onBlur={newContent => setCourse({...course,["target"]:newContent})} 
-                                />
+                                <DraftjsWidget value="" onChange={(editorState)=>onChangeEditor(editorState,"target")}/>
                                 <span className="text-red-500 text-sm">{error.target?error.target[0]:""}</span>
                             </div>
                         </div>
@@ -333,13 +342,7 @@ const AddCourse = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2">
                                     Lợi ích
                                 </label>
-                                <JoditEditor
-                                    // ref={editor}
-                                    value={course.benefit}
-                                    config={config}
-                                    tabIndex={1}
-                                    onBlur={newContent => setCourse({...course,["benefit"]:newContent})} 
-                                />
+                                <DraftjsWidget value="" onChange={(editorState)=>onChangeEditor(editorState,"benefit")}/>
                                 <span className="text-red-500 text-sm">{error.benefit?error.benefit[0]:""}</span>
                             </div>
                         </div>
@@ -348,13 +351,7 @@ const AddCourse = () => {
                                 <label className="block uppercase text-gray-600 text-xs font-bold mb-2">
                                     Mô tả
                                 </label>
-                                <JoditEditor
-                                    // ref={editor}
-                                    value={course.description}
-                                    config={config}
-                                    tabIndex={1}
-                                    onBlur={newContent => setCourse({...course,["description"]:newContent})} 
-                                />
+                                <DraftjsWidget value="" onChange={(editorState)=>onChangeEditor(editorState,"description")}/>
                                 <span className="text-red-500 text-sm">{error.description?error.description[0]:""}</span>
                             </div>
                         </div>
