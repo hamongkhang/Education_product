@@ -18,7 +18,6 @@ const OrderItem = (props) => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data.data);
                 setHistory(data.data.reverse());
             });
     };
@@ -75,7 +74,7 @@ const OrderItem = (props) => {
             <div className={`overflow-hidden sm1:ml-5 ${classOrder} mt-3`}>
                 {history &&
                     history.map((item, i) => {
-                        console.log(item);
+                        if(item){
                         return (
                             <OrderDetailsItem
                                 key={i}
@@ -83,6 +82,10 @@ const OrderItem = (props) => {
                                 type={type[i]}
                             />
                         );
+                        }else{
+                            <>
+                            </>
+                        }
                     })}
             </div>
         </div>

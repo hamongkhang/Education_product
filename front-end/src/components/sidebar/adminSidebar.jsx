@@ -17,6 +17,13 @@ const sidebar = [
     }
     ,
     {
+        name: "Exam Result",
+        icon: "fas fa-book-reader",
+        link: "/admin/exam/result",
+        role: 1
+    }
+    ,
+    {
         name: "Banners",
         icon: "fas fa-address-card",
         link: "/admin/banner",

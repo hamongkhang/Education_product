@@ -177,6 +177,7 @@ const ExamDetail = ({
                         examLesson2={examLesson2}
                         examLesson={examLesson}
                         handleExamLesson={handleExamLesson}
+                        examDetailId={examDetails.id}
                     />
                 </div>
             </div>

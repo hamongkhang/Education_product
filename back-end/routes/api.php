@@ -54,6 +54,7 @@ Route::post('/users/blockActiveUser', [App\Http\Controllers\UsersController::cla
 Route::post('/users/changeDecentralise', [App\Http\Controllers\UsersController::class, 'changeDecentralise'])->name('user.changeDecentralise');
 Route::get('/admins/getAllAdmin', [App\Http\Controllers\AdminController::class, 'getAllAdmin'])->name('user.getAllAdmin');
 Route::post('/admins/changeCentralise', [App\Http\Controllers\AdminController::class, 'changeCentralise'])->name('user.changeCentralise');
+Route::post('/exam/createExamResult', [App\Http\Controllers\ExamController::class, 'createResult'])->name('exam.createExamResult');
 
 
 
@@ -243,6 +244,9 @@ Route::post('/exam/updateQuestionAdmin', [App\Http\Controllers\ExamController::c
 Route::post('/exam/deleteQuestionAnswer', [App\Http\Controllers\ExamController::class, 'deleteQuestionAnswer'])->name('exam.deleteQuestionAnswer');
 Route::post('/exam/addQuestionAnswer', [App\Http\Controllers\ExamController::class, 'addQuestionAnswer'])->name('exam.addQuestionAnswer');
 Route::post('/exam/addQuestionAnswerFileQuestion', [App\Http\Controllers\ExamController::class, 'addQuestionAnswerFileQuestion'])->name('exam.addQuestionAnswerFileQuestion');
+Route::post('/exam/getOneResult', [App\Http\Controllers\ExamController::class, 'getOneResult'])->name('exam.getOneResult');
+Route::get('/exam/getResult', [App\Http\Controllers\ExamController::class, 'getResult'])->name('exam.getResult');
+Route::post('/exam/deleteResult', [App\Http\Controllers\ExamController::class, 'deleteResult'])->name('exam.deleteResult');
 //import_export file//
 Route::post('/users/importUser',[App\Http\Controllers\UsersController::class,'importUser'])->name('users.importUser');
 Route::get('/users/exportUserLink',[App\Http\Controllers\UsersController::class,'exportUserLink'])->name('users.exportUserLink');
