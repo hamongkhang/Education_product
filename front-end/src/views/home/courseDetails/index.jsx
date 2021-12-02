@@ -40,7 +40,7 @@ const CourseDetails = (props) => {
                 .then((json) => {
                     changeRender();
                     if (json.success) {
-                        toast.success(`'Thêm vào giỏ hàng thành công!`, {
+                        toast.success(`Thêm vào giỏ hàng thành công!`, {
                             position: 'top-center',
                             autoClose: 5000,
                             hideProgressBar: false,

@@ -5,13 +5,16 @@ import 'slick-carousel/slick/slick-theme.css';
 import BookItem from './bookItem';
 import { Link } from 'react-router-dom';
 import { NextArrow, PrevArrow } from '../customArrowsSlider';
+import Preloader from '../preloader';
 
 const BookList = (props) => {
     const $token = localStorage.getItem('access_token');
+    const [isLoading, setIsLoading] = useState(true);
     const [book, setBook] = useState([]);
     const { changeRender } = props;
 
     useEffect(() => {
+        setIsLoading(true);
         if ($token) {
             fetch('http://localhost:8000/api/getBooks', {
                 method: 'GET',
@@ -19,13 +22,12 @@ const BookList = (props) => {
             })
                 .then((response) => response.json())
                 .then((data) => setBook(data.books));
-            return () => {};
         } else {
             fetch('http://localhost:8000/api/getBooks')
                 .then((response) => response.json())
                 .then((data) => setBook(data.books));
-            return () => {};
         }
+        setIsLoading(false);
     }, []);
     const settings = {
         infinite: true,
@@ -56,6 +58,7 @@ const BookList = (props) => {
     };
     return (
         <div className="relative">
+            {isLoading && <Preloader />}
             <div className="bg-purple-800 shadow-md rounded-md h-12 my-10 flex items-center justify-between relative overflow-hidden z-0 text-white">
                 {/* <div className="w-40 h-40 bg-green-600 transform rotate-45 absolute z-0 -right-16"/> */}
                 <div className="w-40 h-40 rounded-full bg-yellow-400 border-4 border-white absolute z-0 -top-3/4 -right-5" />

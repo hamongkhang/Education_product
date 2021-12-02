@@ -20,7 +20,10 @@ export const LeftDocument = (props) => {
                                                 ) {
                                                     return (
                                                         <li className="other-doc-left__list--li">
-                                                            <a href="#">
+                                                            <a
+                                                                href={`http://localhost:8000${item2.path}${item2.file}`}
+                                                                download
+                                                            >
                                                                 {item2.name}
                                                             </a>
                                                         </li>

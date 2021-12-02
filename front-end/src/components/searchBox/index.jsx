@@ -1,6 +1,15 @@
 import React from 'react';
 
 const SearchBox = (props) => {
+    const handleSearchBox = () => {
+        const searchArea = document.querySelector('.search-area'),
+            searchOverlay = document.querySelector('.search-overlay');
+
+        searchArea.classList.remove('translate-y-0');
+        searchArea.classList.add('-translate-y-full');
+        searchOverlay.classList.remove('translate-y-0');
+        searchOverlay.classList.add('translate-y-full');
+    };
     return (
         <div>
             <div className="search-area fixed transform -translate-y-full duration-300 top-0 right-0 left-0 z-40 bg-white h-2/5">
@@ -24,7 +33,10 @@ const SearchBox = (props) => {
                     </form>
                 </div>
             </div>
-            <div className="search-overlay fixed transform translate-y-full duration-300 cursor-pointer right-0 bottom-0 z-30 left-0 bg-penetration-5 h-3/5" />
+            <div
+                onClick={handleSearchBox}
+                className="search-overlay fixed transform translate-y-full duration-300 cursor-pointer right-0 bottom-0 z-30 left-0 bg-penetration-5 h-3/5"
+            />
         </div>
     );
 };

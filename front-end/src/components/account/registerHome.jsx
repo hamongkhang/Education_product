@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import Preloader from '../preloader';
 
 const RegisterHome = (props) => {
     const [registerUser, setRegisterUser] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
     const [textError, setTextError] = useState({
         fullName: '',
         nameAccount: '',
@@ -29,6 +31,7 @@ const RegisterHome = (props) => {
 
     const onRegister = (e) => {
         e.preventDefault();
+        setIsLoading(true);
         if (
             registerUser.email != '' &&
             registerUser.password != '' &&
@@ -113,10 +116,12 @@ const RegisterHome = (props) => {
                         // }
                     }
                     setTextError(validator);
+                    setIsLoading(false);
                 });
         } else {
             alert('Không được bỏ trống');
         }
+        setIsLoading(false);
     };
     return (
         <section
@@ -131,6 +136,7 @@ const RegisterHome = (props) => {
             <div className="absolute -bottom-1 md:right-20 right-2/3 transform transition animate-spin text-8xl">
                 <i class="fad fa-ruler-triangle text-pink-200"></i>
             </div> */}
+            {isLoading && <Preloader />}
             <div className="flex items-center justify-center bg-indigo-200 shadow-md lg:w-2/4 md:w-3/4  md:mx-auto rounded-lg md:my-10 m-5">
                 <form
                     onSubmit={onRegister}

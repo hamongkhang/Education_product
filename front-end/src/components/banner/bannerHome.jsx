@@ -3,6 +3,7 @@ import BannerItem from './bannerItem';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import Preloader from '../preloader';
 
 const NextArrow = (props) => (
     <div
@@ -23,14 +24,16 @@ const PrevArrow = (props) => (
 
 const BannerHome = (props) => {
     const [banner, setBanner] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        setIsLoading(true);
         fetch('http://localhost:8000/api/banner/getBanner', {
             method: 'GET',
         })
             .then((response) => response.json())
             .then((data) => setBanner(data.data));
-        return () => {};
+        setIsLoading(false);
     }, []);
     const settings = {
         infinite: true,
@@ -45,6 +48,7 @@ const BannerHome = (props) => {
     };
     return (
         <div className="group">
+            {isLoading && <Preloader />}
             <Slider {...settings}>
                 {banner.map((item, i) => {
                     return <BannerItem data={item} />;

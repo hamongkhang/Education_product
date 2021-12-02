@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import CartItem from './cartItem';
 import { toast } from 'react-toastify';
+import Preloader from '../preloader';
 
 toast.configure();
 
@@ -9,9 +10,20 @@ const Cart = (props) => {
     const [cart, setCart] = useState([]);
     const [render, setRender] = useState(false);
     const [payment, setPayment] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const $token = localStorage.getItem('access_token');
 
+    const handleCart = () => {
+        const cartArea = document.querySelector('.cart-area'),
+            cartOverlay = document.querySelector('.cart-overlay');
+        cartArea.classList.remove('translate-x-0');
+        cartArea.classList.add('translate-x-full');
+        cartOverlay.classList.remove('translate-x-0');
+        cartOverlay.classList.add('-translate-x-full');
+    };
+
     const payMent = () => {
+        setIsLoading(true);
         if ($token) {
             if (total != 0) {
                 const _formData = new FormData();
@@ -25,9 +37,9 @@ const Cart = (props) => {
                 })
                     .then((response) => response.json())
                     .then((data) => {
+                        setIsLoading(false);
                         window.location.href = data.url;
                     });
-                return () => {};
             } else {
                 // alert('Không cần thanh toán');
                 toast.info(`Không cần thanh toán!`, {
@@ -52,9 +64,11 @@ const Cart = (props) => {
                 progress: undefined,
             });
         }
+        setIsLoading(false);
     };
 
     const updateCart = (id, type, amount) => {
+        setIsLoading(true);
         const _formData = new FormData();
         _formData.append('product_id', id);
         _formData.append('type', type);
@@ -72,9 +86,11 @@ const Cart = (props) => {
                 } else {
                     setRender(!render);
                 }
+                setIsLoading(false);
             });
     };
     const removeCart = (product_id, type) => {
+        setIsLoading(true);
         const _formData = new FormData();
         _formData.append('product_id', product_id);
         _formData.append('type', type);
@@ -88,9 +104,11 @@ const Cart = (props) => {
             .then((json) => {
                 setRender(!render);
                 console.log(json.description);
+                setIsLoading(false);
             });
     };
     const getCart = () => {
+        setIsLoading(true);
         const requestOptions = {
             method: 'POST',
             headers: { Authorization: `Bearer ` + $token },
@@ -106,6 +124,7 @@ const Cart = (props) => {
                     });
                     setTotal(total);
                 }
+                setIsLoading(false);
             });
     };
     useEffect(() => {
@@ -116,12 +135,16 @@ const Cart = (props) => {
 
     return (
         <div>
+            {isLoading && <Preloader />}
             <div className="fixed cart-area transform translate-x-full top-0 right-0 bottom-0 overflow-hidden bg-white w-full md:w-1/2 lg:w-2/6 shadow-2xl z-30 duration-500">
                 <div className="flex justify-between items-center h-19 mb-5 shadow-md px-5 py-3">
                     <span className="text-lg font-semibold tracking-wide uppercase">
                         Giỏ hàng
                     </span>
-                    <button className="text-2xl cart-close hover:text-red-500 duration-200">
+                    <button
+                        onClick={handleCart}
+                        className="text-2xl cart-close hover:text-red-500 duration-200"
+                    >
                         <i className="far fa-times"></i>
                     </button>
                 </div>
@@ -157,7 +180,10 @@ const Cart = (props) => {
                     </div>
                 </div>
             </div>
-            <div className="cart-overlay fixed top-0 bottom-0 left-0 z-30 transform -translate-x-full duration-500 bg-penetration-5 cursor-pointer w-0 md:w-1/2 lg:w-4/6"></div>
+            <div
+                onClick={handleCart}
+                className="cart-overlay fixed top-0 bottom-0 left-0 z-30 transform -translate-x-full duration-500 bg-penetration-5 cursor-pointer w-0 md:w-1/2 lg:w-4/6"
+            ></div>
         </div>
     );
 };

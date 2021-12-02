@@ -3,12 +3,13 @@ import { BannerBook } from '../../../components/banner';
 import { CourseItem } from '../../../components/courses';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import Preloader from '../../../components/preloader';
 
 const Books = (props) => {
     const [show, setShow] = useState(8);
     const [pageItem, setPageItem] = useState(1);
     const [page, setPage] = useState(0);
-
+    const [isLoading, setIsLoading] = useState(true);
     const [course, setCourse] = useState([]);
     const [course1, setCourse1] = useState([]);
     const [search, setSearch] = useState([]);
@@ -19,11 +20,10 @@ const Books = (props) => {
 
     const addCourse = (event) => {
         const target = event.target;
-        const field = target.name;
-        const value = target.value;
         tinhTongSecond(target.value);
         const _formData = new FormData();
         _formData.append('id', target.value);
+        setIsLoading(true);
         if ($token) {
             fetch('http://localhost:8000/api/getCourseSearch', {
                 method: 'POST',
@@ -34,8 +34,8 @@ const Books = (props) => {
                 .then((data) => {
                     setCourse(data.data);
                     setCourse1(data.data);
+                    setIsLoading(false);
                 });
-            return () => {};
         } else {
             fetch('http://localhost:8000/api/getCourseSearch', {
                 method: 'POST',
@@ -45,19 +45,23 @@ const Books = (props) => {
                 .then((data) => {
                     setCourse(data.data);
                     setCourse1(data.data);
+                    setIsLoading(false);
                 });
-            return () => {};
         }
     };
 
     const getAdmin = () => {
+        setIsLoading(true);
         fetch('http://localhost:8000/api/users/getAdmin')
             .then((response) => response.json())
-            .then((data) => setAdmin(data.data));
-        return () => {};
+            .then((data) => {
+                setAdmin(data.data);
+                setIsLoading(false);
+            });
     };
 
     const getApiSecond = () => {
+        setIsLoading(true);
         fetch('http://localhost:8000/api/getCourses', {
             method: 'GET',
         })
@@ -65,11 +69,12 @@ const Books = (props) => {
             .then((data) => {
                 setCourse(data.data);
                 setCourse1(data.data);
+                setIsLoading(false);
             });
-        return () => {};
     };
 
     const tinhTong = () => {
+        setIsLoading(true);
         fetch('http://localhost:8000/api/getCourseHome', {
             method: 'GET',
         })
@@ -77,6 +82,7 @@ const Books = (props) => {
             .then(
                 (data) => setCount(data.data),
                 (data) => setSearch(data.data),
+                setIsLoading(false),
             );
         return () => {
             for (var i = 0; i < count.length; i++) {
@@ -88,6 +94,7 @@ const Books = (props) => {
     };
 
     const tinhTongSecond = (id) => {
+        setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id', id);
         fetch('http://localhost:8000/api/getCountSearch', {
@@ -95,7 +102,10 @@ const Books = (props) => {
             body: _formData,
         })
             .then((response) => response.json())
-            .then((data) => setCount(data.data));
+            .then((data) => {
+                setCount(data.data);
+                setIsLoading(false);
+            });
         return () => {
             for (var i = 0; i < count.length; i++) {
                 if (count[i] == null) {
@@ -106,12 +116,15 @@ const Books = (props) => {
     };
 
     const getCategoryCourses = () => {
+        setIsLoading(true);
         fetch('http://localhost:8000/api/getCategoryCourses', {
             method: 'GET',
         })
             .then((response) => response.json())
-            .then((data) => setCategoryCourse(data.data));
-        return () => {};
+            .then((data) => {
+                setCategoryCourse(data.data);
+                setIsLoading(false);
+            });
     };
 
     const handleChange = (event, value) => {
@@ -141,6 +154,7 @@ const Books = (props) => {
     return (
         <>
             <BannerBook />
+            {isLoading && <Preloader />}
             <div className="xl:w-4/5 xl:px-0 px-4 w-full relative left-1/2 transform -translate-x-1/2 mt-10">
                 <div className="bg-purple-800 w-full h-12 md:h-16 rounded-md mb-10 flex items-center justify-between px-3 md:px-6">
                     <div className="font-medium text-white uppercase">
@@ -157,11 +171,12 @@ const Books = (props) => {
                             <option name="courseSearch" value="allCourse">
                                 Toàn bộ các khóa học
                             </option>
-                            {categoryCourse.map((item, index) => (
-                                <option name="courseSearch" value={item.id}>
-                                    {item.name}
-                                </option>
-                            ))}
+                            {categoryCourse &&
+                                categoryCourse.map((item, index) => (
+                                    <option name="courseSearch" value={item.id}>
+                                        {item.name}
+                                    </option>
+                                ))}
                         </select>
                     </div>
                 </div>

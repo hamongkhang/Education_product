@@ -2,16 +2,19 @@ import React, { useState, useEffect, Profiler } from 'react';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { toast } from 'react-toastify';
+import Preloader from '../preloader';
 
 toast.configure();
 
 const Avt = (props) => {
+    const [isLoading, setIsLoading] = useState(false);
     const $link = 'http://localhost:8000/upload/images/avatar/';
     const history = useHistory();
     const $token = localStorage.getItem('access_token');
     const addAvatar = (event) => {
         const target = event.target;
         if ($token) {
+            setIsLoading(true);
             window.localStorage.removeItem('avatar_google');
             window.localStorage.setItem('avatar', event.target.files[0].name);
             const _formData = new FormData();
@@ -27,6 +30,7 @@ const Avt = (props) => {
             )
                 .then((res) => res.json())
                 .then((json) => {
+                    setIsLoading(false);
                     if (!json.error) {
                         // alert('Update avatar thành công');
                         toast.success(`Cập nhật ảnh đại diện thành công!`, {
@@ -81,6 +85,7 @@ const Avt = (props) => {
     if (localStorage.getItem('avatar_google')) {
         return (
             <form encType="multipart/form-data">
+                {isLoading && <Preloader />}
                 <div className="group">
                     <div className="mx-auto relative w-64 h-64 md:w-80 md:h-80 border-red-600 border rounded-lg mb-10 md:mb-0">
                         <img

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import Preloader from '../preloader';
 
 const CodeVerificationForgot = (props) => {
     const [changePasswordForgot, setChangePasswordForgot] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
     const history = useHistory();
 
     const addChangePasswordForgot = (event) => {
@@ -16,6 +18,7 @@ const CodeVerificationForgot = (props) => {
         });
     };
     const onChangePasswordForgot = (e) => {
+        setIsLoading(true);
         e.preventDefault();
         if (
             changePasswordForgot.code != '' &&
@@ -51,6 +54,7 @@ const CodeVerificationForgot = (props) => {
                     } else {
                         alert(json.error);
                     }
+                    setIsLoading(false);
                 });
         } else {
             alert('Không được bỏ trống');
@@ -61,6 +65,7 @@ const CodeVerificationForgot = (props) => {
             className="relative py-28 px-5 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url("./assets/images/bg/about.jpg")` }}
         >
+            {isLoading && <Preloader />}
             <div className="bg-penetration-5 absolute inset-0 w-full h-full"></div>
             <div className="relative flex flex-col sm:justify-center items-center mt-5">
                 <div className="relative sm:max-w-sm w-full">

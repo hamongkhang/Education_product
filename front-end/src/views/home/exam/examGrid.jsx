@@ -47,12 +47,14 @@ const ExamGrid = (props) => {
                     }
                 })}
             </div>
-            {
-                examRight.length > 5 &&
-                <div className="online-exam-right__seemore" onClick={handleShow}>
-                <p>{txt}</p>
-            </div>
-            }
+            {examRight.length > 5 && (
+                <div
+                    className="online-exam-right__seemore"
+                    onClick={handleShow}
+                >
+                    <p>{txt}</p>
+                </div>
+            )}
         </>
     );
 };

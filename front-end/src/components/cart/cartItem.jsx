@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Preloader from '../preloader';
 
 toast.configure();
 
@@ -9,6 +10,7 @@ const CartItem = (props) => {
     const { updateCart } = props;
     const $token = localStorage.getItem('access_token');
     const [product, setProduct] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
     const [amount, setAmount] = useState(props.quantity);
     const [amountBook, setAmountBook] = useState('');
     const $linkBook = 'http://localhost:8000/upload/images/book/';
@@ -37,6 +39,7 @@ const CartItem = (props) => {
     };
 
     const getOneBook = (id) => {
+        setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id', id);
         const requestOptions = {
@@ -58,8 +61,10 @@ const CartItem = (props) => {
                     setAmountBook(json.book.quantity);
                 }
             });
+        setIsLoading(false);
     };
     const getOneCourse = (id) => {
+        setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id', id);
         const requestOptions = {
@@ -80,6 +85,7 @@ const CartItem = (props) => {
                     setProduct(json.course);
                 }
             });
+        setIsLoading(false);
     };
     useEffect(() => {
         if ($token) {
@@ -109,6 +115,7 @@ const CartItem = (props) => {
                     />
                 </div>
             )}
+            {isLoading && <Preloader />}
             <div className="pl-5 w-9/12">
                 <div className="flex items-start">
                     {props.type === 'book' ? (

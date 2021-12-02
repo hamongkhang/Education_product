@@ -3,8 +3,10 @@ import { BannerBook } from '../../../components/banner';
 import { BookItem } from '../../../components/books';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import Preloader from '../../../components/preloader';
 
 const Books = (props) => {
+    const { changeRender } = props;
     const $token = localStorage.getItem('access_token');
     const [book, setBook] = useState([]);
     const [books1, setBooks1] = useState([]);
@@ -12,12 +14,14 @@ const Books = (props) => {
     const [bookSearch, setBookSearch] = useState([]);
     const [show, setShow] = useState(8);
     const [pageItem, setPageItem] = useState(1);
+    const [isLoading, setIsLoading] = useState(true);
     const [page, setPage] = useState(0);
     const handleChange = (event, value) => {
         setPageItem(value);
         renderBooks(value);
     };
     const addBookType = (event) => {
+        setIsLoading(true);
         const target = event.target;
         const field = target.name;
         const value = target.value;
@@ -33,8 +37,8 @@ const Books = (props) => {
                 .then((data) => {
                     setBook(data.bookTypeSearch);
                     setBooks1(data.bookTypeSearch);
+                    setIsLoading(false);
                 });
-            return () => {};
         } else {
             fetch('http://localhost:8000/api/getBookTypeSearch', {
                 method: 'POST',
@@ -44,8 +48,8 @@ const Books = (props) => {
                 .then((data) => {
                     setBook(data.bookTypeSearch);
                     setBooks1(data.bookTypeSearch);
+                    setIsLoading(false);
                 });
-            return () => {};
         }
     };
 
@@ -56,15 +60,20 @@ const Books = (props) => {
     };
 
     const getApiFirst = () => {
+        setIsLoading(true);
         fetch('http://localhost:8000/api/getBookTypes', {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
             .then((response) => response.json())
-            .then((data) => setBookType(data.book_types));
-        return () => {};
+            .then((data) => {
+                setBookType(data.book_types);
+                setIsLoading(false);
+            });
     };
+
     const getApiSecond = () => {
+        setIsLoading(true);
         fetch('http://localhost:8000/api/getBooks', {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
@@ -73,8 +82,8 @@ const Books = (props) => {
             .then((data) => {
                 setBook(data.books);
                 setBooks1(data.books);
+                setIsLoading(false);
             });
-        return () => {};
     };
 
     useEffect(() => {
@@ -95,6 +104,7 @@ const Books = (props) => {
     }, [books1]);
     return (
         <>
+            {isLoading && <Preloader />}
             <BannerBook />
             <div className="xl:w-4/5 xl:px-0 px-4 w-full relative left-1/2 transform -translate-x-1/2 mt-10">
                 <div className="bg-purple-800 w-full h-12 md:h-16 rounded-md mb-10 flex items-center justify-between px-3 md:px-6">
@@ -122,7 +132,11 @@ const Books = (props) => {
                 </div>
                 <div className="w-full grid mx-auto pl-2 grid-cols-1 gap-0 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {book.map((item, index) => (
-                        <BookItem key={index} {...item} />
+                        <BookItem
+                            key={index}
+                            {...item}
+                            changeRender={changeRender}
+                        />
                     ))}
                 </div>
                 <div className="flex justify-center mb-10">

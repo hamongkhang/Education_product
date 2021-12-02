@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { LeftDocument } from './Left_document';
 import RightDocument from './Right_document';
 import { BannerBook } from '../../../components/banner';
+import Preloader from '../../../components/preloader';
 
 const OtherMaterials = () => {
     const [listDocument, setListDocument] = useState([]);
     const [listCategory, setListCategory] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const $token = localStorage.getItem('access_token');
 
     const getListDocument = () => {
+        setIsLoading(true);
         fetch('http://localhost:8000/api/freeDocument/getFreeDocument', {
             method: 'GET',
         })
@@ -16,14 +19,15 @@ const OtherMaterials = () => {
             .then((data) => {
                 setListDocument(data.data[1]);
                 setListCategory(data.data[0]);
+                setIsLoading(false);
             });
-        return () => {};
     };
     useEffect(() => {
         getListDocument();
     }, []);
     return (
         <>
+            {isLoading && <Preloader />}
             <BannerBook />
             <div className="other-doc mt-10">
                 <LeftDocument document={listDocument} category={listCategory} />

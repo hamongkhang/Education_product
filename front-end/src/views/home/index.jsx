@@ -19,12 +19,19 @@ import Home from './home';
 import ITinTeaching from './ITinTeaching';
 import OtherMaterials from './otherMaterials';
 import ArticleDetails from './articleDetails';
+import ArticleDetails2 from './articleDetails2';
 import ExamIndex from './exam';
 import CheckResultExam from '../../components/cart/checkResultExam';
+import ScrollIndicator from '../../components/scrollIndicator';
+import Footer from '../../components/footer';
+import Call from '../../components/call';
+import Chat from '../../components/chat';
+import SearchBox from '../../components/searchBox';
+import Cart from '../../components/cart';
 
 const HomePages = (props) => {
     const { changeRender } = props;
-    const [reRender, setReRender] = useState(false); 
+    const [reRender, setReRender] = useState(false);
 
     const [checkLoggedIn, setCheckLoggedIn] = useState(false);
 
@@ -48,6 +55,7 @@ const HomePages = (props) => {
     return (
         <>
             <Header setReRender={setReRender} checkLoggedIn={checkLoggedIn} />
+            <ScrollIndicator />
             <div>
                 {/*  Route home page */}
                 <Route path="/dang-ky" exact component={Register} />
@@ -75,7 +83,11 @@ const HomePages = (props) => {
                     exact
                     component={ResetPassword}
                 />
-                <Route path="/sach" exact component={Books} />
+                <Route
+                    path="/sach"
+                    exact
+                    component={() => <Books changeRender={changeRender} />}
+                />
                 <Route
                     path="/sach/:id"
                     exact
@@ -90,7 +102,11 @@ const HomePages = (props) => {
                         <CourseDetails changeRender={changeRender} />
                     )}
                 />
-                <Route path="/khoa-hoc" exact component={Courses} />
+                <Route
+                    path="/khoa-hoc"
+                    exact
+                    component={() => <Courses changeRender={changeRender} />}
+                />
                 <Route path="/tin-tuc" exact component={Articles} />
                 <Route
                     path="/it-trong-day-hoc"
@@ -113,6 +129,11 @@ const HomePages = (props) => {
                     component={ArticleDetails}
                 />
                 <Route
+                    path="/chi-tiet-tin-tuc/:id"
+                    exact
+                    component={ArticleDetails2}
+                />
+                <Route
                     path="/tai-lieu-khac/:id"
                     exact
                     component={OtherMaterials}
@@ -129,6 +150,11 @@ const HomePages = (props) => {
                     component={() => <Home changeRender={changeRender} />}
                 />
             </div>
+            <Call />
+            <Chat />
+            <Cart />
+            <SearchBox />
+            <Footer />
         </>
     );
 };

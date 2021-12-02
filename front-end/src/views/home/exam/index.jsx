@@ -4,6 +4,7 @@ import RightExam from './Right_exam';
 import { BannerBook } from '../../../components/banner';
 import { Route } from 'react-router-dom';
 import ExamDetail from './examDetail';
+import Preloader from '../../../components/preloader';
 
 const ExamIndex = () => {
     const [listExam, setListExam] = useState([]);
@@ -18,9 +19,11 @@ const ExamIndex = () => {
     const [timer, setTimer] = React.useState(0);
     const [correct, setCorrect] = React.useState(0);
     const countRef = React.useRef(null);
+    const [isLoading, setIsLoading] = useState(true);
     const $token = localStorage.getItem('access_token');
 
     const getQuestionAnswer = (id) => {
+        setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id', id);
         fetch('http://localhost:8000/api/exam/getQuestionAnswer/', {
@@ -33,11 +36,12 @@ const ExamIndex = () => {
                 setQuestion(data.data[0]);
                 setAnswer(data.data[1]);
                 setCorrect(data.data[2]);
+                setIsLoading(false);
             });
-        return () => {};
     };
 
     const getListDocument = () => {
+        setIsLoading(true);
         fetch('http://localhost:8000/api/exam/getExam', {
             method: 'GET',
         })
@@ -45,8 +49,8 @@ const ExamIndex = () => {
             .then((data) => {
                 setListExam(data.data[1]);
                 setListExamCategory(data.data[0]);
+                setIsLoading(false);
             });
-        return () => {};
     };
     const handleExamLesson = (id = -1, i, time) => {
         let data = listExam.find((item) => item.id === id);
@@ -83,6 +87,7 @@ const ExamIndex = () => {
     if (timer != -1) {
         return (
             <>
+                {isLoading && <Preloader />}
                 <BannerBook />
                 <div className="other-doc mt-10">
                     <LeftExam

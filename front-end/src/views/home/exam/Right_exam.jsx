@@ -5,31 +5,34 @@ import ExamGrid from './examGrid';
 import RightItem from './rightItem';
 
 const RightExamItem = (props) => {
-  const [historyExam,setHistoryExam] = useState([]);
-  const $token=localStorage.getItem('access_token');
+    const [historyExam, setHistoryExam] = useState([]);
+    const $token = localStorage.getItem('access_token');
 
-  const getExamHistory=()=>{
-    fetch("http://localhost:8000/api/history/getHistoryExam", {
-        method: "GET",
-        headers: {"Authorization": `Bearer `+$token},
-      })
-    .then(response => response.json())
-    .then(data =>  {
-      setHistoryExam(data.data);
-  });
-    return () => {
-}
-}
+    const getExamHistory = () => {
+        fetch('http://localhost:8000/api/history/getHistoryExam', {
+            method: 'GET',
+            headers: { Authorization: `Bearer ` + $token },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setHistoryExam(data.data);
+            });
+        return () => {};
+    };
 
-    const handleExam = itemCategory => {
-        let examTemp = props.examRight.filter(item => item.category_id === itemCategory.id);
-        return <ExamGrid
-            examRight={examTemp}
-            itemCategoryID={itemCategory.id}
-            handleExamDetails={props.handleExamDetails}
-            historyExam={historyExam}
-        />
-    }
+    const handleExam = (itemCategory) => {
+        let examTemp = props.examRight.filter(
+            (item) => item.category_id === itemCategory.id,
+        );
+        return (
+            <ExamGrid
+                examRight={examTemp}
+                itemCategoryID={itemCategory.id}
+                handleExamDetails={props.handleExamDetails}
+                historyExam={historyExam}
+            />
+        );
+    };
 
     useEffect(() => {
         getExamHistory();
@@ -51,9 +54,7 @@ const RightExamItem = (props) => {
                                     <h4>{itemCategory.name}</h4>
                                 </div>
                             </div>
-                            {
-                                handleExam(itemCategory)
-                            }
+                            {handleExam(itemCategory)}
                         </div>
                     );
                 })}

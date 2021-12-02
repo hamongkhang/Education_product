@@ -4,12 +4,14 @@ import Avt from './avt';
 import ChangeInfo from './changeInfo';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Preloader from '../preloader';
 
 toast.configure();
 
 const UserInfoProfile = (props) => {
     const [profile, setProfile] = useState([]);
     const [option, setOption] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const history = useHistory();
     const $token = localStorage.getItem('access_token');
     const requestOptions = {
@@ -27,11 +29,13 @@ const UserInfoProfile = (props) => {
     }, []);
 
     useEffect(() => {
+        setIsLoading(true);
         if ($token) {
             fetch('http://localhost:8000/api/users/userProfile', requestOptions)
                 .then((response) => response.json())
                 .then((data) => {
                     setProfile(data);
+                    setIsLoading(false);
                     if (data.sex === 'female') {
                         setOption({
                             option1: <option value="Khác">Khác</option>,
@@ -77,9 +81,11 @@ const UserInfoProfile = (props) => {
             });
             history.push('dang-nhap');
         }
+        setIsLoading(false);
     }, []);
     return (
         <div className="md:flex md:space-x-10">
+            {isLoading && <Preloader />}
             <Avt profile={profile} />
             <div className="space-y-10">
                 <ChangeInfo profile={profile} option={option} />

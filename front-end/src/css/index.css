@@ -264,6 +264,7 @@ body::-webkit-scrollbar-thumb {
 
 .custom-scroll-1::-webkit-scrollbar {
     width: 8px;
+    height: 8px;
 }
 
 .custom-scroll-1::-webkit-scrollbar-thumb {
@@ -281,6 +282,7 @@ body::-webkit-scrollbar-thumb {
 
 .custom-scroll-2::-webkit-scrollbar {
     width: 8px;
+    height: 8px;
 }
 
 .custom-scroll-2::-webkit-scrollbar-thumb {

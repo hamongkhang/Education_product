@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import Preloader from '../preloader';
 
 const ForgotPassword = (props) => {
     const [forgotPassword, setForgotPassword] = useState({});
     const history = useHistory();
+    const [isLoading, setIsLoading] = useState(false);
 
     const addForgotPassword = (event) => {
         const target = event.target;
@@ -18,6 +20,7 @@ const ForgotPassword = (props) => {
 
     const onForgotPassword = (e) => {
         e.preventDefault();
+        setIsLoading(true);
         if (forgotPassword.email != '') {
             const _formData = new FormData();
             _formData.append('email', forgotPassword.email);
@@ -38,6 +41,7 @@ const ForgotPassword = (props) => {
                     } else {
                         alert(json.error);
                     }
+                    setIsLoading(false);
                 });
         } else {
             alert('Không được bỏ trống');
@@ -48,6 +52,7 @@ const ForgotPassword = (props) => {
             className="relative py-28 px-5 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url("./assets/images/bg/about.jpg")` }}
         >
+            {isLoading && <Preloader />}
             <div className="bg-penetration-5 absolute inset-0 w-full h-full"></div>
             <div className="relative flex flex-col sm:justify-center items-center mt-5">
                 <div className="relative sm:max-w-sm w-full">

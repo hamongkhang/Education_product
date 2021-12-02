@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import Preloader from '../preloader';
 
 const CodeVerification = (props) => {
     const [codeRegister, setCodeRegister] = useState({});
     const history = useHistory();
+    const [isLoading, setIsLoading] = useState(false);
 
     const addCodeRegister = (event) => {
         const target = event.target;
@@ -16,6 +18,7 @@ const CodeVerification = (props) => {
         });
     };
     const onGetCodeRegister = (e) => {
+        setIsLoading(true);
         e.preventDefault();
         if (codeRegister.code != '') {
             const _formData = new FormData();
@@ -34,16 +37,19 @@ const CodeVerification = (props) => {
                     } else {
                         alert(json.error);
                     }
+                    setIsLoading(false);
                 });
         } else {
             alert('Không được bỏ trống');
         }
+        setIsLoading(false);
     };
     return (
         <div
             className="relative py-28 px-5 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url("./assets/images/bg/about.jpg")` }}
         >
+            {isLoading && <Preloader />}
             <div className="bg-penetration-5 absolute inset-0 w-full h-full"></div>
             <div className="relative flex flex-col sm:justify-center items-center mt-5">
                 <div className="relative sm:max-w-sm w-full">

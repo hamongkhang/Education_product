@@ -4,8 +4,7 @@ import Logo from './logo';
 
 const Navbar = (props) => {
     const { checkLoggedIn } = props;
-    const location = useLocation();
-    const [pathname, setPathname] = useState(location.pathname);
+    const { pathname } = useLocation();
     return (
         <div className="flex">
             <Logo />
@@ -126,6 +125,7 @@ const Navbar = (props) => {
                                 <a
                                     href="https://www.facebook.com/groups/867025087270480"
                                     target="_blank"
+                                    rel="noopener"
                                     className="hover whitespace-nowrap"
                                 >
                                     Diễn đàn

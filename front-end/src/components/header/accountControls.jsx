@@ -4,16 +4,38 @@ import { LoginName } from '../account';
 
 const AccountControls = (props) => {
     const { setReRender, checkLoggedIn } = props;
+    const handleCart = () => {
+        const cartArea = document.querySelector('.cart-area'),
+            cartOverlay = document.querySelector('.cart-overlay');
+        cartArea.classList.remove('translate-x-full');
+        cartArea.classList.add('translate-x-0');
+        cartOverlay.classList.remove('-translate-x-full');
+        cartOverlay.classList.add('translate-x-0');
+    };
+
+    const handleSearchBox = () => {
+        const searchArea = document.querySelector('.search-area'),
+            searchOverlay = document.querySelector('.search-overlay');
+
+        searchArea.classList.remove('-translate-y-full');
+        searchArea.classList.add('translate-y-0');
+        searchOverlay.classList.remove('translate-y-full');
+        searchOverlay.classList.add('translate-y-0');
+    };
 
     return (
         <div className="flex items-center space-x-3">
             <div className="text-white space-x-3">
                 {checkLoggedIn && (
                     <>
-                        <button className="search-open leading-5 left-1 px-3 p-2 rounded-md bg-indigo-600 hover:bg-indigo-700 duration-300">
+                        <button
+                            onClick={handleSearchBox}
+                            className="search-open leading-5 left-1 px-3 p-2 rounded-md bg-indigo-600 hover:bg-indigo-700 duration-300"
+                        >
                             <i className="far fa-search font-medium" />
                         </button>
                         <button
+                            onClick={handleCart}
                             type="button"
                             className="relative cart bg-green-700 hover:bg-green-800 pr-3 leading-5 p-2 duration-500 rounded-md"
                         >

@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Countdown from './Countdown';
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-
 
 export const ExamLesson = ({
     question,
@@ -12,63 +11,62 @@ export const ExamLesson = ({
     timer,
     correct,
     number,
-    examDetailId
+    examDetailId,
 }) => {
     const $link = 'http://localhost:8000/upload/images/exam/';
     const $token = localStorage.getItem('access_token');
     const [check, setCheck] = useState([]);
-    const [render, setRender] = useState(false); 
-    const counterRef = useRef(null)
+    const [render, setRender] = useState(false);
+    const counterRef = useRef(null);
     const history = useHistory();
     const onExam = (event) => {
-        event.preventDefault(); 
+        event.preventDefault();
         var tong = 0;
-        var chuoi="";
-        for(var i=0;i<number;i++){
-            if(correct[i].answer===check[i]){
-                tong=tong+1;
-            }else{
-                var j=i+1;
-                chuoi=chuoi+"["+j+"]";
+        var chuoi = '';
+        for (var i = 0; i < number; i++) {
+            if (correct[i].answer === check[i]) {
+                tong = tong + 1;
+            } else {
+                var j = i + 1;
+                chuoi = chuoi + '[' + j + ']';
             }
         }
-        for(var i=0;i<number;i++){
-            if(!check[i]){
-                check[i]="[]";
+        for (var i = 0; i < number; i++) {
+            if (!check[i]) {
+                check[i] = '[]';
             }
         }
         alert('Bạn là đúng ' + tong + ' / ' + number + ' câu');
         const _formData = new FormData();
-        _formData.append("name",localStorage.getItem('nameAccount'))
-        _formData.append("time",time*60-timer)
-        _formData.append("scores",tong)
-        _formData.append("length",check.length)
-        _formData.append("exam_id",examDetailId)
-        for(var i=0;i<check.length;i++){
-            _formData.append("answer"+i,check[i])
+        _formData.append('name', localStorage.getItem('nameAccount'));
+        _formData.append('time', time * 60 - timer);
+        _formData.append('scores', tong);
+        _formData.append('length', check.length);
+        _formData.append('exam_id', examDetailId);
+        for (var i = 0; i < check.length; i++) {
+            _formData.append('answer' + i, check[i]);
         }
-        _formData.append("answer_false",chuoi)
-        fetch("http://localhost:8000/api/exam/createExamResult", {
-            method: "POST",
-            body:_formData,
-            headers: {"Authorization": `Bearer `+$token}
-          })
-        .then(response => response.json())
-        .then(data =>  {
+        _formData.append('answer_false', chuoi);
+        fetch('http://localhost:8000/api/exam/createExamResult', {
+            method: 'POST',
+            body: _formData,
+            headers: { Authorization: `Bearer ` + $token },
         })
-        history.push("/")    
-    }
-    const addAnswer = (event,index) => {
+            .then((response) => response.json())
+            .then((data) => {});
+        history.push('/');
+    };
+    const addAnswer = (event, index) => {
         const target = event.target;
         const field = target.name;
         const value = target.value;
-        check[index]=value;
+        check[index] = value;
     };
 
     useEffect(() => {
-        if(number>0){
-            for(var i=0;i<number;i++){
-                check[i]="false";
+        if (number > 0) {
+            for (var i = 0; i < number; i++) {
+                check[i] = 'false';
             }
         }
         const fixedCounter = () => {
@@ -91,7 +89,7 @@ export const ExamLesson = ({
         return () => {
             window.removeEventListener('scroll', fixedCounter);
         };
-    }, [render])
+    }, [render]);
 
     return (
         <>
@@ -112,9 +110,15 @@ export const ExamLesson = ({
                                                           Câu&nbsp;{''}
                                                           {Number(index) + 1}:
                                                       </th>
-                                                      {(items.image)&&(items.image!=="Block") ? (
+                                                      {items.image &&
+                                                      items.image !==
+                                                          'Block' ? (
                                                           <td className="test-body__right">
-                                                                                           <p dangerouslySetInnerHTML={{ __html:items.question}}></p>
+                                                              <p
+                                                                  dangerouslySetInnerHTML={{
+                                                                      __html: items.question,
+                                                                  }}
+                                                              ></p>
 
                                                               <p className="test-body__right--img">
                                                                   <img
@@ -127,8 +131,11 @@ export const ExamLesson = ({
                                                           </td>
                                                       ) : (
                                                           <td className="test-body__right">
-                                                                                          <p dangerouslySetInnerHTML={{ __html:items.question}}></p>
-
+                                                              <p
+                                                                  dangerouslySetInnerHTML={{
+                                                                      __html: items.question,
+                                                                  }}
+                                                              ></p>
                                                           </td>
                                                       )}
                                                   </tr>
@@ -154,7 +161,8 @@ export const ExamLesson = ({
                                                                                       event,
                                                                                   ) =>
                                                                                       addAnswer(
-                                                                                          event,index
+                                                                                          event,
+                                                                                          index,
                                                                                       )
                                                                                   }
                                                                               />
@@ -168,7 +176,11 @@ export const ExamLesson = ({
                                                                           </label>
                                                                       </th>
                                                                       <td className="test-body__left--list-answer">
-                                                                      <p dangerouslySetInnerHTML={{ __html:item.answer}}></p>
+                                                                          <p
+                                                                              dangerouslySetInnerHTML={{
+                                                                                  __html: item.answer,
+                                                                              }}
+                                                                          ></p>
                                                                       </td>
                                                                   </tr>
                                                               </>
@@ -189,7 +201,10 @@ export const ExamLesson = ({
                         </button>
                     </form>
                 </div>
-                <div ref={counterRef} className="absolute top-0 px-5 py-3 right-0 bg-white shadow-lg rounded-md">
+                <div
+                    ref={counterRef}
+                    className="absolute top-0 px-5 py-3 right-0 bg-white shadow-lg rounded-md"
+                >
                     <Countdown timer={timer} />
                 </div>
             </div>

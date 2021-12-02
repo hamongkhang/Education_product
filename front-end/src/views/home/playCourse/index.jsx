@@ -6,6 +6,7 @@ import CourseName from './courseName';
 import CourseChapter from './courseChapter';
 import { useRouteMatch } from 'react-router';
 import { useHistory } from 'react-router-dom';
+import Preloader from '../../../components/preloader';
 
 import { toast } from 'react-toastify';
 
@@ -13,7 +14,7 @@ toast.configure();
 
 const PlayCourse = (props) => {
     const history = useHistory();
-    const [background, setBackground] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const [txt, setTxt] = useState('Nội dung');
     const match = useRouteMatch();
     const [classContent, setClassContent] = useState('translate-x-full');
@@ -44,6 +45,7 @@ const PlayCourse = (props) => {
     }, []);
 
     const getComment = (id) => {
+        setIsLoading(true);
         const _formData = new FormData();
         _formData.append('lessonId', id);
         const requestOptions = {
@@ -56,11 +58,12 @@ const PlayCourse = (props) => {
             .then((data) => {
                 setComment(data.data[0]);
                 setCommentReply(data.data[1]);
+                setIsLoading(false);
             });
-        return () => {};
     };
 
     const getOneCourse = () => {
+        setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id', match.params.id);
         const requestOptions = {
@@ -70,11 +73,14 @@ const PlayCourse = (props) => {
         };
         fetch('http://localhost:8000/api/getOneCourse', requestOptions)
             .then((response) => response.json())
-            .then((data) => setCourse(data.course));
-        return () => {};
+            .then((data) => {
+                setCourse(data.course);
+                setIsLoading(false);
+            });
     };
 
     const getTableOfContentAlpha = () => {
+        setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id', match.params.id);
         const requestOptions = {
@@ -87,10 +93,13 @@ const PlayCourse = (props) => {
             requestOptions,
         )
             .then((response) => response.json())
-            .then((data) => setTable(data.data));
-        return () => {};
+            .then((data) => {
+                setTable(data.data);
+                setIsLoading(false);
+            });
     };
     const getContentAlpha = () => {
+        setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id', match.params.id);
         const requestOptions = {
@@ -100,11 +109,14 @@ const PlayCourse = (props) => {
         };
         fetch('http://localhost:8000/api/getContentAlpha', requestOptions)
             .then((response) => response.json())
-            .then((data) => setContentAlpha(data.data));
-        return () => {};
+            .then((data) => {
+                setContentAlpha(data.data);
+                setIsLoading(false);
+            });
     };
 
     const getLessonAlpha = () => {
+        setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id', match.params.id);
         const requestOptions = {
@@ -120,6 +132,7 @@ const PlayCourse = (props) => {
                     setUrl(data.data[0].file_name);
                     setId(data.data[0].id);
                     getComment(data.data[0].id);
+                    setIsLoading(false);
                 }
             });
         return () => {};
@@ -206,6 +219,7 @@ const PlayCourse = (props) => {
     };
     return (
         <div className="relative overflow-hidden">
+            {isLoading && <Preloader />}
             <header className="shadow-md fixed top-0 w-full pt-1 bg-gray-600 z-30 max-w-screen-2xl mx-auto">
                 <div className="w-11/12 mx-auto h-16 ">
                     <div className="flex justify-between items-center">
@@ -229,6 +243,7 @@ const PlayCourse = (props) => {
                                     controls={true}
                                     width="100%"
                                     playing={true}
+                                    height="100%"
                                 />
                             ) : (
                                 <ReactPlayer
@@ -236,10 +251,11 @@ const PlayCourse = (props) => {
                                     controls={true}
                                     width="100%"
                                     playing={true}
+                                    height="100%"
                                 />
                             )}
                         </div>
-                        <div className="w-11/12 mx-auto">
+                        <div className="w-11/12 mx-auto mb-10">
                             <div className="py-3 mt-2 border-b-2 uppercase font-semibold border-blue-600 mb-4 ">
                                 {' '}
                                 Bình luận

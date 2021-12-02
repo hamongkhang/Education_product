@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Preloader from '../preloader';
 
 toast.configure();
 
@@ -8,6 +9,7 @@ const LoginName = (props) => {
     const { setReRender } = props;
     const history = useHistory();
     const [classes, setClasses] = useState('hidden');
+    const [isLoading, setIsLoading] = useState(false);
     const handleLoginDropdown = () => {
         classes === 'block' ? setClasses('hidden') : setClasses('block');
     };
@@ -15,6 +17,7 @@ const LoginName = (props) => {
     const $link = 'http://localhost:8000/upload/images/avatar/';
     const $token = localStorage.getItem('access_token');
     const onLogout = (e) => {
+        setIsLoading(true);
         if ($token) {
             if (window.confirm('Bạn có chắc chắn muốn đăng xuất không?')) {
                 fetch('http://localhost:8000/api/users/logout', {
@@ -37,6 +40,7 @@ const LoginName = (props) => {
                             progress: undefined,
                         });
                         setReRender(false);
+                        setIsLoading(false);
                         history.push('dang-nhap');
                     });
             }
@@ -52,6 +56,7 @@ const LoginName = (props) => {
                 progress: undefined,
             });
         }
+        setIsLoading(false);
     };
 
     if (localStorage.getItem('avatar_google')) {
@@ -60,6 +65,7 @@ const LoginName = (props) => {
                 className="login-name cursor-pointer font-medium text-indigo-600 bg-indigo-100 hover:bg-indigo-200 duration-200 rounded-md hover:rounded-none space-x-2 relative"
                 onClick={handleLoginDropdown}
             >
+                {isLoading && <Preloader />}
                 <img
                     src={localStorage.getItem('avatar_google')}
                     className="w-9 h-9 object-cover rounded-md hover:opacity-90"
@@ -79,13 +85,13 @@ const LoginName = (props) => {
                             </Link>
                         </div>
                         <div>
-                            <Link
+                            <button
                                 to="/"
                                 onClick={(event) => onLogout(event)}
                                 className="w-full block px-3 py-1.5 hover:bg-indigo-300 duration-200"
                             >
                                 Đăng xuất
-                            </Link>
+                            </button>
                         </div>
                     </div>
                 </div>

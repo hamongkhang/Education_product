@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 
 export const ListDocument = (props) => {
     const { documentRight } = props;
-    console.log(documentRight);
     const [show, setShow] = useState(5);
     const [arr, setArr] = useState(documentRight.slice(0, show));
     const [arr1, setArr1] = useState([]);

@@ -25,9 +25,9 @@ const Catalog = (props) => {
                             className="flex justify-between items-center line-1"
                         >
                             <span>Luyện thi 2k4</span>
-                            <i className="fa fa-chevron-right float-right leading-6" />
+                            {/* <i className="fa fa-chevron-right float-right leading-6" /> */}
                         </Link>
-                        <div className="absolute border-l-4 w-full border-purple-800 z-40 bg-white text-black shadow-lg top-0 left-full catalog-item">
+                        {/* <div className="absolute border-l-4 w-full border-purple-800 z-40 bg-white text-black shadow-lg top-0 left-full catalog-item">
                             <Link
                                 to="/"
                                 className="line-1 hover:bg-purple-800 hover:text-white px-4 py-2"
@@ -46,7 +46,7 @@ const Catalog = (props) => {
                             >
                                 THCS
                             </Link>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className="">

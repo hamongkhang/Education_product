@@ -4,6 +4,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { NextArrow, PrevArrow } from '../customArrowsSlider';
+import Preloader from '../preloader';
 
 const arr = [
     {
@@ -24,30 +25,41 @@ const CourseList = (props) => {
     const [course, setCourse] = useState([]);
     const [count, setCount] = useState([]);
     const [admin, setAdmin] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const $token = localStorage.getItem('access_token');
 
     const getAdmin = () => {
+        setIsLoading(true);
         fetch('http://localhost:8000/api/users/getAdmin')
             .then((response) => response.json())
-            .then((data) => setAdmin(data.data));
-        return () => {};
+            .then((data) => {
+                setAdmin(data.data);
+                setIsLoading(false);
+            });
     };
 
     const getApiSecond = () => {
+        setIsLoading(true);
         fetch('http://localhost:8000/api/getCourses', {
             method: 'GET',
         })
             .then((response) => response.json())
-            .then((data) => setCourse(data.data));
-        return () => {};
+            .then((data) => {
+                setCourse(data.data);
+                setIsLoading(false);
+            });
     };
 
     const tinhTong = () => {
+        setIsLoading(true);
         fetch('http://localhost:8000/api/getCourseHome', {
             method: 'GET',
         })
             .then((response) => response.json())
-            .then((data) => setCount(data.data));
+            .then((data) => {
+                setCount(data.data);
+                setIsLoading(false);
+            });
         return () => {
             for (var i = 0; i < count.length; i++) {
                 if (count[i] == null) {
@@ -91,6 +103,7 @@ const CourseList = (props) => {
     };
     return (
         <div className="relative">
+            {isLoading && <Preloader />}
             <div className="bg-purple-800 shadow-lg rounded-md h-12 mb-10 flex items-center justify-between relative overflow-hidden text-white">
                 <div className="w-40 h-40 rounded-full bg-yellow-400 border-4 border-white absolute z-0 -top-3/4 -right-5" />
                 <div className="p-3 text-17 font-semibold uppercase">

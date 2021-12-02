@@ -2,52 +2,12 @@ import React, { useState, useEffect } from 'react';
 import RigisterCourseItem from './enrolledCourseItem';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-
-const arr = [
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-    },
-    {
-        name: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
-    },
-];
+import Preloader from '../preloader';
 
 const EnrolledCourses = (props) => {
     const [show, setShow] = useState(8);
     const [arr1, setArr1] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [pageItem, setPageItem] = useState(1);
     const [page, setPage] = useState(0);
     const [course, setCourse] = useState([]);
@@ -78,6 +38,7 @@ const EnrolledCourses = (props) => {
     };
 
     const getApiSecond = () => {
+        setIsLoading(true);
         fetch('http://localhost:8000/api/history/getHistoryCourse', {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
@@ -87,11 +48,12 @@ const EnrolledCourses = (props) => {
                 setHistory(data.data);
                 setEnrolledCourses(data.data);
                 setSearch(data.data);
+                setIsLoading(false);
             });
-        return () => {};
     };
 
     const tinhTong = () => {
+        setIsLoading(true);
         fetch('http://localhost:8000/api/getCountHistory', {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
@@ -100,6 +62,7 @@ const EnrolledCourses = (props) => {
             .then((data) => {
                 setCount(data.data);
                 setCount2(data.data);
+                setIsLoading(false);
             });
         return () => {
             for (var i = 0; i < count.length; i++) {
@@ -133,6 +96,7 @@ const EnrolledCourses = (props) => {
     }, [enrolledCourses]);
     return (
         <div className="">
+            {isLoading && <Preloader />}
             <div className="flex flex-col md:flex-row items-start justify-between uppercase font-semibold mt-5">
                 <div className="text-xl sm:text-2xl">
                     Các khóa học đã đăng ký

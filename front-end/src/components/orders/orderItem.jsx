@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import OrderDetailsItem from './orderDetailsItem';
+import Preloader from '../preloader';
 
 const OrderItem = (props) => {
     const [classIcon, setClassIcon] = useState('down');
@@ -7,8 +8,10 @@ const OrderItem = (props) => {
     const [history, setHistory] = useState([]);
     const [type, setType] = useState([]);
     const $token = localStorage.getItem('access_token');
+    const [isLoading, setIsLoading] = useState(true);
 
     const getApiFirst = () => {
+        setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id_payment', props.paymentId.orderId);
         fetch('http://localhost:8000/api/history/getHistoryProduct', {
@@ -19,9 +22,11 @@ const OrderItem = (props) => {
             .then((response) => response.json())
             .then((data) => {
                 setHistory(data.data.reverse());
+                setIsLoading(false);
             });
     };
     const getApiSecond = () => {
+        setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id_payment', props.paymentId.orderId);
         fetch('http://localhost:8000/api/history/getHistoryType', {
@@ -32,6 +37,7 @@ const OrderItem = (props) => {
             .then((response) => response.json())
             .then((data) => {
                 setType(data.data.reverse());
+                setIsLoading(false);
             });
     };
     const handleClick = () => {
@@ -54,6 +60,7 @@ const OrderItem = (props) => {
                 className="block xs:flex justify-between items-center leading-7 cursor-pointer"
                 onClick={handleClick}
             >
+                {isLoading && <Preloader />}
                 <div className="flex text-indigo-500">
                     <div className="w-5">
                         <i
@@ -74,17 +81,16 @@ const OrderItem = (props) => {
             <div className={`overflow-hidden sm1:ml-5 ${classOrder} mt-3`}>
                 {history &&
                     history.map((item, i) => {
-                        if(item){
-                        return (
-                            <OrderDetailsItem
-                                key={i}
-                                product={item}
-                                type={type[i]}
-                            />
-                        );
-                        }else{
-                            <>
-                            </>
+                        if (item) {
+                            return (
+                                <OrderDetailsItem
+                                    key={i}
+                                    product={item}
+                                    type={type[i]}
+                                />
+                            );
+                        } else {
+                            <></>;
                         }
                     })}
             </div>

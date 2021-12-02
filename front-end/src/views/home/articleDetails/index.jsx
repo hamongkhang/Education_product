@@ -1,6 +1,5 @@
 import { useRouteMatch } from 'react-router';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { BannerBook } from '../../../components/banner';
 
 const ArticleDetails = (props) => {
@@ -17,7 +16,6 @@ const ArticleDetails = (props) => {
         )
             .then((res) => res.json())
             .then((json) => {
-                console.log(json.data);
                 json.data.map((item) => {
                     if (item.id == match.params.id) {
                         setITItem(item);
@@ -52,8 +50,25 @@ const ArticleDetails = (props) => {
                     </h2>
                 </div>
                 <div className="text-justify">
-                    <p dangerouslySetInnerHTML={{ __html:ITItem.description}}>
-                    </p>
+                    <p
+                        dangerouslySetInnerHTML={{ __html: ITItem.description }}
+                    ></p>
+                </div>
+                <div>
+                    {ITItem.file && ITItem.file.split('.').pop() === 'mp4' ? (
+                        <video
+                            className="md:h-96 md1:h-508 object-cover w-full"
+                            src={`${$linkImage}${ITItem.file}`}
+                            controls
+                        ></video>
+                    ) : (
+                        <img
+                            src=""
+                            alt=""
+                            className="md:h-96 md1:h-508 object-cover w-full"
+                            srcset={$linkImage + ITItem.file + ' 2x'}
+                        />
+                    )}
                 </div>
             </div>
         </>

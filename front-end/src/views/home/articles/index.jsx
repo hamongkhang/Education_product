@@ -4,12 +4,14 @@ import { ArticleItem } from '../../../components/articles';
 import { BannerBook } from '../../../components/banner';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import Preloader from '../../../components/preloader';
 
 const Articles = (props) => {
     const [show, setShow] = useState(4);
     const [pageItem, setPageItem] = useState(1);
     const [page, setPage] = useState(0);
     const [search, setSearch] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const $link = 'http://localhost:8000/upload/images/featured_post/';
     const [featuredPost, setFeaturedPost] = useState([]);
     const [articles, setArticles] = useState([]);
@@ -32,6 +34,7 @@ const Articles = (props) => {
     };
 
     useEffect(() => {
+        setIsLoading(true);
         if ($token) {
             fetch('http://localhost:8000/api/featuredPost/getFeaturedPost', {
                 method: 'GET',
@@ -42,6 +45,7 @@ const Articles = (props) => {
                     setFeaturedPost(data.data);
                     setArticles(data.data);
                     setSearch(data.data);
+                    setIsLoading(false);
                 });
         } else {
             fetch('http://localhost:8000/api/featuredPost/getFeaturedPost', {
@@ -52,6 +56,7 @@ const Articles = (props) => {
                     setFeaturedPost(data.data);
                     setArticles(data.data);
                     setSearch(data.data);
+                    setIsLoading(false);
                 });
         }
 
@@ -75,6 +80,7 @@ const Articles = (props) => {
     }, [articles]);
     return (
         <>
+            {isLoading && <Preloader />}
             <BannerBook />
             <div className="xl:w-4/5 xl:px-0 px-4 w-full mx-auto mt-10 flex flex-col lg:flex-row lg:space-x-6">
                 <div className="w-full lg:w-4/6">

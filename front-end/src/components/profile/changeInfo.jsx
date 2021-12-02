@@ -3,11 +3,13 @@ import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import Avt from './avt';
 import { toast } from 'react-toastify';
+import Preloader from '../preloader';
 
 toast.configure();
 
 const ChangeInfo = (props) => {
     const [updateProfile, setUpdateProfile] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [textError, setTextError] = useState({
         fullName: '',
         nameAccount: '',
@@ -35,6 +37,7 @@ const ChangeInfo = (props) => {
     const onUpdateProfile = (e) => {
         e.preventDefault();
         if ($token) {
+            setIsLoading(true);
             const _formData = new FormData();
             _formData.append('email', updateProfile.email);
             _formData.append('fullName', updateProfile.fullName);
@@ -112,13 +115,13 @@ const ChangeInfo = (props) => {
                         // }
                     }
                     setTextError(validator);
+                    setIsLoading(false);
                 });
-        } else {
-            alert('Không được bỏ trống');
         }
     };
     return (
         <div className="bg-indigo-100 p-5 shadow-lg">
+            {isLoading && <Preloader />}
             <div className="text-center text-xl uppercase font-semibold mb-5">
                 Cập nhật thông tin cá nhân
             </div>

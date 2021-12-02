@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useRouteMatch } from 'react-router';
 import queryString from 'query-string';
 import { toast } from 'react-toastify';
+import Preloader from '../preloader';
 
 toast.configure();
 
@@ -11,6 +12,7 @@ const Login = (props) => {
     const { changeRender, setReRender } = props;
     const [user, setUser] = useState({});
     const match = useRouteMatch();
+    const [isLoading, setIsLoading] = useState(false);
     const history = useHistory();
     const addUser = (event) => {
         const target = event.target;
@@ -56,28 +58,33 @@ const Login = (props) => {
     }, []);
 
     const loginGoogle = (event) => {
+        setIsLoading(true);
         const requestOptions = {
             method: 'GET',
         };
         fetch('http://127.0.0.1:8000/api/auth/redirect/google', requestOptions)
             .then((res) => res.json())
             .then((json) => {
+                setIsLoading(false);
                 window.location.href = json.link;
             });
     };
     const loginFacebook = (event) => {
+        setIsLoading(true);
         const requestOptions = {
             method: 'GET',
         };
         fetch('http://127.0.0.1:8000/api/auth/facebook', requestOptions)
             .then((res) => res.json())
             .then((json) => {
+                setIsLoading(false);
                 window.location.href = json.link;
             });
     };
 
     const onLogin = (e) => {
         e.preventDefault();
+        setIsLoading(true);
         if (user.email != '' && user.password != '') {
             const _formData = new FormData();
             _formData.append('email', user.email);
@@ -129,17 +136,20 @@ const Login = (props) => {
                             progress: undefined,
                         });
                         setReRender(true);
+                        setIsLoading(false);
                         history.push('/');
                         // }
                     }
                 });
         }
+        setIsLoading(false);
     };
     return (
         <div
             className="relative py-28 px-5 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url("./assets/images/bg/about.jpg")` }}
         >
+            {isLoading && <Preloader />}
             <div className="bg-penetration-5 absolute inset-0 w-full h-full"></div>
             <div className="relative flex flex-col sm:justify-center items-center mt-5">
                 <div className="relative sm:max-w-sm w-full">

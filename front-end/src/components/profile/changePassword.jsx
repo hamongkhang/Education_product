@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Preloader from '../preloader';
 
 toast.configure();
 const ChangePassword = () => {
     const [changePassword, setChangePassword] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
     const history = useHistory();
     const $token = localStorage.getItem('access_token');
     const [textError, setTextError] = useState({
@@ -23,6 +25,7 @@ const ChangePassword = () => {
         });
     };
     const onChangePassword = (e) => {
+        setIsLoading(true);
         e.preventDefault();
         if (
             changePassword.old_password != '' &&
@@ -76,6 +79,7 @@ const ChangePassword = () => {
                             : '';
                     }
                     setTextError(validator);
+                    setIsLoading(false);
                 });
         } else {
             alert('Không được bỏ trống');
@@ -83,6 +87,7 @@ const ChangePassword = () => {
     };
     return (
         <div className="bg-indigo-100 p-5 shadow-lg">
+            {isLoading && <Preloader />}
             <div className="text-center text-xl uppercase font-semibold mb-5">
                 Thay đổi mật khẩu
             </div>
