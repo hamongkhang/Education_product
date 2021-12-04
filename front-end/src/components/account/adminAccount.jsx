@@ -28,10 +28,13 @@ const AdminAccount = (props) => {
                 confirmButtonText: 'Đăng xuất',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    fetch('http://localhost:8000/api/users/logout', {
-                        method: 'POST',
-                        headers: { Authorization: `Bearer ` + $token },
-                    })
+                    fetch(
+                        `${process.env.REACT_APP_URL_SERVER}/api/users/logout`,
+                        {
+                            method: 'POST',
+                            headers: { Authorization: `Bearer ` + $token },
+                        },
+                    )
                         .then((res) => res.json())
                         .then((json) => {
                             window.localStorage.removeItem('access_token');
@@ -60,7 +63,7 @@ const AdminAccount = (props) => {
                         className="h-8 w-8 object-cover rounded-full"
                         src={
                             $avatar
-                                ? `http://localhost:8000/upload/images/avatar/${$avatar}`
+                                ? `${process.env.REACT_APP_URL_SERVER}/upload/images/avatar/${$avatar}`
                                 : `${window.location.origin}/assets/images/slider/city.jpg`
                         }
                     />

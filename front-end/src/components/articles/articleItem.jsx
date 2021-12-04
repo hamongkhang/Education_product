@@ -7,10 +7,7 @@ const ArticleItem = (props) => {
             <div
                 className="relative overflow-hidden w-full h-64 bg-cover bg-no-repeat"
                 style={{
-                    backgroundImage:
-                        "url('http://localhost:8000/upload/images/featured_post/" +
-                        props.data.image +
-                        "')",
+                    backgroundImage: `url('${process.env.REACT_APP_URL_SERVER}/upload/images/featured_post/${props.data.image}')`,
                 }}
             >
                 <div className="absolute transform -translate-x-full transition duration-500 group-hover:translate-x-0 z-10 top-0 left-0 w-full h-full overlay overlay-5" />

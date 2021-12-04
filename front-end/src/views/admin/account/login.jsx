@@ -32,7 +32,10 @@ const LoginAdmin = (props) => {
                 method: 'POST',
                 body: _formData,
             };
-            fetch('http://127.0.0.1:8000/api/admin/loginAdmin', requestOptions)
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/admin/loginAdmin`,
+                requestOptions,
+            )
                 .then((res) => res.json())
                 .then((json) => {
                     if (json.error === 'Unauthorized') {
@@ -91,10 +94,13 @@ const LoginAdmin = (props) => {
                 confirmButtonText: 'Đăng xuất',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    fetch('http://localhost:8000/api/users/logout', {
-                        method: 'POST',
-                        headers: { Authorization: `Bearer ` + $token },
-                    })
+                    fetch(
+                        `${process.env.REACT_APP_URL_SERVER}/api/users/logout`,
+                        {
+                            method: 'POST',
+                            headers: { Authorization: `Bearer ` + $token },
+                        },
+                    )
                         .then((res) => res.json())
                         .then((json) => {
                             window.localStorage.removeItem('access_token');
@@ -111,7 +117,7 @@ const LoginAdmin = (props) => {
     };
     const checkRole = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/admin/checkAdmin', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/admin/checkAdmin`, {
             method: 'POST',
             headers: { Authorization: `Bearer ` + $token },
         })

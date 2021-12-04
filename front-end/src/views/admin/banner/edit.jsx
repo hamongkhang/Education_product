@@ -9,7 +9,7 @@ toast.configure();
 
 const EditBanner = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const $link = 'http://localhost:8000/upload/images/banner/';
+    const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/banner/`;
     const match = useRouteMatch();
     const [editBanner, setEditBanner] = useState({});
     const [file, setFile] = useState(null);
@@ -35,7 +35,7 @@ const EditBanner = () => {
             _formData.append('image', file);
         }
         fetch(
-            'http://localhost:8000/api/banner/updateBanner/' + editBanner.id,
+            `${process.env.REACT_APP_URL_SERVER}/api/banner/updateBanner/${editBanner.id}`,
             {
                 method: 'POST',
                 body: _formData,
@@ -74,7 +74,7 @@ const EditBanner = () => {
         setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id', match.params.id);
-        fetch('http://localhost:8000/api/banner/getOneBanner', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/banner/getOneBanner`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },

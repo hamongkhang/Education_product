@@ -9,10 +9,13 @@ const RightExamItem = (props) => {
     const $token = localStorage.getItem('access_token');
 
     const getExamHistory = () => {
-        fetch('http://localhost:8000/api/history/getHistoryExam', {
-            method: 'GET',
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/history/getHistoryExam`,
+            {
+                method: 'GET',
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 setHistoryExam(data.data);

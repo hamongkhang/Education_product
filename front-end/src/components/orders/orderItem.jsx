@@ -14,11 +14,14 @@ const OrderItem = (props) => {
         setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id_payment', props.paymentId.orderId);
-        fetch('http://localhost:8000/api/history/getHistoryProduct', {
-            method: 'POST',
-            headers: { Authorization: `Bearer ` + $token },
-            body: _formData,
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/history/getHistoryProduct`,
+            {
+                method: 'POST',
+                headers: { Authorization: `Bearer ` + $token },
+                body: _formData,
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 setHistory(data.data.reverse());
@@ -29,11 +32,14 @@ const OrderItem = (props) => {
         setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id_payment', props.paymentId.orderId);
-        fetch('http://localhost:8000/api/history/getHistoryType', {
-            method: 'POST',
-            headers: { Authorization: `Bearer ` + $token },
-            body: _formData,
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/history/getHistoryType`,
+            {
+                method: 'POST',
+                headers: { Authorization: `Bearer ` + $token },
+                body: _formData,
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 setType(data.data.reverse());

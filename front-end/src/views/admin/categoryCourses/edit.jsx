@@ -10,7 +10,7 @@ toast.configure();
 
 const EditCategoryCourse = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const $link = 'http://localhost:8000/upload/images/book/';
+    const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/book/`;
     const match = useRouteMatch();
     const [category, setCategory] = useState({});
     const [file, setFile] = useState(null);
@@ -33,7 +33,7 @@ const EditCategoryCourse = () => {
         _formData.append('name', category.name);
         _formData.append('status', category.status);
         _formData.append('description', category.description);
-        fetch('http://localhost:8000/api/updateCategoryCourse', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/updateCategoryCourse`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },

@@ -4,9 +4,12 @@ import MaterialItem from './materiaItem';
 const Materials = (props) => {
     const [document, setDocument] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:8000/api/freeDocument/getFreeDocumentAlpha', {
-            method: 'GET',
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/freeDocument/getFreeDocumentAlpha`,
+            {
+                method: 'GET',
+            },
+        )
             .then((response) => response.json())
             .then((data) => setDocument(data.data));
         return () => {};

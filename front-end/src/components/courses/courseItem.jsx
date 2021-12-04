@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const CourseItem = (props) => {
-    const $link = 'http://localhost:8000/upload/images/avatar/';
-    const $linkImage = 'http://localhost:8000/upload/images/course/';
+    const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/avatar/`;
+    const $linkImage = `${process.env.REACT_APP_URL_SERVER}/upload/images/course/`;
     return (
         <div className="shadow-md mr-2 rounded-md overflow-hidden mb-10 bg-white">
             <div>

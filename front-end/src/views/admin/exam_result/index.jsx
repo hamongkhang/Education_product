@@ -23,7 +23,7 @@ const ExamResultTable = (props) => {
     };
     const getExamResult = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/getResult', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/exam/getResult`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -36,7 +36,7 @@ const ExamResultTable = (props) => {
     };
     const getExamAdmin = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/getExamAdmin', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/exam/getExamAdmin`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -108,11 +108,14 @@ const ExamResultTable = (props) => {
                 const _formData = new FormData();
                 _formData.append('id', id);
                 setIsLoading(true);
-                fetch('http://localhost:8000/api/exam/deleteResult', {
-                    method: 'POST',
-                    body: _formData,
-                    headers: { Authorization: `Bearer ` + $token },
-                })
+                fetch(
+                    `${process.env.REACT_APP_URL_SERVER}/api/exam/deleteResult`,
+                    {
+                        method: 'POST',
+                        body: _formData,
+                        headers: { Authorization: `Bearer ` + $token },
+                    },
+                )
                     .then((response) => response.json())
                     .then((data) => {
                         if (data.error) {

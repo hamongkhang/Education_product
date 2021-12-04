@@ -14,10 +14,7 @@ const RightItem = (props) => {
                             {' '}
                             <img
                                 className=""
-                                src={
-                                    'http://localhost:8000/upload/images/exam/' +
-                                    item.image
-                                }
+                                src={`${process.env.REACT_APP_URL_SERVER}/upload/images/exam/${item.image}`}
                                 alt="ảnh chi tiết"
                             />
                         </div>

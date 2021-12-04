@@ -65,7 +65,10 @@ const RegisterHome = (props) => {
                 method: 'POST',
                 body: _formData,
             };
-            fetch('http://127.0.0.1:8000/api/users/getCode', requestOptions)
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/users/getCode`,
+                requestOptions,
+            )
                 .then((res) => res.json())
                 .then((json) => {
                     let validator = {

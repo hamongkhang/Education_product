@@ -26,7 +26,7 @@ const AddContent = () => {
     });
     const getTableOfContents = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getTableOfContents', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getTableOfContents`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -53,7 +53,7 @@ const AddContent = () => {
         _formData.append('status', content.status);
         _formData.append('table_of_content_id', content.table_of_content_id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/addContent', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/addContent`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },

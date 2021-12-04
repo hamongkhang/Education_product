@@ -12,7 +12,7 @@ const Articles = (props) => {
     const [page, setPage] = useState(0);
     const [search, setSearch] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const $link = 'http://localhost:8000/upload/images/featured_post/';
+    const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/featured_post/`;
     const [featuredPost, setFeaturedPost] = useState([]);
     const [articles, setArticles] = useState([]);
     const $user = window.localStorage.getItem('nameAccount');
@@ -36,10 +36,13 @@ const Articles = (props) => {
     useEffect(() => {
         setIsLoading(true);
         if ($token) {
-            fetch('http://localhost:8000/api/featuredPost/getFeaturedPost', {
-                method: 'GET',
-                headers: { Authorization: `Bearer ` + $token },
-            })
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/featuredPost/getFeaturedPost`,
+                {
+                    method: 'GET',
+                    headers: { Authorization: `Bearer ` + $token },
+                },
+            )
                 .then((response) => response.json())
                 .then((data) => {
                     setFeaturedPost(data.data);
@@ -48,9 +51,12 @@ const Articles = (props) => {
                     setIsLoading(false);
                 });
         } else {
-            fetch('http://localhost:8000/api/featuredPost/getFeaturedPost', {
-                method: 'GET',
-            })
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/featuredPost/getFeaturedPost`,
+                {
+                    method: 'GET',
+                },
+            )
                 .then((response) => response.json())
                 .then((data) => {
                     setFeaturedPost(data.data);

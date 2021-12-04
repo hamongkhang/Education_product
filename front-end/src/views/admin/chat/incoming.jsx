@@ -4,7 +4,7 @@ const Incoming = (props) => {
     return (
         <div className="flex items-end space-x-2">
             <img
-                src={`http://localhost:8000/upload/images/avatar/${props.avatar}`}
+                src={`${process.env.REACT_APP_URL_SERVER}/upload/images/avatar/${props.avatar}`}
                 className="w-8 h-8 rounded-full object-cover"
                 alt=""
             />

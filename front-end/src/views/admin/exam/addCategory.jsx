@@ -30,7 +30,7 @@ const AddCategory = () => {
         _formData.append('name', examCategoryAdd.name);
         _formData.append('status', examCategoryAdd.status);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/addExamCategory', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/exam/addExamCategory`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },

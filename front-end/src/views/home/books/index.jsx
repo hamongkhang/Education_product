@@ -28,7 +28,7 @@ const Books = (props) => {
         const _formData = new FormData();
         _formData.append('id', target.value);
         if ($token) {
-            fetch('http://localhost:8000/api/getBookTypeSearch', {
+            fetch(`${process.env.REACT_APP_URL_SERVER}/api/getBookTypeSearch`, {
                 method: 'POST',
                 body: _formData,
                 headers: { Authorization: `Bearer ` + $token },
@@ -40,7 +40,7 @@ const Books = (props) => {
                     setIsLoading(false);
                 });
         } else {
-            fetch('http://localhost:8000/api/getBookTypeSearch', {
+            fetch(`${process.env.REACT_APP_URL_SERVER}/api/getBookTypeSearch`, {
                 method: 'POST',
                 body: _formData,
             })
@@ -61,7 +61,7 @@ const Books = (props) => {
 
     const getApiFirst = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getBookTypes', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getBookTypes`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -74,7 +74,7 @@ const Books = (props) => {
 
     const getApiSecond = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getBooks', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getBooks`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })

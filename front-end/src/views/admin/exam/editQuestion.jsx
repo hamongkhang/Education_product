@@ -9,7 +9,7 @@ toast.configure();
 
 const EditQuestion = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const $link = 'http://localhost:8000/upload/images/exam/';
+    const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/exam/`;
     const match = useRouteMatch();
     const [questionEdit2, setQuestionEdit2] = useState({});
     const [correctEdit2, setCorrectEdit2] = useState({});
@@ -43,11 +43,14 @@ const EditQuestion = () => {
             _formData.append('image', file);
         }
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/updateQuestionAdmin', {
-            method: 'POST',
-            body: _formData,
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/exam/updateQuestionAdmin`,
+            {
+                method: 'POST',
+                body: _formData,
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
@@ -113,11 +116,14 @@ const EditQuestion = () => {
         const _formData = new FormData();
         _formData.append('id', match.params.id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/getOneQuestionAnswer/', {
-            body: _formData,
-            method: 'POST',
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/exam/getOneQuestionAnswer/`,
+            {
+                body: _formData,
+                method: 'POST',
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 setQuestionEdit2(data.data[0]);
@@ -130,7 +136,7 @@ const EditQuestion = () => {
         const _formData = new FormData();
         _formData.append('id', match.params.idExam);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/getOneExamEdit', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/exam/getOneExamEdit`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },

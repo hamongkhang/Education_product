@@ -52,11 +52,14 @@ const AddQuestionAnswer = () => {
                 _formData.append('fileImage' + k, responFile2[k]);
             }
             setIsLoading(true);
-            fetch('http://localhost:8000/api/exam/addQuestionAnswer', {
-                method: 'POST',
-                body: _formData,
-                headers: { Authorization: `Bearer ` + $token },
-            })
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/exam/addQuestionAnswer`,
+                {
+                    method: 'POST',
+                    body: _formData,
+                    headers: { Authorization: `Bearer ` + $token },
+                },
+            )
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.error) {
@@ -103,11 +106,14 @@ const AddQuestionAnswer = () => {
         }
         _formData.append('count', correctAnswerArray.length);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/addQuestionAnswerFileQuestion', {
-            method: 'POST',
-            body: _formData,
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/exam/addQuestionAnswerFileQuestion`,
+            {
+                method: 'POST',
+                body: _formData,
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
@@ -236,7 +242,7 @@ const AddQuestionAnswer = () => {
         const _formData = new FormData();
         _formData.append('id', match.params.idExam);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/getOneExamEdit', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/exam/getOneExamEdit`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },

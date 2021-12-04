@@ -21,7 +21,7 @@ export const LeftDocument = (props) => {
                                                     return (
                                                         <li className="other-doc-left__list--li">
                                                             <a
-                                                                href={`http://localhost:8000${item2.path}${item2.file}`}
+                                                                href={`${process.env.REACT_APP_URL_SERVER}${item2.path}${item2.file}`}
                                                                 download
                                                             >
                                                                 {item2.name}

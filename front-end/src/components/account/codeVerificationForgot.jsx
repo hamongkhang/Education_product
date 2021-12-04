@@ -37,7 +37,7 @@ const CodeVerificationForgot = (props) => {
                 body: _formData,
             };
             fetch(
-                'http://127.0.0.1:8000/api/users/changePasswordForgot',
+                `${process.env.REACT_APP_URL_SERVER}/api/users/changePasswordForgot`,
                 requestOptions,
             )
                 .then((res) => res.json())

@@ -31,7 +31,7 @@ const EditCategory = () => {
             _formData.append('image', file);
         }
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/editExamCategory', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/exam/editExamCategory`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -68,11 +68,14 @@ const EditCategory = () => {
         const _formData = new FormData();
         _formData.append('id', match.params.id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/getOneExamCategory', {
-            method: 'POST',
-            body: _formData,
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/exam/getOneExamCategory`,
+            {
+                method: 'POST',
+                body: _formData,
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {

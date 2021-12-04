@@ -27,7 +27,7 @@ const Content = (props) => {
     };
     const getContents = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getContents', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getContents`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -52,7 +52,7 @@ const Content = (props) => {
     };
     const getTableOfContents = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getTableOfContents', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getTableOfContents`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -89,7 +89,7 @@ const Content = (props) => {
         const _formData = new FormData();
         _formData.append('id', id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/changeContentStatus', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/changeContentStatus`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -138,7 +138,7 @@ const Content = (props) => {
                 const _formData = new FormData();
                 _formData.append('id', id);
                 setIsLoading(true);
-                fetch('http://localhost:8000/api/deleteContent', {
+                fetch(`${process.env.REACT_APP_URL_SERVER}/api/deleteContent`, {
                     method: 'POST',
                     body: _formData,
                     headers: { Authorization: `Bearer ` + $token },

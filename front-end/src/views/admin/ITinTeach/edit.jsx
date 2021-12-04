@@ -10,7 +10,7 @@ toast.configure();
 
 const EditITINTeach = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const $link = 'http://localhost:8000/upload/images/IT_in_teach/';
+    const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/IT_in_teach/`;
     const match = useRouteMatch();
     const [itinTeach, setITinTeach] = useState({});
     const [itinTeachs, setITinTeachs] = useState([]);
@@ -48,7 +48,7 @@ const EditITINTeach = () => {
         }
         setIsLoading(true);
         fetch(
-            `http://localhost:8000/api/ITinTeach/updateITinTeach/${itinTeach.id}`,
+            `${process.env.REACT_APP_URL_SERVER}/api/ITinTeach/updateITinTeach/${itinTeach.id}`,
             {
                 method: 'POST',
                 body: _formData,
@@ -86,10 +86,13 @@ const EditITINTeach = () => {
 
     const getITinTeach = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/ITinTeach/getITinTeach', {
-            method: 'GET',
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/ITinTeach/getITinTeach`,
+            {
+                method: 'GET',
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 setITinTeachs(data.data);

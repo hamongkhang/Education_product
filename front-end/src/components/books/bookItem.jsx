@@ -9,7 +9,7 @@ const BookItem = (props) => {
     const { changeRender } = props;
     const [isLoading, setIsLoading] = useState(false);
     const $token = localStorage.getItem('access_token');
-    const $link = 'http://localhost:8000/upload/images/book/';
+    const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/book/`;
     const addToCart = (product_id) => {
         setIsLoading(true);
         if ($token) {
@@ -21,7 +21,10 @@ const BookItem = (props) => {
                 headers: { Authorization: `Bearer ` + $token },
                 body: _formData,
             };
-            fetch('http://127.0.0.1:8000/api/cart/addCart', requestOptions)
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/cart/addCart`,
+                requestOptions,
+            )
                 .then((res) => res.json())
                 .then((json) => {
                     changeRender();

@@ -7,7 +7,7 @@ toast.configure();
 
 const BookDetails = (props) => {
     const match = useRouteMatch();
-    const $link = 'http://localhost:8000/upload/images/book/';
+    const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/book/`;
     const $token = localStorage.getItem('access_token');
     const [bookk, setBookk] = useState([]);
     const { changeRender } = props;
@@ -21,7 +21,10 @@ const BookDetails = (props) => {
                 headers: { Authorization: `Bearer ` + $token },
                 body: _formData,
             };
-            fetch('http://127.0.0.1:8000/api/cart/addCart', requestOptions)
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/cart/addCart`,
+                requestOptions,
+            )
                 .then((res) => res.json())
                 .then((json) => {
                     changeRender();
@@ -68,7 +71,10 @@ const BookDetails = (props) => {
                 body: _formData,
                 headers: { Authorization: `Bearer ` + $token },
             };
-            fetch('http://localhost:8000/api/getOneBook', requestOptions)
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/getOneBook`,
+                requestOptions,
+            )
                 .then((response) => response.json())
                 .then((data) => setBookk(data.book));
             return () => {};
@@ -79,7 +85,10 @@ const BookDetails = (props) => {
                 method: 'POST',
                 body: _formData,
             };
-            fetch('http://localhost:8000/api/getOneBook', requestOptions)
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/getOneBook`,
+                requestOptions,
+            )
                 .then((response) => response.json())
                 .then((data) => setBookk(data.book));
             return () => {};

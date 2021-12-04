@@ -45,7 +45,7 @@ const AddTeacher = () => {
         _formData.append('phone', addTeacher.phone);
         _formData.append('image', file);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/teacher/createTeacher', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/teacher/createTeacher`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },

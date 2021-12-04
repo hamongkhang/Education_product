@@ -26,7 +26,7 @@ const EditLesson = () => {
     });
     const getContents = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getContents', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getContents`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -47,7 +47,7 @@ const EditLesson = () => {
         const _formData = new FormData();
         _formData.append('id', match.params.id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getOneLesson', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getOneLesson`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -82,7 +82,7 @@ const EditLesson = () => {
             _formData.append('file', file);
         }
         setIsLoading(true);
-        fetch('http://localhost:8000/api/updateLesson', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/updateLesson`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },

@@ -27,10 +27,13 @@ const AddDocument = () => {
     const history = useHistory();
     const getDocument = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/freeDocument/getFreeDocumentAdmin', {
-            method: 'GET',
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/freeDocument/getFreeDocumentAdmin`,
+            {
+                method: 'GET',
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 setDocumentCategory(data.data[0].reverse());
@@ -46,11 +49,14 @@ const AddDocument = () => {
         _formData.append('file', documentAdd.file);
         _formData.append('status', documentAdd.status);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/freeDocument/createFreeDocument', {
-            method: 'POST',
-            body: _formData,
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/freeDocument/createFreeDocument`,
+            {
+                method: 'POST',
+                body: _formData,
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {

@@ -13,8 +13,8 @@ const CartItem = (props) => {
     const [isLoading, setIsLoading] = useState(true);
     const [amount, setAmount] = useState(props.quantity);
     const [amountBook, setAmountBook] = useState('');
-    const $linkBook = 'http://localhost:8000/upload/images/book/';
-    const $linkCourse = 'http://localhost:8000/upload/images/course/';
+    const $linkBook = `${process.env.REACT_APP_URL_SERVER}/upload/images/book/`;
+    const $linkCourse = `${process.env.REACT_APP_URL_SERVER}/upload/images/course/`;
     const increase = () => {
         updateCart(props.product_id, props.type, amount + 1);
         if (amount + 1 > amountBook) {
@@ -47,7 +47,10 @@ const CartItem = (props) => {
             headers: { Authorization: `Bearer ` + $token },
             body: _formData,
         };
-        fetch('http://127.0.0.1:8000/api/getOneBook', requestOptions)
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/getOneBook`,
+            requestOptions,
+        )
             .then((res) => res.json())
             .then((json) => {
                 if (json.error) {
@@ -72,7 +75,10 @@ const CartItem = (props) => {
             headers: { Authorization: `Bearer ` + $token },
             body: _formData,
         };
-        fetch('http://127.0.0.1:8000/api/getOneCourse', requestOptions)
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/getOneCourse`,
+            requestOptions,
+        )
             .then((res) => res.json())
             .then((json) => {
                 if (json.error) {

@@ -33,7 +33,7 @@ const Footer = (props) => {
                             <img
                                 src=""
                                 alt=""
-                                srcset="http://localhost:8000/upload/images/logo-vl-365.png 2x"
+                                srcset={`${process.env.REACT_APP_URL_SERVER}/upload/images/logo-vl-365.png 2x`}
                                 className="h-20 w-40 object-cover mt-4"
                             />
                         </div>

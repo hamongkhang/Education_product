@@ -25,11 +25,14 @@ const ExamDetail = ({
                 const _formData = new FormData();
                 _formData.append('amount', total);
                 _formData.append('id_exam', id);
-                fetch('http://localhost:8000/api/payment/momoPaymentExam', {
-                    method: 'POST',
-                    headers: { Authorization: `Bearer ` + $token },
-                    body: _formData,
-                })
+                fetch(
+                    `${process.env.REACT_APP_URL_SERVER}/api/payment/momoPaymentExam`,
+                    {
+                        method: 'POST',
+                        headers: { Authorization: `Bearer ` + $token },
+                        body: _formData,
+                    },
+                )
                     .then((response) => response.json())
                     .then((data) => {
                         window.location.href = data.url;
@@ -76,10 +79,7 @@ const ExamDetail = ({
                         <div className="answer-left">
                             <img
                                 className="object-cover"
-                                src={
-                                    'http://localhost:8000/upload/images/exam/' +
-                                    examDetails.image
-                                }
+                                src={`${process.env.REACT_APP_URL_SERVER}/upload/images/exam/${examDetails.image}`}
                                 alt="ảnh chi tiết"
                             />
                         </div>

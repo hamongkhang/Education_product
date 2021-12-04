@@ -41,7 +41,7 @@ const BooksTable = (props) => {
         setIsLoading(true);
         const _formData = new FormData();
         _formData.append('file', filefile);
-        fetch('http://localhost:8000/api/users/importUser', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/users/importUser`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -77,10 +77,13 @@ const BooksTable = (props) => {
     };
     const ExportUser1 = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/book/exportBookTypeLink', {
-            method: 'GET',
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/book/exportBookTypeLink`,
+            {
+                method: 'GET',
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
@@ -113,7 +116,7 @@ const BooksTable = (props) => {
     };
     const ExportUser2 = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/book/exportBookLink', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/book/exportBookLink`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -160,7 +163,7 @@ const BooksTable = (props) => {
     };
     const getBookTypes = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getBookTypes', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getBookTypes`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -178,7 +181,7 @@ const BooksTable = (props) => {
     };
     const getBooks = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getBooks', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getBooks`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -204,7 +207,7 @@ const BooksTable = (props) => {
                 const _formData = new FormData();
                 _formData.append('id', id);
                 setIsLoading(true);
-                fetch('http://localhost:8000/api/deleteBook', {
+                fetch(`${process.env.REACT_APP_URL_SERVER}/api/deleteBook`, {
                     method: 'POST',
                     body: _formData,
                     headers: { Authorization: `Bearer ` + $token },
@@ -255,11 +258,14 @@ const BooksTable = (props) => {
                 setIsLoading(true);
                 const _formData = new FormData();
                 _formData.append('id', id);
-                fetch('http://localhost:8000/api/deleteBookType', {
-                    method: 'POST',
-                    body: _formData,
-                    headers: { Authorization: `Bearer ` + $token },
-                })
+                fetch(
+                    `${process.env.REACT_APP_URL_SERVER}/api/deleteBookType`,
+                    {
+                        method: 'POST',
+                        body: _formData,
+                        headers: { Authorization: `Bearer ` + $token },
+                    },
+                )
                     .then((response) => response.json())
                     .then((data) => {
                         if (data.error) {
@@ -295,7 +301,7 @@ const BooksTable = (props) => {
         const _formData = new FormData();
         setIsLoading(true);
         _formData.append('id', id);
-        fetch('http://localhost:8000/api/changeBookStatus', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/changeBookStatus`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -754,7 +760,7 @@ const BooksTable = (props) => {
                                                       <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                           <img
                                                               alt=""
-                                                              src={`http://localhost:8000/upload/images/book/${item.image}`}
+                                                              src={`${process.env.REACT_APP_URL_SERVER}/upload/images/book/${item.image}`}
                                                               className="w-12 h-16 object-cover"
                                                           />
                                                       </td>
@@ -868,7 +874,7 @@ const BooksTable = (props) => {
                                                       <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                           <img
                                                               alt=""
-                                                              src={`http://localhost:8000/upload/images/book/${item.image}`}
+                                                              src={`${process.env.REACT_APP_URL_SERVER}/upload/images/book/${item.image}`}
                                                               className="w-12 h-16 object-cover"
                                                           />
                                                       </td>

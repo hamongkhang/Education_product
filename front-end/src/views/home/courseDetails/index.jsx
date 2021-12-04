@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 toast.configure();
 
 const CourseDetails = (props) => {
-    const $link = 'http://localhost:8000/upload/images/course/';
+    const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/course/`;
     // const [classes, setClasses] = useState('right-0 translate-x-full');
     const match = useRouteMatch();
     const [post, setPost] = useState([]);
@@ -18,7 +18,7 @@ const CourseDetails = (props) => {
     const $token = localStorage.getItem('access_token');
     const { changeRender } = props;
     const getApiFist = () => {
-        fetch('http://localhost:8000/api/getCourses', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getCourses`, {
             method: 'GET',
         })
             .then((response) => response.json())
@@ -35,7 +35,10 @@ const CourseDetails = (props) => {
                 headers: { Authorization: `Bearer ` + $token },
                 body: _formData,
             };
-            fetch('http://127.0.0.1:8000/api/cart/addCart', requestOptions)
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/cart/addCart`,
+                requestOptions,
+            )
                 .then((res) => res.json())
                 .then((json) => {
                     changeRender();
@@ -87,7 +90,10 @@ const CourseDetails = (props) => {
             method: 'POST',
             body: _formData,
         };
-        fetch('http://127.0.0.1:8000/api/getCountLesson', requestOptions)
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/getCountLesson`,
+            requestOptions,
+        )
             .then((res) => res.json())
             .then((data) => setCount(data.data));
         return () => {};
@@ -103,7 +109,10 @@ const CourseDetails = (props) => {
                 body: _formData,
                 headers: { Authorization: `Bearer ` + $token },
             };
-            fetch('http://localhost:8000/api/getOneCourse', requestOptions)
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/getOneCourse`,
+                requestOptions,
+            )
                 .then((response) => response.json())
                 .then((data) => setCourse(data.course));
             return () => {};
@@ -114,7 +123,10 @@ const CourseDetails = (props) => {
                 method: 'POST',
                 body: _formData,
             };
-            fetch('http://localhost:8000/api/getOneCourse', requestOptions)
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/getOneCourse`,
+                requestOptions,
+            )
                 .then((response) => response.json())
                 .then((data) => setCourse(data.course));
             return () => {};

@@ -41,7 +41,7 @@ const Courses = (props) => {
         const _formData = new FormData();
         _formData.append('file', filefile);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/users/importUser', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/users/importUser`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -77,10 +77,13 @@ const Courses = (props) => {
     };
     const ExportUser1 = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/course/exportCourseLink', {
-            method: 'GET',
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/course/exportCourseLink`,
+            {
+                method: 'GET',
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
@@ -113,10 +116,13 @@ const Courses = (props) => {
     };
     const ExportUser2 = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/document/exportDocumentLink', {
-            method: 'GET',
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/document/exportDocumentLink`,
+            {
+                method: 'GET',
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
@@ -154,7 +160,7 @@ const Courses = (props) => {
     };
     const getCategoryCourses = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getCategoryCourses', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getCategoryCourses`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -172,7 +178,7 @@ const Courses = (props) => {
     };
     const getCourses = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getCourses', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getCourses`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -215,7 +221,7 @@ const Courses = (props) => {
         const _formData = new FormData();
         _formData.append('id', course_id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/changeCourseStatus', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/changeCourseStatus`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -264,7 +270,7 @@ const Courses = (props) => {
                 const _formData = new FormData();
                 _formData.append('id', id);
                 setIsLoading(true);
-                fetch('http://localhost:8000/api/deleteCourse', {
+                fetch(`${process.env.REACT_APP_URL_SERVER}/api/deleteCourse`, {
                     method: 'POST',
                     body: _formData,
                     headers: { Authorization: `Bearer ` + $token },
@@ -492,7 +498,7 @@ const Courses = (props) => {
                                                       <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                           <img
                                                               alt=""
-                                                              src={`http://localhost:8000/upload/images/course/${item.image}`}
+                                                              src={`${process.env.REACT_APP_URL_SERVER}/upload/images/course/${item.image}`}
                                                               className="w-12 h-16 object-cover"
                                                           />
                                                       </td>
@@ -616,7 +622,7 @@ const Courses = (props) => {
                                                       <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                           <img
                                                               alt=""
-                                                              src={`http://localhost:8000/upload/images/course/${item.image}`}
+                                                              src={`${process.env.REACT_APP_URL_SERVER}/upload/images/course/${item.image}`}
                                                               className="w-12 h-16 object-cover"
                                                           />
                                                       </td>

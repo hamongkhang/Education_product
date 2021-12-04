@@ -29,7 +29,7 @@ const ForgotPassword = (props) => {
                 body: _formData,
             };
             fetch(
-                'http://127.0.0.1:8000/api/users/getCodeForgotPassword',
+                `${process.env.REACT_APP_URL_SERVER}/api/users/getCodeForgotPassword`,
                 requestOptions,
             )
                 .then((res) => res.json())

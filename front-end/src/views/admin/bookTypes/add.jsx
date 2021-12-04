@@ -30,7 +30,7 @@ const AddBookType = () => {
         setIsLoading(true);
         const _formData = new FormData();
         _formData.append('name', type.name);
-        fetch('http://localhost:8000/api/addBookType', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/addBookType`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },

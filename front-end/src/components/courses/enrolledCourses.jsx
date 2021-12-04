@@ -39,10 +39,13 @@ const EnrolledCourses = (props) => {
 
     const getApiSecond = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/history/getHistoryCourse', {
-            method: 'GET',
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/history/getHistoryCourse`,
+            {
+                method: 'GET',
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 setHistory(data.data);
@@ -54,7 +57,7 @@ const EnrolledCourses = (props) => {
 
     const tinhTong = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getCountHistory', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getCountHistory`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })

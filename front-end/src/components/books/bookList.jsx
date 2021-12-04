@@ -16,14 +16,14 @@ const BookList = (props) => {
     useEffect(() => {
         setIsLoading(true);
         if ($token) {
-            fetch('http://localhost:8000/api/getBooks', {
+            fetch(`${process.env.REACT_APP_URL_SERVER}/api/getBooks`, {
                 method: 'GET',
                 headers: { Authorization: `Bearer ` + $token },
             })
                 .then((response) => response.json())
                 .then((data) => setBook(data.books));
         } else {
-            fetch('http://localhost:8000/api/getBooks')
+            fetch(`${process.env.REACT_APP_URL_SERVER}/api/getBooks`)
                 .then((response) => response.json())
                 .then((data) => setBook(data.books));
         }

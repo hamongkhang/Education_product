@@ -31,7 +31,10 @@ const UserInfoProfile = (props) => {
     useEffect(() => {
         setIsLoading(true);
         if ($token) {
-            fetch('http://localhost:8000/api/users/userProfile', requestOptions)
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/users/userProfile`,
+                requestOptions,
+            )
                 .then((response) => response.json())
                 .then((data) => {
                     setProfile(data);

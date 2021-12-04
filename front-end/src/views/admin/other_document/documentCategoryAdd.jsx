@@ -30,7 +30,7 @@ const AddDocumentCategory = () => {
         _formData.append('status', documentCategoryAdd.status);
         setIsLoading(true);
         fetch(
-            'http://localhost:8000/api/freeDocumentCategory/createFreeDocumentCategory',
+            `${process.env.REACT_APP_URL_SERVER}/api/freeDocumentCategory/createFreeDocumentCategory`,
             {
                 method: 'POST',
                 body: _formData,

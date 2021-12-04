@@ -27,7 +27,7 @@ const Lessson = (props) => {
     };
     const getContents = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getContents', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getContents`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -45,7 +45,7 @@ const Lessson = (props) => {
     };
     const getLessons = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getLessons', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getLessons`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -88,7 +88,7 @@ const Lessson = (props) => {
         const _formData = new FormData();
         _formData.append('id', id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/changeLessonStatus', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/changeLessonStatus`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -137,7 +137,7 @@ const Lessson = (props) => {
                 const _formData = new FormData();
                 _formData.append('id', id);
                 setIsLoading(true);
-                fetch('http://localhost:8000/api/deleteLesson', {
+                fetch(`${process.env.REACT_APP_URL_SERVER}/api/deleteLesson`, {
                     method: 'POST',
                     body: _formData,
                     headers: { Authorization: `Bearer ` + $token },

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const TeacherItem = (props) => {
-    const $link = 'http://localhost:8000/upload/images/teacher/';
+    const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/teacher/`;
     return (
         <div className="mr-5 lg:p-8 p-4 mb-20 rounded-md shadow-lg group bg-white">
             <div className="overflow-hidden w-full h-72 md:h-80">

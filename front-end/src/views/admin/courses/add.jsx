@@ -9,7 +9,7 @@ toast.configure();
 
 const AddCourse = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const $link = 'http://localhost:8000/upload/images/course/';
+    const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/course/`;
     const [course, setCourse] = useState({
         id: '',
         name: '',
@@ -59,7 +59,7 @@ const AddCourse = () => {
         }
         _formData.append('description', course.description);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/addCourse', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/addCourse`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -94,7 +94,7 @@ const AddCourse = () => {
     };
     const getCategoryCourses = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getCategoryCourses', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getCategoryCourses`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })

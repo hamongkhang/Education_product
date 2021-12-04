@@ -30,7 +30,7 @@ const AddCategoryCourse = () => {
         _formData.append('name', category.name);
         _formData.append('status', category.status);
         _formData.append('description', category.description);
-        fetch('http://localhost:8000/api/addCategoryCourse', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/addCategoryCourse`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },

@@ -62,7 +62,10 @@ const Login = (props) => {
         const requestOptions = {
             method: 'GET',
         };
-        fetch('http://127.0.0.1:8000/api/auth/redirect/google', requestOptions)
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/auth/redirect/google`,
+            requestOptions,
+        )
             .then((res) => res.json())
             .then((json) => {
                 setIsLoading(false);
@@ -74,7 +77,10 @@ const Login = (props) => {
         const requestOptions = {
             method: 'GET',
         };
-        fetch('http://127.0.0.1:8000/api/auth/facebook', requestOptions)
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/auth/facebook`,
+            requestOptions,
+        )
             .then((res) => res.json())
             .then((json) => {
                 setIsLoading(false);
@@ -93,7 +99,10 @@ const Login = (props) => {
                 method: 'POST',
                 body: _formData,
             };
-            fetch('http://127.0.0.1:8000/api/users/login', requestOptions)
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/users/login`,
+                requestOptions,
+            )
                 .then((res) => res.json())
                 .then((json) => {
                     if (json.error === 'Unauthorized') {

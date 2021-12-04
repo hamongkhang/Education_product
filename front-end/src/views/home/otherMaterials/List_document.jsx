@@ -41,7 +41,7 @@ export const ListDocument = (props) => {
                                 <div className="other-doc-right-content__text">
                                     <p className="other-doc-right-content__text--color">
                                         <a
-                                            href={`http://localhost:8000${item.path}${item.file}`}
+                                            href={`${process.env.REACT_APP_URL_SERVER}${item.path}${item.file}`}
                                             download
                                         >
                                             {item.name}

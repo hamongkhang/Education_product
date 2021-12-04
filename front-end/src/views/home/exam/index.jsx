@@ -26,11 +26,14 @@ const ExamIndex = () => {
         setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id', id);
-        fetch('http://localhost:8000/api/exam/getQuestionAnswer/', {
-            body: _formData,
-            method: 'POST',
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/exam/getQuestionAnswer/`,
+            {
+                body: _formData,
+                method: 'POST',
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 setQuestion(data.data[0]);
@@ -42,7 +45,7 @@ const ExamIndex = () => {
 
     const getListDocument = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/getExam', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/exam/getExam`, {
             method: 'GET',
         })
             .then((response) => response.json())

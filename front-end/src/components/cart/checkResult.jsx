@@ -10,11 +10,14 @@ const CheckResult = (props) => {
             method: 'POST',
             headers: { Authorization: `Bearer ` + $token },
         };
-        fetch('http://127.0.0.1:8000/api/payment/checkResult', requestOptions)
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/payment/checkResult`,
+            requestOptions,
+        )
             .then((res) => res.json())
             .then((json) => {
                 alert(json.response);
-                window.location.href = 'http://localhost:3000/';
+                window.location.href = process.env.REACT_APP_URL_SERVER;
             });
         setIsLoading(false);
     };

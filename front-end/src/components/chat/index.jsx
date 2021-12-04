@@ -48,7 +48,10 @@ const Chat = (props) => {
                 method: 'POST',
                 headers: { Authorization: `Bearer ` + token },
             };
-            fetch('http://127.0.0.1:8000/api/users/userProfile', requestOptions)
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/users/userProfile`,
+                requestOptions,
+            )
                 .then((res) => res.json())
                 .then((json) => {
                     if (json.id) {
@@ -67,7 +70,7 @@ const Chat = (props) => {
             method: 'POST',
             headers: { Authorization: `Bearer ` + token },
         };
-        fetch('http://127.0.0.1:8000/api/inbox', requestOptions)
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/inbox`, requestOptions)
             .then((res) => res.json())
             .then((json) => {
                 let data_messages = json.messages;
@@ -95,7 +98,10 @@ const Chat = (props) => {
                 headers: { Authorization: `Bearer ` + token },
                 body: _formData,
             };
-            fetch('http://127.0.0.1:8000/api/sendmess', requestOptions)
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/sendmess`,
+                requestOptions,
+            )
                 .then((res) => res.json())
                 .then((json) => {
                     if (json.access_token) {
@@ -116,7 +122,10 @@ const Chat = (props) => {
                 method: 'POST',
                 body: _formData,
             };
-            fetch('http://127.0.0.1:8000/api/sendmess', requestOptions)
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/sendmess`,
+                requestOptions,
+            )
                 .then((res) => res.json())
                 .then((json) => {
                     if (json.access_token) {

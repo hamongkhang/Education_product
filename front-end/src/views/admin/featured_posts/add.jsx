@@ -42,11 +42,14 @@ const AddPost = () => {
         _formData.append('status', postAdd.status);
         _formData.append('image', file);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/featuredPost/createFeaturedPost', {
-            method: 'POST',
-            body: _formData,
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/featuredPost/createFeaturedPost`,
+            {
+                method: 'POST',
+                body: _formData,
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {

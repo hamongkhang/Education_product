@@ -13,7 +13,7 @@ export const ExamLesson = ({
     number,
     examDetailId,
 }) => {
-    const $link = 'http://localhost:8000/upload/images/exam/';
+    const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/exam/`;
     const $token = localStorage.getItem('access_token');
     const [check, setCheck] = useState([]);
     const [render, setRender] = useState(false);
@@ -47,7 +47,7 @@ export const ExamLesson = ({
             _formData.append('answer' + i, check[i]);
         }
         _formData.append('answer_false', chuoi);
-        fetch('http://localhost:8000/api/exam/createExamResult', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/exam/createExamResult`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },

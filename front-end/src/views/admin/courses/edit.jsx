@@ -10,7 +10,7 @@ toast.configure();
 
 const EditCourse = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const $link = 'http://localhost:8000/upload/images/course/';
+    const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/course/`;
     const match = useRouteMatch();
     const [course, setCourse] = useState({});
     const [file, setFile] = useState(null);
@@ -49,7 +49,7 @@ const EditCourse = () => {
         }
         _formData.append('description', course.description);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/updateCourse', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/updateCourse`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -86,7 +86,7 @@ const EditCourse = () => {
         const _formData = new FormData();
         _formData.append('id', match.params.id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getOneCourse', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getOneCourse`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -111,7 +111,7 @@ const EditCourse = () => {
     };
     const getCategoryCourses = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getCategoryCourses', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getCategoryCourses`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })

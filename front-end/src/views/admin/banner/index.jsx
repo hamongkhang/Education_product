@@ -20,7 +20,7 @@ const BannerTable = (props) => {
     };
     const getBanner = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/banner/getBanner', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/banner/getBanner`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -51,11 +51,14 @@ const BannerTable = (props) => {
         setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id', id);
-        fetch('http://localhost:8000/api/banner/destroyBanner/' + id, {
-            method: 'POST',
-            body: _formData,
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/banner/destroyBanner/${id}`,
+            {
+                method: 'POST',
+                body: _formData,
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
@@ -89,11 +92,14 @@ const BannerTable = (props) => {
         setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id', id);
-        fetch('http://localhost:8000/api/banner/blockActiveBanner', {
-            method: 'POST',
-            body: _formData,
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/banner/blockActiveBanner`,
+            {
+                method: 'POST',
+                body: _formData,
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
@@ -234,7 +240,7 @@ const BannerTable = (props) => {
                                                   <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                       <img
                                                           alt=""
-                                                          src={`http://localhost:8000/upload/images/banner/${item.image}`}
+                                                          src={`${process.env.REACT_APP_URL_SERVER}/upload/images/banner/${item.image}`}
                                                           className="w-12 h-16 object-cover"
                                                       />
                                                   </td>
@@ -303,7 +309,7 @@ const BannerTable = (props) => {
                                                   <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                       <img
                                                           alt=""
-                                                          src={`http://localhost:8000/upload/images/banner/${item.image}`}
+                                                          src={`${process.env.REACT_APP_URL_SERVER}/upload/images/banner/${item.image}`}
                                                           className="w-12 h-16 object-cover"
                                                       />
                                                   </td>

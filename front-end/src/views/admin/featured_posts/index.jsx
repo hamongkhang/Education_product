@@ -34,7 +34,7 @@ const PostTable = (props) => {
         const _formData = new FormData();
         _formData.append('file', filefile);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/users/importUser', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/users/importUser`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -70,7 +70,7 @@ const PostTable = (props) => {
     };
     const ExportUser1 = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/post/exportPostLink', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/post/exportPostLink`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -106,7 +106,7 @@ const PostTable = (props) => {
     };
     const ExportUser2 = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/book/exportBookLink', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/book/exportBookLink`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -147,10 +147,13 @@ const PostTable = (props) => {
     };
     const getPost = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/featuredPost/getFeaturedPost', {
-            method: 'GET',
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/featuredPost/getFeaturedPost`,
+            {
+                method: 'GET',
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 setPost(data.data);
@@ -160,7 +163,7 @@ const PostTable = (props) => {
     const changeStatus = (id) => {
         setIsLoading(true);
         fetch(
-            `http://localhost:8000/api/featuredPost/blockActiveFeaturedPost/${id}`,
+            `${process.env.REACT_APP_URL_SERVER}/api/featuredPost/blockActiveFeaturedPost/${id}`,
             {
                 method: 'POST',
                 headers: { Authorization: `Bearer ` + $token },
@@ -216,7 +219,7 @@ const PostTable = (props) => {
         _formData.append('id', id);
         setIsLoading(true);
         fetch(
-            'http://localhost:8000/api/featuredPost/destroyFeaturedPost/' + id,
+            `${process.env.REACT_APP_URL_SERVER}/api/featuredPost/destroyFeaturedPost/${id}`,
             {
                 method: 'POST',
                 body: _formData,
@@ -413,7 +416,7 @@ const PostTable = (props) => {
                                                   <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                       <img
                                                           alt=""
-                                                          src={`http://localhost:8000/upload/images/featured_post/${item.image}`}
+                                                          src={`${process.env.REACT_APP_URL_SERVER}/upload/images/featured_post/${item.image}`}
                                                           className="w-12 h-16 object-cover"
                                                       />
                                                   </td>
@@ -494,7 +497,7 @@ const PostTable = (props) => {
                                                   <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                       <img
                                                           alt=""
-                                                          src={`http://localhost:8000/upload/images/featured_post/${item.image}`}
+                                                          src={`${process.env.REACT_APP_URL_SERVER}/upload/images/featured_post/${item.image}`}
                                                           className="w-12 h-16 object-cover"
                                                       />
                                                   </td>

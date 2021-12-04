@@ -23,10 +23,13 @@ const ITinTeach = (props) => {
 
     const getITinTeach = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/ITinTeach/getITinTeach', {
-            method: 'GET',
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/ITinTeach/getITinTeach`,
+            {
+                method: 'GET',
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 setITinTeach(data.data);
@@ -50,7 +53,7 @@ const ITinTeach = (props) => {
                 _formData.append('id', id);
                 setIsLoading(true);
                 fetch(
-                    `http://localhost:8000/api/ITinTeach/destroyITinTeach/${id}`,
+                    `${process.env.REACT_APP_URL_SERVER}/api/ITinTeach/destroyITinTeach/${id}`,
                     {
                         method: 'POST',
                         body: _formData,
@@ -92,7 +95,7 @@ const ITinTeach = (props) => {
     const changeStatus = (id) => {
         setIsLoading(true);
         fetch(
-            `http://localhost:8000/api/ITinTeach/blockActiveITinTeach/${id}`,
+            `${process.env.REACT_APP_URL_SERVER}/api/ITinTeach/blockActiveITinTeach/${id}`,
             {
                 method: 'POST',
                 headers: { Authorization: `Bearer ` + $token },
@@ -174,7 +177,7 @@ const ITinTeach = (props) => {
         const _formData = new FormData();
         _formData.append('file', filefile);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/users/importUser', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/users/importUser`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -210,7 +213,7 @@ const ITinTeach = (props) => {
     };
     const ExportUser1 = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/it/exportItLink', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/it/exportItLink`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -246,10 +249,13 @@ const ITinTeach = (props) => {
     };
     const ExportUser2 = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/document/exportDocumentLink', {
-            method: 'GET',
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/document/exportDocumentLink`,
+            {
+                method: 'GET',
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
@@ -416,7 +422,7 @@ const ITinTeach = (props) => {
                                                       <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                           <img
                                                               alt=""
-                                                              src={`http://localhost:8000/upload/images/IT_in_teach/${item.image}`}
+                                                              src={`${process.env.REACT_APP_URL_SERVER}/upload/images/IT_in_teach/${item.image}`}
                                                               className="w-12 h-16 object-cover"
                                                           />
                                                       </td>
@@ -509,7 +515,7 @@ const ITinTeach = (props) => {
                                                       <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                           <img
                                                               alt=""
-                                                              src={`http://localhost:8000/upload/images/IT_in_teach/${item.image}`}
+                                                              src={`${process.env.REACT_APP_URL_SERVER}/upload/images/IT_in_teach/${item.image}`}
                                                               className="w-12 h-16 object-cover"
                                                           />
                                                       </td>

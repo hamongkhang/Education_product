@@ -9,7 +9,7 @@ toast.configure();
 
 const EditExam = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const $link = 'http://localhost:8000/upload/images/exam/';
+    const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/exam/`;
     const match = useRouteMatch();
     const [examEdit, setExamEdit] = useState({});
     const [file, setFile] = useState(null);
@@ -44,7 +44,7 @@ const EditExam = () => {
             _formData.append('image', file);
         }
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/updateExamAdmin', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/exam/updateExamAdmin`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -79,7 +79,7 @@ const EditExam = () => {
     };
     const getExamCategoryAdminEdit = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/getExamAdmin', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/exam/getExamAdmin`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -93,7 +93,7 @@ const EditExam = () => {
         const _formData = new FormData();
         _formData.append('id', match.params.id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/getOneExamEdit', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/exam/getOneExamEdit`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },

@@ -59,7 +59,7 @@ const ChangeInfo = (props) => {
                 headers: { Authorization: `Bearer ` + $token },
             };
             fetch(
-                'http://127.0.0.1:8000/api/users/updateProfile',
+                `${process.env.REACT_APP_URL_SERVER}/api/users/updateProfile`,
                 requestOptions,
             )
                 .then((res) => res.json())

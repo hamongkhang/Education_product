@@ -30,7 +30,7 @@ const CourseList = (props) => {
 
     const getAdmin = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/users/getAdmin')
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/users/getAdmin`)
             .then((response) => response.json())
             .then((data) => {
                 setAdmin(data.data);
@@ -40,7 +40,7 @@ const CourseList = (props) => {
 
     const getApiSecond = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getCourses', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getCourses`, {
             method: 'GET',
         })
             .then((response) => response.json())
@@ -52,7 +52,7 @@ const CourseList = (props) => {
 
     const tinhTong = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getCourseHome', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getCourseHome`, {
             method: 'GET',
         })
             .then((response) => response.json())

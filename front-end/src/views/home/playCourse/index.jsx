@@ -53,7 +53,10 @@ const PlayCourse = (props) => {
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
         };
-        fetch('http://localhost:8000/api/comment/getComment', requestOptions)
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/comment/getComment  `,
+            requestOptions,
+        )
             .then((response) => response.json())
             .then((data) => {
                 setComment(data.data[0]);
@@ -71,7 +74,10 @@ const PlayCourse = (props) => {
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
         };
-        fetch('http://localhost:8000/api/getOneCourse', requestOptions)
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/getOneCourse`,
+            requestOptions,
+        )
             .then((response) => response.json())
             .then((data) => {
                 setCourse(data.course);
@@ -89,7 +95,7 @@ const PlayCourse = (props) => {
             headers: { Authorization: `Bearer ` + $token },
         };
         fetch(
-            'http://localhost:8000/api/getTableOfContentAlpha',
+            `${process.env.REACT_APP_URL_SERVER}/api/getTableOfContentAlpha`,
             requestOptions,
         )
             .then((response) => response.json())
@@ -107,7 +113,10 @@ const PlayCourse = (props) => {
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
         };
-        fetch('http://localhost:8000/api/getContentAlpha', requestOptions)
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/getContentAlpha`,
+            requestOptions,
+        )
             .then((response) => response.json())
             .then((data) => {
                 setContentAlpha(data.data);
@@ -124,7 +133,10 @@ const PlayCourse = (props) => {
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
         };
-        fetch('http://localhost:8000/api/getLessonAlpha', requestOptions)
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/getLessonAlpha`,
+            requestOptions,
+        )
             .then((response) => response.json())
             .then((data) => {
                 setLessonAlpha(data.data);
@@ -180,7 +192,7 @@ const PlayCourse = (props) => {
                         headers: { Authorization: `Bearer ` + $token },
                     };
                     fetch(
-                        'http://127.0.0.1:8000/api/comment/addComment',
+                        `${process.env.REACT_APP_URL_SERVER}/api/comment/addComment`,
                         requestOptions,
                     )
                         .then((res) => res.json())
@@ -247,7 +259,7 @@ const PlayCourse = (props) => {
                                 />
                             ) : (
                                 <ReactPlayer
-                                    url={`http://localhost:8000/upload/images/course/${url}`}
+                                    url={`${process.env.REACT_APP_URL_SERVER}/upload/images/course/${url}`}
                                     controls={true}
                                     width="100%"
                                     playing={true}

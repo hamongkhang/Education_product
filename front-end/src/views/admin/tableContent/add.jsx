@@ -29,7 +29,7 @@ const AddTableContent = () => {
     });
     const getCourses = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getCourses', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getCourses`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -53,7 +53,7 @@ const AddTableContent = () => {
         _formData.append('status', table.status);
         _formData.append('course_id', table.course_id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/addTableOfContent', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/addTableOfContent`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },

@@ -32,7 +32,7 @@ const Register = () => {
     useEffect(() => {
         setPhanTram(25);
 
-        fetch('http://127.0.0.1:8000/api/token')
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/token`)
             .then((response) => response.json())
             .then((data) => setToken(data.token));
         return () => {};
@@ -95,7 +95,10 @@ const Register = () => {
                 body: _formData,
             };
 
-            fetch('http://127.0.0.1:8000/api/users/register', requestOptions)
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/users/register`,
+                requestOptions,
+            )
                 .then((res) => res.json())
                 .then((json) => {
                     if (json['success'] > 0) {

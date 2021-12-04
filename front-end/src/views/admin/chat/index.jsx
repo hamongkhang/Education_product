@@ -19,7 +19,7 @@ const Chat = (props) => {
 
     const getMessages = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/inbox', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/inbox`, {
             method: 'POST',
             headers: { Authorization: `Bearer ` + $token },
         })

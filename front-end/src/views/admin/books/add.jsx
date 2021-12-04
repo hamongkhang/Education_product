@@ -57,7 +57,7 @@ const AddBook = () => {
         _formData.append('image', file);
         _formData.append('quantity', book.quantity);
         _formData.append('description', book.description);
-        fetch('http://localhost:8000/api/addBook', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/addBook`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -92,7 +92,7 @@ const AddBook = () => {
     };
     const getBookTypes = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getBookTypes', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getBookTypes`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })

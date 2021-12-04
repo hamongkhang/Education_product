@@ -26,7 +26,7 @@ const EditDocumentCategory = () => {
         _formData.append('status', documentCategoryEdit.status);
         setIsLoading(true);
         fetch(
-            `http://localhost:8000/api/freeDocumentCategory/updateFreeDocumentCategory/${documentCategoryEdit.id}`,
+            `${process.env.REACT_APP_URL_SERVER}/api/freeDocumentCategory/updateFreeDocumentCategory/${documentCategoryEdit.id}`,
             {
                 method: 'POST',
                 body: _formData,
@@ -66,7 +66,7 @@ const EditDocumentCategory = () => {
         _formData.append('id', match.params.id);
         setIsLoading(true);
         fetch(
-            'http://localhost:8000/api/freeDocumentCategory/getOneDocumentCategory',
+            `${process.env.REACT_APP_URL_SERVER}/api/freeDocumentCategory/getOneDocumentCategory`,
             {
                 method: 'POST',
                 body: _formData,

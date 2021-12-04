@@ -43,11 +43,14 @@ const AddITinTeach = () => {
         _formData.append('file', itInTeach.file);
         _formData.append('description', itInTeach.description);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/ITinTeach/createITinTeach', {
-            method: 'POST',
-            body: _formData,
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/ITinTeach/createITinTeach`,
+            {
+                method: 'POST',
+                body: _formData,
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {

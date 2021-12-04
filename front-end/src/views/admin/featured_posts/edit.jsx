@@ -10,7 +10,7 @@ toast.configure();
 
 const EditPost = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const $link = 'http://localhost:8000/upload/images/featured_post/';
+    const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/featured_post/`;
     const match = useRouteMatch();
     const [postEdit, setPostEdit] = useState({});
     const [file, setFile] = useState(null);
@@ -41,8 +41,7 @@ const EditPost = () => {
         }
         setIsLoading(true);
         fetch(
-            'http://localhost:8000/api/featuredPost/updateFeaturedPost/' +
-                postEdit.id,
+            `${process.env.REACT_APP_URL_SERVER}/api/featuredPost/updateFeaturedPost/${postEdit.id}`,
             {
                 method: 'POST',
                 body: _formData,
@@ -81,11 +80,14 @@ const EditPost = () => {
         const _formData = new FormData();
         _formData.append('id', match.params.id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/featuredPost/getOnePost', {
-            method: 'POST',
-            body: _formData,
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/featuredPost/getOnePost`,
+            {
+                method: 'POST',
+                body: _formData,
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {

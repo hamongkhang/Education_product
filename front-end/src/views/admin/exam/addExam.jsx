@@ -49,7 +49,7 @@ const AddExam = () => {
         _formData.append('status', examAdd.status);
         _formData.append('image', file);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/addExamAdmin', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/exam/addExamAdmin`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -84,7 +84,7 @@ const AddExam = () => {
     };
     const getExamCategoryAdmin = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/getExamAdmin', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/exam/getExamAdmin`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })

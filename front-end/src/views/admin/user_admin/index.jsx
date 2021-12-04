@@ -20,7 +20,7 @@ const AdminTable = (props) => {
     };
     const getAdmins = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/admins/getAllAdmin', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/admins/getAllAdmin`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -34,11 +34,14 @@ const AdminTable = (props) => {
         const _formData = new FormData();
         _formData.append('id', id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/admins/changeCentralise', {
-            method: 'POST',
-            body: _formData,
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/admins/changeCentralise`,
+            {
+                method: 'POST',
+                body: _formData,
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
@@ -202,7 +205,7 @@ const AdminTable = (props) => {
                                                   <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                       <img
                                                           alt=""
-                                                          src={`http://localhost:8000/upload/images/avatar/${item.avatar}`}
+                                                          src={`${process.env.REACT_APP_URL_SERVER}/upload/images/avatar/${item.avatar}`}
                                                           className="w-12 h-16 object-cover"
                                                       />
                                                   </td>
@@ -259,7 +262,7 @@ const AdminTable = (props) => {
                                                   <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                       <img
                                                           alt=""
-                                                          src={`http://localhost:8000/upload/images/avatar/${item.avatar}`}
+                                                          src={`${process.env.REACT_APP_URL_SERVER}/upload/images/avatar/${item.avatar}`}
                                                           className="w-12 h-16 object-cover"
                                                       />
                                                   </td>

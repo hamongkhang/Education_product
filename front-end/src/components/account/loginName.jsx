@@ -14,13 +14,13 @@ const LoginName = (props) => {
         classes === 'block' ? setClasses('hidden') : setClasses('block');
     };
     const $avatar = window.localStorage.getItem('avatar');
-    const $link = 'http://localhost:8000/upload/images/avatar/';
+    const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/avatar/`;
     const $token = localStorage.getItem('access_token');
     const onLogout = (e) => {
         setIsLoading(true);
         if ($token) {
             if (window.confirm('Bạn có chắc chắn muốn đăng xuất không?')) {
-                fetch('http://localhost:8000/api/users/logout', {
+                fetch(`${process.env.REACT_APP_URL_SERVER}/api/users/logout`, {
                     method: 'POST',
                     headers: { Authorization: `Bearer ` + $token },
                 })

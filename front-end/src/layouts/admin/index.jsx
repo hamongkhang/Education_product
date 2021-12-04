@@ -12,7 +12,7 @@ const Admin = (props) => {
     const history = useHistory();
     const $token = localStorage.getItem('access_token');
     const checkRole = () => {
-        fetch('http://localhost:8000/api/admin/checkAdmin', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/admin/checkAdmin`, {
             method: 'POST',
             headers: { Authorization: `Bearer ` + $token },
         })

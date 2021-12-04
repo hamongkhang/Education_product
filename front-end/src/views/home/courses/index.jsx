@@ -25,7 +25,7 @@ const Books = (props) => {
         _formData.append('id', target.value);
         setIsLoading(true);
         if ($token) {
-            fetch('http://localhost:8000/api/getCourseSearch', {
+            fetch(`${process.env.REACT_APP_URL_SERVER}/api/getCourseSearch`, {
                 method: 'POST',
                 body: _formData,
                 headers: { Authorization: `Bearer ` + $token },
@@ -37,7 +37,7 @@ const Books = (props) => {
                     setIsLoading(false);
                 });
         } else {
-            fetch('http://localhost:8000/api/getCourseSearch', {
+            fetch(`${process.env.REACT_APP_URL_SERVER}/api/getCourseSearch`, {
                 method: 'POST',
                 body: _formData,
             })
@@ -52,7 +52,7 @@ const Books = (props) => {
 
     const getAdmin = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/users/getAdmin')
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/users/getAdmin`)
             .then((response) => response.json())
             .then((data) => {
                 setAdmin(data.data);
@@ -62,7 +62,7 @@ const Books = (props) => {
 
     const getApiSecond = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getCourses', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getCourses`, {
             method: 'GET',
         })
             .then((response) => response.json())
@@ -75,7 +75,7 @@ const Books = (props) => {
 
     const tinhTong = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getCourseHome', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getCourseHome`, {
             method: 'GET',
         })
             .then((response) => response.json())
@@ -97,7 +97,7 @@ const Books = (props) => {
         setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id', id);
-        fetch('http://localhost:8000/api/getCountSearch', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getCountSearch`, {
             method: 'POST',
             body: _formData,
         })
@@ -117,7 +117,7 @@ const Books = (props) => {
 
     const getCategoryCourses = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getCategoryCourses', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getCategoryCourses`, {
             method: 'GET',
         })
             .then((response) => response.json())

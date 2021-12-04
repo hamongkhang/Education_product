@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ITinTeachingItem = (props) => {
-    const $linkImage = 'http://localhost:8000/upload/images/IT_in_teach/';
+    const $linkImage = `${process.env.REACT_APP_URL_SERVER}/upload/images/IT_in_teach/`;
 
     return (
         <article className="rounded-lg overflow-hidden shadow-md hover:shadow-2xl img mb-5 sm1:mb-10 bg-white">

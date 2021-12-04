@@ -27,7 +27,10 @@ const ChatArea = (props) => {
                     body: _formData,
                     headers: { Authorization: `Bearer ` + $token },
                 };
-                fetch('http://127.0.0.1:8000/api/inbox_admin', requestOptions)
+                fetch(
+                    `${process.env.REACT_APP_URL_SERVER}/api/inbox_admin`,
+                    requestOptions,
+                )
                     .then((res) => res.json())
                     .then((data) => {
                         let data_messages = data.messages;
@@ -48,7 +51,10 @@ const ChatArea = (props) => {
                 headers: { Authorization: `Bearer ` + $token },
                 body: _formData,
             };
-            fetch('http://127.0.0.1:8000/api/sendmess', requestOptions)
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/sendmess`,
+                requestOptions,
+            )
                 .then((res) => res.json())
                 .then((json) => {
                     if (json.access_token) {
@@ -85,7 +91,7 @@ const ChatArea = (props) => {
                     <div className="flex items-center space-x-2">
                         {props.userClicked.avatar ? (
                             <img
-                                src={`http://localhost:8000/upload/images/avatar/${props.userClicked.avatar}`}
+                                src={`${process.env.REACT_APP_URL_SERVER}/upload/images/avatar/${props.userClicked.avatar}`}
                                 className="w-10 h-10 rounded-full object-cover"
                                 alt=""
                             />

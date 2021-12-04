@@ -7,9 +7,12 @@ const ArticleDetails2 = (props) => {
     const { id } = useParams();
 
     const fetchArticle = () => {
-        fetch('http://localhost:8000/api/featuredPost/getFeaturedPost', {
-            method: 'GET',
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/featuredPost/getFeaturedPost`,
+            {
+                method: 'GET',
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.data) {
@@ -32,7 +35,7 @@ const ArticleDetails2 = (props) => {
                 <div>
                     <img
                         className="md:h-96 md1:h-508 object-cover w-full"
-                        srcset={`http://localhost:8000/upload/images/featured_post/${article.image} 2x`}
+                        src={`${process.env.REACT_APP_URL_SERVER}/upload/images/featured_post/${article.image}`}
                     />
                 </div>
                 <div className="my-5">
@@ -57,14 +60,14 @@ const ArticleDetails2 = (props) => {
                     {article.file && article.file.split('.').pop() === 'mp4' ? (
                         <video
                             className="md:h-96 md1:h-508 object-cover w-full"
-                            src={`http://localhost:8000/upload/images/featured_post/${article.file}`}
+                            src={`${process.env.REACT_APP_URL_SERVER}/upload/images/featured_post/${article.file}`}
                             controls
                         ></video>
                     ) : (
                         <img
                             alt=""
                             className="md:h-96 md1:h-508 object-cover w-full"
-                            srcset={`http://localhost:8000/upload/images/featured_post/${article.file} 2x`}
+                            src={`${process.env.REACT_APP_URL_SERVER}/upload/images/featured_post/${article.file}`}
                         />
                     )}
                 </div>

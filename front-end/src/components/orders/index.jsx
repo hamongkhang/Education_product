@@ -9,7 +9,7 @@ const Orders = (props) => {
 
     const getApiSecond = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/history/getHistory', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/history/getHistory`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })

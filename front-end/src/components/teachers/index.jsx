@@ -8,7 +8,7 @@ import { NextArrow, PrevArrow } from '../customArrowsSlider';
 const Teachers = (props) => {
     const [teacher, setTeacher] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:8000/api/teacher/getTeacher')
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/teacher/getTeacher`)
             .then((response) => response.json())
             .then((data) => setTeacher(data.data));
         return () => {};

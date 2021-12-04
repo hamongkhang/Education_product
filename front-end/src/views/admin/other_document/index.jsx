@@ -47,7 +47,7 @@ const DocumentTable = (props) => {
         const _formData = new FormData();
         _formData.append('file', filefile);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/users/importUser', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/users/importUser`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -83,10 +83,13 @@ const DocumentTable = (props) => {
     };
     const ExportUser1 = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/document/exportDocumentCategoryLink', {
-            method: 'GET',
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/document/exportDocumentCategoryLink`,
+            {
+                method: 'GET',
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
@@ -119,10 +122,13 @@ const DocumentTable = (props) => {
     };
     const ExportUser2 = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/document/exportDocumentLink', {
-            method: 'GET',
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/document/exportDocumentLink`,
+            {
+                method: 'GET',
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
@@ -155,10 +161,13 @@ const DocumentTable = (props) => {
     };
     const getDocument = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/freeDocument/getFreeDocumentAdmin', {
-            method: 'GET',
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/freeDocument/getFreeDocumentAdmin`,
+            {
+                method: 'GET',
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 setDocument(data.data[1]);
@@ -187,7 +196,7 @@ const DocumentTable = (props) => {
     const changeStatus = (id) => {
         setIsLoading(true);
         fetch(
-            `http://localhost:8000/api/freeDocumentCategory/blockActiveDocumentCategory/${id}`,
+            `${process.env.REACT_APP_URL_SERVER}/api/freeDocumentCategory/blockActiveDocumentCategory/${id}`,
             {
                 method: 'POST',
                 headers: { Authorization: `Bearer ` + $token },
@@ -225,7 +234,7 @@ const DocumentTable = (props) => {
     const changeStatusDocument = (id) => {
         setIsLoading(true);
         fetch(
-            `http://localhost:8000/api/freeDocument/blockActiveFreeDocument/${id}`,
+            `${process.env.REACT_APP_URL_SERVER}/api/freeDocument/blockActiveFreeDocument/${id}`,
             {
                 method: 'POST',
                 headers: { Authorization: `Bearer ` + $token },
@@ -281,8 +290,7 @@ const DocumentTable = (props) => {
         _formData.append('id', id);
         setIsLoading(true);
         fetch(
-            'http://localhost:8000/api/freeDocumentCategory/destroyFreeDocumentCategory/' +
-                id,
+            `${process.env.REACT_APP_URL_SERVER}/api/freeDocumentCategory/destroyFreeDocumentCategory/${id}`,
             {
                 method: 'POST',
                 body: _formData,
@@ -339,7 +347,7 @@ const DocumentTable = (props) => {
         _formData.append('id', id);
         setIsLoading(true);
         fetch(
-            'http://localhost:8000/api/freeDocument/destroyFreeDocument/' + id,
+            `${process.env.REACT_APP_URL_SERVER}/api/freeDocument/destroyFreeDocument/${id}`,
             {
                 method: 'POST',
                 body: _formData,

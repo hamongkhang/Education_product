@@ -27,7 +27,7 @@ const UserTable = (props) => {
     };
     const getUsers = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/users/getAllUser', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/users/getAllUser`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -45,7 +45,7 @@ const UserTable = (props) => {
         const _formData = new FormData();
         _formData.append('file', file);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/users/importUser', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/users/importUser`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -83,11 +83,14 @@ const UserTable = (props) => {
         const _formData = new FormData();
         _formData.append('id', id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/users/changeDecentralise', {
-            method: 'POST',
-            body: _formData,
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/users/changeDecentralise`,
+            {
+                method: 'POST',
+                body: _formData,
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
@@ -124,7 +127,7 @@ const UserTable = (props) => {
         const _formData = new FormData();
         _formData.append('id', id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/users/blockActiveUser', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/users/blockActiveUser`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -188,7 +191,7 @@ const UserTable = (props) => {
     };
     const ExportUser = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/users/exportUserLink', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/users/exportUserLink`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -362,7 +365,7 @@ const UserTable = (props) => {
                                                   <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                       <img
                                                           alt=""
-                                                          src={`http://localhost:8000/upload/images/avatar/${item.avatar}`}
+                                                          src={`${process.env.REACT_APP_URL_SERVER}/upload/images/avatar/${item.avatar}`}
                                                           className="w-12 h-16 object-cover"
                                                       />
                                                   </td>
@@ -452,7 +455,7 @@ const UserTable = (props) => {
                                                   <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                       <img
                                                           alt=""
-                                                          src={`http://localhost:8000/upload/images/avatar/${item.avatar}`}
+                                                          src={`${process.env.REACT_APP_URL_SERVER}/upload/images/avatar/${item.avatar}`}
                                                           className="w-12 h-16 object-cover"
                                                       />
                                                   </td>

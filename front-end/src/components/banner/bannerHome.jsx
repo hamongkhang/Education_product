@@ -28,7 +28,7 @@ const BannerHome = (props) => {
 
     useEffect(() => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/banner/getBanner', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/banner/getBanner`, {
             method: 'GET',
         })
             .then((response) => response.json())

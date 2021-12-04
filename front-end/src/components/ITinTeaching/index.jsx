@@ -11,7 +11,7 @@ const ITinTeachingList = (props) => {
             method: 'GET',
         };
         fetch(
-            'http://127.0.0.1:8000/api/ITinTeach/getITinTeach',
+            `${process.env.REACT_APP_URL_SERVER}/api/ITinTeach/getITinTeach`,
             requestOptions,
         )
             .then((res) => res.json())

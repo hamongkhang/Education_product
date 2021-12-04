@@ -10,7 +10,7 @@ toast.configure();
 
 const EditTeacher = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const $link = 'http://localhost:8000/upload/images/teacher/';
+    const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/teacher/`;
     const match = useRouteMatch();
     const [editTeacher, setEditTeacher] = useState({});
     const [file, setFile] = useState(null);
@@ -44,7 +44,7 @@ const EditTeacher = () => {
         }
         setIsLoading(true);
         fetch(
-            'http://localhost:8000/api/teacher/updateTeacher/' + editTeacher.id,
+            `${process.env.REACT_APP_URL_SERVER}/api/teacher/updateTeacher/${editTeacher.id}`,
             {
                 method: 'POST',
                 body: _formData,
@@ -83,7 +83,7 @@ const EditTeacher = () => {
         const _formData = new FormData();
         _formData.append('id', match.params.id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/teacher/getOneTeacher', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/teacher/getOneTeacher`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },

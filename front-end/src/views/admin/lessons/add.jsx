@@ -27,7 +27,7 @@ const AddLesson = () => {
     });
     const getContents = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getContents', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getContents`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -59,7 +59,7 @@ const AddLesson = () => {
             _formData.append('file', file);
         }
         setIsLoading(true);
-        fetch('http://localhost:8000/api/addLesson', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/addLesson`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },

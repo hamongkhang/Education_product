@@ -23,10 +23,13 @@ const CommentTable = (props) => {
     const [render, setRender] = useState(false);
     const getComments = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/comment/getCommentAdmin', {
-            method: 'GET',
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/comment/getCommentAdmin`,
+            {
+                method: 'GET',
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 setComment(data.data[0]);
@@ -40,7 +43,7 @@ const CommentTable = (props) => {
     };
     const getLessons = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getLessons', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getLessons`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -67,11 +70,14 @@ const CommentTable = (props) => {
                 const _formData = new FormData();
                 _formData.append('id', id);
                 setIsLoading(true);
-                fetch('http://localhost:8000/api/comment/deleteComment', {
-                    method: 'POST',
-                    body: _formData,
-                    headers: { Authorization: `Bearer ` + $token },
-                })
+                fetch(
+                    `${process.env.REACT_APP_URL_SERVER}/api/comment/deleteComment`,
+                    {
+                        method: 'POST',
+                        body: _formData,
+                        headers: { Authorization: `Bearer ` + $token },
+                    },
+                )
                     .then((response) => response.json())
                     .then((data) => {
                         if (data.error) {
@@ -118,11 +124,14 @@ const CommentTable = (props) => {
                 const _formData = new FormData();
                 _formData.append('id', id);
                 setIsLoading(true);
-                fetch('http://localhost:8000/api/comment/deleteCommentReply', {
-                    method: 'POST',
-                    body: _formData,
-                    headers: { Authorization: `Bearer ` + $token },
-                })
+                fetch(
+                    `${process.env.REACT_APP_URL_SERVER}/api/comment/deleteCommentReply`,
+                    {
+                        method: 'POST',
+                        body: _formData,
+                        headers: { Authorization: `Bearer ` + $token },
+                    },
+                )
                     .then((response) => response.json())
                     .then((data) => {
                         if (data.error) {

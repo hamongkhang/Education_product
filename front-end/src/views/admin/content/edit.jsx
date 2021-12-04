@@ -24,7 +24,7 @@ const EditContent = () => {
     });
     const getTableOfContents = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getTableOfContents', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getTableOfContents`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -48,7 +48,7 @@ const EditContent = () => {
         const _formData = new FormData();
         _formData.append('id', match.params.id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getOneContent', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getOneContent`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -78,7 +78,7 @@ const EditContent = () => {
         _formData.append('status', content.status);
         _formData.append('table_of_content_id', content.table_of_content_id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/updateContent', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/updateContent`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },

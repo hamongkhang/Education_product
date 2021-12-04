@@ -33,7 +33,7 @@ const AddBanner = () => {
         _formData.append('name', addBanners.name);
         _formData.append('status', addBanners.status);
         _formData.append('image', file);
-        fetch('http://localhost:8000/api/banner/createBanner', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/banner/createBanner`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },

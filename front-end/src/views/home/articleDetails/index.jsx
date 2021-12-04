@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { BannerBook } from '../../../components/banner';
 
 const ArticleDetails = (props) => {
-    const $linkImage = 'http://localhost:8000/upload/images/IT_in_teach/';
+    const $linkImage = `${process.env.REACT_APP_URL_SERVER}/upload/images/IT_in_teach/`;
     const [ITItem, setITItem] = useState({});
     const match = useRouteMatch();
     const getITItem = () => {
@@ -11,7 +11,7 @@ const ArticleDetails = (props) => {
             method: 'GET',
         };
         fetch(
-            'http://127.0.0.1:8000/api/ITinTeach/getITinTeach',
+            `${process.env.REACT_APP_URL_SERVER}/api/ITinTeach/getITinTeach`,
             requestOptions,
         )
             .then((res) => res.json())
@@ -32,10 +32,8 @@ const ArticleDetails = (props) => {
             <div className="md1:px-0 px-5 md1:w-4/5 w-full mx-auto my-10">
                 <div>
                     <img
-                        src=""
-                        alt=""
                         className="md:h-96 md1:h-508 object-cover w-full"
-                        srcset={$linkImage + ITItem.image + ' 2x'}
+                        src={$linkImage + ITItem.image}
                     />
                 </div>
                 <div className="my-5">
@@ -63,10 +61,9 @@ const ArticleDetails = (props) => {
                         ></video>
                     ) : (
                         <img
-                            src=""
                             alt=""
                             className="md:h-96 md1:h-508 object-cover w-full"
-                            srcset={$linkImage + ITItem.file + ' 2x'}
+                            src={$linkImage + ITItem.file}
                         />
                     )}
                 </div>

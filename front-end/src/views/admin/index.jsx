@@ -36,7 +36,7 @@ const Dashboard = (props) => {
 
     const getUser = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/users/getAllUser', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/users/getAllUser`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -48,7 +48,7 @@ const Dashboard = (props) => {
     };
     const getOrder = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/order/getOrder', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/order/getOrder`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -60,7 +60,7 @@ const Dashboard = (props) => {
     };
     const getMoney = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/order/getMoney', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/order/getMoney`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -74,7 +74,7 @@ const Dashboard = (props) => {
     };
     const getCount = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/order/getCount', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/order/getCount`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })

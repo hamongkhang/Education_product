@@ -12,9 +12,12 @@ const OtherMaterials = () => {
 
     const getListDocument = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/freeDocument/getFreeDocument', {
-            method: 'GET',
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/freeDocument/getFreeDocument`,
+            {
+                method: 'GET',
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 setListDocument(data.data[1]);

@@ -50,7 +50,7 @@ const Comment = ({ item, replyComment, amountReply, setCommentReply }) => {
                 headers: { Authorization: `Bearer ` + $token },
             };
             fetch(
-                'http://127.0.0.1:8000/api/comment/replyComment',
+                `${process.env.REACT_APP_URL_SERVER}/api/comment/replyComment`,
                 requestOptions,
             )
                 .then((res) => res.json())

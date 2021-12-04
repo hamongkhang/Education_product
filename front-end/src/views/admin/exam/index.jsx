@@ -29,7 +29,7 @@ const ExamTable = (props) => {
     };
     const getExamAdmin = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/getExamAdmin', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/exam/getExamAdmin`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -60,7 +60,7 @@ const ExamTable = (props) => {
         const _formData = new FormData();
         _formData.append('file', filefile);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/users/importUser', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/users/importUser`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -96,10 +96,13 @@ const ExamTable = (props) => {
     };
     const ExportExamCategory = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/exportExamCategoryLink', {
-            method: 'GET',
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/exam/exportExamCategoryLink`,
+            {
+                method: 'GET',
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
@@ -132,7 +135,7 @@ const ExamTable = (props) => {
     };
     const ExportExam = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/exportExamLink', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/exam/exportExamLink`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -170,11 +173,14 @@ const ExamTable = (props) => {
         const _formData = new FormData();
         _formData.append('id', id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/changeCategoryStatus', {
-            method: 'POST',
-            body: _formData,
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/exam/changeCategoryStatus`,
+            {
+                method: 'POST',
+                body: _formData,
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
@@ -219,11 +225,14 @@ const ExamTable = (props) => {
                 const _formData = new FormData();
                 _formData.append('id', id);
                 setIsLoading(true);
-                fetch('http://localhost:8000/api/exam/deleteCategory', {
-                    method: 'POST',
-                    body: _formData,
-                    headers: { Authorization: `Bearer ` + $token },
-                })
+                fetch(
+                    `${process.env.REACT_APP_URL_SERVER}/api/exam/deleteCategory`,
+                    {
+                        method: 'POST',
+                        body: _formData,
+                        headers: { Authorization: `Bearer ` + $token },
+                    },
+                )
                     .then((response) => response.json())
                     .then((data) => {
                         if (data.error) {
@@ -270,11 +279,14 @@ const ExamTable = (props) => {
                 const _formData = new FormData();
                 _formData.append('id', id);
                 setIsLoading(true);
-                fetch('http://localhost:8000/api/exam/deleteExamAdmin', {
-                    method: 'POST',
-                    body: _formData,
-                    headers: { Authorization: `Bearer ` + $token },
-                })
+                fetch(
+                    `${process.env.REACT_APP_URL_SERVER}/api/exam/deleteExamAdmin`,
+                    {
+                        method: 'POST',
+                        body: _formData,
+                        headers: { Authorization: `Bearer ` + $token },
+                    },
+                )
                     .then((response) => response.json())
                     .then((data) => {
                         if (data.error) {
@@ -310,7 +322,7 @@ const ExamTable = (props) => {
         const _formData = new FormData();
         _formData.append('id', id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/changeExamStatus', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/exam/changeExamStatus`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -800,7 +812,7 @@ const ExamTable = (props) => {
                                                       <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                           <img
                                                               alt=""
-                                                              src={`http://localhost:8000/upload/images/exam/${item.image}`}
+                                                              src={`${process.env.REACT_APP_URL_SERVER}/upload/images/exam/${item.image}`}
                                                               className="w-12 h-16 object-cover"
                                                           />
                                                       </td>
@@ -921,7 +933,7 @@ const ExamTable = (props) => {
                                                       <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                           <img
                                                               alt=""
-                                                              src={`http://localhost:8000/upload/images/exam/${item.image}`}
+                                                              src={`${process.env.REACT_APP_URL_SERVER}/upload/images/exam/${item.image}`}
                                                               className="w-12 h-16 object-cover"
                                                           />
                                                       </td>

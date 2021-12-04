@@ -30,11 +30,14 @@ const Cart = (props) => {
                 _formData.append('amount', total);
                 // _formData.append("type",type)
                 // _formData.append("quantity",amount)
-                fetch('http://localhost:8000/api/payment/momoPayment', {
-                    method: 'POST',
-                    headers: { Authorization: `Bearer ` + $token },
-                    body: _formData,
-                })
+                fetch(
+                    `${process.env.REACT_APP_URL_SERVER}/api/payment/momoPayment`,
+                    {
+                        method: 'POST',
+                        headers: { Authorization: `Bearer ` + $token },
+                        body: _formData,
+                    },
+                )
                     .then((response) => response.json())
                     .then((data) => {
                         setIsLoading(false);
@@ -78,7 +81,10 @@ const Cart = (props) => {
             headers: { Authorization: `Bearer ` + $token },
             body: _formData,
         };
-        fetch('http://127.0.0.1:8000/api/cart/updateCart', requestOptions)
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/cart/updateCart`,
+            requestOptions,
+        )
             .then((res) => res.json())
             .then((json) => {
                 if (json.error) {
@@ -99,7 +105,10 @@ const Cart = (props) => {
             headers: { Authorization: `Bearer ` + $token },
             body: _formData,
         };
-        fetch('http://127.0.0.1:8000/api/cart/removeCart', requestOptions)
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/cart/removeCart`,
+            requestOptions,
+        )
             .then((res) => res.json())
             .then((json) => {
                 setRender(!render);
@@ -113,7 +122,10 @@ const Cart = (props) => {
             method: 'POST',
             headers: { Authorization: `Bearer ` + $token },
         };
-        fetch('http://127.0.0.1:8000/api/cart/getCart', requestOptions)
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/cart/getCart`,
+            requestOptions,
+        )
             .then((res) => res.json())
             .then((json) => {
                 if (json.cart) {

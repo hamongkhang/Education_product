@@ -23,7 +23,7 @@ const CategoryCourse = (props) => {
     };
     const getCategoryCourses = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getCategoryCourses', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getCategoryCourses`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -43,11 +43,14 @@ const CategoryCourse = (props) => {
         setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id', cate_id);
-        fetch('http://localhost:8000/api/changeCategoryCourseStatus', {
-            method: 'POST',
-            body: _formData,
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/changeCategoryCourseStatus`,
+            {
+                method: 'POST',
+                body: _formData,
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
@@ -92,11 +95,14 @@ const CategoryCourse = (props) => {
                 const _formData = new FormData();
                 _formData.append('id', id);
                 setIsLoading(true);
-                fetch('http://localhost:8000/api/deleteCategoryCourse', {
-                    method: 'POST',
-                    body: _formData,
-                    headers: { Authorization: `Bearer ` + $token },
-                })
+                fetch(
+                    `${process.env.REACT_APP_URL_SERVER}/api/deleteCategoryCourse`,
+                    {
+                        method: 'POST',
+                        body: _formData,
+                        headers: { Authorization: `Bearer ` + $token },
+                    },
+                )
                     .then((response) => response.json())
                     .then((data) => {
                         if (data.error) {
@@ -175,7 +181,7 @@ const CategoryCourse = (props) => {
         const _formData = new FormData();
         _formData.append('file', filefile);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/users/importUser', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/users/importUser`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -211,10 +217,13 @@ const CategoryCourse = (props) => {
     };
     const ExportUser1 = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/course/exportCourseCategoryLink', {
-            method: 'GET',
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/course/exportCourseCategoryLink`,
+            {
+                method: 'GET',
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
@@ -247,7 +256,7 @@ const CategoryCourse = (props) => {
     };
     const ExportUser2 = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/book/exportBookLink', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/book/exportBookLink`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })

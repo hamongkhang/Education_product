@@ -33,7 +33,7 @@ const EditBookType = () => {
         const _formData = new FormData();
         _formData.append('id', match.params.id);
         _formData.append('name', type.name);
-        fetch('http://localhost:8000/api/updateBookType', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/updateBookType`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -70,7 +70,7 @@ const EditBookType = () => {
         setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id', match.params.id);
-        fetch('http://localhost:8000/api/getOneBookType', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getOneBookType`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },

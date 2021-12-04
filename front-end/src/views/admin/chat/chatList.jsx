@@ -69,12 +69,12 @@ const ChatList = (props) => {
                                       {item.avatar ? (
                                           <img
                                               className="w-12 h-12 object-cover rounded-full"
-                                              srcSet={`http://localhost:8000/upload/images/avatar/${item.avatar} 2x`}
+                                              srcSet={`${process.env.REACT_APP_URL_SERVER}/upload/images/avatar/${item.avatar} 2x`}
                                           />
                                       ) : (
                                           <img
                                               className="w-12 h-12 object-cover rounded-full"
-                                              srcSet={`http://localhost:8000/upload/images/avatar/male_avatar.jpg 2x`}
+                                              srcSet={`${process.env.REACT_APP_URL_SERVER}/upload/images/avatar/male_avatar.jpg 2x`}
                                           />
                                       )}
                                   </div>
@@ -102,12 +102,12 @@ const ChatList = (props) => {
                                       {item.avatar ? (
                                           <img
                                               className="w-12 h-12 object-cover rounded-full"
-                                              srcSet={`http://localhost:8000/upload/images/avatar/${item.avatar} 2x`}
+                                              srcSet={`${process.env.REACT_APP_URL_SERVER}/upload/images/avatar/${item.avatar} 2x`}
                                           />
                                       ) : (
                                           <img
                                               className="w-12 h-12 object-cover rounded-full"
-                                              srcSet={`http://localhost:8000/upload/images/avatar/male_avatar.jpg 2x`}
+                                              srcSet={`${process.env.REACT_APP_URL_SERVER}/upload/images/avatar/male_avatar.jpg 2x`}
                                           />
                                       )}
                                   </div>

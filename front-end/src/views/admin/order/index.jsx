@@ -36,7 +36,7 @@ const OrderTable = (props) => {
         const _formData = new FormData();
         _formData.append('file', file);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/users/importUser', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/users/importUser`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -72,7 +72,7 @@ const OrderTable = (props) => {
     };
     const ExportUser = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/order/exportOrderLink', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/order/exportOrderLink`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -113,7 +113,7 @@ const OrderTable = (props) => {
     };
     const getOrder = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/order/getOrder', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/order/getOrder`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -124,7 +124,7 @@ const OrderTable = (props) => {
         return () => {};
     };
     const getUsers = () => {
-        fetch('http://localhost:8000/api/users/getAllUser', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/users/getAllUser`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -149,11 +149,14 @@ const OrderTable = (props) => {
                 const _formData = new FormData();
                 _formData.append('id', id);
                 setIsLoading(true);
-                fetch('http://localhost:8000/api/order/destroyOrder', {
-                    method: 'POST',
-                    body: _formData,
-                    headers: { Authorization: `Bearer ` + $token },
-                })
+                fetch(
+                    `${process.env.REACT_APP_URL_SERVER}/api/order/destroyOrder`,
+                    {
+                        method: 'POST',
+                        body: _formData,
+                        headers: { Authorization: `Bearer ` + $token },
+                    },
+                )
                     .then((response) => response.json())
                     .then((data) => {
                         if (data.error) {

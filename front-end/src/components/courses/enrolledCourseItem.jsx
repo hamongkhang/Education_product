@@ -6,10 +6,7 @@ const EnrolledCourseItem = (props) => (
     <div className="shadow-md rounded overflow-hidden box-content bg-white">
         <div>
             <img
-                src={
-                    'http://localhost:8000/upload/images/course/' +
-                    props.data.image
-                }
+                src={`${process.env.REACT_APP_URL_SERVER}/upload/images/course/${props.data.image}`}
                 className="w-full h-44 object-cover"
                 alt=""
             />

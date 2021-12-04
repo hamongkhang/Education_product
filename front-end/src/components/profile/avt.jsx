@@ -8,7 +8,7 @@ toast.configure();
 
 const Avt = (props) => {
     const [isLoading, setIsLoading] = useState(false);
-    const $link = 'http://localhost:8000/upload/images/avatar/';
+    const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/avatar/`;
     const history = useHistory();
     const $token = localStorage.getItem('access_token');
     const addAvatar = (event) => {
@@ -25,7 +25,7 @@ const Avt = (props) => {
                 headers: { Authorization: `Bearer ` + $token },
             };
             fetch(
-                'http://127.0.0.1:8000/api/users/updateProfile',
+                `${process.env.REACT_APP_URL_SERVER}/api/users/updateProfile`,
                 requestOptions,
             )
                 .then((res) => res.json())

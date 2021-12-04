@@ -29,8 +29,7 @@ const EditDocument = () => {
         _formData.append('status', documentEdit.status);
         setIsLoading(true);
         fetch(
-            'http://localhost:8000/api/freeDocument/updateFreeDocument/' +
-                documentEdit.id,
+            `${process.env.REACT_APP_URL_SERVER}/api/freeDocument/updateFreeDocument/${documentEdit.id}`,
             {
                 method: 'POST',
                 body: _formData,
@@ -69,11 +68,14 @@ const EditDocument = () => {
         const _formData = new FormData();
         _formData.append('id', match.params.id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/freeDocument/getOneDocument', {
-            method: 'POST',
-            body: _formData,
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/freeDocument/getOneDocument`,
+            {
+                method: 'POST',
+                body: _formData,
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
@@ -132,10 +134,13 @@ const EditDocument = () => {
     const [documentCategory, setDocumentCategory] = useState([]);
     const getDocument = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/freeDocument/getFreeDocumentAdmin', {
-            method: 'GET',
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/freeDocument/getFreeDocumentAdmin`,
+            {
+                method: 'GET',
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 setDocumentCategory(data.data[0].reverse());

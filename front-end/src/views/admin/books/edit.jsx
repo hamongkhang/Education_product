@@ -10,7 +10,7 @@ toast.configure();
 
 const EditBook = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const $link = 'http://localhost:8000/upload/images/book/';
+    const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/book/`;
     const match = useRouteMatch();
     const [book, setBook] = useState({});
     const [file, setFile] = useState(null);
@@ -51,7 +51,7 @@ const EditBook = () => {
         }
         _formData.append('quantity', book.quantity);
         _formData.append('description', book.description);
-        fetch('http://localhost:8000/api/updateBook', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/updateBook`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -88,7 +88,7 @@ const EditBook = () => {
         setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id', match.params.id);
-        fetch('http://localhost:8000/api/getOneBook', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getOneBook`, {
             method: 'POST',
             body: _formData,
             headers: { Authorization: `Bearer ` + $token },
@@ -113,7 +113,7 @@ const EditBook = () => {
     };
     const getBookTypes = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/getBookTypes', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/getBookTypes`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })

@@ -53,7 +53,7 @@ const IndexQuestionExam = () => {
     };
     const getExamQuestionCategoryAdminEdit = () => {
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/getExamAdmin', {
+        fetch(`${process.env.REACT_APP_URL_SERVER}/api/exam/getExamAdmin`, {
             method: 'GET',
             headers: { Authorization: `Bearer ` + $token },
         })
@@ -67,11 +67,14 @@ const IndexQuestionExam = () => {
         const _formData = new FormData();
         _formData.append('id', match.params.id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/getQuestionAnswer/', {
-            body: _formData,
-            method: 'POST',
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/exam/getQuestionAnswer/`,
+            {
+                body: _formData,
+                method: 'POST',
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 setQuestionEdit(data.data[0]);
@@ -84,11 +87,14 @@ const IndexQuestionExam = () => {
         const _formData = new FormData();
         _formData.append('id', match.params.id);
         setIsLoading(true);
-        fetch('http://localhost:8000/api/exam/getOneExamQuestionEdit', {
-            method: 'POST',
-            body: _formData,
-            headers: { Authorization: `Bearer ` + $token },
-        })
+        fetch(
+            `${process.env.REACT_APP_URL_SERVER}/api/exam/getOneExamQuestionEdit`,
+            {
+                method: 'POST',
+                body: _formData,
+                headers: { Authorization: `Bearer ` + $token },
+            },
+        )
             .then((response) => response.json())
             .then((data) => {
                 if (data.error) {
@@ -122,11 +128,14 @@ const IndexQuestionExam = () => {
                 const _formData = new FormData();
                 _formData.append('id', id);
                 setIsLoading(true);
-                fetch('http://localhost:8000/api/exam/deleteQuestionAnswer', {
-                    method: 'POST',
-                    body: _formData,
-                    headers: { Authorization: `Bearer ` + $token },
-                })
+                fetch(
+                    `${process.env.REACT_APP_URL_SERVER}/api/exam/deleteQuestionAnswer`,
+                    {
+                        method: 'POST',
+                        body: _formData,
+                        headers: { Authorization: `Bearer ` + $token },
+                    },
+                )
                     .then((response) => response.json())
                     .then((data) => {
                         if (data.error) {
@@ -238,7 +247,7 @@ const IndexQuestionExam = () => {
                                         <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <img
                                                 alt=""
-                                                src={`http://localhost:8000/upload/images/exam/${examQuestionEdit.image}`}
+                                                src={`${process.env.REACT_APP_URL_SERVER}/upload/images/exam/${examQuestionEdit.image}`}
                                                 className="w-12 h-16 object-cover"
                                             />
                                         </td>
@@ -382,7 +391,7 @@ const IndexQuestionExam = () => {
                                                     <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                                         <img
                                                             alt=""
-                                                            src={`http://localhost:8000/upload/images/exam/${items.image}`}
+                                                            src={`${process.env.REACT_APP_URL_SERVER}/upload/images/exam/${items.image}`}
                                                             className="w-12 h-16 object-cover"
                                                         />
                                                     </td>

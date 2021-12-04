@@ -15,19 +15,25 @@ const ArticleList = (props) => {
     useEffect(() => {
         setIsLoading(true);
         if ($token) {
-            fetch('http://localhost:8000/api/featuredPost/getFeaturedPost', {
-                method: 'GET',
-                headers: { Authorization: `Bearer ` + $token },
-            })
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/featuredPost/getFeaturedPost`,
+                {
+                    method: 'GET',
+                    headers: { Authorization: `Bearer ` + $token },
+                },
+            )
                 .then((response) => response.json())
                 .then((data) => {
                     setFeaturedPost(data.data);
                     setIsLoading(false);
                 });
         } else {
-            fetch('http://localhost:8000/api/featuredPost/getFeaturedPost', {
-                method: 'GET',
-            })
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/featuredPost/getFeaturedPost`,
+                {
+                    method: 'GET',
+                },
+            )
                 .then((response) => response.json())
                 .then((data) => {
                     setFeaturedPost(data.data);

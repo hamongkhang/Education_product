@@ -27,7 +27,10 @@ const CodeVerification = (props) => {
                 method: 'POST',
                 body: _formData,
             };
-            fetch('http://127.0.0.1:8000/api/users/register', requestOptions)
+            fetch(
+                `${process.env.REACT_APP_URL_SERVER}/api/users/register`,
+                requestOptions,
+            )
                 .then((res) => res.json())
                 .then((json) => {
                     if (!json.error) {
