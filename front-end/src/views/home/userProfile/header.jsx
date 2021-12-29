@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../../components/header/logo';
-import { LoginName } from '../../../components/account';
 
 const UserProfileHeader = (props) => {
     const [classOverlay, setClassOverlay] = useState('-translate-x-full');

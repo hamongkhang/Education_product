@@ -14,7 +14,7 @@ const PlayCourseItem = ({ item, lesson, handleUrl }) => {
             </div>
             <div>
                 {lesson.map((item2, index) => {
-                    if (item.id === item2.content_id) {
+                    if (item.id == item2.content_id) {
                         return (
                             <div
                                 key={index}

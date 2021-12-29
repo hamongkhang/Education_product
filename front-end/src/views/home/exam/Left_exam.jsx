@@ -16,7 +16,6 @@ export const LeftExam = (props) => {
             .then((data) => {
                 setHistoryExam2(data.data);
             });
-        return () => {};
     };
 
     useEffect(() => {
@@ -37,8 +36,7 @@ export const LeftExam = (props) => {
                                         <ul className="other-doc-left__course--p">
                                             {props.exam.map((item2) => {
                                                 if (
-                                                    item2.category_id ===
-                                                    item.id
+                                                    item2.category_id == item.id
                                                 ) {
                                                     var kt2 = 0;
                                                     for (
@@ -48,7 +46,7 @@ export const LeftExam = (props) => {
                                                     ) {
                                                         if (
                                                             historyExam2[i]
-                                                                .product_id ===
+                                                                .product_id ==
                                                             item2.id
                                                         ) {
                                                             kt2 = 1;

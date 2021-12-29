@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Preloader from '../preloader';
 
 toast.configure();
 
 const BookItem = (props) => {
     const { changeRender } = props;
-    const [isLoading, setIsLoading] = useState(false);
     const $token = localStorage.getItem('access_token');
     const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/book/`;
     const addToCart = (product_id) => {
-        setIsLoading(true);
         if ($token) {
             const _formData = new FormData();
             _formData.append('product_id', product_id);
@@ -51,7 +48,6 @@ const BookItem = (props) => {
                             progress: undefined,
                         });
                     }
-                    setIsLoading(false);
                 });
         } else {
             // alert('hay đăng nhập trước khi bỏ vào giỏ hàng');
@@ -65,11 +61,9 @@ const BookItem = (props) => {
                 progress: undefined,
             });
         }
-        setIsLoading(false);
     };
     return (
         <div className="shadow-md bg-white overflow-hidden h-96 mr-2 rounded-md mb-10">
-            {isLoading && <Preloader />}
             <div className="w-full h-64 flex items-center justify-center">
                 <img
                     src={$link + props.image}

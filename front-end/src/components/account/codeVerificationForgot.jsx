@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Preloader from '../preloader';
+
+toast.configure();
 
 const CodeVerificationForgot = (props) => {
     const [changePasswordForgot, setChangePasswordForgot] = useState({});
+    const [textError, setTextError] = useState({
+        code: '',
+        password: '',
+        cfpassword: '',
+    });
     const [isLoading, setIsLoading] = useState(false);
     const history = useHistory();
 
@@ -42,22 +50,37 @@ const CodeVerificationForgot = (props) => {
             )
                 .then((res) => res.json())
                 .then((json) => {
+                    let validator = {
+                        code: '',
+                        password: '',
+                        cfpassword: '',
+                    };
                     if (!json.error) {
-                        alert('Thành Công');
+                        toast.success(`Lấy lại mât khẩu thành công!`, {
+                            position: 'top-center',
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                        });
                         history.push('/dang-nhap');
-                    } else if (json.error.code) {
-                        alert(json.error.code);
-                    } else if (json.error.new_password) {
-                        alert(json.error.new_password);
-                    } else if (json.error.new_password_confirmed) {
-                        alert(json.error.new_password_confirmed);
                     } else {
-                        alert(json.error);
+                        validator.code = json.error.code ? json.error.code : '';
+                        validator.password = json.error.new_password
+                            ? json.error.new_password
+                            : '';
+                        validator.cfpassword = json.error.new_password_confirmed
+                            ? json.error.new_password_confirmed
+                            : '';
                     }
+                    // } else {
+                    //     alert(json.error);
+                    // }
+                    setTextError(validator);
                     setIsLoading(false);
                 });
-        } else {
-            alert('Không được bỏ trống');
         }
     };
     return (
@@ -93,9 +116,8 @@ const CodeVerificationForgot = (props) => {
                                     className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2"
                                     required
                                 />
-                                <span className="text-red-500 text-sm">
-                                    {' '}
-                                    Mã xác minh không khớp!
+                                <span className="text-red-500 text-sm font-semibold">
+                                    {textError.code}
                                 </span>
                             </div>
                             <div className="w-full mb-4">
@@ -116,6 +138,9 @@ const CodeVerificationForgot = (props) => {
                                     placeholder="Mật khẩu mới"
                                     required
                                 />
+                                <span className="text-red-500 text-sm font-semibold">
+                                    {textError.password}
+                                </span>
                             </div>
                             <div className="w-full mb-4">
                                 <label
@@ -135,9 +160,8 @@ const CodeVerificationForgot = (props) => {
                                     placeholder="Xác nhận mật khẩu mới"
                                     required
                                 />
-                                <span className="text-red-500 text-sm">
-                                    {' '}
-                                    Mật khẩu không khớp
+                                <span className="text-red-500 text-sm font-semibold">
+                                    {textError.cfpassword}
                                 </span>
                             </div>
                             <div>

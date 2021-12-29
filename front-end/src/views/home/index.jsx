@@ -31,7 +31,7 @@ import Cart from '../../components/cart';
 
 const HomePages = (props) => {
     const { changeRender } = props;
-    const [reRender, setReRender] = useState(false);
+    const [reRender, setReRender] = useState('');
 
     const [checkLoggedIn, setCheckLoggedIn] = useState(false);
 

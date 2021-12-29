@@ -29,10 +29,10 @@ const ExamGrid = (props) => {
         <>
             <div className="online-exam-body">
                 {list.map((item, index) => {
-                    if (item.category_id === itemCategoryID) {
+                    if (item.category_id == itemCategoryID) {
                         var kt = 0;
                         for (var i = 0; i < historyExam.length; i++) {
-                            if (historyExam[i].product_id === item.id) {
+                            if (historyExam[i].product_id == item.id) {
                                 kt = 1;
                             }
                         }

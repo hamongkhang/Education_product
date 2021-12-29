@@ -12,6 +12,7 @@ const UserInfoProfile = (props) => {
     const [profile, setProfile] = useState([]);
     const [option, setOption] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [avtFb, setAvtFb] = useState('');
     const history = useHistory();
     const $token = localStorage.getItem('access_token');
     const requestOptions = {
@@ -20,8 +21,10 @@ const UserInfoProfile = (props) => {
     };
 
     const handleCheckLoggedIn = () => {
-        // if
-        // ...
+        if (localStorage.getItem('avatar_google')) {
+            let avtFb = localStorage.getItem('avatar_google');
+            setAvtFb(avtFb);
+        }
     };
 
     useEffect(() => {
@@ -92,7 +95,7 @@ const UserInfoProfile = (props) => {
             <Avt profile={profile} />
             <div className="space-y-10">
                 <ChangeInfo profile={profile} option={option} />
-                <ChangePassword />
+                {!avtFb && <ChangePassword />}
             </div>
         </div>
     );

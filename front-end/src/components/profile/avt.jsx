@@ -10,7 +10,20 @@ const Avt = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const $link = `${process.env.REACT_APP_URL_SERVER}/upload/images/avatar/`;
     const history = useHistory();
+    const [avtFb, setAvtFb] = useState('');
     const $token = localStorage.getItem('access_token');
+
+    const handleCheckLoggedIn = () => {
+        if (localStorage.getItem('avatar_google')) {
+            let avtFb = localStorage.getItem('avatar_google');
+            setAvtFb(avtFb);
+        }
+    };
+
+    useEffect(() => {
+        handleCheckLoggedIn();
+    }, []);
+
     const addAvatar = (event) => {
         const target = event.target;
         if ($token) {
@@ -93,14 +106,16 @@ const Avt = (props) => {
                             className="w-full h-full mb-10 md:mb-0 object-cover rounded-lg"
                             alt=""
                         />
-                        <label
-                            htmlFor="avt"
-                            className="w-4/5 text-center opacity-0 group-hover:opacity-100 block py-2 rounded-md bg-yellow-400 hover:bg-yellow-500 cursor-pointer text-15 font-semibold absolute bottom-5 transform left-1/2 -translate-x-1/2 duration-300 text-white"
-                        >
-                            {' '}
-                            <i className="fad fa-camera mr-2"></i>{' '}
-                            <span> Đổi ảnh</span>
-                        </label>
+                        {!avtFb && (
+                            <label
+                                htmlFor="avt"
+                                className="w-4/5 text-center opacity-0 group-hover:opacity-100 block py-2 rounded-md bg-yellow-400 hover:bg-yellow-500 cursor-pointer text-15 font-semibold absolute bottom-5 transform left-1/2 -translate-x-1/2 duration-300 text-white"
+                            >
+                                {' '}
+                                <i className="fad fa-camera mr-2"></i>{' '}
+                                <span> Đổi ảnh</span>
+                            </label>
+                        )}
                         <input
                             type="file"
                             name="avatar"

@@ -57,7 +57,7 @@ const CourseChapter = ({ table, index, contentAlpha, lesson, handleUrl }) => {
             </div>
             <div className={chapter}>
                 {contentAlpha.map((item, index) => {
-                    if (item.table_of_content_id === table.id) {
+                    if (item.table_of_content_id == table.id) {
                         return (
                             <PlayCourseItem
                                 key={index}

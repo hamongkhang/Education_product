@@ -19,7 +19,7 @@ const ArticleItem = (props) => {
                         }}
                     ></p>
                     <Link to={`/chi-tiet-tin-tuc/${props.data.id}`}>
-                        <span className="text-17 underline hover:text-indigo-600">
+                        <span className="text-17 underline text-indigo-500 hover:text-indigo-700">
                             Đọc tiếp
                         </span>
                     </Link>
