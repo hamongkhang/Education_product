@@ -98,6 +98,12 @@ const sidebar = [
         link: '/admin/category_courses',
         role: 1,
     },
+    {
+        name: 'Payment',
+        icon: 'fas fa-money-bill-wave',
+        link: '/admin/payment',
+        role: 1,
+    },
 ];
 
 const AdminSidebar = (props) => {

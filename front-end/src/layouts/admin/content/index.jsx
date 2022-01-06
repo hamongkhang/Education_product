@@ -55,6 +55,7 @@ import AddDocument from '../../../views/admin/other_document/documentAdd';
 import EditDocument from '../../../views/admin/other_document/documentEdit';
 import OrderTable from '../../../views/admin/order';
 import ExamResultTable from '../../../views/admin/exam_result';
+import PaymentTable from '../../../views/admin/payment/index';
 
 const AdminContent = (props) => {
     return (
@@ -334,6 +335,11 @@ const AdminContent = (props) => {
                             path="/admin/other_document/addDocument"
                             exact
                             component={AddDocument}
+                        />
+                          <Route
+                            path="/admin/payment/"
+                            exact
+                            component={PaymentTable}
                         />
                         <Route
                             path="/admin/other_document/editDocument/:id"

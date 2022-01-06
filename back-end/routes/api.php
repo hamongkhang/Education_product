@@ -263,6 +263,10 @@ Route::get('/it/exportItLink',[App\Http\Controllers\ITinTeachController::class,'
 Route::get('/course/exportCourseCategoryLink',[App\Http\Controllers\CourseController::class,'exportCourseCategoryLink'])->name('course.exportCourseCategoryLink');
 Route::get('/course/exportCourseLink',[App\Http\Controllers\CourseController::class,'exportCourseLink'])->name('course.exportCourseLink');
 
+Route::get('/getOneThanhToan',[App\Http\Controllers\PaymentController::class,'getThanhToan'])->name('thanhtoan.getThanhToan');
+Route::post('/thanhToan',[App\Http\Controllers\PaymentController::class,'thanhToan2'])->name('thanhtoan.thanhToan2');
+
+
 
 
 
