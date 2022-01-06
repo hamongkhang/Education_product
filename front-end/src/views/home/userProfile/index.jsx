@@ -6,9 +6,9 @@ import { UserInfoProfile } from '../../../components/profile';
 import Orders from '../../../components/orders';
 
 const UserProfile = (props) => (
-    <div>
+    <div className="pb-16" style={{ minHeight: '100vh' }}>
         <UserProfileHeader />
-        <div className="pt-24 mb-10 w-11/12 mx-auto bg-gray-100">
+        <div className="pt-24 w-11/12 mx-auto bg-gray-100">
             <Route
                 path="/tai-khoan/khoa-hoc"
                 exact

@@ -24,7 +24,7 @@ export const ExamLesson = ({
         var tong = 0;
         var chuoi = '';
         for (var i = 0; i < number; i++) {
-            if (correct[i].answer === check[i]) {
+            if (correct[i].answer == check[i]) {
                 tong = tong + 1;
             } else {
                 var j = i + 1;
@@ -141,7 +141,7 @@ export const ExamLesson = ({
                                                   </tr>
                                                   {answer.map((item) => {
                                                       if (
-                                                          item.id_question ===
+                                                          item.id_question ==
                                                           items.id
                                                       ) {
                                                           return (

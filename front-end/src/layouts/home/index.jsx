@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import HomePages from '../../views/home';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -19,6 +19,7 @@ function HomePage() {
                     <Route path="/tai-khoan" exact component={UserProfile} />
                     <Route path="/bai-hoc" exact component={PlayCourse} />
                     <Route path="/" component={HomePages} />
+                    <Redirect from="*" to="/" />
                     <Call />
                     <Chat />
                     <Cart />

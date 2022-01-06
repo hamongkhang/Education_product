@@ -119,6 +119,7 @@ const ChangeInfo = (props) => {
                 });
         }
     };
+
     return (
         <div className="bg-indigo-100 p-5 shadow-lg">
             {isLoading && <Preloader />}

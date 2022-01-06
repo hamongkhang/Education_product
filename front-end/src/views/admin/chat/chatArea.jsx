@@ -110,7 +110,7 @@ const ChatArea = (props) => {
                 >
                     {messages
                         ? messages.map((item, index) =>
-                              item.user_id === props.userClicked.id ? (
+                              item.user_id == props.userClicked.id ? (
                                   <Incoming
                                       key={index}
                                       {...item}

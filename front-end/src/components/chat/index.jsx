@@ -147,7 +147,10 @@ const Chat = (props) => {
     };
 
     useEffect(() => {
-        if (localStorage.getItem('access_token')) {
+        if (
+            localStorage.getItem('access_token') ||
+            localStorage.getItem('access_token_chat')
+        ) {
             fetchMessages();
             getUserID();
         }
@@ -187,7 +190,7 @@ const Chat = (props) => {
                     ref={messageEl}
                 >
                     {messages.map((item, index) =>
-                        item.receiver === userID ? (
+                        item.receiver == userID ? (
                             <Incoming key={index} {...item} />
                         ) : (
                             <Outgoing key={index} {...item} />

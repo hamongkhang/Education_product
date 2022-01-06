@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Preloader from '../preloader';
+
+toast.configure();
 
 const CodeVerification = (props) => {
     const [codeRegister, setCodeRegister] = useState({});
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(false);
+    const [textError, setTextError] = useState('');
 
     const addCodeRegister = (event) => {
         const target = event.target;
@@ -33,13 +37,22 @@ const CodeVerification = (props) => {
             )
                 .then((res) => res.json())
                 .then((json) => {
+                    let err = '';
                     if (!json.error) {
-                        history.push('/');
+                        toast.success(`Đăng ký tài khoản thành công!`, {
+                            position: 'top-center',
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                        });
+                        history.push('/dang-nhap');
                     } else if (json.error.code) {
-                        alert(json.error.code);
-                    } else {
-                        alert(json.error);
+                        err = json.error.code;
                     }
+                    setTextError(err);
                     setIsLoading(false);
                 });
         } else {
@@ -78,9 +91,8 @@ const CodeVerification = (props) => {
                                     className="px-4 py-2 w-full focus:border-indigo-500 border-gray-300 hover:border-gray-400 rounded outline-none border-2"
                                     required
                                 />
-                                <span className="text-red-500 text-sm">
-                                    {' '}
-                                    Mã xác minh không khớp!
+                                <span className="text-red-500 text-sm font-semibold">
+                                    {textError}
                                 </span>
                             </div>
                             <div>

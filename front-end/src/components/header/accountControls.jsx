@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { LoginName } from '../account';
 
 const AccountControls = (props) => {
-    const { setReRender, checkLoggedIn } = props;
+    const { checkLoggedIn, onLogout } = props;
     const handleCart = () => {
         const cartArea = document.querySelector('.cart-area'),
             cartOverlay = document.querySelector('.cart-overlay');
@@ -49,7 +49,7 @@ const AccountControls = (props) => {
             </div>
             {checkLoggedIn ? (
                 <div className="hidden sm:block">
-                    <LoginName setReRender={setReRender} />
+                    <LoginName onLogout={onLogout} />
                 </div>
             ) : (
                 <div>

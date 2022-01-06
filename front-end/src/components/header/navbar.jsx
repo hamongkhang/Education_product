@@ -3,8 +3,9 @@ import { Link, useLocation } from 'react-router-dom';
 import Logo from './logo';
 
 const Navbar = (props) => {
-    const { checkLoggedIn } = props;
+    const { checkLoggedIn, onLogout } = props;
     const { pathname } = useLocation();
+
     return (
         <div className="flex">
             <Logo />
@@ -67,7 +68,7 @@ const Navbar = (props) => {
                             </li>
                             <li
                                 className={
-                                    pathname === '/sach'
+                                    pathname === '/tai-lieu-mien-phi'
                                         ? 'nav-link relative active'
                                         : 'nav-link relative'
                                 }
@@ -221,6 +222,16 @@ const Navbar = (props) => {
                                 </a>
                             </li>
                         </ul>
+                        {checkLoggedIn && (
+                            <button
+                                onClick={(event) => onLogout(event)}
+                                to="/"
+                                className="sm:hidden w-full flex nav-link items-center justify-between bg-indigo-100 font-medium px-5 py-4 hover:bg-indigo-200"
+                            >
+                                <span>Đăng xuất</span>
+                                <i class="fad fa-sign-out-alt text-lg"></i>
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>

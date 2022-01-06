@@ -259,7 +259,7 @@ const PlayCourse = (props) => {
                                 />
                             ) : (
                                 <ReactPlayer
-                                    url={`${process.env.REACT_APP_URL_SERVER}/upload/images/course/${url}`}
+                                    url={`${process.env.REACT_APP_URL_SERVER}/upload/lesson_files/${url}`}
                                     controls={true}
                                     width="100%"
                                     playing={true}
@@ -308,12 +308,12 @@ const PlayCourse = (props) => {
                                 <div className="space-y-4 lg:h-814 custom-scroll-1 lg:overflow-y-scroll">
                                     {comment &&
                                         comment.map((item, index) => {
-                                            if (item.lessonId === id) {
+                                            if (item.lessonId == id) {
                                                 let reply = commentReply.filter(
                                                     (item2) =>
-                                                        item2.id_reply ===
+                                                        item2.id_reply ==
                                                             item.id &&
-                                                        item2.lessonId === id,
+                                                        item2.lessonId == id,
                                                 );
                                                 return (
                                                     <Comment

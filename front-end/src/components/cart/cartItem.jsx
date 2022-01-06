@@ -16,8 +16,8 @@ const CartItem = (props) => {
     const $linkBook = `${process.env.REACT_APP_URL_SERVER}/upload/images/book/`;
     const $linkCourse = `${process.env.REACT_APP_URL_SERVER}/upload/images/course/`;
     const increase = () => {
-        updateCart(props.product_id, props.type, amount + 1);
-        if (amount + 1 > amountBook) {
+        updateCart(props.product_id, props.type, parseInt(amount) + 1);
+        if (parseInt(amount) + 1 > amountBook) {
             setAmount(amountBook);
             // alert('Số lượng sách trong kho chỉ còn ' + amountBook + ' quyển');
             toast.warn(`Số lượng sách trong kho chỉ còn ${amountBook} quyển!`, {
@@ -30,12 +30,12 @@ const CartItem = (props) => {
                 progress: undefined,
             });
         } else {
-            setAmount(amount + 1);
+            setAmount(parseInt(amount) + 1);
         }
     };
     const decrease = () => {
-        updateCart(props.product_id, props.type, amount - 1);
-        setAmount(amount - 1);
+        updateCart(props.product_id, props.type, parseInt(amount) - 1);
+        setAmount(parseInt(amount) - 1);
     };
 
     const getOneBook = (id) => {
@@ -123,7 +123,7 @@ const CartItem = (props) => {
             )}
             {isLoading && <Preloader />}
             <div className="pl-5 w-9/12">
-                <div className="flex items-start">
+                <div className="flex items-start justify-between">
                     {props.type === 'book' ? (
                         <Link to={'/sach/' + product.id}>
                             <h3 className="line-2 hover:text-indigo-500 duration-300">
@@ -139,7 +139,7 @@ const CartItem = (props) => {
                     )}
 
                     <button
-                        className="hover:text-red-500 text-lg"
+                        className="hover:text-red-500 block text-lg"
                         onClick={() => removeCart(props.product_id, props.type)}
                     >
                         <i className="far fa-times"></i>

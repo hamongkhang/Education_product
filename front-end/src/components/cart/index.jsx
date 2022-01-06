@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import CartItem from './cartItem';
 import { toast } from 'react-toastify';
-import Preloader from '../preloader';
 
 toast.configure();
 
@@ -10,7 +9,6 @@ const Cart = (props) => {
     const [cart, setCart] = useState([]);
     const [render, setRender] = useState(false);
     const [payment, setPayment] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
     const $token = localStorage.getItem('access_token');
 
     const handleCart = () => {
@@ -23,7 +21,6 @@ const Cart = (props) => {
     };
 
     const payMent = () => {
-        setIsLoading(true);
         if ($token) {
             if (total != 0) {
                 const _formData = new FormData();
@@ -40,7 +37,6 @@ const Cart = (props) => {
                 )
                     .then((response) => response.json())
                     .then((data) => {
-                        setIsLoading(false);
                         window.location.href = data.url;
                     });
             } else {
@@ -67,11 +63,9 @@ const Cart = (props) => {
                 progress: undefined,
             });
         }
-        setIsLoading(false);
     };
 
     const updateCart = (id, type, amount) => {
-        setIsLoading(true);
         const _formData = new FormData();
         _formData.append('product_id', id);
         _formData.append('type', type);
@@ -92,11 +86,9 @@ const Cart = (props) => {
                 } else {
                     setRender(!render);
                 }
-                setIsLoading(false);
             });
     };
     const removeCart = (product_id, type) => {
-        setIsLoading(true);
         const _formData = new FormData();
         _formData.append('product_id', product_id);
         _formData.append('type', type);
@@ -113,11 +105,9 @@ const Cart = (props) => {
             .then((json) => {
                 setRender(!render);
                 console.log(json.description);
-                setIsLoading(false);
             });
     };
     const getCart = () => {
-        setIsLoading(true);
         const requestOptions = {
             method: 'POST',
             headers: { Authorization: `Bearer ` + $token },
@@ -136,7 +126,6 @@ const Cart = (props) => {
                     });
                     setTotal(total);
                 }
-                setIsLoading(false);
             });
     };
     useEffect(() => {
@@ -147,7 +136,6 @@ const Cart = (props) => {
 
     return (
         <div>
-            {isLoading && <Preloader />}
             <div className="fixed cart-area transform translate-x-full top-0 right-0 bottom-0 overflow-hidden bg-white w-full md:w-1/2 lg:w-2/6 shadow-2xl z-30 duration-500">
                 <div className="flex justify-between items-center h-19 mb-5 shadow-md px-5 py-3">
                     <span className="text-lg font-semibold tracking-wide uppercase">

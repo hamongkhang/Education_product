@@ -4,7 +4,6 @@ import RightExam from './Right_exam';
 import { BannerBook } from '../../../components/banner';
 import { Route } from 'react-router-dom';
 import ExamDetail from './examDetail';
-import Preloader from '../../../components/preloader';
 
 const ExamIndex = () => {
     const [listExam, setListExam] = useState([]);
@@ -19,11 +18,9 @@ const ExamIndex = () => {
     const [timer, setTimer] = React.useState(0);
     const [correct, setCorrect] = React.useState(0);
     const countRef = React.useRef(null);
-    const [isLoading, setIsLoading] = useState(true);
     const $token = localStorage.getItem('access_token');
 
     const getQuestionAnswer = (id) => {
-        setIsLoading(true);
         const _formData = new FormData();
         _formData.append('id', id);
         fetch(
@@ -39,12 +36,10 @@ const ExamIndex = () => {
                 setQuestion(data.data[0]);
                 setAnswer(data.data[1]);
                 setCorrect(data.data[2]);
-                setIsLoading(false);
             });
     };
 
     const getListDocument = () => {
-        setIsLoading(true);
         fetch(`${process.env.REACT_APP_URL_SERVER}/api/exam/getExam`, {
             method: 'GET',
         })
@@ -52,11 +47,10 @@ const ExamIndex = () => {
             .then((data) => {
                 setListExam(data.data[1]);
                 setListExamCategory(data.data[0]);
-                setIsLoading(false);
             });
     };
     const handleExamLesson = (id = -1, i, time) => {
-        let data = listExam.find((item) => item.id === id);
+        let data = listExam.find((item) => item.id == id);
         setExamLesson2(data);
         getQuestionAnswer(id);
         setIsShow2(true);
@@ -68,7 +62,7 @@ const ExamIndex = () => {
     };
     const handleExamDetails = (id = -1, check = 0) => {
         if (id !== -1) {
-            let data = listExam.find((item) => item.id === id);
+            let data = listExam.find((item) => item.id == id);
             if (data) {
                 data = {
                     ...data,
@@ -90,7 +84,6 @@ const ExamIndex = () => {
     if (timer != -1) {
         return (
             <>
-                {isLoading && <Preloader />}
                 <BannerBook />
                 <div className="other-doc mt-10">
                     <LeftExam

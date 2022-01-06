@@ -18,6 +18,7 @@ const RightExamItem = (props) => {
         )
             .then((response) => response.json())
             .then((data) => {
+                console.log(data);
                 setHistoryExam(data.data);
             });
         return () => {};
@@ -25,7 +26,7 @@ const RightExamItem = (props) => {
 
     const handleExam = (itemCategory) => {
         let examTemp = props.examRight.filter(
-            (item) => item.category_id === itemCategory.id,
+            (item) => item.category_id == itemCategory.id,
         );
         return (
             <ExamGrid
