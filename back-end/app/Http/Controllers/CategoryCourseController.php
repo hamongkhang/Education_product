@@ -55,6 +55,11 @@ class CategoryCourseController extends Controller
                 'name' => 'required|min:1|max:255|unique:category_course,name',
                 'status'=>'required|in:Active,Block',
                 'description'=>'required'
+            ],[
+                'name.required' => 'Tên không để trống',
+                'name.max' => 'Tên không quá 255 kí tự',
+                'name.unique' => 'Tên này đã tồn tại',
+                'description.required' => "Mô tả không để trống"
             ]);
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      
@@ -85,7 +90,8 @@ class CategoryCourseController extends Controller
                 'id' => 'required|exists:category_course,id',
                 'name' => 'min:1|max:255',
                 'status'=>'in:Active,Block',
-                'description'=>''
+            ],[
+                'name.max' => 'Tên không quá 255 kí tự',
             ]);
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      

@@ -1,3 +1,3 @@
-import UserInfoProfile from "./userInfoProfile";
+import UserInfoProfile from './userInfoProfile';
 
-export { UserInfoProfile, }
+export { UserInfoProfile };

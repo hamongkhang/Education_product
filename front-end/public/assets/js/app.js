@@ -1,29 +1,6 @@
 var PATH = {};
 (function($) {
     "use strict"
-    /** handle open/close cart area */
-    PATH.HandleCart = function() {
-        const cartArea = $('.cart-area'),
-            cartOverlay = $('.cart-overlay');
-        $('.cart').on('click', function() {
-            cartArea.removeClass('translate-x-full');
-            cartArea.addClass('translate-x-0');
-            cartOverlay.removeClass('-translate-x-full');
-            cartOverlay.addClass('translate-x-0');
-        });
-        var handleClose = function() {
-            cartArea.removeClass('translate-x-0');
-            cartArea.addClass('translate-x-full');
-            cartOverlay.removeClass('translate-x-0');
-            cartOverlay.addClass('-translate-x-full');
-        }
-        $('.cart-close').on('click', function() {
-            handleClose()
-        })
-        cartOverlay.on('click', function() {
-            handleClose();
-        })
-    }
 
     /** handle open/close menu mobie */
     PATH.HandleNav = function() {
@@ -81,55 +58,6 @@ var PATH = {};
         })
     }
 
-    /** handle open/close search box */
-    PATH.HandleSearchBox = function() {
-        const searchOpen = $('.search-open'),
-            searchClose = $('.search-close'),
-            searchOverlay = $('.search-overlay'),
-            searchArea = $('.search-area');
-
-        var handleClose = function() {
-            searchArea.removeClass('translate-y-0');
-            searchArea.addClass('-translate-y-full');
-            searchOverlay.removeClass('translate-y-0');
-            searchOverlay.addClass('translate-y-full');
-        }
-
-        $('.search-open').on('click', function() {
-            searchArea.removeClass('-translate-y-full');
-            searchArea.addClass('translate-y-0');
-            searchOverlay.removeClass('translate-y-full');
-            searchOverlay.addClass('translate-y-0');
-        })
-
-        searchClose.on('click', function() {
-            handleClose();
-        })
-
-        searchOverlay.on('click', function() {
-            handleClose();
-        })
-    }
-
-    /** handle open/close chat box */
-    PATH.HandleChatbox = function() {
-        const chatOpen = $('.chat-open'),
-            chatClose = $('.chat-close'),
-            chatbox = $('.chatbox');
-
-        chatOpen.on('click', function() {
-            chatbox.removeClass('w-0 h-0');
-            chatbox.addClass('w-80 h-508');
-            chatOpen.addClass('hidden');
-        });
-
-        chatClose.on('click', function() {
-            chatbox.removeClass('w-80 h-508');
-            chatbox.addClass('w-0 h-0');
-            chatOpen.removeClass('hidden');
-        })
-    }
-
     /** handle fixed header on scroll */
     PATH.HeaderFixed = function() {
         const varHeaderFix = $(window).scrollTop() >= 60,
@@ -169,9 +97,6 @@ var PATH = {};
 
     /* Window on load function */
     $(window).on('load', function() {
-        PATH.HandleCart();
         PATH.HandleNav();
-        PATH.HandleSearchBox();
-        PATH.HandleChatbox();
     });
 })(jQuery);

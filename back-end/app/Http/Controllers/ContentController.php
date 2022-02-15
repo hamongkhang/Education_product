@@ -153,6 +153,11 @@ public function getContentHome(Request $request){
                 'name' => 'required|min:1|max:255',
                 'table_of_content_id'=>'required|exists:table_of_content,id',
                 'status'=>'required|in:Active,Block'
+            ],[
+                'name.required' => 'Tên sách không để trống',
+                'name.max' => 'Tên sách không quá 255 kí tự',
+                'name.unique' => 'Tên này đã tồn tại',
+                'table_of_content_id' => 'Chương chưa được chọn'
             ]);
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      
@@ -192,6 +197,9 @@ public function getContentHome(Request $request){
                 'name' => 'min:1|max:255',
                 'table_of_content_id'=>'exists:table_of_content,id',
                 'status'=>'in:Active,Block'
+            ],[
+                'name.max' => 'Tên sách không quá 255 kí tự',
+                'table_of_content_id' => 'Chương chưa được chọn'
             ]);
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      

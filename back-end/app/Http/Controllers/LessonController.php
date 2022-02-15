@@ -179,6 +179,15 @@ class LessonController extends Controller
                 'path'=>'required',
                 'status'=>'required|in:Active,Block',
                 'description'=>'required',
+            ],[
+                'name.required' => 'Tên không để trống',
+                'name.max' => 'Tên không quá 255 kí tự',
+                'name.unique' => 'Tên này đã tồn tại',
+                'content_id.required' => 'Hãy chọn nội dung',
+                'file.required' => 'File không được để trống',
+                'file.mimes' => 'File có đuôi là mp4 MOV',
+                'path.required' => "Phần không được để trống",
+                'description.required' => "Mô tả không được để trống",
             ]);
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      
@@ -236,7 +245,10 @@ class LessonController extends Controller
                 'file'=>'mimetypes:video/avi,video/mpeg,video/mp4',
                 'path'=>'',
                 'status'=>'in:Active,Block',
-                'description'=>'',
+            ],[
+                'name.max' => 'Tên không quá 255 kí tự',
+                'content_id.required' => 'Hãy chọn nội dung',
+                'file.mimetypes' => 'File có đuôi là mp4 MOV',
             ]);
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      

@@ -10,6 +10,7 @@ use App\Models\History;
 use App\Models\UserCode;
 use App\Models\UserCourse;
 use App\Models\UserExam;
+use App\Models\ThanhToan;
 use App\Models\ForgotCode;
 use App\Models\momoOrderDetail;
 use Illuminate\Support\Facades\Hash;
@@ -27,7 +28,7 @@ class PaymentController extends Controller
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['exportOrder','exportOrderLink','onLogin', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
+        $this->middleware('auth:api', ['except' => ['thanhToan2','getThanhToan','exportOrder','exportOrderLink','onLogin', 'onRegister','getCode','getCodeForgotPassword','changePasswordForgot']]);
     }
     public function exportOrderLink(){
         return response()->json(['url' => "http://localhost:8000/order/exportOrder"]);
@@ -43,6 +44,54 @@ class PaymentController extends Controller
             $respon=[$examCategoryFind,$examFind];
             return Response()->json(array("Successfully"=> 1,"data"=>$respon ));
     }
+
+    public function getThanhToan(){
+        $login = auth()->user();
+        $books = ThanhToan::all();
+        return response()->json([
+            'data'=>$books
+        ], 200);  
+    }
+
+
+    public function thanhToan2(Request $request){
+        $adminFind = auth()->user();
+        $teacherFind = ThanhToan::where('id',1)->first();
+        if ($request->endpoint==null){
+            $endpoint=$teacherFind->endpoint;
+        }else{
+            $endpoint=$request->endpoint;
+        }
+
+        if ($request->accessKey==null){
+            $accessKey=$teacherFind->accessKey;
+        }else{
+            $accessKey=$request->accessKey;
+        }
+
+        if ($request->secretKey==null){
+            $secretKey=$teacherFind->secretKey;
+        }else{
+            $secretKey=$request->secretKey;
+        }
+
+        if ($request->partnerCode==null){
+            $partnerCode=$teacherFind->partnerCode;
+        }else{
+            $partnerCode=$request->partnerCode;
+        }
+        $teacherFind->endpoint=$endpoint;
+        $teacherFind->secretKey=$secretKey;  
+        $teacherFind->accessKey=$accessKey;  
+        $teacherFind->partnerCode=$partnerCode; 
+        $teacherFind->updated_at=Carbon::now('Asia/Ho_Chi_Minh'); 
+        $teacherFind->created_at=Carbon::now('Asia/Ho_Chi_Minh');  
+        $teacherFind->save();
+        return Response()->json(array("Successfully. Update successfully!"=> 1,"data"=>"khang" ));
+    }
+
+
+
     public function getOrder(Request $request){
         $login = auth()->user();
         if($login && $login->is_admin == true){
@@ -156,11 +205,12 @@ class PaymentController extends Controller
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 400);      
             }
+            $teacherFind = ThanhToan::where('id',1)->first();
             $data = DB::table('cart')->where('userId', $dataUser->id)->get();
-            $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
-            $partnerCode = 'MOMO282120210723';
-            $accessKey = 'lI611IsPM6PQ3TFC';
-            $serectkey = 'w3SOos2fvPln43ksfcJFAEMvhB9joTTZ';
+            $endpoint = $teacherFind->endpoint;
+            $partnerCode = $teacherFind->partnerCode;
+            $accessKey = $teacherFind->accessKey;
+            $serectkey = $teacherFind->secretKey;
             $orderId = time() ."";
             $orderInfo = "Thanh toán qua MoMo";
             $amount = $request->amount;
