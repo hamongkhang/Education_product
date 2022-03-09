@@ -1,0 +1,7 @@
+"Order ID","Order Key","Order Date","Completed Date",Title,"Order Status","Order Currency","Payment Method Title","Order Total"
+433,wc_order_Yd1tW1ei5770n,"2021-10-21 08:34:49",,"Order &ndash; Tháng Mười 21, 2021 @ 08:34 Sáng",wc-on-hold,USD,"Quét Mã MoMo",55.00
+435,wc_order_ggWBcnd90ovPh,"2021-10-21 09:17:30",,"Order &ndash; October 21, 2021 @ 09:17 AM",wc-on-hold,USD,"Quét Mã MoMo",70.00
+436,wc_order_F2GxyOSIRaloa,"2021-10-21 09:18:56",,"Order &ndash; October 21, 2021 @ 09:18 AM",wc-on-hold,USD,"Quét Mã MoMo",35.00
+440,wc_order_Jp2tM7H817rKh,"2021-10-22 02:22:15",,"Order &ndash; October 22, 2021 @ 02:22 AM",wc-pending,USD,,0.00
+443,wc_order_rm6JntHQHXMnr,"2021-10-22 03:10:08",,"Order &ndash; October 22, 2021 @ 03:10 AM",wc-on-hold,USD,"Quét Mã MoMo",70.00
+1836,wc_order_MPOLKczybtH1j,"2021-11-04 03:55:12",,"Order &ndash; November 4, 2021 @ 03:55 AM",wc-on-hold,USD,"Quét Mã MoMo",25.00
